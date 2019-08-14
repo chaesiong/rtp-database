@@ -1,0 +1,21 @@
+CREATE OR REPLACE FORCE EDITIONABLE VIEW "DL_STAGING4PIBICS"."CNT_SUMMARY" ("TABLE_NAME", "CREATE_DATE", "PIBICS_COUNT", "PIBICS_DML_AT", "STAGING_COUNT", "STAGING_DML_AT") AS 
+  SELECT p.table_name      AS table_name
+      ,p.create_date     AS create_date
+      ,p.count           AS pibics_count
+      ,p.dml_at          AS pibics_dml_at
+      ,coalesce(s.count ,0)          AS staging_count
+      ,s.dml_at          AS staging_dml_at
+FROM dl_staging4pibics.cnt_pibics p
+LEFT JOIN dl_staging4pibics.cnt_staging s
+ON s.table_name = p.table_name
+AND s.create_date = p.create_date
+;
+   COMMENT ON TABLE "DL_STAGING4PIBICS"."CNT_SUMMARY"  IS 'Overview of counters for PIBICS and STAGUING. PIBICS is the leading table';
+  GRANT SELECT ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "DL_STAGING4PIBICS_INTF";
+  GRANT REFERENCES ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "DL_STAGING4PIBICS_INTF";
+  GRANT SELECT ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "BIO_BD";
+  GRANT DELETE ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "DERMALOG_PROXY";
+  GRANT INSERT ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "DERMALOG_PROXY";
+  GRANT SELECT ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "DERMALOG_PROXY";
+  GRANT UPDATE ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "DERMALOG_PROXY";
+  GRANT SELECT ON "DL_STAGING4PIBICS"."CNT_SUMMARY" TO "TESTADM";

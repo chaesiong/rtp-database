@@ -1,0 +1,32 @@
+CREATE OR REPLACE FORCE EDITIONABLE VIEW "DL_BORDERCONTROL"."COL_BLACKLIST_HITS" ("SEQ_ID", "REC_ID", "FIRSTNAME", "MIDDLENAME", "LASTNAME", "FIRSTNAMETHAI", "MIDDLENAMETHAI", "LASTNAMETHAI", "GENDER", "NATIONALITY", "BEHAVIOUR", "LEVELOFCONF", "NEXTSTEP", "PHONE", "AUTHORITY", "CASENUMBER", "CONTACTREQUIRED", "REASON", "DATEOFBIRTH", "ENTRYDATE", "PASSPORT_NO", "ARRIVALDATE", "TM6NUMBER") AS 
+  SELECT seq_id
+      ,c001 AS rec_id
+      ,c002 AS firstname
+      ,c003 AS middlename
+      ,c004 AS lastname
+      ,c005 AS firstnameThai
+      ,c006 AS middlenameThai
+      ,c007 AS lastnameThai
+      ,c008 AS gender
+      ,c009 AS nationality
+      ,c010 AS behaviour
+      ,c011 AS levelofconf
+      ,c012 AS nextstep
+      ,c013 AS phone
+      ,c014 AS authority
+      ,c015 AS casenumber
+      ,c016 AS contactrequired
+      ,c017 AS reason
+      ,c018 AS dateofbirth
+      ,c019 AS entrydate
+      ,c020 AS passport_no
+      ,c021 AS arrivaldate
+      ,c022 AS tm6number
+  FROM apex_collections
+ WHERE collection_name = 'BLACKLIST_HITS_ENTRIES';
+  GRANT SELECT ON "DL_BORDERCONTROL"."COL_BLACKLIST_HITS" TO "BIO_BD";
+  GRANT DELETE ON "DL_BORDERCONTROL"."COL_BLACKLIST_HITS" TO "DERMALOG_PROXY";
+  GRANT INSERT ON "DL_BORDERCONTROL"."COL_BLACKLIST_HITS" TO "DERMALOG_PROXY";
+  GRANT SELECT ON "DL_BORDERCONTROL"."COL_BLACKLIST_HITS" TO "DERMALOG_PROXY";
+  GRANT UPDATE ON "DL_BORDERCONTROL"."COL_BLACKLIST_HITS" TO "DERMALOG_PROXY";
+  GRANT SELECT ON "DL_BORDERCONTROL"."COL_BLACKLIST_HITS" TO "TESTADM";

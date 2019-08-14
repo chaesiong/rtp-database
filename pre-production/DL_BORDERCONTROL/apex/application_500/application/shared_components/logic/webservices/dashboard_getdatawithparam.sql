@@ -1,0 +1,34 @@
+prompt --application/shared_components/logic/webservices/dashboard_getdatawithparam
+begin
+wwv_flow_api.create_web_service(
+ p_id=>wwv_flow_api.id(882429435086013468)
+,p_name=>'Dashboard_GetDataWithParam'
+,p_url=>'http://10.120.30.41:8080/ords/ws_cambodia_prod/dash/KHM_Today/'
+,p_action=>'REST'
+,p_static_parm_04=>'GET'
+,p_static_parm_05=>'json'
+,p_static_parm_10=>'nvp'
+);
+wwv_flow_api.create_ws_operations(
+ p_id=>wwv_flow_api.id(882429654412013473)
+,p_ws_id=>wwv_flow_api.id(882429435086013468)
+,p_name=>'doREST'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(882450521321346680)
+,p_ws_opers_id=>wwv_flow_api.id(882429654412013473)
+,p_name=>'json'
+,p_input_or_output=>'O'
+,p_parm_type=>'json'
+,p_type_is_xsd=>'N'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(882518724935150480)
+,p_ws_opers_id=>wwv_flow_api.id(882429654412013473)
+,p_name=>'ID'
+,p_input_or_output=>'I'
+,p_parm_type=>'string'
+,p_type_is_xsd=>'Y'
+);
+end;
+/

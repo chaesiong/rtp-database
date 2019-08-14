@@ -1,0 +1,112 @@
+prompt --application/shared_components/logic/application_items
+begin
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(69866511323472059)
+,p_name=>'AI_APP_VERSION'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53539863965700169)
+,p_name=>'AI_BORDERPOST_ID'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53540070867700864)
+,p_name=>'AI_BORDERPOST_NAME'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53529266555565867)
+,p_name=>'AI_CGI_ENV_HTTP_USER_AGENT'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53529015415564426)
+,p_name=>'AI_CGI_ENV_REMOTE_ADDR'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53529425975567811)
+,p_name=>'AI_CGI_ENV_REMOTE_HOST'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(137241810218795787)
+,p_name=>'AI_CLIENT_IP'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(70031921361647689)
+,p_name=>'AI_DATE_RANGE_FUTURE_LG'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(110710205722355072)
+,p_name=>'AI_DATE_RANGE_FUTURE_MD'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(70031845887647688)
+,p_name=>'AI_DATE_RANGE_FUTURE_SM'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(70031733136647688)
+,p_name=>'AI_DATE_RANGE_PAST_LG'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(110709995425354249)
+,p_name=>'AI_DATE_RANGE_PAST_MD'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(70031704388647687)
+,p_name=>'AI_DATE_RANGE_PAST_SM'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(68040475776783964)
+,p_name=>'AI_DEFAULT_DATE_FORMAT'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(62225539971911134)
+,p_name=>'AI_OWNER'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53540961847738265)
+,p_name=>'AI_TERMINAL_ID'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53528683734562013)
+,p_name=>'AI_TERMINAL_IP'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(53528884103563014)
+,p_name=>'AI_TERMINAL_NAME'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(64219932211752566)
+,p_name=>'AI_USERNAME'
+,p_protection_level=>'I'
+);
+end;
+/

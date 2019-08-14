@@ -1,0 +1,149 @@
+prompt --application/pages/page_00030
+begin
+wwv_flow_api.create_page(
+ p_id=>30
+,p_user_interface_id=>wwv_flow_api.id(45965479290928181)
+,p_name=>'Cancel Visa'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Cancel Visa'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_chained=>'N'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_cache_mode=>'NOCACHE'
+,p_last_updated_by=>'E1CHAGEMANN'
+,p_last_upd_yyyymmddhh24miss=>'20180514153749'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(55118658097152853)
+,p_plug_name=>'Confirm to cancel'
+,p_region_template_options=>'#DEFAULT#:t-Region--removeHeader:t-Region--noBorder:t-Region--scrollBody:t-Form--large'
+,p_plug_template=>wwv_flow_api.id(45928798426927985)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'Y'
+,p_plug_grid_column_span=>8
+,p_plug_display_column=>3
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(55119512343152861)
+,p_plug_name=>'Buttonregion'
+,p_parent_plug_id=>wwv_flow_api.id(55118658097152853)
+,p_region_template_options=>'#DEFAULT#:t-ButtonRegion--noUI'
+,p_plug_template=>wwv_flow_api.id(45922244475927968)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(55119130628152858)
+,p_button_sequence=>20
+,p_button_plug_id=>wwv_flow_api.id(55119512343152861)
+,p_button_name=>'CONFIRM'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#:t-Button--large:t-Button--iconRight'
+,p_button_template_id=>wwv_flow_api.id(45954778691928084)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Confirm'
+,p_button_position=>'REGION_TEMPLATE_CHANGE'
+,p_icon_css_classes=>'fa-check'
+,p_grid_new_grid=>false
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(55118994651152856)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_api.id(55119512343152861)
+,p_button_name=>'CANCEL'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#:t-Button--large:t-Button--iconRight'
+,p_button_template_id=>wwv_flow_api.id(45954778691928084)
+,p_button_image_alt=>'Cancel'
+,p_button_position=>'REGION_TEMPLATE_CHANGE'
+,p_icon_css_classes=>'fa-times-circle-o'
+,p_grid_new_grid=>false
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(55118728750152854)
+,p_name=>'P30_VISA_NUMBER'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_api.id(55118658097152853)
+,p_prompt=>'VISA number:'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
+,p_read_only_when_type=>'ALWAYS'
+,p_field_template=>wwv_flow_api.id(45954251363928073)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'BOTH'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(55118835536152855)
+,p_name=>'P30_VISA_REMARK'
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_api.id(55118658097152853)
+,p_prompt=>'Remark for cancellation:'
+,p_display_as=>'NATIVE_TEXTAREA'
+,p_cSize=>30
+,p_cHeight=>5
+,p_field_template=>wwv_flow_api.id(45954251363928073)
+,p_item_template_options=>'#DEFAULT#:t-Form-fieldContainer--stretchInputs'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'N'
+,p_attribute_03=>'N'
+,p_attribute_04=>'BOTH'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(55119597697152862)
+,p_name=>'P30_VISA_KEY_VALUE'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_api.id(55118658097152853)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(55119377742152860)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'CLOSE DIALOG: ON CANCEL'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_api.id(55118994651152856)
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(55119774545152864)
+,p_process_sequence=>20
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'SAVE: CANCEL VISA'
+,p_process_sql_clob=>'dl_bordercontrol.voa_apex_pkg.cancel_visa(:P30_VISA_KEY_VALUE, :P30_VISA_REMARK);'
+,p_process_error_message=>'An error occurred while cancelling Visa &P30_VISA_NUMBER.. Please contact the system administrator.'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_api.id(55119130628152858)
+,p_process_success_message=>'The Visa &P30_VISA_NUMBER. was successfully cancelled.'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(55120275902152869)
+,p_process_sequence=>30
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'CLOSE DIALOG: AFTER SAVE'
+,p_process_error_message=>'An error occurred while cancelling Visa &P30_VISA_NUMBER.. Please contact the system administrator.'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_api.id(55119130628152858)
+,p_process_success_message=>'The Visa &P30_VISA_NUMBER. was successfully cancelled.'
+);
+end;
+/

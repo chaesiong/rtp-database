@@ -1,0 +1,308 @@
+prompt --application/pages/page_08000
+begin
+wwv_flow_api.create_page(
+ p_id=>8000
+,p_user_interface_id=>wwv_flow_api.id(68526215125627868)
+,p_name=>'Pivot Analysis'
+,p_page_mode=>'NORMAL'
+,p_step_title=>'Pivot Analysis'
+,p_reload_on_submit=>'A'
+,p_warn_on_unsaved_changes=>'N'
+,p_step_sub_title=>'Pivot Analysis'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_autocomplete_on_off=>'ON'
+,p_page_template_options=>'#DEFAULT#'
+,p_required_role=>wwv_flow_api.id(46598465620221197)
+,p_dialog_chained=>'Y'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_cache_mode=>'NOCACHE'
+,p_cache_timeout_seconds=>21600
+,p_help_text=>'No help is available for this page.'
+,p_last_updated_by=>'ADMIN'
+,p_last_upd_yyyymmddhh24miss=>'20171204143950'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(45749237953250836)
+,p_plug_name=>'Pivot Analysis'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(68499437106627602)
+,p_plug_display_sequence=>20
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_source=>'select * from dl_bordercontrol_datamart.pivot_analysis;'
+,p_plug_source_type=>'NATIVE_IR'
+,p_plug_query_row_template=>1
+,p_plug_query_show_nulls_as=>' - '
+,p_pagination_display_position=>'BOTTOM_RIGHT'
+);
+wwv_flow_api.create_worksheet(
+ p_id=>wwv_flow_api.id(45749701025250839)
+,p_name=>'Pivot Analysis'
+,p_max_row_count=>'1000000'
+,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+,p_no_data_found_message=>'No data found.'
+,p_show_nulls_as=>'-'
+,p_pagination_type=>'ROWS_X_TO_Y'
+,p_pagination_display_pos=>'BOTTOM_RIGHT'
+,p_report_list_mode=>'TABS'
+,p_show_detail_link=>'N'
+,p_download_formats=>'CSV:HTML:EMAIL:XLS:PDF:RTF'
+,p_owner=>'ADMIN'
+,p_internal_uid=>6127569789347708
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45749813695250847)
+,p_db_column_name=>'Year'
+,p_display_order=>1
+,p_column_identifier=>'A'
+,p_column_label=>'Year'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45750166730250851)
+,p_db_column_name=>'Day'
+,p_display_order=>3
+,p_column_identifier=>'C'
+,p_column_label=>'Day'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45750592585250852)
+,p_db_column_name=>'Cal.week'
+,p_display_order=>4
+,p_column_identifier=>'D'
+,p_column_label=>'Cal.Week'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45750947293250853)
+,p_db_column_name=>'Hour'
+,p_display_order=>6
+,p_column_identifier=>'F'
+,p_column_label=>'Hour'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45751333745250854)
+,p_db_column_name=>'Agent'
+,p_display_order=>7
+,p_column_identifier=>'G'
+,p_column_label=>'Agent'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45751814580250855)
+,p_db_column_name=>'Age'
+,p_display_order=>8
+,p_column_identifier=>'H'
+,p_column_label=>'Age'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45752173612250856)
+,p_db_column_name=>'Borderpost'
+,p_display_order=>9
+,p_column_identifier=>'I'
+,p_column_label=>'Borderpost'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45752617316250857)
+,p_db_column_name=>'Document Type'
+,p_display_order=>10
+,p_column_identifier=>'J'
+,p_column_label=>'Document Type'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45752951192250858)
+,p_db_column_name=>'Gender'
+,p_display_order=>11
+,p_column_identifier=>'K'
+,p_column_label=>'Gender'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45753388013250859)
+,p_db_column_name=>'Movement type'
+,p_display_order=>12
+,p_column_identifier=>'L'
+,p_column_label=>'Movement Type'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45753815696250860)
+,p_db_column_name=>'Nationality'
+,p_display_order=>13
+,p_column_identifier=>'M'
+,p_column_label=>'Nationality'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45754171852250861)
+,p_db_column_name=>'Officer'
+,p_display_order=>14
+,p_column_identifier=>'N'
+,p_column_label=>'Officer'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45754587188250862)
+,p_db_column_name=>'Transport Mode'
+,p_display_order=>15
+,p_column_identifier=>'O'
+,p_column_label=>'Transport Mode'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45755010215250862)
+,p_db_column_name=>'Visa Type'
+,p_display_order=>16
+,p_column_identifier=>'P'
+,p_column_label=>'Visa Type'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45755390382250863)
+,p_db_column_name=>'Count Incidents'
+,p_display_order=>17
+,p_column_identifier=>'Q'
+,p_column_label=>'Count Incidents'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45755799662250864)
+,p_db_column_name=>'Count Movements'
+,p_display_order=>18
+,p_column_identifier=>'R'
+,p_column_label=>'Count Movements'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45756144383250865)
+,p_db_column_name=>'Month'
+,p_display_order=>19
+,p_column_identifier=>'S'
+,p_column_label=>'Month'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(45756545097250866)
+,p_db_column_name=>'Weekday'
+,p_display_order=>20
+,p_column_identifier=>'T'
+,p_column_label=>'Weekday'
+,p_column_type=>'NUMBER'
+,p_column_alignment=>'RIGHT'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_rpt(
+ p_id=>wwv_flow_api.id(45756998105250868)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_type=>'PIVOT'
+,p_report_alias=>'61349'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_display_rows=>50
+,p_report_columns=>'Gender:'
+,p_flashback_enabled=>'N'
+);
+wwv_flow_api.create_worksheet_pivot(
+ p_id=>wwv_flow_api.id(45757470110250874)
+,p_report_id=>wwv_flow_api.id(45756998105250868)
+,p_pivot_columns=>'Day'
+,p_row_columns=>'Year:Month'
+);
+wwv_flow_api.create_worksheet_pivot_agg(
+ p_id=>wwv_flow_api.id(45757876298250878)
+,p_pivot_id=>wwv_flow_api.id(45757470110250874)
+,p_display_seq=>1
+,p_function_name=>'SUM'
+,p_column_name=>'Count Incidents'
+,p_db_column_name=>'PFC1'
+,p_format_mask=>'999G999G999G999G990'
+,p_display_sum=>'N'
+);
+wwv_flow_api.create_worksheet_pivot_agg(
+ p_id=>wwv_flow_api.id(45758302325250880)
+,p_pivot_id=>wwv_flow_api.id(45757470110250874)
+,p_display_seq=>2
+,p_function_name=>'SUM'
+,p_column_name=>'Count Movements'
+,p_db_column_name=>'PFC2'
+,p_format_mask=>'999G999G999G999G990'
+,p_display_sum=>'N'
+);
+wwv_flow_api.create_worksheet_pivot_sort(
+ p_id=>wwv_flow_api.id(45758662044250884)
+,p_pivot_id=>wwv_flow_api.id(45757470110250874)
+,p_sort_seq=>1
+,p_sort_column_name=>'Year'
+,p_sort_direction=>'ASC'
+);
+wwv_flow_api.create_worksheet_pivot_sort(
+ p_id=>wwv_flow_api.id(45759128475250886)
+,p_pivot_id=>wwv_flow_api.id(45757470110250874)
+,p_sort_seq=>2
+,p_sort_column_name=>'Month'
+,p_sort_direction=>'ASC'
+);
+wwv_flow_api.create_page_branch(
+ p_id=>wwv_flow_api.id(45761336217250919)
+,p_branch_action=>'f?p=&APP_ID.:8000:&SESSION.'
+,p_branch_point=>'AFTER_PROCESSING'
+,p_branch_type=>'REDIRECT_URL'
+,p_branch_sequence=>10
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(45760470784250911)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_RESET_PAGINATION'
+,p_process_name=>'Reset Pagination'
+,p_process_sql_clob=>'reset_pagination'
+,p_attribute_01=>'THIS_PAGE'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'GO,P8000_SEARCH,RESET'
+,p_process_when_type=>'REQUEST_IN_CONDITION'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(45760837752250915)
+,p_process_sequence=>20
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_SESSION_STATE'
+,p_process_name=>'Reset report search'
+,p_attribute_01=>'CLEAR_CACHE_FOR_ITEMS'
+,p_attribute_03=>'P8000_SEARCH,P8000_ROWS'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+);
+end;
+/

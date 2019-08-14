@@ -1,0 +1,54 @@
+prompt --application/shared_components/logic/webservices/google_geocoding
+begin
+wwv_flow_api.create_web_service(
+ p_id=>wwv_flow_api.id(564192387690249356)
+,p_name=>'Google GeoCoding'
+,p_url=>'http://maps.googleapis.com/maps/api/geocode/xml'
+,p_action=>'REST'
+,p_proxy_override=>'http://proxy.dermalog.hh:3128'
+,p_static_parm_04=>'GET'
+,p_static_parm_05=>'xml'
+,p_static_parm_06=>'//geometry/location'
+,p_static_parm_10=>'nvp'
+);
+wwv_flow_api.create_ws_operations(
+ p_id=>wwv_flow_api.id(564192666032249358)
+,p_ws_id=>wwv_flow_api.id(564192387690249356)
+,p_name=>'doREST'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(564192964062249359)
+,p_ws_opers_id=>wwv_flow_api.id(564192666032249358)
+,p_name=>'address'
+,p_input_or_output=>'I'
+,p_parm_type=>'string'
+,p_type_is_xsd=>'Y'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(564193202192249360)
+,p_ws_opers_id=>wwv_flow_api.id(564192666032249358)
+,p_name=>'sensor'
+,p_input_or_output=>'I'
+,p_parm_type=>'string'
+,p_type_is_xsd=>'Y'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(564193558382249360)
+,p_ws_opers_id=>wwv_flow_api.id(564192666032249358)
+,p_name=>'long'
+,p_input_or_output=>'O'
+,p_parm_type=>'string'
+,p_path=>'/lng'
+,p_type_is_xsd=>'Y'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(564193816423249360)
+,p_ws_opers_id=>wwv_flow_api.id(564192666032249358)
+,p_name=>'lat'
+,p_input_or_output=>'O'
+,p_parm_type=>'string'
+,p_path=>'/lat'
+,p_type_is_xsd=>'Y'
+);
+end;
+/

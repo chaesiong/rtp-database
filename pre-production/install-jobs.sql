@@ -1,0 +1,40 @@
+---------------------
+-- jobs --
+-- LOGGER/jobs
+@LOGGER/jobs/logger_purge_job.sql
+@LOGGER/jobs/logger_unset_prefs_by_client.sql
+-- DL_BORDERCONTROL/jobs
+@DL_BORDERCONTROL/jobs/purge_tmp_blacklist_search.sql
+@DL_BORDERCONTROL/jobs/purge_tmp_collective_passport.sql
+-- DL_BORDERCONTROL_DATAMART/jobs
+@DL_BORDERCONTROL_DATAMART/jobs/update_datamart.sql
+-- DL_STAGING4PIBICS_INTF/jobs
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_ampur.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_continent.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_conveyance.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_country.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_department.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_flightnumbers.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_fs_slipsystem.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_occupation.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_paymentrate.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_permittype.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_province.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_rankcrw.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_region.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_suffix.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_tambon.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_traveldoctype.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_visabynation.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_visatype.sql
+@DL_STAGING4PIBICS_INTF/jobs/sj_sync_lostpassport.sql
+@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist_30min.sql
+@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_lostpassport.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_thaipassport.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_tminout.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_watchlist.sql
+-- DL_INTERFACE/jobs
+@DL_INTERFACE/jobs/check_queue_2.sql
+@DL_INTERFACE/jobs/check_queue_3.sql
+@DL_INTERFACE/jobs/check_queue.sql

@@ -1,0 +1,30 @@
+prompt --application/shared_components/logic/application_items
+begin
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(97693247826904381)
+,p_name=>'AI_CLIENT_IP'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(42787981900926186)
+,p_name=>'AI_VERSION'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(42791652442985397)
+,p_name=>'AI_VERSION_BBS'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(38179476012452199)
+,p_name=>'APP_CURRENT_CASE_ID'
+,p_protection_level=>'N'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(72170203259742500)
+,p_name=>'CAMUNDA_URL'
+,p_protection_level=>'I'
+);
+end;
+/

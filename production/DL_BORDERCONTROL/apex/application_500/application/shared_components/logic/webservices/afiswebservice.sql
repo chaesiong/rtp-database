@@ -1,0 +1,423 @@
+prompt --application/shared_components/logic/webservices/afiswebservice
+begin
+wwv_flow_api.create_web_service(
+ p_id=>wwv_flow_api.id(563902349932423388)
+,p_name=>'AfisWebservice'
+,p_url=>'http://10.120.14.13:8888/HelloWorldService?wsdl'
+,p_action=>'NEW_SCHOOL'
+,p_static_parm_01=>'http://www.dermalog.com/AfisWebservice/'
+,p_static_parm_02=>'document'
+);
+wwv_flow_api.create_ws_operations(
+ p_id=>wwv_flow_api.id(563902504362423455)
+,p_ws_id=>wwv_flow_api.id(563902349932423388)
+,p_name=>'BASIC_AUTH'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563902835598423457)
+,p_ws_opers_id=>wwv_flow_api.id(563902504362423455)
+,p_name=>'username'
+,p_input_or_output=>'A'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563903152233423460)
+,p_ws_opers_id=>wwv_flow_api.id(563902504362423455)
+,p_name=>'password'
+,p_input_or_output=>'A'
+);
+wwv_flow_api.create_ws_operations(
+ p_id=>wwv_flow_api.id(563903381211423465)
+,p_ws_id=>wwv_flow_api.id(563902349932423388)
+,p_name=>'Search'
+,p_input_message_name=>'SearchRequest'
+,p_input_message_style=>'literal'
+,p_output_message_name=>'SearchResponse'
+,p_output_message_style=>'literal'
+,p_soap_action=>'http://www.dermalog.com/AfisWebservice/Search'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563903673192423471)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'Search'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:Search'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563904016815423479)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'Fingers'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerTypeSet'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563903673192423471)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563904345826423479)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'RT'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563904615786423480)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'Image'
+,p_input_or_output=>'I'
+,p_parm_type=>'xsd:base64Binary'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904345826423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563904935096423482)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'ImageType'
+,p_input_or_output=>'I'
+,p_parm_type=>'xsd:string'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904345826423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563905247245423482)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'RI'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563905549013423484)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'RM'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563905835969423485)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'RR'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563906074893423485)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'RL'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563906373151423487)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'LT'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563906757380423488)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'LI'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563907050898423488)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'LM'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563907340110423490)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'LR'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563907587272423491)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'LL'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563904016815423479)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563907955118423494)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'SearchResponse'
+,p_input_or_output=>'O'
+,p_parm_type=>'tns:SearchResponse'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563908182641423498)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'HitList'
+,p_input_or_output=>'O'
+,p_parm_type=>'tns:HitType'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563907955118423494)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563908471926423501)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'AfisId'
+,p_input_or_output=>'O'
+,p_parm_type=>'xsd:int'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563908182641423498)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563908806489423502)
+,p_ws_opers_id=>wwv_flow_api.id(563903381211423465)
+,p_name=>'Score'
+,p_input_or_output=>'O'
+,p_parm_type=>'xsd:int'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563908182641423498)
+);
+wwv_flow_api.create_ws_operations(
+ p_id=>wwv_flow_api.id(563909118389423502)
+,p_ws_id=>wwv_flow_api.id(563902349932423388)
+,p_name=>'Insert'
+,p_input_message_name=>'InsertRequest'
+,p_input_message_style=>'literal'
+,p_output_message_name=>'InsertResponse'
+,p_output_message_style=>'literal'
+,p_soap_action=>'http://www.dermalog.com/AfisWebservice/Insert'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563909404743423504)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'Insert'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:Insert'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563909685157423505)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'Fingers'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerTypeSet'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909404743423504)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563910067025423505)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'RT'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563910335183423507)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'Image'
+,p_input_or_output=>'I'
+,p_parm_type=>'xsd:base64Binary'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563910067025423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563910615330423507)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'ImageType'
+,p_input_or_output=>'I'
+,p_parm_type=>'xsd:string'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563910067025423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563910950034423509)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'RI'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563911207886423510)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'RM'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563911556697423510)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'RR'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563911860144423512)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'RL'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563912159457423512)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'LT'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563912381794423513)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'LI'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563912722760423515)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'LM'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563913048697423515)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'LR'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563913354475423516)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'LL'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:FingerType'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563909685157423505)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563913612272423516)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'InsertResponse'
+,p_input_or_output=>'O'
+,p_parm_type=>'tns:InsertResponse'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563913885573423518)
+,p_ws_opers_id=>wwv_flow_api.id(563909118389423502)
+,p_name=>'AfisId'
+,p_input_or_output=>'O'
+,p_parm_type=>'xsd:int'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563913612272423516)
+);
+wwv_flow_api.create_ws_operations(
+ p_id=>wwv_flow_api.id(563914186201423519)
+,p_ws_id=>wwv_flow_api.id(563902349932423388)
+,p_name=>'Delete'
+,p_input_message_name=>'DeleteRequest'
+,p_input_message_style=>'literal'
+,p_output_message_name=>'DeleteResponse'
+,p_output_message_style=>'literal'
+,p_soap_action=>'http://www.dermalog.com/AfisWebservice/Delete'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563914509303423519)
+,p_ws_opers_id=>wwv_flow_api.id(563914186201423519)
+,p_name=>'Delete'
+,p_input_or_output=>'I'
+,p_parm_type=>'tns:Delete'
+,p_type_is_xsd=>'N'
+,p_form_qualified=>'N'
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563914845458423521)
+,p_ws_opers_id=>wwv_flow_api.id(563914186201423519)
+,p_name=>'AfisId'
+,p_input_or_output=>'I'
+,p_parm_type=>'xsd:int'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+,p_parent_id=>wwv_flow_api.id(563914509303423519)
+);
+wwv_flow_api.create_ws_parameters(
+ p_id=>wwv_flow_api.id(563915155265423523)
+,p_ws_opers_id=>wwv_flow_api.id(563914186201423519)
+,p_name=>'DeleteResponse'
+,p_input_or_output=>'O'
+,p_parm_type=>'tns:DeleteResponse'
+,p_type_is_xsd=>'Y'
+,p_form_qualified=>'N'
+);
+end;
+/

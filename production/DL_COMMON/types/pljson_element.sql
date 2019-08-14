@@ -1,0 +1,8 @@
+CREATE OR REPLACE EDITIONABLE TYPE "DL_COMMON"."PLJSON_ELEMENT" force as object
+(
+  obj_type number
+)
+not final;
+/
+
+  GRANT EXECUTE ON "DL_COMMON"."PLJSON_ELEMENT" TO PUBLIC;

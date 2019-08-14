@@ -1,0 +1,51 @@
+prompt --application/pages/page_00002
+begin
+wwv_flow_api.create_page(
+ p_id=>2
+,p_user_interface_id=>wwv_flow_api.id(563846918365049635)
+,p_name=>'Homepage'
+,p_page_mode=>'NORMAL'
+,p_step_title=>'Homepage'
+,p_reload_on_submit=>'A'
+,p_warn_on_unsaved_changes=>'N'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_autocomplete_on_off=>'ON'
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_chained=>'Y'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_cache_mode=>'NOCACHE'
+,p_help_text=>'No help is available for this page.'
+,p_last_updated_by=>'ADMIN'
+,p_last_upd_yyyymmddhh24miss=>'20171213110444'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(188301287883196642)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Rredirect'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'BEGIN',
+'',
+'IF :AI_LANDING_PAGE is null THEN',
+'',
+'htp.init;',
+'owa_util.redirect_url(''f?p=&APP_ID.:101:&APP_SESSION.'');',
+'apex_application.stop_apex_engine;',
+'',
+'',
+'ELSE',
+'',
+'htp.init;',
+'owa_util.redirect_url(''f?p=&APP_ID.:&AI_LANDING_PAGE.:&APP_SESSION.'');',
+'apex_application.stop_apex_engine;',
+'',
+'END IF;',
+'',
+'END;',
+''))
+);
+end;
+/

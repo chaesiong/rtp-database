@@ -1,0 +1,6018 @@
+prompt --application/shared_components/globalization/messages
+begin
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(229127933005105)
+,p_name=>'CASE_NUMBER_ALLREADY_USED'
+,p_message_language=>'th'
+,p_message_text=>'The casenumber is is allready used in an other case. You must choose a higher number.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(1559888150478103)
+,p_name=>'ISSUING_COUNTRY'
+,p_message_text=>'Issuing Country'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(1560096661478120)
+,p_name=>'ISSUING_COUNTRY'
+,p_message_language=>'th'
+,p_message_text=>'ISSUING_COUNTRY_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(2570591713886653)
+,p_name=>'DATE_OF_BIRTH_PARTIAL'
+,p_message_text=>'Date Of Birth Partial'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(2570763565886654)
+,p_name=>'DATE_OF_BIRTH_PARTIAL'
+,p_message_language=>'th'
+,p_message_text=>'DATE_OF_BIRTH_PARTIAL_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(5224603025592008)
+,p_name=>'NIST:INDEX.DEMOGRAPHIC'
+,p_message_text=>'Demographic Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(5224778409592008)
+,p_name=>'NIST:INDEX.FINGERPRINTS'
+,p_message_text=>'Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(5224991129592010)
+,p_name=>'NIST:INDEX.PHOTOS'
+,p_message_text=>'Photos'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7700724180818884)
+,p_name=>'CASE_NUMBER'
+,p_message_text=>'Case Number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7700949594818892)
+,p_name=>'CASE_NUMBER'
+,p_message_language=>'th'
+,p_message_text=>'เลขระเบียน'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7701294746826687)
+,p_name=>'CASE_TYPE'
+,p_message_text=>'Case Type'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7701492119826695)
+,p_name=>'CASE_TYPE'
+,p_message_language=>'th'
+,p_message_text=>'ประเภทของคดี'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7910743984175279)
+,p_name=>'BEHAVIOR'
+,p_message_text=>'Behavior'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7910995233175279)
+,p_name=>'BEHAVIOR'
+,p_message_language=>'th'
+,p_message_text=>'พฤติการณ์ที่เกี่ยวข้อง'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7911283970179981)
+,p_name=>'REASON'
+,p_message_text=>'Reason'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7911472242179982)
+,p_name=>'REASON'
+,p_message_language=>'th'
+,p_message_text=>'เหตุผล'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7911748508185547)
+,p_name=>'CONTACT_INFORMATION'
+,p_message_text=>'Contact Information'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(7911917041185547)
+,p_name=>'CONTACT_INFORMATION'
+,p_message_language=>'th'
+,p_message_text=>'หมายเหตุติดต่อ'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9629899685286892)
+,p_name=>'AUTHORITY'
+,p_message_text=>'Authority'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9630040308286906)
+,p_name=>'AUTHORITY'
+,p_message_language=>'th'
+,p_message_text=>'หน่วยงานที่บันทึก'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9630864111307460)
+,p_name=>'IS_ACTIVE'
+,p_message_text=>'Is Active'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9631059004307461)
+,p_name=>'IS_ACTIVE'
+,p_message_language=>'th'
+,p_message_text=>'IS_ACTIVE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9631571221313908)
+,p_name=>'ACTION_CODE'
+,p_message_text=>'Action Code'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9631761977313909)
+,p_name=>'ACTION_CODE'
+,p_message_language=>'th'
+,p_message_text=>'สิ่งที่ต้องปฏิบัติ'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9632084366319166)
+,p_name=>'ARRESTED_DESCRIPTION'
+,p_message_text=>'Arrested Description'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9632305710319166)
+,p_name=>'ARRESTED_DESCRIPTION'
+,p_message_language=>'th'
+,p_message_text=>'รายละเอียดการจับกุม'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9632599717323409)
+,p_name=>'ARRESTED_STATUS'
+,p_message_text=>'Arrested Status'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9632744661323409)
+,p_name=>'ARRESTED_STATUS'
+,p_message_language=>'th'
+,p_message_text=>'สถานะการจับกุม'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9633084834327687)
+,p_name=>'ARRESTED_WARRANT_DATE'
+,p_message_text=>'Arrested warrant date'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9633275609327687)
+,p_name=>'ARRESTED_WARRANT_DATE'
+,p_message_language=>'th'
+,p_message_text=>'วันเดือนปีที่ออก(ค.ศ.)'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9633581137332566)
+,p_name=>'ARRESTED_WARRANT_EXPIRY_DATE'
+,p_message_text=>'Arrested warrant expiry date'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9633815097332568)
+,p_name=>'ARRESTED_WARRANT_EXPIRY_DATE'
+,p_message_language=>'th'
+,p_message_text=>'วันเดือนปีที่หมดอายุ (ค.ศ.)'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9635111120338168)
+,p_name=>'ARRESTED_WARRANT_NUMBER'
+,p_message_text=>'Arrested warrant number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9635254998338168)
+,p_name=>'ARRESTED_WARRANT_NUMBER'
+,p_message_language=>'th'
+,p_message_text=>'เลขที่หมายจับ'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9636415530342735)
+,p_name=>'ARRESTED_WARRANT_YEAR'
+,p_message_text=>'Arrested warrant year'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9636574256342736)
+,p_name=>'ARRESTED_WARRANT_YEAR'
+,p_message_language=>'th'
+,p_message_text=>'อายุความ(ปี)'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9636910271347991)
+,p_name=>'ASSOCIATED_BEHAVIOR'
+,p_message_text=>'Associated behavior'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9637043566347992)
+,p_name=>'ASSOCIATED_BEHAVIOR'
+,p_message_language=>'th'
+,p_message_text=>'พฤติกรรมที่เกี่ยวข้อง'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9639849948363871)
+,p_name=>'CONTACT_OWNER_DATA'
+,p_message_text=>'Contact Owner Data'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9640029139363877)
+,p_name=>'CONTACT_OWNER_DATA'
+,p_message_language=>'th'
+,p_message_text=>'ชื่อผู้ติดต่อ'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9640378060367436)
+,p_name=>'CONTACT_TELEPHONE_NUMBER'
+,p_message_text=>'Contact telephone number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9640551737367436)
+,p_name=>'CONTACT_TELEPHONE_NUMBER'
+,p_message_language=>'th'
+,p_message_text=>'หมายเลขติดต่อ'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9640879235372247)
+,p_name=>'CRIMINAL_CASE_NUMBER'
+,p_message_text=>'Criminal Case Number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9641069542372247)
+,p_name=>'CRIMINAL_CASE_NUMBER'
+,p_message_language=>'th'
+,p_message_text=>'เลขที่อาญา'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9646943667376133)
+,p_name=>'DECIDED_CASE_NUMBER'
+,p_message_text=>'Decided Case Number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9647123396376143)
+,p_name=>'DECIDED_CASE_NUMBER'
+,p_message_language=>'th'
+,p_message_text=>'เลขที่คดีดำ'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9647435718382144)
+,p_name=>'UNDECIDED_CASE_NUMBER'
+,p_message_text=>'Undecided Case Number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9647711646382148)
+,p_name=>'UNDECIDED_CASE_NUMBER'
+,p_message_language=>'th'
+,p_message_text=>'Undecided case number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9648137851387053)
+,p_name=>'RELATED_DOCUMENT'
+,p_message_text=>'Related Document'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9648330946387062)
+,p_name=>'RELATED_DOCUMENT'
+,p_message_language=>'th'
+,p_message_text=>'เอกสารที่เกี่ยวข้อง'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9648982596415582)
+,p_name=>'LOST_PP_LAST_PLACE'
+,p_message_text=>'Last Place'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(9649150193415583)
+,p_name=>'LOST_PP_LAST_PLACE'
+,p_message_language=>'th'
+,p_message_text=>'Last Place'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17717727057778842)
+,p_name=>'DOC_TYPE'
+,p_message_text=>'Doc Type'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17718065116778842)
+,p_name=>'DOC_TYPE'
+,p_message_language=>'th'
+,p_message_text=>'DOC_TYPE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17718336611778842)
+,p_name=>'IDENTITY'
+,p_message_text=>'Identity'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17718647269778842)
+,p_name=>'IDENTITY'
+,p_message_language=>'th'
+,p_message_text=>'IDENTITY_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17718913432778843)
+,p_name=>'PHONE_NUMBER_0'
+,p_message_text=>'PHONE_NUMBER_0'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17719262676778843)
+,p_name=>'PHONE_NUMBER_0'
+,p_message_language=>'th'
+,p_message_text=>'PHONE_NUMBER_0_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17719518384778843)
+,p_name=>'SKIN'
+,p_message_text=>'Skin'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17719878775778843)
+,p_name=>'SKIN'
+,p_message_language=>'th'
+,p_message_text=>'SKIN_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17720188276778843)
+,p_name=>'TRAVEL_PERMIT_TO'
+,p_message_text=>'Travel Permit To'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17720466823778843)
+,p_name=>'TRAVEL_PERMIT_TO'
+,p_message_language=>'th'
+,p_message_text=>'TRAVEL_PERMIT_TO_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17720798548778843)
+,p_name=>'PHONE_NUMBER_2'
+,p_message_text=>'PHONE_NUMBER_2'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17721047392778844)
+,p_name=>'PHONE_NUMBER_2'
+,p_message_language=>'th'
+,p_message_text=>'PHONE_NUMBER_2_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17721342097778844)
+,p_name=>'OSTAY_TM6'
+,p_message_text=>'OSTAY_TM6'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17721667741778844)
+,p_name=>'OSTAY_TM6'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_TM6_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17721996032778844)
+,p_name=>'CRD_FLAG'
+,p_message_text=>'Crd Flag'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17722211842778844)
+,p_name=>'CRD_FLAG'
+,p_message_language=>'th'
+,p_message_text=>'CRD_FLAG_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17722545522778844)
+,p_name=>'FACE_SHAPE'
+,p_message_text=>'Face Shape'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17722811765778844)
+,p_name=>'FACE_SHAPE'
+,p_message_language=>'th'
+,p_message_text=>'FACE_SHAPE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17723137647778844)
+,p_name=>'TRAVEL_PERMIT'
+,p_message_text=>'Travel Permit'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17723473718778845)
+,p_name=>'TRAVEL_PERMIT'
+,p_message_language=>'th'
+,p_message_text=>'TRAVEL_PERMIT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17723712336778845)
+,p_name=>'COUNTRY_OF_BIRTH'
+,p_message_text=>'Country Of Birth'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17724016162778845)
+,p_name=>'COUNTRY_OF_BIRTH'
+,p_message_language=>'th'
+,p_message_text=>'COUNTRY_OF_BIRTH_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17724349608778845)
+,p_name=>'DATE_OF_BIRTH$VC'
+,p_message_text=>'DATE_OF_BIRTH$Vc'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17724624058778845)
+,p_name=>'DATE_OF_BIRTH$VC'
+,p_message_language=>'th'
+,p_message_text=>'DATE_OF_BIRTH$VC_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17724901514778845)
+,p_name=>'ISSUING_AUTHORITY'
+,p_message_text=>'Issuing Authority'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17725232279778845)
+,p_name=>'ISSUING_AUTHORITY'
+,p_message_language=>'th'
+,p_message_text=>'ISSUING_AUTHORITY_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17725550294778845)
+,p_name=>'NATIONALITY'
+,p_message_text=>'Nationality'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17725893190778845)
+,p_name=>'NATIONALITY'
+,p_message_language=>'th'
+,p_message_text=>'NATIONALITY_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17726161001778846)
+,p_name=>'CRD_RESULT_FLAG'
+,p_message_text=>'Crd Result Flag'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17726475462778846)
+,p_name=>'CRD_RESULT_FLAG'
+,p_message_language=>'th'
+,p_message_text=>'CRD_RESULT_FLAG_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17726718705778846)
+,p_name=>'DATE_OF_EXPIRY$VC'
+,p_message_text=>'DATE_OF_EXPIRY$Vc'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17727038449778846)
+,p_name=>'DATE_OF_EXPIRY$VC'
+,p_message_language=>'th'
+,p_message_text=>'DATE_OF_EXPIRY$VC_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17727391437778846)
+,p_name=>'PLACE_OF_BIRTH'
+,p_message_text=>'Place Of Birth'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17727608518778846)
+,p_name=>'PLACE_OF_BIRTH'
+,p_message_language=>'th'
+,p_message_text=>'PLACE_OF_BIRTH_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17727923141778846)
+,p_name=>'SURNAME_THAI'
+,p_message_text=>'Surname Thai'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17728207095778846)
+,p_name=>'SURNAME_THAI'
+,p_message_language=>'th'
+,p_message_text=>'SURNAME_THAI_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17728578874778847)
+,p_name=>'WARRANT_ARRESTED_TYPE'
+,p_message_text=>'Warrant Arrested Type'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17728807555778847)
+,p_name=>'WARRANT_ARRESTED_TYPE'
+,p_message_language=>'th'
+,p_message_text=>'WARRANT_ARRESTED_TYPE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17729140536778847)
+,p_name=>'DATE_OF_EXPIRY'
+,p_message_text=>'Date Of Expiry'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17729436979778847)
+,p_name=>'DATE_OF_EXPIRY'
+,p_message_language=>'th'
+,p_message_text=>'DATE_OF_EXPIRY_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17729787372778847)
+,p_name=>'MRZ_DATA'
+,p_message_text=>'Mrz Data'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17730021187778847)
+,p_name=>'MRZ_DATA'
+,p_message_language=>'th'
+,p_message_text=>'MRZ_DATA_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17730338927778847)
+,p_name=>'MIDDLENAME_THAI'
+,p_message_text=>'Middlename Thai'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17730645585778847)
+,p_name=>'MIDDLENAME_THAI'
+,p_message_language=>'th'
+,p_message_text=>'MIDDLENAME_THAI_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17730905412778847)
+,p_name=>'PROFESSION'
+,p_message_text=>'Profession'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17731294929778848)
+,p_name=>'PROFESSION'
+,p_message_language=>'th'
+,p_message_text=>'PROFESSION_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17731597678778848)
+,p_name=>'SEX'
+,p_message_text=>'Sex'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17731870492778848)
+,p_name=>'SEX'
+,p_message_language=>'th'
+,p_message_text=>'SEX_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17732122745778848)
+,p_name=>'SALUTATION'
+,p_message_text=>'Salutation'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17732411269778848)
+,p_name=>'SALUTATION'
+,p_message_language=>'th'
+,p_message_text=>'SALUTATION_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17732787121778848)
+,p_name=>'DOMINANT_CHARACTERISTIC'
+,p_message_text=>'Dominant Characteristic'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17733004031778848)
+,p_name=>'DOMINANT_CHARACTERISTIC'
+,p_message_language=>'th'
+,p_message_text=>'DOMINANT_CHARACTERISTIC_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17733317718778848)
+,p_name=>'HAIR_COLOR'
+,p_message_text=>'Hair Color'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17733662320778849)
+,p_name=>'HAIR_COLOR'
+,p_message_language=>'th'
+,p_message_text=>'HAIR_COLOR_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17733944954778849)
+,p_name=>'NOTICE'
+,p_message_text=>'Notice'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17734218412778849)
+,p_name=>'NOTICE'
+,p_message_language=>'th'
+,p_message_text=>'NOTICE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17734593357778849)
+,p_name=>'OSTAY_SELF_INDICTMENT'
+,p_message_text=>'Ostay Self Indictment'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17734868279778849)
+,p_name=>'OSTAY_SELF_INDICTMENT'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_SELF_INDICTMENT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17735116893778849)
+,p_name=>'CRD_UPDATED_DATETIME'
+,p_message_text=>'Crd Updated Datetime'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17735436647778849)
+,p_name=>'CRD_UPDATED_DATETIME'
+,p_message_language=>'th'
+,p_message_text=>'CRD_UPDATED_DATETIME_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17735711414778849)
+,p_name=>'SECRET_LEVEL'
+,p_message_text=>'Secret Level'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17736012424778850)
+,p_name=>'SECRET_LEVEL'
+,p_message_language=>'th'
+,p_message_text=>'SECRET_LEVEL_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17736385253778850)
+,p_name=>'BODY_HEIGHT'
+,p_message_text=>'Body Height'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17736637423778850)
+,p_name=>'BODY_HEIGHT'
+,p_message_language=>'th'
+,p_message_text=>'BODY_HEIGHT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17736982735778850)
+,p_name=>'OTHER'
+,p_message_text=>'Other'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17737211996778850)
+,p_name=>'OTHER'
+,p_message_language=>'th'
+,p_message_text=>'OTHER_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17737533381778850)
+,p_name=>'OWNER'
+,p_message_text=>'Owner'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17737872943778850)
+,p_name=>'OWNER'
+,p_message_language=>'th'
+,p_message_text=>'OWNER_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17738163256778850)
+,p_name=>'TRAVEL_PERMIT_DATE_INSERT'
+,p_message_text=>'Travel Permit Date Insert'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17738419205778850)
+,p_name=>'TRAVEL_PERMIT_DATE_INSERT'
+,p_message_language=>'th'
+,p_message_text=>'TRAVEL_PERMIT_DATE_INSERT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17738750977778851)
+,p_name=>'OSTAY_NOTICE'
+,p_message_text=>'Ostay Notice'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17739020575778851)
+,p_name=>'OSTAY_NOTICE'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_NOTICE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17739320171778851)
+,p_name=>'OWNER_DATA'
+,p_message_text=>'Owner Data'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17739634403778851)
+,p_name=>'OWNER_DATA'
+,p_message_language=>'th'
+,p_message_text=>'OWNER_DATA_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17739916995778851)
+,p_name=>'TRAVEL_PERMIT_DATE_DELETE'
+,p_message_text=>'Travel Permit Date Delete'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17740215785778851)
+,p_name=>'TRAVEL_PERMIT_DATE_DELETE'
+,p_message_language=>'th'
+,p_message_text=>'TRAVEL_PERMIT_DATE_DELETE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17740539427778851)
+,p_name=>'MIDDLE_NAME'
+,p_message_text=>'Middle Name'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17740838265778851)
+,p_name=>'MIDDLE_NAME'
+,p_message_language=>'th'
+,p_message_text=>'MIDDLE_NAME_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17741114566778852)
+,p_name=>'REFERENCE_DOCUMENT'
+,p_message_text=>'Reference Document'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17741448220778852)
+,p_name=>'REFERENCE_DOCUMENT'
+,p_message_language=>'th'
+,p_message_text=>'REFERENCE_DOCUMENT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17741795543778852)
+,p_name=>'DOC_CLASS'
+,p_message_text=>'Doc Class'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17742020539778852)
+,p_name=>'DOC_CLASS'
+,p_message_language=>'th'
+,p_message_text=>'DOC_CLASS_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17742394667778852)
+,p_name=>'OSTAY_BLOCK_PERIOD'
+,p_message_text=>'Ostay Block Period'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17742628928778852)
+,p_name=>'OSTAY_BLOCK_PERIOD'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_BLOCK_PERIOD_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17742990506778852)
+,p_name=>'OSTAY_DEPARTURE_DATE'
+,p_message_text=>'Ostay Departure Date'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17743216765778852)
+,p_name=>'OSTAY_DEPARTURE_DATE'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_DEPARTURE_DATE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17743549526778853)
+,p_name=>'SURNAME'
+,p_message_text=>'Surname'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17743822910778853)
+,p_name=>'SURNAME'
+,p_message_language=>'th'
+,p_message_text=>'SURNAME_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17744169654778853)
+,p_name=>'DOC_NUMBER'
+,p_message_text=>'Doc Number'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17744479571778853)
+,p_name=>'DOC_NUMBER'
+,p_message_language=>'th'
+,p_message_text=>'DOC_NUMBER_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17744711872778853)
+,p_name=>'LOST_PP_LOST_DATE'
+,p_message_text=>'Lost Pp Lost Date'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17745091576778853)
+,p_name=>'LOST_PP_LOST_DATE'
+,p_message_language=>'th'
+,p_message_text=>'LOST_PP_LOST_DATE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17745374122778853)
+,p_name=>'MRZ_FORMAT'
+,p_message_text=>'Mrz Format'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17745648778778853)
+,p_name=>'MRZ_FORMAT'
+,p_message_language=>'th'
+,p_message_text=>'MRZ_FORMAT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17745980463778854)
+,p_name=>'OSTAY_CREATION_DATE'
+,p_message_text=>'Ostay Creation Date'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17746244102778854)
+,p_name=>'OSTAY_CREATION_DATE'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_CREATION_DATE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17746572644778854)
+,p_name=>'URGENT_CONTACT'
+,p_message_text=>'Urgent Contact'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17746889464778854)
+,p_name=>'URGENT_CONTACT'
+,p_message_language=>'th'
+,p_message_text=>'URGENT_CONTACT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17747166149778854)
+,p_name=>'GIVEN_NAME'
+,p_message_text=>'Given Name'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17747404194778854)
+,p_name=>'GIVEN_NAME'
+,p_message_language=>'th'
+,p_message_text=>'GIVEN_NAME_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17747706469778854)
+,p_name=>'OTHER_DESCRIPTION'
+,p_message_text=>'Other Description'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17748073563778854)
+,p_name=>'OTHER_DESCRIPTION'
+,p_message_language=>'th'
+,p_message_text=>'OTHER_DESCRIPTION_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17748359186778855)
+,p_name=>'DATA_ACQUISITION_TYPE'
+,p_message_text=>'Data Acquisition Type'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17748642927778855)
+,p_name=>'DATA_ACQUISITION_TYPE'
+,p_message_language=>'th'
+,p_message_text=>'DATA_ACQUISITION_TYPE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17748990152778855)
+,p_name=>'GIVENNAME_THAI'
+,p_message_text=>'Givenname Thai'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17749251546778855)
+,p_name=>'GIVENNAME_THAI'
+,p_message_language=>'th'
+,p_message_text=>'GIVENNAME_THAI_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17749594090778855)
+,p_name=>'BODY_WEIGHT'
+,p_message_text=>'Body Weight'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17749820444778855)
+,p_name=>'BODY_WEIGHT'
+,p_message_language=>'th'
+,p_message_text=>'BODY_WEIGHT_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17750136742778855)
+,p_name=>'CRD_BLIN_SEQ'
+,p_message_text=>'Crd Blin Seq'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17750415217778855)
+,p_name=>'CRD_BLIN_SEQ'
+,p_message_language=>'th'
+,p_message_text=>'CRD_BLIN_SEQ_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17750742582778856)
+,p_name=>'FACE_ID'
+,p_message_text=>'Face Id'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17751041108778856)
+,p_name=>'FACE_ID'
+,p_message_language=>'th'
+,p_message_text=>'FACE_ID_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17751345359778856)
+,p_name=>'TRAVEL_PERMIT_NOTE'
+,p_message_text=>'Travel Permit Note'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17751672007778856)
+,p_name=>'TRAVEL_PERMIT_NOTE'
+,p_message_language=>'th'
+,p_message_text=>'TRAVEL_PERMIT_NOTE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17751999984778856)
+,p_name=>'BODY_SHAPE'
+,p_message_text=>'Body Shape'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17752269409778856)
+,p_name=>'BODY_SHAPE'
+,p_message_language=>'th'
+,p_message_text=>'BODY_SHAPE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17752595325778856)
+,p_name=>'EYE_COLOR'
+,p_message_text=>'Eye Color'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17752825678778856)
+,p_name=>'EYE_COLOR'
+,p_message_language=>'th'
+,p_message_text=>'EYE_COLOR_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17753177076778857)
+,p_name=>'OSTAY_ARRIVAL_DATE'
+,p_message_text=>'Ostay Arrival Date'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17753405496778857)
+,p_name=>'OSTAY_ARRIVAL_DATE'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_ARRIVAL_DATE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17753723016778857)
+,p_name=>'OSTAY_STATUS'
+,p_message_text=>'Ostay Status'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17754031553778857)
+,p_name=>'OSTAY_STATUS'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_STATUS_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17754333293778857)
+,p_name=>'DATE_OF_ISSUE'
+,p_message_text=>'Date Of Issue'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17754656704778857)
+,p_name=>'DATE_OF_ISSUE'
+,p_message_language=>'th'
+,p_message_text=>'DATE_OF_ISSUE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17754940588778857)
+,p_name=>'OSTAY_NO_DAYS'
+,p_message_text=>'Ostay No Days'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17755291737778857)
+,p_name=>'OSTAY_NO_DAYS'
+,p_message_language=>'th'
+,p_message_text=>'OSTAY_NO_DAYS_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17755568650778857)
+,p_name=>'TARGET_CODE'
+,p_message_text=>'Target Code'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17755861972778858)
+,p_name=>'TARGET_CODE'
+,p_message_language=>'th'
+,p_message_text=>'TARGET_CODE_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17756144310778858)
+,p_name=>'DATE_OF_BIRTH'
+,p_message_text=>'Date Of Birth'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17756425144778858)
+,p_name=>'DATE_OF_BIRTH'
+,p_message_language=>'th'
+,p_message_text=>'DATE_OF_BIRTH_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17756780180778858)
+,p_name=>'HAIR_CHARACTERISTIC'
+,p_message_text=>'Hair Characteristic'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17757097935778858)
+,p_name=>'HAIR_CHARACTERISTIC'
+,p_message_language=>'th'
+,p_message_text=>'HAIR_CHARACTERISTIC_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17757331026778858)
+,p_name=>'SPECIAL_CHARACTERISTIC'
+,p_message_text=>'Special Characteristic'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17757649602778858)
+,p_name=>'SPECIAL_CHARACTERISTIC'
+,p_message_language=>'th'
+,p_message_text=>'SPECIAL_CHARACTERISTIC_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17757943007778858)
+,p_name=>'TRAVEL_PERMIT_FROM'
+,p_message_text=>'Travel Permit From'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17758235447778859)
+,p_name=>'TRAVEL_PERMIT_FROM'
+,p_message_language=>'th'
+,p_message_text=>'TRAVEL_PERMIT_FROM_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17758529390778859)
+,p_name=>'CRD_RESULT_XML'
+,p_message_text=>'Crd Result Xml'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17758852895778859)
+,p_name=>'CRD_RESULT_XML'
+,p_message_language=>'th'
+,p_message_text=>'CRD_RESULT_XML_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17759131529778859)
+,p_name=>'PHONE_NUMBER_1'
+,p_message_text=>'PHONE_NUMBER_1'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(17759406091778859)
+,p_name=>'PHONE_NUMBER_1'
+,p_message_language=>'th'
+,p_message_text=>'PHONE_NUMBER_1_TH'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(20685950644276126)
+,p_name=>'COMMON.INTERNAL_ERROR.GENERIC'
+,p_message_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'Something went terribly wrong.',
+'',
+'Error ID: #%0'))
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(20686104737276126)
+,p_name=>'COMMON.INTERNAL_ERROR.GENERIC'
+,p_message_language=>'th'
+,p_message_text=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'Something went terribly wrong.',
+'',
+'Error ID: #%0'))
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21964572262070273)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.UNKNOWN'
+,p_message_text=>'Unknown'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21964695285070273)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_'
+,p_message_text=>'Fingerprint capturing component'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21964717901070274)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.HEADER.RESTART'
+,p_message_text=>'Restart'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21964862525070274)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGTOOLTIP'
+,p_message_text=>'This enables the defogging feature on Palm3 scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21964921408070280)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGLABEL'
+,p_message_text=>'Defogging'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21965191661070283)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21965850150070300)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.BUTTON.CLOSE'
+,p_message_text=>'Close'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21966273786070302)
+,p_name=>'FINGERITEM:UPLOAD.LABEL'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21966326308070303)
+,p_name=>'FINGERITEM:NEW'
+,p_message_text=>'New'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21966727537070310)
+,p_name=>'FACEITEM:UPLOAD.LABEL'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21967047232070311)
+,p_name=>'PASSPORTCAPTURE:PASSPORT CAPTURE COMPONENT'
+,p_message_text=>'Passport Capture Component'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21967625294070315)
+,p_name=>'FACEITEM:NEW'
+,p_message_text=>'New'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21967930657070325)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.CONNECTING'
+,p_message_text=>'connecting...'
+,p_is_js_message=>true
+);
+end;
+/
+begin
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21968481071070327)
+,p_name=>'FACECAPTURE:FACE.OVERVIEW.EMPTYLIST.DESC.LOADING'
+,p_message_text=>'loading'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21968576054070327)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.START'
+,p_message_text=>'Start'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21968689208070327)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.COMPONENT.STOPPED'
+,p_message_text=>'Face Capture Component'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21969104482070432)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_2_3_4_5'
+,p_message_text=>'Place four fingers of right hand on scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21969346197070629)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.TITLE'
+,p_message_text=>'Finger Capture workflow Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21969537167070629)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.MESSAGE.ENROLMENT-WARNING-CONTAMINATION'
+,p_message_text=>'Please clean the scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21969812328070647)
+,p_name=>'FINGERCAPTURE:CONTAMINATION.MESSAGE'
+,p_message_text=>'The scanner is not clean'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21970176559070649)
+,p_name=>'FINGERCAPTURE:CONTAMINATION.TITLE'
+,p_message_text=>'Warning Contamination!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21970418611071061)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.READY'
+,p_message_text=>'ready'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22035904436315184)
+,p_name=>'FACEITEM:PORTRAIT'
+,p_message_text=>'Portrait'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22341376260749019)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22341438331749019)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTINDEX'
+,p_message_text=>'Right Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22341902442749023)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.DONE'
+,p_message_text=>'Fingerprint successfully captured!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22342089672749023)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.MISSING.UP'
+,p_message_text=>'Fingerprint was marked as unable print'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22342262277749025)
+,p_name=>'FINGERITEM:USEMOUSEWHEEL.TO.ZOOM'
+,p_message_text=>'Use the mouse wheel to zoom in.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22342403664749026)
+,p_name=>'FINGERITEM:FINGERDETAILS.BUTTON.CLOSE'
+,p_message_text=>'Close'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22344180948797906)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTINDEX'
+,p_message_text=>'Left Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22380948824598387)
+,p_name=>'PASSPORTCAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_text=>'Reconnect'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22381178453598388)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_text=>'Passport Capture Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22381468594598390)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_text=>'Could not connect to Device<br/>Retry in 10 sec'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22382204525598632)
+,p_name=>'FINGERCAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_text=>'Reconnect'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22382485523598634)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_text=>'Could not connect to Device<br/>Retry in 10 sec'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22382736265598637)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_text=>'Finger Capture Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22384226349600873)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_text=>'Could not connect to Device'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22493691556879104)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.CLEARLIST'
+,p_message_text=>'Clear List'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22493896412879104)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.TAKEPHOTO'
+,p_message_text=>'Take photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22493958008879104)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.LOADING'
+,p_message_text=>'Face Capture Component'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22494814227880082)
+,p_name=>'FACECAPTURE:FACE.OVERVIEW.EMPTYLIST.DESC.PORTRAIT'
+,p_message_text=>'portrait'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22494984031880082)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.PORTRAIT'
+,p_message_text=>'Take portrait photo of the clients face'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22496067495883513)
+,p_name=>'FACECAPTURE:IMAGELIST.FULL.MESSAGE'
+,p_message_text=>'Please clear the image list or select an image to complete the workflow step.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22496287398883514)
+,p_name=>'FACECAPTURE:IMAGELIST.FULL.TITLE'
+,p_message_text=>'Image list is full'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22496513199883515)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.OVERVIEWLISTFULL'
+,p_message_text=>'Please select an image or clear the overview list'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22499481254934491)
+,p_name=>'FACECAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_text=>'Face Capture Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22499661582934492)
+,p_name=>'FACECAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_text=>'Could not connect to Device<br/>Retry in 10 sec'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22499997588934493)
+,p_name=>'FACECAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_text=>'Reconnect'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22500689921935648)
+,p_name=>'FACECAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_text=>'Could not connect to Device'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22574705498102205)
+,p_name=>'FINGERCAPTURE:IMAGESERVICE.UNAVAILABLE.TEXT'
+,p_message_text=>'The service may not be available or misconfigured'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22574936539102206)
+,p_name=>'FINGERCAPTURE:IMAGESERVICE.UNAVAILABLE.HEADER'
+,p_message_text=>'Warning fingerprint image can not be saved!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22575158734102213)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_10_9_8_7'
+,p_message_text=>'Place four fingers of left hand on scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22575532067102289)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.MESSAGE.ENROLMENT-INFORMATION-REMOVEFINGER'
+,p_message_text=>'Remove hand from scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22587529856264360)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTMIDDLE'
+,p_message_text=>'Right Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22587882313264361)
+,p_name=>'FINGERITEM:FINGERDETAILS.LIVENESSRESULT'
+,p_message_text=>'Liveness Result'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22588186038264364)
+,p_name=>'FINGERITEM:FINGERDETAILS.LIVENESSSCORE'
+,p_message_text=>'LivenessScore'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22588369175264365)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_text=>'Device.DeviceType'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22588579320264366)
+,p_name=>'FINGERITEM:FINGERDETAILS.SOURCEAGENCY'
+,p_message_text=>'Source Agency'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22588912468264380)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_text=>'Device Vendor'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22589105838264380)
+,p_name=>'FINGERITEM:FINGERDETAILS.BITSPERPIXEL'
+,p_message_text=>'BitsPerPixel'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22589321237264380)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.VERSION'
+,p_message_text=>'Device Version'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22589675231264381)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.NAME'
+,p_message_text=>'Device Name'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22590029107264384)
+,p_name=>'FINGERITEM:FINGERDETAILS.HORIZONTALLINELENGTH'
+,p_message_text=>'HorizontalLinelength'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22590380894264389)
+,p_name=>'FINGERITEM:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22590796772264397)
+,p_name=>'FINGERITEM:FINGERDETAILS.VERTICALLINELENGTH'
+,p_message_text=>'VerticalLineLength'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22590961343264397)
+,p_name=>'FINGERITEM:FINGERDETAILS.SCALEUNITS'
+,p_message_text=>'ScaleUnits'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22591155946264397)
+,p_name=>'FINGERITEM:FINGERDETAILS.VERTICALPIXELSCALE'
+,p_message_text=>'VerticalPixelScale'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22591563403264399)
+,p_name=>'FINGERITEM:FINGERDETAILS.HORIZONTALPIXELSCALE'
+,p_message_text=>'HorizontalPixelScale'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22592230630276292)
+,p_name=>'FACECAPTURE:FACEDETAILS.MESSAGE.DONE'
+,p_message_text=>'Face successfully captured'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22592449487276293)
+,p_name=>'FACECAPTURE:FACEDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22592797953276303)
+,p_name=>'FACECAPTURE:FACEDETAILS.SOURCEAGENCY'
+,p_message_text=>'Source Agency'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22593048696276306)
+,p_name=>'FACECAPTURE:FACEDETAILS.COMPRESSION'
+,p_message_text=>'Compression Algorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22593331811276310)
+,p_name=>'FACECAPTURE:FACEDETAILS.TITLE.PORTRAIT'
+,p_message_text=>'Portrait'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22593693974276310)
+,p_name=>'FACECAPTURE:FACEDETAILS.QUALITY'
+,p_message_text=>'Quality Algorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22593966941276319)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.TYPE'
+,p_message_text=>'Device Type'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22594351869276323)
+,p_name=>'FACECAPTURE:FACECAPTURE.BUTTON.ACCEPT'
+,p_message_text=>'Accept'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22594462055276323)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.NAME'
+,p_message_text=>'Device Name'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22594818229276326)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.VENDOR'
+,p_message_text=>'Device Vendor'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22595177281276326)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.VERSION'
+,p_message_text=>'Device Version'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22595453034276334)
+,p_name=>'FACECAPTURE:FACECAPTURE.BUTTON.DECLINE'
+,p_message_text=>'Decline'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22595728045297381)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.RESULT.COMPLETED'
+,p_message_text=>'Face Capture Component'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22595964302298117)
+,p_name=>'FACEITEM:FACEDETAILS.TITLE.PORTRAIT'
+,p_message_text=>'Portrait'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22596127162298117)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.DONE'
+,p_message_text=>'Face successfully captured!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22596409617298119)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22596708682298121)
+,p_name=>'FACEITEM:FINGERDETAILS.QUALITYALGORITHM'
+,p_message_text=>'QualityAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22597018598298122)
+,p_name=>'FACEITEM:FINGERDETAILS.SOURCEAGENCY'
+,p_message_text=>'Source Agency'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22597384245298126)
+,p_name=>'FACEITEM:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22597614664298135)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.NAME'
+,p_message_text=>'Device.Name'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22597949029298135)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VERSION'
+,p_message_text=>'Device.Version'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22598283570298137)
+,p_name=>'FACEITEM:USEMOUSEWHEEL.TO.ZOOM'
+,p_message_text=>'Use the mouse wheel to zoom in.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22598550077298138)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_text=>'Device.Vendor'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22598898223298140)
+,p_name=>'FACEITEM:FACEDETAILS.BUTTON.CLOSE'
+,p_message_text=>'Close'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22599163581298141)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_text=>'Device.DeviceType'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22600300258326029)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.SCANNING'
+,p_message_text=>'scanning...'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22600669862328084)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.SURNAME'
+,p_message_text=>'Surname: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22600792353328084)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.GIVENNAMES'
+,p_message_text=>'Given Names: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22601024155328085)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.COMPLETE'
+,p_message_text=>'complete'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22601105462328085)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.NATIONALITY'
+,p_message_text=>'Nationality: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22601685743328086)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.SEX'
+,p_message_text=>'Sex: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22601935234328088)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.DATEOFBIRTH'
+,p_message_text=>'Date Of Birth: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22602486228328100)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.DOCUMENTTYPE'
+,p_message_text=>'Document Type: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22602574685328100)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.DATEOFEXPIRY'
+,p_message_text=>'Date Of Expiry: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22602655832328100)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.PERSONALNO'
+,p_message_text=>'Personal No: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22603033838328101)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.PASSPORTNO'
+,p_message_text=>'Passport No: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22608920460347235)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTRING'
+,p_message_text=>'Left Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22612673882447024)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.DONE'
+,p_message_text=>'Fingerprint successfully captured!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22612860707447025)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTMIDDLE'
+,p_message_text=>'Left Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22613061696447028)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.MISSING.XX'
+,p_message_text=>'Fingerprint was marked as XX'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22614864738471903)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTRING'
+,p_message_text=>'Right Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22617102217535676)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_6_1'
+,p_message_text=>'Place both thumbs on scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22617341089536474)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.TITLE'
+,p_message_text=>'Fingerprint Capture Component'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22842996107868404)
+,p_name=>'REASON_FOR_CLOSING_THIS_CASE'
+,p_message_text=>'The Reason for closing this case must be filled!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(22843249067868406)
+,p_name=>'REASON_FOR_CLOSING_THIS_CASE'
+,p_message_language=>'th'
+,p_message_text=>'The Reason for closing this case must be filled!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23062333712918217)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTTHUMB'
+,p_message_text=>'Right Thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23107539386588022)
+,p_name=>'FACEITEM:WORKFLOW.BACKGROUND.PROCESS.IMAGEUPLOAD'
+,p_message_text=>'uploading image'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23109118481674076)
+,p_name=>'FINGERCAPTURE:DIALOG.RESTARTCONFIRM.DESCRIPTION'
+,p_message_text=>'Once the fingerprint enrolment startet, you have two restart options. The first is to restart the hole enrolment, all captured data are deleted. The second is to recapture the previous enrolment step.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23109372090674081)
+,p_name=>'FINGERCAPTURE:DIALOG.RESTARTCONFIRM.HEADING'
+,p_message_text=>'Restart or Recapture'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23109852198674083)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.CONTINUEBUTTONTEXT'
+,p_message_text=>'Continue'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23110085787674085)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.RESTARTBUTTONTEXT'
+,p_message_text=>'Restart Enrolment'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23110114853674085)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.RESTARTSTEPBUTTONTEXT'
+,p_message_text=>'Recapture Enrolment Step'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23110512586674105)
+,p_name=>'FINGERCAPTURE:DIALOG.CONFIRM.RESTARTPREVIOUSSTEPBUTTONTEXT'
+,p_message_text=>'Recapture Previous Enrolment Step'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23111787799688758)
+,p_name=>'FACEITEM:PHOTO'
+,p_message_text=>'Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23195653682426109)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTINDEX'
+,p_message_text=>'Right Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23202984804426688)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTMIDDLE'
+,p_message_text=>'Right Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23203103403426888)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTRING'
+,p_message_text=>'Right Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23203304522427086)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTLITTLE'
+,p_message_text=>'Right Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23203543245427289)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTINDEX'
+,p_message_text=>'Left Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23203780063427902)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTLITTLE'
+,p_message_text=>'Left Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23812721547615587)
+,p_name=>'PASSPORTCAPTURE:SEX.MALE.VALUE'
+,p_message_text=>'Male'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23885909909102702)
+,p_name=>'FINGERITEM:RIGHT THUMB'
+,p_message_text=>'Right thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23890549240213902)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_text=>'Could not connect to Device'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(23891027863222652)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.DISCONNECTED'
+,p_message_text=>'disconnected'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24056707473993540)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.MESSAGE.ENROLMENT-WRONG-HAND-DETECT'
+,p_message_text=>'Wrong hand detected'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24056963105995288)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.IS-VALID'
+,p_message_text=>'is-valid'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24358659287089578)
+,p_name=>'FACECAPTURE:IMAGESERVICE.UNAVAILABLE.HEADER'
+,p_message_text=>'Warning face image can not be saved!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24358863152089579)
+,p_name=>'FACECAPTURE:IMAGESERVICE.UNAVAILABLE.TEXT'
+,p_message_text=>'The image service may not be available or misconfigured'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24359706460168137)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTMIDDLE'
+,p_message_text=>'Left Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24403885587379527)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.IS-INVALID'
+,p_message_text=>'is-invalid'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24605748069660348)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.HAND.HANDSSWAPPED.DESCRIPTION'
+,p_message_text=>'enrolment:wrong:hand:handsswapped description'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24605834203660348)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.HAND.HANDSSWAPPED.HEADING'
+,p_message_text=>'enrolment:wrong:hand:handsswapped heading'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24606496159666951)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.MANUAL.ASSIGN.LOWQUALITY.DESCRIPTION'
+,p_message_text=>'The component could not achieve the required image quality in its given time. Please try again.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(24606579639666951)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.MANUAL.ASSIGN.LOWQUALITY.HEADING'
+,p_message_text=>'Too bad picture quality'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(26673386030304767)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.MISSING.UP'
+,p_message_text=>'Fingerprint was marked as UP'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(30073110907421892)
+,p_name=>'FACEITEM:CONFIRM.DELETE.TEXT'
+,p_message_text=>'Please Confirm Deletion'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(30073244577421892)
+,p_name=>'FACEITEM:CONFIRM.DELETE.TITLE'
+,p_message_text=>'Please Confirm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(30073348753421893)
+,p_name=>'FACEITEM:CONFIRM.DELETE.OK'
+,p_message_text=>'Delete'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(30073444694421893)
+,p_name=>'FACEITEM:CONFIRM.DELETE.CANCEL'
+,p_message_text=>'Cancel'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(30457597679498018)
+,p_name=>'FACEITEM:PHOTO CANDIDATE'
+,p_message_text=>'Photo candidate'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(30464698485533928)
+,p_name=>'FACEITEM:FACEDETAILS.TITLE.UNKNOWN'
+,p_message_text=>'Unknown'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(31829433564199812)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTLITTLE'
+,p_message_text=>'Left Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(31829640688200292)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTRING'
+,p_message_text=>'Left Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(32455716062163763)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.FINGER.DUPLICATION.HEADING'
+,p_message_text=>'enrolment:wrong:finger:duplication heading'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(32455946755163765)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.FINGER.DUPLICATION.DESCRIPTION'
+,p_message_text=>'enrolment:wrong:finger:duplication description'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(32456159629163766)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTMIDDLE'
+,p_message_text=>'LeftMiddle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(32456377212163767)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTRING'
+,p_message_text=>'LeftRing'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(32456821888163771)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.CAPTURED'
+,p_message_text=>'Captured:'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(32542966611306613)
+,p_name=>'FACEITEM:PORTRAIT PASS'
+,p_message_text=>'Portrait Pass'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(32543131932306617)
+,p_name=>'FACEITEM:PHOTO UPLOAD'
+,p_message_text=>'Photo Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(33491631746140270)
+,p_name=>'FACEITEM:PHOTO LIVE/UPLOAD'
+,p_message_text=>'Photo Live/Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(33886479167522512)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTLITTLE'
+,p_message_text=>'Right Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34034713611742489)
+,p_name=>'FINGERITEM:FINGERDETAILS.QUALITYALGORITHM'
+,p_message_text=>'QualityAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34132055887475652)
+,p_name=>'FACEITEM:PASS PHOTO'
+,p_message_text=>'Pass Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34132255373475662)
+,p_name=>'FACEITEM:LIVE PHOTO'
+,p_message_text=>'Live Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34247762312074061)
+,p_name=>'FINGERITEM:RIGHT INDEX'
+,p_message_text=>'Right Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34247939580074066)
+,p_name=>'FINGERITEM:RIGHT MIDDLE'
+,p_message_text=>'Right Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34248294318074081)
+,p_name=>'FINGERITEM:RIGHT LITTLE'
+,p_message_text=>'Right Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34248745670074082)
+,p_name=>'FINGERITEM:LEFT INDEX'
+,p_message_text=>'Left Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34248826006074082)
+,p_name=>'FINGERITEM:LEFT THUMB'
+,p_message_text=>'Left Thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34249124332074083)
+,p_name=>'FINGERITEM:RIGHT RING'
+,p_message_text=>'Right Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34249597889074100)
+,p_name=>'FINGERITEM:LEFT RING'
+,p_message_text=>'Left Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34249639664074100)
+,p_name=>'FINGERITEM:LEFT MIDDLE'
+,p_message_text=>'Left Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34250083249074101)
+,p_name=>'FINGERITEM:LEFT LITTLE'
+,p_message_text=>'Left Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34263673498234339)
+,p_name=>'PASSPORTCAPTURE:SEX.FEMALE.VALUE'
+,p_message_text=>'Female'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34557077116730953)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.PASSPORTISSUINGSTATE'
+,p_message_text=>'Issuing State: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34939206114966765)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.HEADER.MANUAL-ASSIGN'
+,p_message_text=>'Please click on the schematic fingers to assign the fingerprints:'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34939444173966768)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DIALOG.CONFIRM'
+,p_message_text=>'Confirm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34939645764966769)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DIALOG.CANCEL'
+,p_message_text=>'Cancel'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34971418745162076)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTTHUMB'
+,p_message_text=>'LeftThumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35142879450588136)
+,p_name=>'NIST:INDEX.FINGERPRINTS'
+,p_message_language=>'th'
+,p_message_text=>'Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35142941779588139)
+,p_name=>'NIST:INDEX.DEMOGRAPHIC'
+,p_message_language=>'th'
+,p_message_text=>'Demographic Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35143031517588139)
+,p_name=>'NIST:INDEX.PHOTOS'
+,p_message_language=>'th'
+,p_message_text=>'Photos'
+,p_is_js_message=>true
+);
+end;
+/
+begin
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(36777164718849739)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.MISSING.UP'
+,p_message_language=>'th'
+,p_message_text=>'Fingerprint was marked as UP'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40173725563699369)
+,p_name=>'NIST.ERROR.NO_BIOMETRIC_DATA'
+,p_message_text=>'This case has no biometric images!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(42234648415453312)
+,p_name=>'FINGERCAPTURE:WORKFLOW.SUCCES.MESSAGE.ENROLMENT-INFORMATION-REMOVEFINGER'
+,p_message_text=>'Remove hand from scanner.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(42234760817453312)
+,p_name=>'FINGERCAPTURE:WORKFLOW.SUCCES.TITLE'
+,p_message_text=>'Finger Capture Step Completed'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(42235010316455756)
+,p_name=>'FINGERCAPTURE:DIALOG.MORE.FINGERS.THAN.EXPECTED.DESCRIPTION'
+,p_message_text=>'more:fingers:than:expected description'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(42235301505455758)
+,p_name=>'FINGERCAPTURE:DIALOG.MORE.FINGERS.THAN.EXPECTED.HEADING'
+,p_message_text=>'more:fingers:than:expected heading'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(42235610185455759)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTTHUMB'
+,p_message_text=>'LeftThumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(42235886326455760)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.EXPECTED'
+,p_message_text=>'Expected:'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(42236181545455777)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTTHUMB'
+,p_message_text=>'RightThumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46086154150463991)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTINDEX'
+,p_message_text=>'LeftIndex'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46537681199022544)
+,p_name=>'INSERT.VALIDATION.FILL-ALL-REQUIRED-FIELDS'
+,p_message_text=>'Please fill all the required fields.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46743629991843419)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTTHUMB'
+,p_message_text=>'Left Thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46865773361426982)
+,p_name=>'NIST:FILESELECTOR.CHOOSE_A_NIST_FILE'
+,p_message_text=>'Select a NIST File from your harddisk'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46865974891428659)
+,p_name=>'NIST:INDEX.PLAINFINGERPRINTS'
+,p_message_text=>'Plain Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46866146701428680)
+,p_name=>'NIST:INDEX.ROLLEDFINGERPRINTS'
+,p_message_text=>'Rolled Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46866492805428680)
+,p_name=>'NIST:INDEX.DESCRIPTIVEDATA'
+,p_message_text=>'Descriptive Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46866705240428700)
+,p_name=>'NIST:PLAIN.ENTRIES.IMPORTABLE'
+,p_message_text=>'Is Importable'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46867018756428701)
+,p_name=>'NIST:PLAIN.ENTRIES.FINGERPRINT'
+,p_message_text=>'Fingerprint'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46867308153428703)
+,p_name=>'NIST:PLAIN.ENTRIES.POSITION'
+,p_message_text=>'Position'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46867680068428715)
+,p_name=>'NIST:PLAIN.ENTRIES.IMPRESSIONTYPE'
+,p_message_text=>'Impression Type'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46867809237428718)
+,p_name=>'NIST:PLAIN.ENTRIES.DIMENSION'
+,p_message_text=>'Dimension'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46868148814428727)
+,p_name=>'NIST:PLAINFINGERPRINTS.NOT_IMPORTABLE'
+,p_message_text=>'This type can not be imported into the current setup.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46868471727431400)
+,p_name=>'NIST:FACE.ENTRIES.POSITION'
+,p_message_text=>'Position'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46868681360431401)
+,p_name=>'NIST:FACE.ENTRIES.IMPRESSIONTYPE'
+,p_message_text=>'Impression Type'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46868934451431401)
+,p_name=>'NIST:FACE.ENTRIES.FINGERPRINT'
+,p_message_text=>'Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46869176736431401)
+,p_name=>'NIST:FACE.ENTRIES.DIMENSION'
+,p_message_text=>'Dimension'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(46869542399431414)
+,p_name=>'NIST:FACE.ENTRIES.IMPORTABLE'
+,p_message_text=>'Is Importable'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47678469336223764)
+,p_name=>'NIST:FILESELECTOR.CHOOSE_A_NIST_FILE'
+,p_message_language=>'th'
+,p_message_text=>'Select a NIST File from your harddisk'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47678509201223766)
+,p_name=>'NIST:INDEX.PLAINFINGERPRINTS'
+,p_message_language=>'th'
+,p_message_text=>'Plain Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47678699719223766)
+,p_name=>'NIST:INDEX.ROLLEDFINGERPRINTS'
+,p_message_language=>'th'
+,p_message_text=>'Rolled Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47678733875223766)
+,p_name=>'NIST:PLAIN.ENTRIES.IMPORTABLE'
+,p_message_language=>'th'
+,p_message_text=>'Is Importable'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47678835685223766)
+,p_name=>'NIST:PLAIN.ENTRIES.IMPRESSIONTYPE'
+,p_message_language=>'th'
+,p_message_text=>'Impression Type'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47678927792223766)
+,p_name=>'NIST:FACE.ENTRIES.POSITION'
+,p_message_language=>'th'
+,p_message_text=>'Position'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679088247223766)
+,p_name=>'NIST:FACE.ENTRIES.IMPRESSIONTYPE'
+,p_message_language=>'th'
+,p_message_text=>'Impression Type'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679127945223766)
+,p_name=>'NIST:FACE.ENTRIES.IMPORTABLE'
+,p_message_language=>'th'
+,p_message_text=>'Is Importable'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679286385223766)
+,p_name=>'NIST:PLAIN.ENTRIES.POSITION'
+,p_message_language=>'th'
+,p_message_text=>'Position'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679369941223766)
+,p_name=>'NIST:PLAINFINGERPRINTS.NOT_IMPORTABLE'
+,p_message_language=>'th'
+,p_message_text=>'This type can not be imported into the current setup.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679425940223766)
+,p_name=>'NIST:FACE.ENTRIES.FINGERPRINT'
+,p_message_language=>'th'
+,p_message_text=>'Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679567179223766)
+,p_name=>'NIST:INDEX.DESCRIPTIVEDATA'
+,p_message_language=>'th'
+,p_message_text=>'Descriptive Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679600371223766)
+,p_name=>'NIST:PLAIN.ENTRIES.FINGERPRINT'
+,p_message_language=>'th'
+,p_message_text=>'Fingerprint'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679750286223766)
+,p_name=>'NIST:PLAIN.ENTRIES.DIMENSION'
+,p_message_language=>'th'
+,p_message_text=>'Dimension'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(47679868590223766)
+,p_name=>'NIST:FACE.ENTRIES.DIMENSION'
+,p_message_language=>'th'
+,p_message_text=>'Dimension'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49606339343242655)
+,p_name=>'FINGERITEM:UPLOAD.FILETYPENOTSUPPORTED.TITLE'
+,p_message_text=>'File type is not supported!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49606602148242656)
+,p_name=>'FINGERITEM:UPLOAD.FILETYPENOTSUPPORTED.TEXT'
+,p_message_text=>'Possible formats are: WSQ, JPEG2000, JPEG, TIFF, PNG and BMP files.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49606789597242657)
+,p_name=>'FINGERITEM:UPLOAD.FILETYPENOTSUPPORTED.OK'
+,p_message_text=>'Okay'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49622683011254780)
+,p_name=>'FINGERITEM:UPLOAD.RESOLUTIONTOLOW.TEXT'
+,p_message_text=>'The resolution of of the uploaded file must be higher than 200 dpi.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49622867814254781)
+,p_name=>'FINGERITEM:UPLOAD.RESOLUTIONTOLOW.TITLE'
+,p_message_text=>'The Resolution (dpi) is to low!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49623164969254782)
+,p_name=>'FINGERITEM:UPLOAD.RESOLUTIONTOLOW.OK'
+,p_message_text=>'OK'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49657982482771459)
+,p_name=>'FINGERITEM:UPLOAD.FILETYPENOTSUPPORTED.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'Possible formats are: WSQ, JPEG2000, JPEG, TIFF, PNG and BMP files.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49658047943771459)
+,p_name=>'FINGERITEM:UPLOAD.RESOLUTIONTOLOW.OK'
+,p_message_language=>'th'
+,p_message_text=>'OK'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49658194950771459)
+,p_name=>'FINGERITEM:UPLOAD.FILETYPENOTSUPPORTED.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'File type is not supported!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49658222312771459)
+,p_name=>'FINGERITEM:UPLOAD.FILETYPENOTSUPPORTED.OK'
+,p_message_language=>'th'
+,p_message_text=>'Okay'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49658364353771459)
+,p_name=>'FINGERITEM:UPLOAD.RESOLUTIONTOLOW.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'The resolution of of the uploaded file must be higher than 200 dpi.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(49658485191771459)
+,p_name=>'FINGERITEM:UPLOAD.RESOLUTIONTOLOW.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'The Resolution (dpi) is to low!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50814160102387364)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.LIVENESSSCORE'
+,p_message_text=>'LivenessScore'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50814333009387367)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.NAME'
+,p_message_text=>'Device.Name'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50814646553387371)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.SOURCEAGENCY'
+,p_message_text=>'SourceAgency'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50814956230387373)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_text=>'Device.Vendor'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50815243925387395)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.HORIZONTALLINELENGTH'
+,p_message_text=>'HorizontalLinelength'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50815523245387398)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_text=>'Device.DeviceType'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50815890049387399)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.VERSION'
+,p_message_text=>'Device.Version'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50816101286387400)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.BITSPERPIXEL'
+,p_message_text=>'BitsPerPixel'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50816493103387401)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.HORIZONTALPIXELSCALE'
+,p_message_text=>'HorizontalPixelScale'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50816717969387411)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50817174683387425)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.VERTICALLINELENGTH'
+,p_message_text=>'VerticalLineLength'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50817218642387425)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.VERTICALPIXELSCALE'
+,p_message_text=>'VerticalPixelScale'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(50817632098387426)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.SCALEUNITS'
+,p_message_text=>'ScaleUnits'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(53380031614843084)
+,p_name=>'FORM.VALIDATION_ERROR.WRONG_DATE_FORMAT'
+,p_message_text=>'Please enter the correct date format (dd/mm/yyyy)!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(56720465408474754)
+,p_name=>'FACEITEM:UPLOAD.FILETYPENOTSUPPORTED.OK'
+,p_message_text=>'Okay'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(56720692661474755)
+,p_name=>'FACEITEM:UPLOAD.FILETYPENOTSUPPORTED.TITLE'
+,p_message_text=>'File type is not supported!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(56720865881474756)
+,p_name=>'FACEITEM:UPLOAD.FILETYPENOTSUPPORTED.TEXT'
+,p_message_text=>'Possible formats are: JPEG2000, JPEG, TIFF, PNG and BMP files.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(56728556099491901)
+,p_name=>'FINGERITEM:WORKFLOW.BACKGROUND.PROCESS.IMAGEUPLOAD'
+,p_message_text=>'uploading image'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(57968102925715085)
+,p_name=>'NIST.ERROR.NO_BIOMETRIC_DATA'
+,p_message_language=>'th'
+,p_message_text=>'This case has no biometric images!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(57968213294715090)
+,p_name=>'FORM.VALIDATION_ERROR.WRONG_DATE_FORMAT'
+,p_message_language=>'th'
+,p_message_text=>'Please enter the correct date format (dd/mm/yyyy)!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59010672517362506)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTTHUMB'
+,p_message_text=>'RightThumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59203557849243856)
+,p_name=>'NIST:UPLOAD.FACECONVERTIONFAILED.TEXT'
+,p_message_text=>'Can not Convert Face Image Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59203720839243890)
+,p_name=>'NIST:UPLOAD.FACECONVERTIONFAILED.TITLE'
+,p_message_text=>'Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59203995950243897)
+,p_name=>'NIST:UPLOAD.FILETYPENOTSUPPORTED.OK'
+,p_message_text=>'Okay'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59850688523699174)
+,p_name=>'FACEITEM:ภาพผ่าน'
+,p_message_text=>'ภาพผ่าน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59850865428699185)
+,p_name=>'FACEITEM:ภาพสด / อัปโหลด'
+,p_message_text=>'ภาพสด / อัปโหลด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59851138545699189)
+,p_name=>'FINGERITEM:ใหม่'
+,p_message_text=>'ใหม่'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59851471111699191)
+,p_name=>'FINGERITEM:นิ้วหัวแม่มือขวา'
+,p_message_text=>'นิ้วหัวแม่มือขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59852097139700336)
+,p_name=>'FINGERITEM:นิ้วชี้ขวา'
+,p_message_text=>'นิ้วชี้ขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59852295566700338)
+,p_name=>'FINGERITEM:นิ้วกลางขวา'
+,p_message_text=>'นิ้วกลางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59852598233700343)
+,p_name=>'FINGERITEM:นิ้วก้อยขวา'
+,p_message_text=>'นิ้วก้อยขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59852886416700343)
+,p_name=>'FINGERITEM:นิ้วนางขวา'
+,p_message_text=>'นิ้วนางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59853231043700347)
+,p_name=>'FINGERITEM:นิ้วหัวแม่มือซ้าย'
+,p_message_text=>'นิ้วหัวแม่มือซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59853374756700347)
+,p_name=>'FINGERITEM:ตัวชี้ซ้าย'
+,p_message_text=>'ตัวชี้ซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59853715263700354)
+,p_name=>'FINGERITEM:กลางซ้าย'
+,p_message_text=>'กลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59854037205700354)
+,p_name=>'FINGERITEM:นิ้วก้อยซ้าย'
+,p_message_text=>'นิ้วก้อยซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59854393606700355)
+,p_name=>'FINGERITEM:นิ้วนางซ้าย'
+,p_message_text=>'นิ้วนางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59854666496700358)
+,p_name=>'FACEITEM:ผ่านภาพถ่าย'
+,p_message_text=>'ผ่านภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(59854969274700359)
+,p_name=>'FACEITEM:ภาพสด'
+,p_message_text=>'ภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(60188750509162724)
+,p_name=>'FACEITEM:ภาพถ่าย'
+,p_message_text=>'ภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(60188959929162743)
+,p_name=>'FACEITEM:ผู้สมัครรูปถ่าย'
+,p_message_text=>'ผู้สมัครรูปถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(60191104480202616)
+,p_name=>'FACEITEM:PHOTO 2'
+,p_message_text=>'Photo 2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(60191202481202616)
+,p_name=>'FACEITEM:PHOTO 1'
+,p_message_text=>'Photo 1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(60265897534123222)
+,p_name=>'RECORD.INSERT.ERROR'
+,p_message_text=>'Errors occurred during processing.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(60266088010128596)
+,p_name=>'RECORD.INSERTED'
+,p_message_text=>'Record successful inserted.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(60282962307180553)
+,p_name=>'CASE.DELETE'
+,p_message_text=>'Would you like to perform this delete action?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(67357196382498593)
+,p_name=>'NIST:UPLOAD.FILETYPENOTSUPPORTED.OK'
+,p_message_language=>'th'
+,p_message_text=>'Okay'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(67357207562498596)
+,p_name=>'NIST:UPLOAD.FACECONVERTIONFAILED.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'Can not Convert Face Image Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(67357315033498597)
+,p_name=>'NIST:UPLOAD.FACECONVERTIONFAILED.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(71289954566058376)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.MISSING.XX'
+,p_message_text=>'Fingerprint was marked as amputated'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75087631831985095)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.UNKNOWN'
+,p_message_language=>'th'
+,p_message_text=>'ไม่ทราบข้อมูล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75087797487985096)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_'
+,p_message_language=>'th'
+,p_message_text=>'องค์ประกอบการจับภาพลายนิ้วมือ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75087882336985097)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.HEADER.RESTART'
+,p_message_language=>'th'
+,p_message_text=>'เริ่มต้นใหม่'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75087920204985097)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGTOOLTIP'
+,p_message_language=>'th'
+,p_message_text=>'ซึ่งจะช่วยให้คุณลักษณะ defogging บนสแกนเนอร์ Palm3'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088073047985098)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGLABEL'
+,p_message_language=>'th'
+,p_message_text=>'defogging'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088118399985099)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'th'
+,p_message_text=>'กรุณาจับภาพหรือเลือกเหตุผลที่หาไม่พบ!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088287877985099)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.BUTTON.CLOSE'
+,p_message_language=>'th'
+,p_message_text=>'ปิด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088331157985100)
+,p_name=>'FINGERITEM:UPLOAD.LABEL'
+,p_message_language=>'th'
+,p_message_text=>'อัปโหลด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088447913985100)
+,p_name=>'FINGERITEM:NEW'
+,p_message_language=>'th'
+,p_message_text=>'ใหม่'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088571262985100)
+,p_name=>'FACEITEM:UPLOAD.LABEL'
+,p_message_language=>'th'
+,p_message_text=>'อัปโหลด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088605461985102)
+,p_name=>'PASSPORTCAPTURE:PASSPORT CAPTURE COMPONENT'
+,p_message_language=>'th'
+,p_message_text=>'ตัวแทนจับหนังสือเดินทาง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088730650985102)
+,p_name=>'FACEITEM:NEW'
+,p_message_language=>'th'
+,p_message_text=>'ใหม่'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088853500985102)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.CONNECTING'
+,p_message_language=>'th'
+,p_message_text=>'การเชื่อมต่อ ...'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75088964051985104)
+,p_name=>'FACECAPTURE:FACE.OVERVIEW.EMPTYLIST.DESC.LOADING'
+,p_message_language=>'th'
+,p_message_text=>'กำลังโหลด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089015757985104)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.START'
+,p_message_language=>'th'
+,p_message_text=>'เริ่มต้น'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089153179985105)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.COMPONENT.STOPPED'
+,p_message_language=>'th'
+,p_message_text=>'ตัวแทนจับภาพใบหน้า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089276296985105)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_2_3_4_5'
+,p_message_language=>'th'
+,p_message_text=>'วางนิ้วทั้งสี่ของมือขวาบนเครื่องสแกน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089376361985106)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ลายนิ้วมือข้อผิดพลาดการจับภาพขั้นตอนการทำงาน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089486440985107)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.MESSAGE.ENROLMENT-WARNING-CONTAMINATION'
+,p_message_language=>'th'
+,p_message_text=>'โปรดทำความสะอาดเครื่องสแกนเนอร์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089581556985107)
+,p_name=>'FINGERCAPTURE:CONTAMINATION.MESSAGE'
+,p_message_language=>'th'
+,p_message_text=>'สแกนเนอร์ที่ไม่สะอาด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089623680985108)
+,p_name=>'FINGERCAPTURE:CONTAMINATION.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'คำเตือน มีการติดเชื้อ!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089736880985108)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.READY'
+,p_message_language=>'th'
+,p_message_text=>'พร้อมแล้ว'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089836667985108)
+,p_name=>'FACEITEM:PORTRAIT'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่ายหน้าตรง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75089957128985110)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'th'
+,p_message_text=>'กรุณาจับภาพหรือเลือกเหตุผลที่หาไม่พบ!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090038278985110)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTINDEX'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090169827985111)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.DONE'
+,p_message_language=>'th'
+,p_message_text=>'ลายนิ้วมือบันทึกเรียบร้อยแล้ว!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090287277985112)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.MISSING.UP'
+,p_message_language=>'th'
+,p_message_text=>'ลายนิ้วมือที่ถูกทำเครื่องหมายเป็นพิมพ์ไม่สามารถ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090343976985112)
+,p_name=>'FINGERITEM:USEMOUSEWHEEL.TO.ZOOM'
+,p_message_language=>'th'
+,p_message_text=>'ใช้ล้อเมาส์เพื่อซูมเข้า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090495335985112)
+,p_name=>'FINGERITEM:FINGERDETAILS.BUTTON.CLOSE'
+,p_message_language=>'th'
+,p_message_text=>'ปิด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090591164985113)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTINDEX'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090617106985114)
+,p_name=>'PASSPORTCAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_language=>'th'
+,p_message_text=>'เชื่อมต่ออีกครั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090792643985114)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ข้อผิดพลาดการจับภาพหนังสือเดินทาง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090805098985115)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_language=>'th'
+,p_message_text=>'ไม่สามารถเชื่อมต่อไปยังอุปกรณ์ <br/> ลองใหม่ในอีก 10 วินาที'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75090999399985115)
+,p_name=>'FINGERCAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_language=>'th'
+,p_message_text=>'เชื่อมต่ออีกครั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091033097985115)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_language=>'th'
+,p_message_text=>'ไม่สามารถเชื่อมต่อไปยังอุปกรณ์ <br/> ลองใหม่ในอีก 10 วินาที'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091163456985116)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ข้อผิดพลาดการจับภาพลายนิ้วมือ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091246319985117)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_language=>'th'
+,p_message_text=>'ไม่สามารถเชื่อมต่อไปยังอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091380802985118)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.CLEARLIST'
+,p_message_language=>'th'
+,p_message_text=>'รายชื่อที่ชัดเจน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091494514985119)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.TAKEPHOTO'
+,p_message_language=>'th'
+,p_message_text=>'ถ่ายภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091555155985119)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.LOADING'
+,p_message_language=>'th'
+,p_message_text=>'ตัวแทนจับภาพใบหน้า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091694959985120)
+,p_name=>'FACECAPTURE:FACE.OVERVIEW.EMPTYLIST.DESC.PORTRAIT'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่ายหน้าตรง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091759776985120)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.PORTRAIT'
+,p_message_language=>'th'
+,p_message_text=>'ถ่ายภาพภาพของลูกค้าใบหน้า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091822498985121)
+,p_name=>'FACECAPTURE:IMAGELIST.FULL.MESSAGE'
+,p_message_language=>'th'
+,p_message_text=>'โปรดล้างรายการรูปภาพหรือเลือกภาพที่จะดำเนินการขั้นตอนขั้นตอนการทำงาน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75091902688985121)
+,p_name=>'FACECAPTURE:IMAGELIST.FULL.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'รายการภาพที่เต็มรูปแบบ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092006694985122)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.MESSAGE.OVERVIEWLISTFULL'
+,p_message_language=>'th'
+,p_message_text=>'โปรดเลือกภาพหรือล้างรายการภาพรวม'
+,p_is_js_message=>true
+);
+end;
+/
+begin
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092118412985123)
+,p_name=>'FACECAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ข้อผิดพลาดการจับภาพใบหน้า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092246387985123)
+,p_name=>'FACECAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_language=>'th'
+,p_message_text=>'ไม่สามารถเชื่อมต่อไปยังอุปกรณ์ <br/> ลองใหม่ในอีก 10 วินาที'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092369932985124)
+,p_name=>'FACECAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_language=>'th'
+,p_message_text=>'เชื่อมต่ออีกครั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092429129985124)
+,p_name=>'FACECAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_language=>'th'
+,p_message_text=>'ไม่สามารถเชื่อมต่อไปยังอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092571882985125)
+,p_name=>'FINGERCAPTURE:IMAGESERVICE.UNAVAILABLE.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'บริการอาจจะไม่สามารถใช้ได้หรือผิดพลาด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092645789985126)
+,p_name=>'FINGERCAPTURE:IMAGESERVICE.UNAVAILABLE.HEADER'
+,p_message_language=>'th'
+,p_message_text=>'ภาพลายนิ้วมือคำเตือนไม่สามารถบันทึกได้!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092705118985128)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_10_9_8_7'
+,p_message_language=>'th'
+,p_message_text=>'วางนิ้วทั้งสี่ของมือซ้ายบนเครื่องสแกน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092829207985128)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.MESSAGE.ENROLMENT-INFORMATION-REMOVEFINGER'
+,p_message_language=>'th'
+,p_message_text=>'เอามือจากสแกนเนอร์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75092959650985128)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTMIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093028015985129)
+,p_name=>'FINGERITEM:FINGERDETAILS.LIVENESSRESULT'
+,p_message_language=>'th'
+,p_message_text=>'ผลมีชีวิตชีวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093159907985129)
+,p_name=>'FINGERITEM:FINGERDETAILS.LIVENESSSCORE'
+,p_message_language=>'th'
+,p_message_text=>'คะแนนตามเวลาจริง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093239087985129)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_language=>'th'
+,p_message_text=>'อุปกรณ์ประเภทอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093335991985131)
+,p_name=>'FINGERITEM:FINGERDETAILS.SOURCEAGENCY'
+,p_message_language=>'th'
+,p_message_text=>'หน่วยงานแหล่งข้อมูล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093472106985131)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_language=>'th'
+,p_message_text=>'ผู้จำหน่ายอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093530872985132)
+,p_name=>'FINGERITEM:FINGERDETAILS.BITSPERPIXEL'
+,p_message_language=>'th'
+,p_message_text=>'บิตต่อพิกเซล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093630530985133)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.VERSION'
+,p_message_language=>'th'
+,p_message_text=>'รุ่นอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093789513985133)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.NAME'
+,p_message_language=>'th'
+,p_message_text=>'ชื่ออุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093870612985133)
+,p_name=>'FINGERITEM:FINGERDETAILS.HORIZONTALLINELENGTH'
+,p_message_language=>'th'
+,p_message_text=>'ความยาวบรรทัดแนวนอน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75093942708985134)
+,p_name=>'FINGERITEM:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_language=>'th'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094095100985134)
+,p_name=>'FINGERITEM:FINGERDETAILS.VERTICALLINELENGTH'
+,p_message_language=>'th'
+,p_message_text=>'ความยาวเส้นแนวตั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094155028985136)
+,p_name=>'FINGERITEM:FINGERDETAILS.SCALEUNITS'
+,p_message_language=>'th'
+,p_message_text=>'หน่วยวัด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094282578985136)
+,p_name=>'FINGERITEM:FINGERDETAILS.VERTICALPIXELSCALE'
+,p_message_language=>'th'
+,p_message_text=>'อัตราส่วนพิกเซลแนวตั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094355056985136)
+,p_name=>'FINGERITEM:FINGERDETAILS.HORIZONTALPIXELSCALE'
+,p_message_language=>'th'
+,p_message_text=>'ระดับพิกเซลแนวนอน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094499451985137)
+,p_name=>'FACECAPTURE:FACEDETAILS.MESSAGE.DONE'
+,p_message_language=>'th'
+,p_message_text=>'เผชิญจับประสบความสำเร็จ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094521308985137)
+,p_name=>'FACECAPTURE:FACEDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'th'
+,p_message_text=>'กรุณาจับภาพหรือเลือกเหตุผลที่หาไม่พบ!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094611821985138)
+,p_name=>'FACECAPTURE:FACEDETAILS.SOURCEAGENCY'
+,p_message_language=>'th'
+,p_message_text=>'หน่วยงานแหล่งข้อมูล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094742071985139)
+,p_name=>'FACECAPTURE:FACEDETAILS.COMPRESSION'
+,p_message_language=>'th'
+,p_message_text=>'อัลกอริทึมการบีบอัด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094886643985140)
+,p_name=>'FACECAPTURE:FACEDETAILS.TITLE.PORTRAIT'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่ายหน้าตรง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75094904806985141)
+,p_name=>'FACECAPTURE:FACEDETAILS.QUALITY'
+,p_message_language=>'th'
+,p_message_text=>'อัลกอริทึมคุณภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095008956985141)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.TYPE'
+,p_message_language=>'th'
+,p_message_text=>'ประเภทอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095125144985142)
+,p_name=>'FACECAPTURE:FACECAPTURE.BUTTON.ACCEPT'
+,p_message_language=>'th'
+,p_message_text=>'ยอมรับ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095278034985142)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.NAME'
+,p_message_language=>'th'
+,p_message_text=>'ชื่ออุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095355025985142)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.VENDOR'
+,p_message_language=>'th'
+,p_message_text=>'ผู้จำหน่ายอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095439979985143)
+,p_name=>'FACECAPTURE:FACEDETAILS.DEVICE.VERSION'
+,p_message_language=>'th'
+,p_message_text=>'รุ่นอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095535607985144)
+,p_name=>'FACECAPTURE:FACECAPTURE.BUTTON.DECLINE'
+,p_message_language=>'th'
+,p_message_text=>'ปฏิเสธ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095620132985144)
+,p_name=>'FACECAPTURE:FACE.CAPTURE.HEADER.RESULT.COMPLETED'
+,p_message_language=>'th'
+,p_message_text=>'ตัวแทนจับภาพใบหน้า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095730044985145)
+,p_name=>'FACEITEM:FACEDETAILS.TITLE.PORTRAIT'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่ายหน้าตรง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095837951985145)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.DONE'
+,p_message_language=>'th'
+,p_message_text=>'ใบหน้าบันทึกเรียบร้อยแล้ว!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75095951569985146)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'th'
+,p_message_text=>'กรุณาจับภาพหรือเลือกเหตุผลที่หาไม่พบ!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096038170985147)
+,p_name=>'FACEITEM:FINGERDETAILS.QUALITYALGORITHM'
+,p_message_language=>'th'
+,p_message_text=>'อัลกอริทึมคุณภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096189248985148)
+,p_name=>'FACEITEM:FINGERDETAILS.SOURCEAGENCY'
+,p_message_language=>'th'
+,p_message_text=>'หน่วยงานแหล่งข้อมูล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096209015985149)
+,p_name=>'FACEITEM:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_language=>'th'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096374842985150)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.NAME'
+,p_message_language=>'th'
+,p_message_text=>'ชื่ออุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096439111985150)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VERSION'
+,p_message_language=>'th'
+,p_message_text=>'รุ่นของอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096519017985151)
+,p_name=>'FACEITEM:USEMOUSEWHEEL.TO.ZOOM'
+,p_message_language=>'th'
+,p_message_text=>'ใช้ล้อเมาส์เพื่อซูมเข้า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096635696985151)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_language=>'th'
+,p_message_text=>'อุปกรณ์ผู้ขาย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096792127985152)
+,p_name=>'FACEITEM:FACEDETAILS.BUTTON.CLOSE'
+,p_message_language=>'th'
+,p_message_text=>'ปิด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096855463985153)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_language=>'th'
+,p_message_text=>'อุปกรณ์ประเภทอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75096911875985153)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.SCANNING'
+,p_message_language=>'th'
+,p_message_text=>'สแกน ...'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097005755985153)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.SURNAME'
+,p_message_language=>'th'
+,p_message_text=>'นามสกุล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097156618985154)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.GIVENNAMES'
+,p_message_language=>'th'
+,p_message_text=>'ชื่อ: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097221710985155)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.COMPLETE'
+,p_message_language=>'th'
+,p_message_text=>'สมบูรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097317023985155)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.NATIONALITY'
+,p_message_language=>'th'
+,p_message_text=>'สัญชาติ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097470968985157)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.SEX'
+,p_message_language=>'th'
+,p_message_text=>'เพศ: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097536039985157)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.DATEOFBIRTH'
+,p_message_language=>'th'
+,p_message_text=>'วัน เดือน ปีเกิด (ค.ศ.)'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097678499985157)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.DOCUMENTTYPE'
+,p_message_language=>'th'
+,p_message_text=>'ประเภทเอกสาร: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097734497985158)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.DATEOFEXPIRY'
+,p_message_language=>'th'
+,p_message_text=>'วันที่หมดอายุ: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097803049985158)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.PERSONALNO'
+,p_message_language=>'th'
+,p_message_text=>'Personal No: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75097926254985159)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.PASSPORTNO'
+,p_message_language=>'th'
+,p_message_text=>'เลขที่หนังสือเดินทาง: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098027798985160)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTRING'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098190406985161)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.DONE'
+,p_message_language=>'th'
+,p_message_text=>'ลายนิ้วมือบันทึกเรียบร้อยแล้ว!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098234551985163)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTMIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098369730985163)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.MISSING.XX'
+,p_message_language=>'th'
+,p_message_text=>'ลายนิ้วมือที่ถูกทำเครื่องหมายเป็น XX'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098418620985164)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTRING'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098563152985164)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_6_1'
+,p_message_language=>'th'
+,p_message_text=>'วางนิ้วหัวแม่มือทั้งสองอยู่บนเครื่องสแกนเนอร์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098689330985165)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ตัวแทนการจับภาพลายนิ้วมือ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098747443985169)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTTHUMB'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098804772985169)
+,p_name=>'FACEITEM:WORKFLOW.BACKGROUND.PROCESS.IMAGEUPLOAD'
+,p_message_language=>'th'
+,p_message_text=>'กำลังอัปโหลดรูปภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75098916267985170)
+,p_name=>'FINGERCAPTURE:DIALOG.RESTARTCONFIRM.DESCRIPTION'
+,p_message_language=>'th'
+,p_message_text=>'เมื่อเปิดตัวการลงทะเบียนลายนิ้วมือคุณมีสองตัวเลือกเริ่มต้นใหม่ ครั้งแรกคือการเริ่มต้นใหม่ลงทะเบียนหลุมบันทึกข้อมูลทั้งหมดจะถูกลบ ที่สองคือการรำลึกขนตอนการลงทะเบียนก่อนหน้านี้'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099004635985170)
+,p_name=>'FINGERCAPTURE:DIALOG.RESTARTCONFIRM.HEADING'
+,p_message_language=>'th'
+,p_message_text=>'รีสตาร์ทหรือแฝง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099161589985170)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.CONTINUEBUTTONTEXT'
+,p_message_language=>'th'
+,p_message_text=>'ดำเนินการต่อ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099283479985171)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.RESTARTBUTTONTEXT'
+,p_message_language=>'th'
+,p_message_text=>'เริ่มการสมัครใหม่'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099364835985172)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.RESTARTSTEPBUTTONTEXT'
+,p_message_language=>'th'
+,p_message_text=>'จับภาพขั้นตอนการสมัครอีกครั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099415860985175)
+,p_name=>'FINGERCAPTURE:DIALOG.CONFIRM.RESTARTPREVIOUSSTEPBUTTONTEXT'
+,p_message_language=>'th'
+,p_message_text=>'เอาคืนก่อนหน้าการลงทะเบียนขั้นตอน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099535088985177)
+,p_name=>'FACEITEM:PHOTO'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099636969985177)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTINDEX'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099711048985177)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTMIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099800896985177)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTRING'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75099953334985178)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTLITTLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100037319985179)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTINDEX'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100120622985179)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTLITTLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100234657985179)
+,p_name=>'PASSPORTCAPTURE:SEX.MALE.VALUE'
+,p_message_language=>'th'
+,p_message_text=>'มาเล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100382579985180)
+,p_name=>'FINGERITEM:RIGHT THUMB'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100458346985180)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_language=>'th'
+,p_message_text=>'ไม่สามารถเชื่อมต่อไปยังอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100550507985181)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.DISCONNECTED'
+,p_message_language=>'th'
+,p_message_text=>'ตัดการเชื่อมต่อ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100679540985181)
+,p_name=>'FINGERCAPTURE:WORKFLOW.ERROR.MESSAGE.ENROLMENT-WRONG-HAND-DETECT'
+,p_message_language=>'th'
+,p_message_text=>'มือผิดที่ตรวจพบ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100701066985182)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.IS-VALID'
+,p_message_language=>'th'
+,p_message_text=>'คือถูกต้อง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100811096985183)
+,p_name=>'FACECAPTURE:IMAGESERVICE.UNAVAILABLE.HEADER'
+,p_message_language=>'th'
+,p_message_text=>'ภาพใบหน้าที่เตือนไม่สามารถบันทึกได้!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75100947609985183)
+,p_name=>'FACECAPTURE:IMAGESERVICE.UNAVAILABLE.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'บริการภาพอาจจะไม่สามารถใช้ได้หรือผิดพลาด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101082570985183)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTMIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101134923985184)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.IS-INVALID'
+,p_message_language=>'th'
+,p_message_text=>'ไม่ถูกต้อง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101202025985184)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.HAND.HANDSSWAPPED.DESCRIPTION'
+,p_message_language=>'th'
+,p_message_text=>'การลงทะเบียน:ผิดพลาด:มือ:คำอธิบายการสลับมือ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101374821985185)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.HAND.HANDSSWAPPED.HEADING'
+,p_message_language=>'th'
+,p_message_text=>'การลงทะเบียน:ผิดพลาด:มือ:หัวข้อการสลับมือ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101410404985186)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.MANUAL.ASSIGN.LOWQUALITY.DESCRIPTION'
+,p_message_language=>'th'
+,p_message_text=>'องค์ประกอบที่ไม่สามารถบรรลุคุณภาพของภาพที่ต้องการในเวลาที่กำหนดของมัน กรุณาลองอีกครั้ง.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101568432985186)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.MANUAL.ASSIGN.LOWQUALITY.HEADING'
+,p_message_language=>'th'
+,p_message_text=>'คุณภาพของภาพที่เลวร้ายเกินไป'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101638719985186)
+,p_name=>'FACEITEM:CONFIRM.DELETE.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'ยืนยันการลบ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101748016985187)
+,p_name=>'FACEITEM:CONFIRM.DELETE.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ยืนยัน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101860401985188)
+,p_name=>'FACEITEM:CONFIRM.DELETE.OK'
+,p_message_language=>'th'
+,p_message_text=>'ลบ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75101941112985189)
+,p_name=>'FACEITEM:CONFIRM.DELETE.CANCEL'
+,p_message_language=>'th'
+,p_message_text=>'ยกเลิก'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102095838985189)
+,p_name=>'FACEITEM:PHOTO CANDIDATE'
+,p_message_language=>'th'
+,p_message_text=>'ผู้สมัครรูปถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102150175985190)
+,p_name=>'FACEITEM:FACEDETAILS.TITLE.UNKNOWN'
+,p_message_language=>'th'
+,p_message_text=>'ไม่ทราบข้อมูล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102211603985190)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTLITTLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102382313985191)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTRING'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102440902985191)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.FINGER.DUPLICATION.HEADING'
+,p_message_language=>'th'
+,p_message_text=>'การลงทะเบียน: ผิด: นิ้ว: หัวข้อการทำสำเนา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102512272985192)
+,p_name=>'FINGERCAPTURE:DIALOG.ENROLMENT.WRONG.FINGER.DUPLICATION.DESCRIPTION'
+,p_message_language=>'th'
+,p_message_text=>'การลงทะเบียน: ผิด: นิ้ว: คำอธิบายการทำสำเนา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102627270985193)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTMIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'กลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102793867985193)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTRING'
+,p_message_language=>'th'
+,p_message_text=>'LeftRing'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102803660985194)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.CAPTURED'
+,p_message_language=>'th'
+,p_message_text=>'บันทึก:'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75102994915985195)
+,p_name=>'FACEITEM:PORTRAIT PASS'
+,p_message_language=>'th'
+,p_message_text=>'ภาพผ่าน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103008779985195)
+,p_name=>'FACEITEM:PHOTO UPLOAD'
+,p_message_language=>'th'
+,p_message_text=>'ภาพอัพโหลด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103142897985195)
+,p_name=>'FACEITEM:PHOTO LIVE/UPLOAD'
+,p_message_language=>'th'
+,p_message_text=>'ภาพสด / อัปโหลด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103282087985195)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTLITTLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103321266985196)
+,p_name=>'FINGERITEM:FINGERDETAILS.QUALITYALGORITHM'
+,p_message_language=>'th'
+,p_message_text=>'อัลกอริทึมคุณภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103441706985197)
+,p_name=>'FACEITEM:PASS PHOTO'
+,p_message_language=>'th'
+,p_message_text=>'รูปภาพ '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103508148985197)
+,p_name=>'FACEITEM:LIVE PHOTO'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103681948985198)
+,p_name=>'FINGERITEM:RIGHT INDEX'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103785126985198)
+,p_name=>'FINGERITEM:RIGHT MIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103851311985198)
+,p_name=>'FINGERITEM:RIGHT LITTLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75103967743985199)
+,p_name=>'FINGERITEM:LEFT INDEX'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104015743985199)
+,p_name=>'FINGERITEM:LEFT THUMB'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104137063985199)
+,p_name=>'FINGERITEM:RIGHT RING'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104248016985201)
+,p_name=>'FINGERITEM:LEFT RING'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104335805985201)
+,p_name=>'FINGERITEM:LEFT MIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104440830985201)
+,p_name=>'FINGERITEM:LEFT LITTLE'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104509634985201)
+,p_name=>'PASSPORTCAPTURE:SEX.FEMALE.VALUE'
+,p_message_language=>'th'
+,p_message_text=>'ผู้หญิง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104618276985202)
+,p_name=>'PASSPORTCAPTURE:PASSPORTDETAILS.PASSPORTISSUINGSTATE'
+,p_message_language=>'th'
+,p_message_text=>'Issuing State: '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104737414985203)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.HEADER.MANUAL-ASSIGN'
+,p_message_language=>'th'
+,p_message_text=>'กรุณาคลิกที่แผนผังลายนิ้วมือเพื่อกำหนดลายนิ้วมือ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104809172985203)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DIALOG.CONFIRM'
+,p_message_language=>'th'
+,p_message_text=>'ยืนยัน'
+,p_is_js_message=>true
+);
+end;
+/
+begin
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75104999811985203)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DIALOG.CANCEL'
+,p_message_language=>'th'
+,p_message_text=>'ยกเลิก'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105084099985203)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.LEFTTHUMB'
+,p_message_language=>'th'
+,p_message_text=>'หัวแม่มือซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105173613985204)
+,p_name=>'FINGERCAPTURE:WORKFLOW.SUCCES.MESSAGE.ENROLMENT-INFORMATION-REMOVEFINGER'
+,p_message_language=>'th'
+,p_message_text=>'เอามือจากสแกนเนอร์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105264665985205)
+,p_name=>'FINGERCAPTURE:WORKFLOW.SUCCES.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ลายนิ้วมือจับภาพขั้นตอนเสร็จสมบูรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105332918985205)
+,p_name=>'FINGERCAPTURE:DIALOG.MORE.FINGERS.THAN.EXPECTED.DESCRIPTION'
+,p_message_language=>'th'
+,p_message_text=>'เพิ่มเติมได้ที่: นิ้ว: กว่า: คำอธิบายคาดว่า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105482534985206)
+,p_name=>'FINGERCAPTURE:DIALOG.MORE.FINGERS.THAN.EXPECTED.HEADING'
+,p_message_language=>'th'
+,p_message_text=>'เพิ่มเติมได้ที่: นิ้ว: กว่า: หัวคาดว่า'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105561220985207)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTTHUMB'
+,p_message_language=>'th'
+,p_message_text=>'หัวแม่มือซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105688624985207)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.ERROR.EXPECTED'
+,p_message_language=>'th'
+,p_message_text=>'ที่คาดว่าจะ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105752590985208)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTTHUMB'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105874047985208)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTINDEX'
+,p_message_language=>'th'
+,p_message_text=>'LeftIndex'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75105936584985209)
+,p_name=>'INSERT.VALIDATION.FILL-ALL-REQUIRED-FIELDS'
+,p_message_language=>'th'
+,p_message_text=>'กรุณากรอกข้อมูลทั้งหมดที่จำเป็น'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106099332985210)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.LEFTTHUMB'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106177788985211)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.LIVENESSSCORE'
+,p_message_language=>'th'
+,p_message_text=>'คะแนนตามเวลาจริง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106245245985211)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.NAME'
+,p_message_language=>'th'
+,p_message_text=>'ชื่ออุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106380196985211)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.SOURCEAGENCY'
+,p_message_language=>'th'
+,p_message_text=>'SourceAgency'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106493637985212)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_language=>'th'
+,p_message_text=>'อุปกรณ์ผู้ขาย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106500293985213)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.HORIZONTALLINELENGTH'
+,p_message_language=>'th'
+,p_message_text=>'ความยาวบรรทัดแนวนอน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106651083985213)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_language=>'th'
+,p_message_text=>'อุปกรณ์ประเภทอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106782753985214)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.DEVICE.VERSION'
+,p_message_language=>'th'
+,p_message_text=>'รุ่นของอุปกรณ์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106821706985215)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.BITSPERPIXEL'
+,p_message_language=>'th'
+,p_message_text=>'บิตต่อพิกเซล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75106911083985215)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.HORIZONTALPIXELSCALE'
+,p_message_language=>'th'
+,p_message_text=>'ระดับพิกเซลแนวนอน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107015101985215)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_language=>'th'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107144439985216)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.VERTICALLINELENGTH'
+,p_message_language=>'th'
+,p_message_text=>'ความยาวเส้นแนวตั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107254265985216)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.VERTICALPIXELSCALE'
+,p_message_language=>'th'
+,p_message_text=>'อัตราส่วนพิกเซลแนวตั้ง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107363258985217)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.SCALEUNITS'
+,p_message_language=>'th'
+,p_message_text=>'หน่วยวัด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107442296985218)
+,p_name=>'FACEITEM:UPLOAD.FILETYPENOTSUPPORTED.OK'
+,p_message_language=>'th'
+,p_message_text=>'ถูก'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107568128985219)
+,p_name=>'FACEITEM:UPLOAD.FILETYPENOTSUPPORTED.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'ประเภทไฟล์ไม่ได้รับการสนับสนุน!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107626503985219)
+,p_name=>'FACEITEM:UPLOAD.FILETYPENOTSUPPORTED.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'รูปแบบที่เป็นไปได้: JPEG2000, JPEG, TIFF, PNG BMP ไฟล์'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107749267985219)
+,p_name=>'FINGERITEM:WORKFLOW.BACKGROUND.PROCESS.IMAGEUPLOAD'
+,p_message_language=>'th'
+,p_message_text=>'กำลังอัปโหลดรูปภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107860102985220)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.RIGHTTHUMB'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75107942674985220)
+,p_name=>'FACEITEM:ภาพผ่าน'
+,p_message_language=>'th'
+,p_message_text=>'ภาพผ่าน'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108066514985221)
+,p_name=>'FACEITEM:ภาพสด / อัปโหลด'
+,p_message_language=>'th'
+,p_message_text=>'ภาพสด / อัปโหลด'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108111563985222)
+,p_name=>'FINGERITEM:ใหม่'
+,p_message_language=>'th'
+,p_message_text=>'ใหม่'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108291379985222)
+,p_name=>'FINGERITEM:นิ้วหัวแม่มือขวา'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108324767985222)
+,p_name=>'FINGERITEM:นิ้วชี้ขวา'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108424514985223)
+,p_name=>'FINGERITEM:นิ้วกลางขวา'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108565031985223)
+,p_name=>'FINGERITEM:นิ้วก้อยขวา'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108655364985224)
+,p_name=>'FINGERITEM:นิ้วนางขวา'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108758493985224)
+,p_name=>'FINGERITEM:นิ้วหัวแม่มือซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วหัวแม่มือซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108812468985226)
+,p_name=>'FINGERITEM:ตัวชี้ซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'ตัวชี้ซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75108943806985226)
+,p_name=>'FINGERITEM:กลางซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'กลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109007469985226)
+,p_name=>'FINGERITEM:นิ้วก้อยซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วก้อยซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109115190985226)
+,p_name=>'FINGERITEM:นิ้วนางซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วนางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109250216985227)
+,p_name=>'FACEITEM:ผ่านภาพถ่าย'
+,p_message_language=>'th'
+,p_message_text=>'ผ่านภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109339020985228)
+,p_name=>'FACEITEM:ภาพสด'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109425785985228)
+,p_name=>'FACEITEM:ภาพถ่าย'
+,p_message_language=>'th'
+,p_message_text=>'ภาพถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109524803985229)
+,p_name=>'FACEITEM:ผู้สมัครรูปถ่าย'
+,p_message_language=>'th'
+,p_message_text=>'ผู้สมัครรูปถ่าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109605321985229)
+,p_name=>'FACEITEM:PHOTO 2'
+,p_message_language=>'th'
+,p_message_text=>'ภาพที่ 2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109745323985229)
+,p_name=>'FACEITEM:PHOTO 1'
+,p_message_language=>'th'
+,p_message_text=>'ภาพที่ 1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109874548985231)
+,p_name=>'RECORD.INSERT.ERROR'
+,p_message_language=>'th'
+,p_message_text=>'เกิดข้อผิดพลาดระหว่างการประมวลผล'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75109967700985231)
+,p_name=>'RECORD.INSERTED'
+,p_message_language=>'th'
+,p_message_text=>'สร้างคำร้องขอการกรอกข้อมูลการค้นหาแล้ว'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75110017639985231)
+,p_name=>'CASE.DELETE'
+,p_message_language=>'th'
+,p_message_text=>'คุณประสงค์ที่จะดำเนินการลบนี้หรือไม่?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(75110141374985233)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.MISSING.XX'
+,p_message_language=>'th'
+,p_message_text=>'Fingerprint was marked as amputated'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(77694426435062166)
+,p_name=>'FINGERITEM:นิ้วโป้งขวา'
+,p_message_text=>'นิ้วโป้งขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(87773565435698498)
+,p_name=>'FINGERITEM:นิ้วกลางซ้าย'
+,p_message_text=>'นิ้วกลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(87773622844698498)
+,p_name=>'FINGERITEM:นิ้วโป้งซ้าย'
+,p_message_text=>'นิ้วโป้งซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(87773780554698499)
+,p_name=>'FINGERITEM:นิ้วชี้ซ้าย'
+,p_message_text=>'นิ้วชี้ซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(87824050994804916)
+,p_name=>'FINGERITEM:นิ้วโป้งซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(87824191479804916)
+,p_name=>'FINGERITEM:นิ้วโป้งขวา'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วโป้งขวา'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(87824217247804916)
+,p_name=>'FINGERITEM:นิ้วกลางซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วกลางซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(87824356347804916)
+,p_name=>'FINGERITEM:นิ้วชี้ซ้าย'
+,p_message_language=>'th'
+,p_message_text=>'นิ้วชี้ซ้าย'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(88147816405707797)
+,p_name=>'PASSPORTCAPTURE:SEX.OTHER.VALUE'
+,p_message_text=>'Other'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(89150764416294891)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTINDEX'
+,p_message_text=>'RightIndex'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(89150842601294891)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTLITTLE'
+,p_message_text=>'RightLittle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(89151048775294894)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTMIDDLE'
+,p_message_text=>'RightMiddle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(89151255004294896)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTRING'
+,p_message_text=>'RightRing'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(89390472449482035)
+,p_name=>'FACEITEM:PHOTO 2A'
+,p_message_text=>'Photo 2a'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(89482754834592843)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.MISSING.NA'
+,p_message_text=>'Fingerprint was marked as not available'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(94618708837518562)
+,p_name=>'ADDRESS.DELETE'
+,p_message_text=>'Would you like to perform this address delete action?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(94620253035529067)
+,p_name=>'TRAVELDOC.DELETE'
+,p_message_text=>'Would you like to perform this traveldoc delete action?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(94637295131093355)
+,p_name=>'IDENTITY.DELETE'
+,p_message_text=>'Would you like to perform this identity delete action?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(97617245069955266)
+,p_name=>'NIST:UPLOAD.FILETYPENOTSUPPORTED.TEXT'
+,p_message_text=>'Possible formats are: nist and nst files.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(97617324613955266)
+,p_name=>'NIST:UPLOAD.FILETYPENOTSUPPORTED.TITLE'
+,p_message_text=>'Filetype is not supported!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101675450212502506)
+,p_name=>'NIST:UPLOAD.FILETYPENOTSUPPORTED.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'Possible formats are: nist and nst files.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101675552862502507)
+,p_name=>'NIST:UPLOAD.FILETYPENOTSUPPORTED.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'Filetype is not supported!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101761890847059124)
+,p_name=>'ADDRESS.DELETE'
+,p_message_language=>'th'
+,p_message_text=>'Would you like to perform this address delete action?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101761943403059128)
+,p_name=>'TRAVELDOC.DELETE'
+,p_message_language=>'th'
+,p_message_text=>'Would you like to perform this traveldoc delete action?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762029888059128)
+,p_name=>'IDENTITY.DELETE'
+,p_message_language=>'th'
+,p_message_text=>'Would you like to perform this identity delete action?'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762128186059130)
+,p_name=>'PASSPORTCAPTURE:SEX.OTHER.VALUE'
+,p_message_language=>'th'
+,p_message_text=>'Other'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762215999059130)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTMIDDLE'
+,p_message_language=>'th'
+,p_message_text=>'RightMiddle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762377260059130)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTLITTLE'
+,p_message_language=>'th'
+,p_message_text=>'RightLittle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762413825059130)
+,p_name=>'FACEITEM:PHOTO 2A'
+,p_message_language=>'th'
+,p_message_text=>'Photo 2a'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762501829059130)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTINDEX'
+,p_message_language=>'th'
+,p_message_text=>'RightIndex'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762605677059130)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.MISSING.NA'
+,p_message_language=>'th'
+,p_message_text=>'Fingerprint was marked as not available'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(101762710693059130)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.RIGHTRING'
+,p_message_language=>'th'
+,p_message_text=>'RightRing'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(104983350537926466)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.OK'
+,p_message_text=>'Delete'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(104983424126926466)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.TITLE'
+,p_message_text=>'Please Confirm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(104983688451926468)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.TEXT'
+,p_message_text=>'Please Confirm Deletion'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(104983739161926468)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.CANCEL'
+,p_message_text=>'Cancel'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(108197388479882655)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.CANCEL'
+,p_message_language=>'th'
+,p_message_text=>'Cancel'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(108197442378882655)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'Please Confirm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(108197579450882656)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.TEXT'
+,p_message_language=>'th'
+,p_message_text=>'Please Confirm Deletion'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(108197682660882656)
+,p_name=>'FINGERITEM:CONFIRM.DELETE.OK'
+,p_message_language=>'th'
+,p_message_text=>'Delete'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(117116014991287060)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTLITTLE'
+,p_message_text=>'LeftLittle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(117352042743407255)
+,p_name=>'FINGERCAPTURE:DIALOG.DUPLICATE_OR_WRONG.LEFTLITTLE'
+,p_message_language=>'th'
+,p_message_text=>'LeftLittle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(122893794805864117)
+,p_name=>'FACEITEM:รูปภาพ 1'
+,p_message_text=>'รูปภาพ 1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(122893893559864117)
+,p_name=>'FACEITEM:รูปภาพ 2'
+,p_message_text=>'รูปภาพ 2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(137288529407105792)
+,p_name=>'FORM.VALIDATION_ERROR.ONLY_NUMBERS_ARE_ALLOWED'
+,p_message_text=>'Only numbers are allowed!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(137299258159108607)
+,p_name=>'FORM.VALIDATION_ERROR.ONLY_NUMBERS_ARE_ALLOWED'
+,p_message_language=>'th'
+,p_message_text=>'Only numbers are allowed!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(171800919261154788)
+,p_name=>'FACEITEM:PHOTO 3'
+,p_message_text=>'Photo 3'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(171801150243154795)
+,p_name=>'FACEITEM:PHOTO 4'
+,p_message_text=>'Photo 4'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(187677108206096830)
+,p_name=>'FACEITEM:รูปภาพ 2'
+,p_message_language=>'th'
+,p_message_text=>'รูปภาพ 2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(187677253181096833)
+,p_name=>'FACEITEM:PHOTO 3'
+,p_message_language=>'th'
+,p_message_text=>'Photo 3'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(187677380954096833)
+,p_name=>'FACEITEM:รูปภาพ 1'
+,p_message_language=>'th'
+,p_message_text=>'รูปภาพ 1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(187677445900096833)
+,p_name=>'FACEITEM:PHOTO 4'
+,p_message_language=>'th'
+,p_message_text=>'Photo 4'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202835114025877049)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_1'
+,p_message_text=>'LiveScanPlain_1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202835398511877093)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_1'
+,p_message_text=>'LiveScanRolled_1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202835699146877169)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_2'
+,p_message_text=>'LiveScanRolled_2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202836603265880858)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_3'
+,p_message_text=>'LiveScanRolled_3'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202836878827880931)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_4'
+,p_message_text=>'LiveScanRolled_4'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202837063962881008)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_5'
+,p_message_text=>'LiveScanRolled_5'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202837323773881090)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_6'
+,p_message_text=>'LiveScanRolled_6'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202837597476881159)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_7'
+,p_message_text=>'LiveScanRolled_7'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202837780537881234)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_8'
+,p_message_text=>'LiveScanRolled_8'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202837946402881317)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_9'
+,p_message_text=>'LiveScanRolled_9'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202838285802881398)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_10'
+,p_message_text=>'LiveScanRolled_10'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(202838405220881595)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_2_3_4_5'
+,p_message_text=>'LiveScanRolled_2_3_4_5'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(204442794768629306)
+,p_name=>'FINGERCAPTURE:ERROR.XHR.TITLE'
+,p_message_text=>'Apex Model: Server Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210185434400123510)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_1'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanPlain_1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210185558230123519)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_1'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210185677635123519)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_2'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210185727136123519)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_3'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_3'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210185829825123519)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_4'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_4'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210185902935123519)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_5'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_5'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210186085710123519)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_6'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_6'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210186151731123520)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_7'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_7'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210186212867123520)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_8'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_8'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210186337998123520)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_9'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_9'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210186416149123520)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_10'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_10'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210186509161123520)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANROLLED_2_3_4_5'
+,p_message_language=>'th'
+,p_message_text=>'LiveScanRolled_2_3_4_5'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(210186651905123520)
+,p_name=>'FINGERCAPTURE:ERROR.XHR.TITLE'
+,p_message_language=>'th'
+,p_message_text=>'Apex Model: Server Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(211023065473292138)
+,p_name=>'IDENTITY_DELETE.WARNING.TRAVEL_DOCS_MUST_BE_DELETED_BEFORE'
+,p_message_text=>'You must delete all travel documents of this identity before.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(218670852940502263)
+,p_name=>'IDENTITY_DELETE.WARNING.TRAVEL_DOCS_MUST_BE_DELETED_BEFORE'
+,p_message_language=>'th'
+,p_message_text=>'You must delete all travel documents of this identity before. '
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(239391518889595550)
+,p_name=>'CASE_NUMBER_ALLREADY_USED'
+,p_message_text=>'The casenumber is is allready used in an other case. You must choose a higher number.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(249950868097613720)
+,p_name=>'TEST'
+,p_message_text=>'TEST'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(249951051520613720)
+,p_name=>'TEST'
+,p_message_language=>'th'
+,p_message_text=>'TEST in THAI'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(250316293924681656)
+,p_name=>'UM_PWD_EXPIRE_1'
+,p_message_text=>'Please change your password, it will expire in %0 day(s).'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(250316478528681656)
+,p_name=>'UM_PWD_EXPIRE_1'
+,p_message_language=>'th'
+,p_message_text=>'Please change your password, it will expire in %0 day(s).'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(250348402139752698)
+,p_name=>'UM_PWD_EXPIRE_2'
+,p_message_text=>'day(s).'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(250348659208752699)
+,p_name=>'UM_PWD_EXPIRE_2'
+,p_message_language=>'th'
+,p_message_text=>'day(s).'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(252196551022607230)
+,p_name=>'UM_PWD_EXPIRE'
+,p_message_text=>'Please change your password, it will expire in %0 day(s).'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(252196725184607231)
+,p_name=>'UM_PWD_EXPIRE'
+,p_message_language=>'th'
+,p_message_text=>'Please change your password, it will expire in %0 day(s).'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259228318463179209)
+,p_name=>'UM_ERR_MSG_USR_NOT_EXISTS'
+,p_message_text=>'User does not exist.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259228509793179210)
+,p_name=>'UM_ERR_MSG_USR_NOT_EXISTS'
+,p_message_language=>'th'
+,p_message_text=>'User does not exist.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259242743872187012)
+,p_name=>'UM_ERR_MSG_COMP_NOT_EXISTS'
+,p_message_text=>'Computer does not exist.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259242982270187012)
+,p_name=>'UM_ERR_MSG_COMP_NOT_EXISTS'
+,p_message_language=>'th'
+,p_message_text=>'Computer does not exist.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259247776088206834)
+,p_name=>'UM_ERR_MSG_PWD_NOT_CORRECT'
+,p_message_text=>'Password is not correct.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259247994984206834)
+,p_name=>'UM_ERR_MSG_PWD_NOT_CORRECT'
+,p_message_language=>'th'
+,p_message_text=>'Password is not correct.'
+);
+end;
+/
+begin
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259270245129225684)
+,p_name=>'UM_ERR_MSG_PWD_CHANGE'
+,p_message_text=>'Password must be changed before next login.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259270422762225684)
+,p_name=>'UM_ERR_MSG_PWD_CHANGE'
+,p_message_language=>'th'
+,p_message_text=>'Password must be changed before next login.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259274959684234772)
+,p_name=>'UM_ERR_MSG_USERNAME_EX'
+,p_message_text=>'User with this username already exists'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259275123056234772)
+,p_name=>'UM_ERR_MSG_USERNAME_EX'
+,p_message_language=>'th'
+,p_message_text=>'User with this username already exists'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259279455467239422)
+,p_name=>'UM_ERR_MSG_COMPNAME_EX'
+,p_message_text=>'Computer with this name already exists'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259279600608239422)
+,p_name=>'UM_ERR_MSG_COMPNAME_EX'
+,p_message_language=>'th'
+,p_message_text=>'Computer with this name already exists'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259284418037250995)
+,p_name=>'UM_ERR_MSG_USR_EX_IN_AD'
+,p_message_text=>'User already exists in AD'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259284663534250995)
+,p_name=>'UM_ERR_MSG_USR_EX_IN_AD'
+,p_message_language=>'th'
+,p_message_text=>'User already exists in AD'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259299318672257984)
+,p_name=>'UM_ERR_MSG_COMP_EX_IN_AD'
+,p_message_text=>'Computer already exists in AD'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259299552266257984)
+,p_name=>'UM_ERR_MSG_COMP_EX_IN_AD'
+,p_message_language=>'th'
+,p_message_text=>'Computer already exists in AD'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259303962062263104)
+,p_name=>'UM_ERR_MSG_NO_UM'
+,p_message_text=>'No user pool configured - neither Active Directory nor Dermalog User Management. Check parameter settings.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259304131813263104)
+,p_name=>'UM_ERR_MSG_NO_UM'
+,p_message_language=>'th'
+,p_message_text=>'No user pool configured - neither Active Directory nor Dermalog User Management. Check parameter settings.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259366730420456884)
+,p_name=>'UM_ERR_MSG_PWD_MIN_LENGTH'
+,p_message_text=>'Password is too short.  Minimum length:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259366985817456885)
+,p_name=>'UM_ERR_MSG_PWD_MIN_LENGTH'
+,p_message_language=>'th'
+,p_message_text=>'Password is too short. Minimum length:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259371253787462090)
+,p_name=>'UM_ERR_MSG_PWD_MAX_LENGTH'
+,p_message_text=>'Password is too long. Maximum length:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259371485563462091)
+,p_name=>'UM_ERR_MSG_PWD_MAX_LENGTH'
+,p_message_language=>'th'
+,p_message_text=>'Password is too long. Maximum length:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259386415709479245)
+,p_name=>'UM_ERR_MSG_PWD_WO_ALPHA'
+,p_message_text=>'Password contains no alphabetic character.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259386627542479246)
+,p_name=>'UM_ERR_MSG_PWD_WO_ALPHA'
+,p_message_language=>'th'
+,p_message_text=>'Password contains no alphabetic character.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259391267892485403)
+,p_name=>'UM_ERR_MSG_PWD_WO_NUMERIC'
+,p_message_text=>'Password contains no numeric character.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259391481439485403)
+,p_name=>'UM_ERR_MSG_PWD_WO_NUMERIC'
+,p_message_language=>'th'
+,p_message_text=>'Password contains no numeric character.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259395937750492032)
+,p_name=>'UM_ERR_MSG_PWD_WO_PUNCTUATION'
+,p_message_text=>'Password contains no punctuation character.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259396171025492033)
+,p_name=>'UM_ERR_MSG_PWD_WO_PUNCTUATION'
+,p_message_language=>'th'
+,p_message_text=>'Password contains no punctuation character.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259400494033496465)
+,p_name=>'UM_ERR_MSG_PWD_WO_UPPER_LOWER'
+,p_message_text=>'Password must contain upper and lower character'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259400623900496466)
+,p_name=>'UM_ERR_MSG_PWD_WO_UPPER_LOWER'
+,p_message_language=>'th'
+,p_message_text=>'Password must contain upper and lower character'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259405139436503687)
+,p_name=>'UM_ERR_MSG_PWD_DIFFER_OLD'
+,p_message_text=>'Password doesn''t differ from old password.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259405309989503687)
+,p_name=>'UM_ERR_MSG_PWD_DIFFER_OLD'
+,p_message_language=>'th'
+,p_message_text=>'Password doesn''t differ from old password.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259409905663510374)
+,p_name=>'UM_ERR_MSG_PWD_DIFFER_N_LAST'
+,p_message_text=>'Password doesn''t differ from n last passwords.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259410166219510375)
+,p_name=>'UM_ERR_MSG_PWD_DIFFER_N_LAST'
+,p_message_language=>'th'
+,p_message_text=>'Password doesn''t differ from n last passwords.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259436359620574524)
+,p_name=>'UM_ERR_MSG_PWD_REUSED'
+,p_message_text=>'Password has been used in the past.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259436562003574524)
+,p_name=>'UM_ERR_MSG_PWD_REUSED'
+,p_message_language=>'th'
+,p_message_text=>'Password has been used in the past.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259441085754577294)
+,p_name=>'UM_ERR_MSG_PWD_W_USERNAME'
+,p_message_text=>'Password contains username.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259441205798577294)
+,p_name=>'UM_ERR_MSG_PWD_W_USERNAME'
+,p_message_language=>'th'
+,p_message_text=>'Password contains username.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259445868190580490)
+,p_name=>'UM_ERR_MSG_PWD_CONTAIN_F_NAME'
+,p_message_text=>'Password contains first name.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259446025491580490)
+,p_name=>'UM_ERR_MSG_PWD_CONTAIN_F_NAME'
+,p_message_language=>'th'
+,p_message_text=>'Password contains first name.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259450344543583707)
+,p_name=>'UM_ERR_MSG_PWD_CONTAIN_L_NAME'
+,p_message_text=>'Password contains last name.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259450565236583707)
+,p_name=>'UM_ERR_MSG_PWD_CONTAIN_L_NAME'
+,p_message_language=>'th'
+,p_message_text=>'Password contains last name.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259457928209587318)
+,p_name=>'UM_ERR_MSG_PWD_CONTAIN_PHONE'
+,p_message_text=>'Password contains phone number.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259458199282587319)
+,p_name=>'UM_ERR_MSG_PWD_CONTAIN_PHONE'
+,p_message_language=>'th'
+,p_message_text=>'Password contains phone number.'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259469591855591264)
+,p_name=>'UM_ERR_MSG_PWD_CHAR_REPEAT'
+,p_message_text=>'Password contains too many repetitions of the same character in a row. Maximum repetitions:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259469716799591264)
+,p_name=>'UM_ERR_MSG_PWD_CHAR_REPEAT'
+,p_message_language=>'th'
+,p_message_text=>'Password contains too many repetitions of the same character in a row. Maximum repetitions:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259474553838594492)
+,p_name=>'UM_ERR_MSG_PWD_CONSECUTIVE'
+,p_message_text=>'Password contains too many consecutive characters in a row.  Maximum consecutive characters:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259474776352594492)
+,p_name=>'UM_ERR_MSG_PWD_CONSECUTIVE'
+,p_message_language=>'th'
+,p_message_text=>'Password contains too many consecutive characters in a row.  Maximum consecutive characters:'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259479549345613219)
+,p_name=>'UM_ERR_MSG_NO_PERMISSION'
+,p_message_text=>'User has no permission to perform this action!'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(259479788054613219)
+,p_name=>'UM_ERR_MSG_NO_PERMISSION'
+,p_message_language=>'th'
+,p_message_text=>'User has no permission to perform this action!'
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809430211874224351)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.HEADER.RESTART'
+,p_message_language=>'de'
+,p_message_text=>'Restart'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809430486408224371)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.BUTTON.CLOSE'
+,p_message_language=>'de'
+,p_message_text=>'Close'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809430723620224402)
+,p_name=>'FACEITEM:PHOTO LIVE/UPLOAD'
+,p_message_language=>'de'
+,p_message_text=>'Photo Live/Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809431032833224429)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.CONNECTING'
+,p_message_language=>'de'
+,p_message_text=>'connecting'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809431379108224452)
+,p_name=>'FINGERITEM:NEW'
+,p_message_language=>'de'
+,p_message_text=>'New'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809431501073224482)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_language=>'de'
+,p_message_text=>'Finger Capture Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809431842885224509)
+,p_name=>'FINGERCAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_language=>'de'
+,p_message_text=>'Reconnect'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809432122995227044)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_language=>'de'
+,p_message_text=>'Could not connect to Device'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809451794321507784)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGLABEL'
+,p_message_language=>'de'
+,p_message_text=>'Defogging'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809451950219507809)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_'
+,p_message_language=>'de'
+,p_message_text=>'LiveScanPlain_'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809452257893507809)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGTOOLTIP'
+,p_message_language=>'de'
+,p_message_text=>'This enables the defogging feature on Palm3 scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809452691534507836)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'de'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809452788329507836)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.UNKNOWN'
+,p_message_language=>'de'
+,p_message_text=>'Unknown'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809453255603507865)
+,p_name=>'FACEITEM:UPLOAD.LABEL'
+,p_message_language=>'de'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809453306040507865)
+,p_name=>'FACEITEM:PORTRAIT PASS'
+,p_message_language=>'de'
+,p_message_text=>'Portrait Pass'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809453826502507890)
+,p_name=>'PASSPORTCAPTURE:PASSPORT CAPTURE COMPONENT'
+,p_message_language=>'de'
+,p_message_text=>'Passport Capture Component'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809454414167507914)
+,p_name=>'FINGERITEM:RIGHT THUMB'
+,p_message_language=>'de'
+,p_message_text=>'Right thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809454556319507914)
+,p_name=>'FINGERITEM:UPLOAD.LABEL'
+,p_message_language=>'de'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809455199535507970)
+,p_name=>'NIST:FILESELECTOR.CHOOSE_A_NIST_FILE'
+,p_message_language=>'de'
+,p_message_text=>'Select a NIST File from your harddisk'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809455473464507971)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_language=>'de'
+,p_message_text=>'Could not connect to Device<br/>Retry in 10 sec'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809455742031508081)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.READY'
+,p_message_language=>'de'
+,p_message_text=>'ready'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809457108050513447)
+,p_name=>'NIST:INDEX.ROLLEDFINGERPRINTS'
+,p_message_language=>'de'
+,p_message_text=>'Rolled Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809457303948513448)
+,p_name=>'NIST:INDEX.PHOTOS'
+,p_message_language=>'de'
+,p_message_text=>'Photos'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809457672483513462)
+,p_name=>'NIST:INDEX.DESCRIPTIVEDATA'
+,p_message_language=>'de'
+,p_message_text=>'Descriptive Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809457964623513486)
+,p_name=>'NIST:INDEX.FINGERPRINTS'
+,p_message_language=>'de'
+,p_message_text=>'Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809458342725513701)
+,p_name=>'NIST:INDEX.DEMOGRAPHIC'
+,p_message_language=>'de'
+,p_message_text=>'Demographic Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809458506561513712)
+,p_name=>'NIST:PLAIN.ENTRIES.IMPORTABLE'
+,p_message_language=>'de'
+,p_message_text=>'Is Importable'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809458948266513726)
+,p_name=>'NIST:PLAIN.ENTRIES.FINGERPRINT'
+,p_message_language=>'de'
+,p_message_text=>'Fingerprint'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809459080313513726)
+,p_name=>'NIST:PLAIN.ENTRIES.POSITION'
+,p_message_language=>'de'
+,p_message_text=>'Position'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809459380620513764)
+,p_name=>'NIST:PLAIN.ENTRIES.IMPRESSIONTYPE'
+,p_message_language=>'de'
+,p_message_text=>'Impression Type'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809459785988513944)
+,p_name=>'NIST:PLAIN.ENTRIES.DIMENSION'
+,p_message_language=>'de'
+,p_message_text=>'Dimension'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809459878865513944)
+,p_name=>'NIST:PLAINFINGERPRINTS.NOT_IMPORTABLE'
+,p_message_language=>'de'
+,p_message_text=>'This type can not be imported into the current setup.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809460160960514276)
+,p_name=>'NIST:FACE.ENTRIES.IMPORTABLE'
+,p_message_language=>'de'
+,p_message_text=>'Is Importable'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809460326294514308)
+,p_name=>'NIST:FACE.ENTRIES.FINGERPRINT'
+,p_message_language=>'de'
+,p_message_text=>'Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809460755660514334)
+,p_name=>'NIST:FACE.ENTRIES.IMPRESSIONTYPE'
+,p_message_language=>'de'
+,p_message_text=>'Impression Type'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809460840380514334)
+,p_name=>'NIST:FACE.ENTRIES.POSITION'
+,p_message_language=>'de'
+,p_message_text=>'Position'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809461188806514377)
+,p_name=>'NIST:FACE.ENTRIES.DIMENSION'
+,p_message_language=>'de'
+,p_message_text=>'Dimension'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809462629240517928)
+,p_name=>'FACEITEM:PHOTO CANDIDATE'
+,p_message_language=>'de'
+,p_message_text=>'Photo candidate'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809465970685229987)
+,p_name=>'NIST:INDEX.PLAINFINGERPRINTS'
+,p_message_language=>'de'
+,p_message_text=>'Plain Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809474335745234450)
+,p_name=>'FACEITEM:PHOTO'
+,p_message_language=>'de'
+,p_message_text=>'Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809474525479239010)
+,p_name=>'FINGERITEM:RIGHT RING'
+,p_message_language=>'de'
+,p_message_text=>'Right Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809489061385522446)
+,p_name=>'FACEITEM:PHOTO 1'
+,p_message_language=>'de'
+,p_message_text=>'Photo 1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809489256064522450)
+,p_name=>'FACEITEM:PHOTO 2'
+,p_message_language=>'de'
+,p_message_text=>'Photo 2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809489547566522469)
+,p_name=>'FINGERITEM:RIGHT MIDDLE'
+,p_message_language=>'de'
+,p_message_text=>'Right Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809489855445522470)
+,p_name=>'FINGERITEM:RIGHT INDEX'
+,p_message_language=>'de'
+,p_message_text=>'Right Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809490191624522486)
+,p_name=>'FINGERITEM:RIGHT LITTLE'
+,p_message_language=>'de'
+,p_message_text=>'Right Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809490430807522487)
+,p_name=>'FINGERITEM:LEFT THUMB'
+,p_message_language=>'de'
+,p_message_text=>'Left Thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809490829664522508)
+,p_name=>'FINGERITEM:LEFT INDEX'
+,p_message_language=>'de'
+,p_message_text=>'Left Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809490943185522508)
+,p_name=>'FINGERITEM:LEFT MIDDLE'
+,p_message_language=>'de'
+,p_message_text=>'Left Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809491329513522518)
+,p_name=>'FINGERITEM:LEFT RING'
+,p_message_language=>'de'
+,p_message_text=>'Left Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809491530444522544)
+,p_name=>'FINGERITEM:LEFT LITTLE'
+,p_message_language=>'de'
+,p_message_text=>'Left Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809573146400591403)
+,p_name=>'FACEITEM:PHOTO 4'
+,p_message_language=>'de'
+,p_message_text=>'Photo 4'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809587745526874869)
+,p_name=>'FACEITEM:PHOTO 3'
+,p_message_language=>'de'
+,p_message_text=>'Photo 3'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809691527767098745)
+,p_name=>'FACEITEM:CONFIRM.DELETE.CANCEL'
+,p_message_language=>'de'
+,p_message_text=>'Cancel'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809691625872098745)
+,p_name=>'FACEITEM:CONFIRM.DELETE.TEXT'
+,p_message_language=>'de'
+,p_message_text=>'Please Confirm Deletion'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809706810334815296)
+,p_name=>'FACEITEM:CONFIRM.DELETE.TITLE'
+,p_message_language=>'de'
+,p_message_text=>'Please Confirm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809706992961815296)
+,p_name=>'FACEITEM:CONFIRM.DELETE.OK'
+,p_message_language=>'de'
+,p_message_text=>'Delete'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809756822598923697)
+,p_name=>'FACEITEM:WORKFLOW.BACKGROUND.PROCESS.IMAGEUPLOAD'
+,p_message_language=>'de'
+,p_message_text=>'uploading image'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809833332553149430)
+,p_name=>'FINGERITEM:FINGERDETAILS.QUALITYALGORITHM'
+,p_message_language=>'de'
+,p_message_text=>'QualityAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809833414042149430)
+,p_name=>'FINGERITEM:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_language=>'de'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809873582712432899)
+,p_name=>'FINGERITEM:FINGERDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'de'
+,p_message_text=>'Bitte erfassen Sie den Finger, oder wählen eine fehlend Begründing!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809873611441432899)
+,p_name=>'FINGERITEM:FINGERDETAILS.TITLE.RIGHTTHUMB'
+,p_message_language=>'de'
+,p_message_text=>'Rechts Daumen'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809873818934432899)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_language=>'de'
+,p_message_text=>'Device.DeviceType'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809874342522432942)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_language=>'de'
+,p_message_text=>'Hersteller'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809883988862149473)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.NAME'
+,p_message_language=>'de'
+,p_message_text=>'Scanner Name'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809884098331149473)
+,p_name=>'FINGERITEM:FINGERDETAILS.VERTICALLINELENGTH'
+,p_message_language=>'de'
+,p_message_text=>'VerticalLineLength'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809884182507149473)
+,p_name=>'FINGERITEM:FINGERDETAILS.DEVICE.VERSION'
+,p_message_language=>'de'
+,p_message_text=>'Scanner Version'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809884675320149485)
+,p_name=>'FINGERITEM:FINGERDETAILS.BUTTON.CLOSE'
+,p_message_language=>'de'
+,p_message_text=>'Schliessen'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34809884855158149486)
+,p_name=>'FINGERITEM:USEMOUSEWHEEL.TO.ZOOM'
+,p_message_language=>'de'
+,p_message_text=>'Use the mouse wheel to zoom in.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34855512896961376017)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_10_9_8_7'
+,p_message_language=>'de'
+,p_message_text=>'LiveScanPlain_10_9_8_7'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34855519439538090781)
+,p_name=>'PASSPORTCAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_language=>'de'
+,p_message_text=>'Reconnect'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34855519681661090782)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_language=>'de'
+,p_message_text=>'Passport Capture Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34855519763747090783)
+,p_name=>'PASSPORTCAPTURE:PASSPORT.CAPTURE.STATUS.MESSAGE.DISCONNECTED'
+,p_message_language=>'de'
+,p_message_text=>'disconnected'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34855519849776090783)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_language=>'de'
+,p_message_text=>'Could not connect to Device<br/>Retry in 10 sec'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34855520616333091911)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_2_3_4_5'
+,p_message_language=>'de'
+,p_message_text=>'LiveScanPlain_2_3_4_5'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34855524507506093036)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_6_1'
+,p_message_language=>'de'
+,p_message_text=>'LiveScanPlain_6_1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008193545586904960)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.HEADER.RESTART'
+,p_message_language=>'it'
+,p_message_text=>'Restart'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008193841774905058)
+,p_name=>'FACEITEM:UPLOAD.LABEL'
+,p_message_language=>'it'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008195410922621486)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGLABEL'
+,p_message_language=>'it'
+,p_message_text=>'Defogging'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008195523083621486)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.DEFOGGINGTOOLTIP'
+,p_message_language=>'it'
+,p_message_text=>'This enables the defogging feature on Palm3 scanner'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008195694924621486)
+,p_name=>'FINGERCAPTURE:FINGERCAPTURE.WORKFLOW.STEP.LIVESCANPLAIN_'
+,p_message_language=>'it'
+,p_message_text=>'LiveScanPlain_'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008195896413621493)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.TITLE.UNKNOWN'
+,p_message_language=>'it'
+,p_message_text=>'Unknown'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008196498531621595)
+,p_name=>'FACEITEM:PHOTO 2'
+,p_message_language=>'it'
+,p_message_text=>'Photo 2'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008196544851621595)
+,p_name=>'FACEITEM:PHOTO 1'
+,p_message_language=>'it'
+,p_message_text=>'Photo 1'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008196830204621600)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.BUTTON.CLOSE'
+,p_message_language=>'it'
+,p_message_text=>'Close'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008197241565621721)
+,p_name=>'FINGERITEM:UPLOAD.LABEL'
+,p_message_language=>'it'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008197449103621824)
+,p_name=>'FINGERITEM:RIGHT LITTLE'
+,p_message_language=>'it'
+,p_message_text=>'Right Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008197706843621825)
+,p_name=>'FINGERITEM:RIGHT RING'
+,p_message_language=>'it'
+,p_message_text=>'Right Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008198014656621853)
+,p_name=>'FINGERITEM:LEFT INDEX'
+,p_message_language=>'it'
+,p_message_text=>'Left Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008198295999621892)
+,p_name=>'FINGERITEM:LEFT LITTLE'
+,p_message_language=>'it'
+,p_message_text=>'Left Little'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008198504576621971)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.RETRY'
+,p_message_language=>'it'
+,p_message_text=>'Could not connect to Device<br/>Retry in 10 sec'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008198796597622033)
+,p_name=>'NIST:INDEX.DEMOGRAPHIC'
+,p_message_language=>'it'
+,p_message_text=>'Descriptive Data'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008199045726622033)
+,p_name=>'NIST:FILESELECTOR.CHOOSE_A_NIST_FILE'
+,p_message_language=>'it'
+,p_message_text=>'Select a NIST File from your harddisk'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008204010819905063)
+,p_name=>'FINGERCAPTURE:FINGERDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'it'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008204455634905233)
+,p_name=>'FACEITEM:PHOTO 4'
+,p_message_language=>'it'
+,p_message_text=>'Photo 4'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008204588388905234)
+,p_name=>'FACEITEM:PHOTO 3'
+,p_message_language=>'it'
+,p_message_text=>'Photo 3'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008204789960905235)
+,p_name=>'FINGERITEM:RIGHT THUMB'
+,p_message_language=>'it'
+,p_message_text=>'Right Thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008205083557905243)
+,p_name=>'FINGERITEM:RIGHT INDEX'
+,p_message_language=>'it'
+,p_message_text=>'Right Index'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008205429291905274)
+,p_name=>'FINGERITEM:RIGHT MIDDLE'
+,p_message_language=>'it'
+,p_message_text=>'Right Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008205867024905383)
+,p_name=>'FINGERITEM:LEFT THUMB'
+,p_message_language=>'it'
+,p_message_text=>'Left Thumb'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008205994727905383)
+,p_name=>'FINGERITEM:LEFT MIDDLE'
+,p_message_language=>'it'
+,p_message_text=>'Left Middle'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008206351747905389)
+,p_name=>'FINGERITEM:LEFT RING'
+,p_message_language=>'it'
+,p_message_text=>'Left Ring'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008206687618905478)
+,p_name=>'NIST:INDEX.FINGERPRINTS'
+,p_message_language=>'it'
+,p_message_text=>'Fingerprints'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008207047623905481)
+,p_name=>'FINGERCAPTURE:NOTY.DROPOUT.BUTTON.OK'
+,p_message_language=>'it'
+,p_message_text=>'Reconnect'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008207175280905482)
+,p_name=>'FINGERCAPTURE:ERROR.WEBSOCKET.TITLE'
+,p_message_language=>'it'
+,p_message_text=>'Finger Capture Error'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35008207598142905521)
+,p_name=>'NIST:INDEX.PHOTOS'
+,p_message_language=>'it'
+,p_message_text=>'Photos'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35140924209138128083)
+,p_name=>'PASSPORTCAPTURE:ERROR.WEBSOCKET.DESCRIPTION.FINAL'
+,p_message_language=>'de'
+,p_message_text=>'Could not connect to Device'
+,p_is_js_message=>true
+);
+end;
+/

@@ -1,0 +1,155 @@
+prompt --application/pages/page_00023
+begin
+wwv_flow_api.create_page(
+ p_id=>23
+,p_user_interface_id=>wwv_flow_api.id(563846918365049635)
+,p_name=>'Children'
+,p_page_mode=>'NORMAL'
+,p_step_title=>'Children'
+,p_reload_on_submit=>'A'
+,p_warn_on_unsaved_changes=>'N'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_autocomplete_on_off=>'ON'
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_chained=>'Y'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_cache_mode=>'NOCACHE'
+,p_cache_timeout_seconds=>21600
+,p_help_text=>'No help is available for this page.'
+,p_last_updated_by=>'ADMIN'
+,p_last_upd_yyyymmddhh24miss=>'20180730110144'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(909558443219339611)
+,p_plug_name=>'Children'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(563820435896049617)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select ',
+'',
+'',
+'''<img style="border: 0px solid #CCC; -moz-border-radius: 0px; -webkit-border-radius: 0px;object-fit:contain;" ''||''src="''||decode(nvl(dbms_lob.getlength(attrblob),0),0,''#APP_IMAGES#white.png'',apex_util.get_blob_file_src(''P24_ATTRBLOB'',ROWID))||''" heig'
+||'ht="1" width="1"  />'' img_icao_face,',
+'',
+'ROWID, ''Child '' || to_char(floor((seqno - 200) / 10)) ChildID, DECODE(MOD(SEQNO, 10) , 0, ''Last Name'', 1, ''First Name'') caption , attrvarchar, attrblob from MOVEMENT_ATTR where MVMNTID = ''4806B4F2F9950B84E053291E780A6539'';',
+'',
+''))
+,p_plug_source_type=>'NATIVE_IR'
+,p_plug_query_row_template=>1
+);
+wwv_flow_api.create_worksheet(
+ p_id=>wwv_flow_api.id(909558673724339612)
+,p_name=>'Children'
+,p_max_row_count=>'500'
+,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
+,p_no_data_found_message=>'No data found.'
+,p_allow_report_categories=>'N'
+,p_show_nulls_as=>'-'
+,p_pagination_type=>'ROWS_X_TO_Y'
+,p_pagination_display_pos=>'BOTTOM_RIGHT'
+,p_report_list_mode=>'TABS'
+,p_show_detail_link=>'C'
+,p_show_calendar=>'N'
+,p_download_formats=>'CSV:HTML:EMAIL:XLS:PDF:RTF'
+,p_detail_link=>'f?p=&APP_ID.:24:&SESSION.::&DEBUG.::P24_ROWID:#ROWID#'
+,p_detail_link_text=>'<img src="#IMAGE_PREFIX#e2.gif"  border="0">'
+,p_icon_view_columns_per_row=>1
+,p_owner=>'ADMIN'
+,p_internal_uid=>632203504564380069
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(909558847239339617)
+,p_db_column_name=>'ROWID'
+,p_display_order=>1
+,p_column_identifier=>'A'
+,p_column_label=>'ROWID'
+,p_allow_sorting=>'N'
+,p_allow_filtering=>'N'
+,p_allow_highlighting=>'N'
+,p_allow_ctrl_breaks=>'N'
+,p_allow_aggregations=>'N'
+,p_allow_computations=>'N'
+,p_allow_charting=>'N'
+,p_allow_group_by=>'N'
+,p_allow_pivot=>'N'
+,p_column_type=>'OTHER'
+,p_display_text_as=>'HIDDEN'
+,p_tz_dependent=>'N'
+,p_rpt_show_filter_lov=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(909560031528339621)
+,p_db_column_name=>'ATTRVARCHAR'
+,p_display_order=>4
+,p_column_identifier=>'D'
+,p_column_label=>'Attrvarchar'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(909561977513345342)
+,p_db_column_name=>'CHILDID'
+,p_display_order=>5
+,p_column_identifier=>'E'
+,p_column_label=>'Childid'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(909562424658345342)
+,p_db_column_name=>'CAPTION'
+,p_display_order=>6
+,p_column_identifier=>'F'
+,p_column_label=>'Caption'
+,p_column_type=>'STRING'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(909562839163345343)
+,p_db_column_name=>'ATTRBLOB'
+,p_display_order=>7
+,p_column_identifier=>'G'
+,p_column_label=>'Attrblob'
+,p_allow_sorting=>'N'
+,p_allow_filtering=>'N'
+,p_allow_highlighting=>'N'
+,p_allow_ctrl_breaks=>'N'
+,p_allow_aggregations=>'N'
+,p_allow_computations=>'N'
+,p_allow_charting=>'N'
+,p_allow_group_by=>'N'
+,p_allow_pivot=>'N'
+,p_column_type=>'OTHER'
+,p_tz_dependent=>'N'
+,p_rpt_show_filter_lov=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(909564687182380161)
+,p_db_column_name=>'IMG_ICAO_FACE'
+,p_display_order=>8
+,p_column_identifier=>'H'
+,p_column_label=>'Img Icao Face'
+,p_column_type=>'STRING'
+,p_display_text_as=>'WITHOUT_MODIFICATION'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_rpt(
+ p_id=>wwv_flow_api.id(909563519519345625)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_alias=>'6322084'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_display_rows=>100000
+,p_report_columns=>'ATTRVARCHAR:CHILDID:CAPTION:IMG_ICAO_FACE:'
+,p_break_on=>'CHILDID:0:0:0:0:0'
+,p_break_enabled_on=>'CHILDID:0:0:0:0:0'
+,p_flashback_enabled=>'N'
+);
+end;
+/

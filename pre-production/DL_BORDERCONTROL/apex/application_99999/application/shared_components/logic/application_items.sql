@@ -1,0 +1,25 @@
+prompt --application/shared_components/logic/application_items
+begin
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(137202743160681672)
+,p_name=>'AI_CLIENT_IP'
+,p_scope=>'GLOBAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(106945615714640641)
+,p_name=>'AI_CURRENT_USER_RIGHTS'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(106944534682625389)
+,p_name=>'AI_LANDING_PAGE'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(106944971402626681)
+,p_name=>'AI_TARGET_URL'
+,p_protection_level=>'I'
+);
+end;
+/

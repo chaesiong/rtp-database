@@ -1,0 +1,134 @@
+prompt --application/shared_components/globalization/messages
+begin
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(192249521480554082)
+,p_name=>'FACEITEM:PHOTO'
+,p_message_text=>'Photo'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(192249722410554197)
+,p_name=>'FACEITEM:PHOTO CANDIDATE'
+,p_message_text=>'Photo candidate'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(192249852693554262)
+,p_name=>'FACEITEM:UPLOAD.LABEL'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193513684752294862)
+,p_name=>'FACEITEM:FINGERDETAILS.QUALITYALGORITHM'
+,p_message_text=>'QualityAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193513779774294867)
+,p_name=>'FACEITEM:FACEDETAILS.TITLE.PORTRAIT'
+,p_message_text=>'Portrait'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193514006912294868)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193514276860294893)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VERSION'
+,p_message_text=>'Device.Version'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193514757013294897)
+,p_name=>'FACEITEM:USEMOUSEWHEEL.TO.ZOOM'
+,p_message_text=>'Use the mouse wheel to zoom in.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193514903172294897)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.NAME'
+,p_message_text=>'Device.Name'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193515231729294898)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_text=>'Device.DeviceType'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193515257405294898)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.DONE'
+,p_message_text=>'Face successfully captured!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193515765803294900)
+,p_name=>'FACEITEM:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193516068693294903)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_text=>'Device.Vendor'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(193516410896294916)
+,p_name=>'FACEITEM:FACEDETAILS.BUTTON.CLOSE'
+,p_message_text=>'Close'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21423268850647415555)
+,p_name=>'FACEITEM:รูปภาพ'
+,p_message_text=>'รูปภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(21423268903186415555)
+,p_name=>'FACEITEM:รูปภาพบุคคลต้องห้าม/เฝ้าระวัง'
+,p_message_text=>'รูปภาพบุคคลต้องห้าม/เฝ้าระวัง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34817867982226387359)
+,p_name=>'FACEITEM:UPLOAD.LABEL'
+,p_message_language=>'th'
+,p_message_text=>'Upload'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34817868045163387359)
+,p_name=>'FACEITEM:รูปภาพ'
+,p_message_language=>'th'
+,p_message_text=>'รูปภาพ'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(34817868221398387364)
+,p_name=>'FACEITEM:รูปภาพบุคคลต้องห้าม/เฝ้าระวัง'
+,p_message_language=>'th'
+,p_message_text=>'รูปภาพบุคคลต้องห้าม/เฝ้าระวัง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35170897989488352936)
+,p_name=>'FACEITEM:รูปภาพบุคคลเฝ้าดู/เฝ้าระวัง'
+,p_message_text=>'รูปภาพบุคคลเฝ้าดู/เฝ้าระวัง'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(35183387618742003769)
+,p_name=>'FACEITEM:รูปภาพบุคคลเฝ้าดู/เฝ้าระวัง'
+,p_message_language=>'th'
+,p_message_text=>'รูปภาพบุคคลเฝ้าดู/เฝ้าระวัง'
+,p_is_js_message=>true
+);
+end;
+/

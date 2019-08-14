@@ -1,0 +1,313 @@
+prompt --application/pages/page_00009
+begin
+wwv_flow_api.create_page(
+ p_id=>9
+,p_user_interface_id=>wwv_flow_api.id(563846918365049635)
+,p_name=>'Enter Country Information'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Enter Country Information'
+,p_reload_on_submit=>'A'
+,p_warn_on_unsaved_changes=>'N'
+,p_step_sub_title_type=>'TEXT_WITH_SUBSTITUTIONS'
+,p_first_item=>'NO_FIRST_ITEM'
+,p_autocomplete_on_off=>'ON'
+,p_group_id=>wwv_flow_api.id(575896413213708794)
+,p_javascript_file_urls=>'#WORKSPACE_IMAGES#GenericFunctions.js'
+,p_javascript_code=>'var htmldb_delete_message=''"DELETE_CONFIRM_MSG"'';'
+,p_page_template_options=>'#DEFAULT#'
+,p_dialog_height=>'350'
+,p_dialog_chained=>'Y'
+,p_overwrite_navigation_list=>'N'
+,p_page_is_public_y_n=>'N'
+,p_protection_level=>'C'
+,p_cache_mode=>'NOCACHE'
+,p_cache_timeout_seconds=>21600
+,p_help_text=>'No help is available for this page.'
+,p_last_updated_by=>'ADMIN'
+,p_last_upd_yyyymmddhh24miss=>'20171110161748'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(844610776130959511)
+,p_plug_name=>'Edit Country'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(563812786985049615)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_attribute_01=>'N'
+,p_attribute_02=>'TEXT'
+,p_attribute_03=>'Y'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(844611475842959512)
+,p_plug_name=>'Buttons'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(563812934294049615)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'REGION_POSITION_03'
+,p_plug_query_row_template=>1
+,p_attribute_01=>'N'
+,p_attribute_02=>'TEXT'
+,p_attribute_03=>'Y'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(844611394947959512)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_api.id(844611475842959512)
+,p_button_name=>'DELETE'
+,p_button_action=>'REDIRECT_URL'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(563841742376049627)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Delete'
+,p_button_position=>'REGION_TEMPLATE_DELETE'
+,p_button_redirect_url=>'javascript:apex.confirm(htmldb_delete_message,''DELETE'');'
+,p_button_execute_validations=>'N'
+,p_button_condition=>'P9_CTRYNO'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_button_css_classes=>'deletebutton'
+,p_grid_new_grid=>false
+,p_database_action=>'DELETE'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(844611277862959512)
+,p_button_sequence=>30
+,p_button_plug_id=>wwv_flow_api.id(844611475842959512)
+,p_button_name=>'SAVE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(563841742376049627)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Apply Changes'
+,p_button_position=>'REGION_TEMPLATE_NEXT'
+,p_button_condition=>'P9_CTRYNO'
+,p_button_condition_type=>'ITEM_IS_NOT_NULL'
+,p_grid_new_grid=>false
+,p_database_action=>'UPDATE'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(844611238384959512)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_api.id(844611475842959512)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(563841742376049627)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Create'
+,p_button_position=>'REGION_TEMPLATE_NEXT'
+,p_button_condition=>'P9_CTRYNO'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_grid_new_grid=>false
+,p_database_action=>'INSERT'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(844611947834959513)
+,p_button_sequence=>50
+,p_button_plug_id=>wwv_flow_api.id(844611475842959512)
+,p_button_name=>'CANCEL'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(563841742376049627)
+,p_button_image_alt=>'Cancel'
+,p_button_position=>'REGION_TEMPLATE_NEXT'
+,p_grid_new_grid=>false
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(844614279647959545)
+,p_name=>'P9_CTRYNO'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_api.id(844610776130959511)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'COUNTRY NUMBER'
+,p_source=>'CTRYNO'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_cSize=>30
+,p_cHeight=>1
+,p_label_alignment=>'RIGHT'
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_protection_level=>'S'
+,p_attribute_01=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(844614718653959633)
+,p_name=>'P9_CTRYCD'
+,p_is_required=>true
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_api.id(844610776130959511)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Country Code'
+,p_source=>'CTRYCD'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>3
+,p_cHeight=>1
+,p_tag_attributes=>'onkeydown="upperCaseF(this)" autofocus'
+,p_field_template=>wwv_flow_api.id(563841465920049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'NONE'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(844614993371959634)
+,p_name=>'P9_CTRYNAME'
+,p_is_required=>true
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_api.id(844610776130959511)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Country Name'
+,p_source=>'CTRYNAME'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>32
+,p_cMaxlength=>55
+,p_cHeight=>1
+,p_tag_attributes=>'onkeydown="upperCaseF(this)"'
+,p_field_template=>wwv_flow_api.id(563841465920049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'NONE'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(844615395299959635)
+,p_name=>'P9_INGRESSCD'
+,p_item_sequence=>40
+,p_item_plug_id=>wwv_flow_api.id(844610776130959511)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'INGRESS CODE'
+,p_source=>'INGRESSCD'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_cSize=>32
+,p_cMaxlength=>2
+,p_cHeight=>1
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(844615807540959636)
+,p_name=>'P9_ACTIVE'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_api.id(844610776130959511)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'ACTIVE'
+,p_source=>'ACTIVE'
+,p_source_type=>'DB_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_cSize=>32
+,p_cMaxlength=>255
+,p_cHeight=>1
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'NO'
+,p_attribute_01=>'Y'
+);
+wwv_flow_api.create_page_computation(
+ p_id=>wwv_flow_api.id(883301577359623786)
+,p_computation_sequence=>10
+,p_computation_item=>'P9_CTRYCD'
+,p_computation_type=>'FUNCTION_BODY'
+,p_computation=>'return upper(:P9_CTRYCD);'
+);
+wwv_flow_api.create_page_validation(
+ p_id=>wwv_flow_api.id(874435789530264543)
+,p_validation_name=>'VAL_UNQ_COUNTRYCODE'
+,p_validation_sequence=>10
+,p_validation=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select 1 from icaocountries where upper(ctrycd)=upper(:P9_CTRYCD) and (:P9_CTRYNO is null or :P9_CTRYNO <> ctryno)',
+'/*select 1 from ICAOCOUNTRIES where CTRYCD = :P9_CTRYCD and not (((:P9_CTRYNO > 0 and CTRYNO = :P9_CTRYNO) or (:P9_CTRYNO is null) or (:P9_CTRYNO < 1)))',
+' and not (((:P9_CTRYNO > 0 and CTRYNO = :P9_CTRYNO) or (:P9_CTRYNO is null) or (:P9_CTRYCD < 1)))*/'))
+,p_validation_type=>'NOT_EXISTS'
+,p_error_message=>'The Country Code must be unique!'
+,p_always_execute=>'N'
+,p_only_for_changed_rows=>'Y'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+);
+wwv_flow_api.create_page_validation(
+ p_id=>wwv_flow_api.id(883302763009660579)
+,p_validation_name=>'VAL_LETTERS_COUNTRYCD'
+,p_validation_sequence=>20
+,p_validation=>'return length(regexp_replace(:P9_CTRYCD, ''[ABCDEFGHIJKLMNOPQRSTUVWXYZ]'', '''')) = 0;'
+,p_validation_type=>'FUNC_BODY_RETURNING_BOOLEAN'
+,p_error_message=>'Illegal characters in Country Code!'
+,p_always_execute=>'N'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(844612011484959513)
+,p_name=>'Cancel Dialog'
+,p_event_sequence=>10
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_api.id(844611947834959513)
+,p_bind_type=>'bind'
+,p_bind_event_type=>'click'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(844612791735959525)
+,p_event_id=>wwv_flow_api.id(844612011484959513)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_DIALOG_CANCEL'
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(844616628818959640)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_HEADER'
+,p_process_type=>'NATIVE_FORM_FETCH'
+,p_process_name=>'Fetch Row from ICAOCOUNTRIES'
+,p_attribute_02=>'ICAOCOUNTRIES'
+,p_attribute_03=>'P9_CTRYNO'
+,p_attribute_04=>'CTRYNO'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(844617058943959646)
+,p_process_sequence=>30
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_FORM_PROCESS'
+,p_process_name=>'Process Row of ICAOCOUNTRIES'
+,p_attribute_02=>'ICAOCOUNTRIES'
+,p_attribute_03=>'P9_CTRYNO'
+,p_attribute_04=>'CTRYNO'
+,p_attribute_11=>'I:U:D'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_success_message=>'Action Processed.'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(844617455324959648)
+,p_process_sequence=>40
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_SESSION_STATE'
+,p_process_name=>'reset page'
+,p_attribute_01=>'CLEAR_CACHE_CURRENT_PAGE'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_button_id=>wwv_flow_api.id(844611394947959512)
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(844617787680959650)
+,p_process_sequence=>50
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'CREATE,SAVE,DELETE'
+,p_process_when_type=>'REQUEST_IN_CONDITION'
+);
+end;
+/
