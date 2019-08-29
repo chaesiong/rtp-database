@@ -97,6 +97,7 @@ function showUsage {
         -r  REST modules of DL_BORDERCONTROL
         -p  Execute privilige on SYS/SYSTEM objects
         -w  APEX workspace
+        -e  APEX static files
         -a "APP1 APP2 APP3"
             APEX applications, with APPx as space separated application IDs in double quotes!
             Defaults to "$APEXApps"
@@ -165,6 +166,41 @@ function exportWorkspace {
     end;
     /
     spool '$EXPORTDIR/DL_BORDERCONTROL/apex/workspace.sql'
+    print contents
+    spool off
+
+EOF
+}
+
+function exportStaticWSFiles {
+    FUNCDEBUG "${FUNCNAME[0]} $@" && return
+
+    test -d "$EXPORTDIR/DL_BORDERCONTROL/apex" || mkdir -p "$EXPORTDIR/DL_BORDERCONTROL/apex"
+    sqlplus -S / as sysdba <<-EOF > /dev/null
+    -- SQL*Plus environment settings
+    -- they are crucial to retrieve a consistent export file
+    set feedback off
+    set heading off
+    set echo off
+    set flush off
+    set termout off
+    set pagesize 0
+    set long 100000000 longchunksize 32767
+    column output format a4000
+    set linesize 4000
+    set trimspool on
+
+    -- variable for storing the data
+    variable contents clob
+
+    declare
+        v_apex_static_files clob;
+    begin
+        select dl_dba.PKG_APEX_UTIL.Script4Static_WS_Files('dl_bordercontrol') into v_apex_static_files from dual;
+        :contents := v_apex_static_files;
+    end;
+    /
+    spool '$EXPORTDIR/DL_BORDERCONTROL/apex/static_workspace_files.sql'
     print contents
     spool off
 
@@ -347,7 +383,6 @@ function exportObjects {
         <value>COMMENT</value>
         <value>INDEX</value>
         <value>OBJECT_GRANT</value>
-        <value>TRIGGER</value>
     </set>
     </entry>
     <entry key="VIEW">
@@ -635,7 +670,7 @@ function zipArchive {
 
 ###############################################################
 
-while getopts "Dfld:s:x:corpwa:i:hz" opt; do
+while getopts "Dfld:s:x:corpwa:i:hze" opt; do
   case $opt in
     D)
         FUNCDEBUG="true"
@@ -646,6 +681,7 @@ while getopts "Dfld:s:x:corpwa:i:hz" opt; do
         exportRESTModules="exportRESTModules"
         exportExecutePriviligeSQLs="exportExecutePriviligeSQLs"
         exportWorkspace="exportWorkspace"
+        exportStaticWSFiles="exportStaticWSFiles"
         exportAPEXApp="exportAPEXApp"
         createInstallDraft="createInstallDraft"
         zipArchive="zipArchive"
@@ -679,6 +715,9 @@ while getopts "Dfld:s:x:corpwa:i:hz" opt; do
         ;;
     w)
         exportWorkspace="exportWorkspace"
+        ;;
+    e)
+        exportStaticWSFiles="exportStaticWSFiles"
         ;;
     a)
         exportAPEXApp="exportAPEXApp"
@@ -732,6 +771,7 @@ fi
 
 $exportExecutePriviligeSQLs
 $exportWorkspace
+$exportStaticWSFiles
 if [ ! -z "$exportAPEXApp" ]; then
     for APP in $APEXApps; do
         exportAPEXApp "$APP"
