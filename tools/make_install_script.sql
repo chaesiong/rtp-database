@@ -7,20 +7,23 @@ declare
                            REF_OWNER DBA_OBJECTS.OWNER%type, REF_OBJECT_NAME DBA_OBJECTS.OBJECT_NAME%type, REF_OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type);
     type r_done is record (OWNER DBA_OBJECTS.OWNER%type, OBJECT_NAME DBA_OBJECTS.OBJECT_NAME%type,
                            OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type);
-    type r_exec is record (EXEC_STMT VARCHAR2(4000));
+    type r_stmt is record (EXEC_STMT VARCHAR2(4000));
 
     type t_obj is table of r_obj index by pls_integer;
     type t_syn is table of r_syn index by pls_integer;
     type t_dep is table of r_dep index by pls_integer;
     type t_done is table of r_done index by varchar2(255);
-    type t_exec is table of r_exec index by pls_integer;
+    type t_stmt is table of r_stmt index by pls_integer;
     l_done_idx varchar2(255);
         
+    l_prof t_stmt;
+    l_grn t_stmt;
     l_obj t_obj;
     l_syn t_syn;
     l_syn_ddl varchar2(4000);
+    l_quot t_stmt;
     l_done t_done;
-    l_exec t_exec;
+    l_exec t_stmt;
     l_exec_idx pls_integer := 1;
     l_exec_str varchar2(4000);
     l_dep t_dep;
@@ -115,6 +118,29 @@ declare
     end;    
     
 begin
+    --fetch quota
+    SELECT 'ALTER USER ' || Q.USERNAME || ' QUOTA ' ||
+    CASE WHEN Q.MAX_BYTES = -1 THEN 'UNLIMITED' ELSE to_char(Q.MAX_BYTES)
+    END || ' ON ' || Q.TABLESPACE_NAME || ';' STMT
+    BULK COLLECT INTO l_quot
+    FROM DBA_TS_QUOTAS Q
+    WHERE Q.USERNAME IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD');
+    --fetch profiles
+    SELECT DISTINCT 'CREATE PROFILE ' || PROFILE || ' LIMIT ' || chr(10) || LISTAGG((RESOURCE_NAME || ' ' || LIMIT), chr(10)) 
+                    WITHIN GROUP (ORDER BY RESOURCE_NAME) OVER (PARTITION BY PROFILE) || ';' STMT
+    BULK COLLECT INTO l_prof                        
+    FROM DBA_PROFILES WHERE PROFILE IN 
+            (SELECT DISTINCT PROFILE FROM DBA_USERS WHERE USERNAME IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD'))
+            AND PROFILE != 'DEFAULT';
+    --fetch grants from other schemas
+    SELECT 'GRANT ' || LISTAGG(PRIVILEGE, ', ') WITHIN GROUP (ORDER BY PRIVILEGE) OVER (PARTITION BY P.GRANTEE, P.OWNER, P.TABLE_NAME, P.GRANTOR) ||
+           ' ON ' || P.OWNER || '.' || P.TABLE_NAME || ' TO ' || GRANTEE || ';' STMT
+    BULK COLLECT INTO l_grn
+    FROM DBA_TAB_PRIVS P
+    WHERE GRANTEE IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
+    AND OWNER NOT IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
+    AND OWNER != 'PIBICSDM2'
+    AND NOT (GRANTOR IN ('SYS', 'SYSTEM') AND TABLE_NAME IN ('SYS', 'SYSTEM') AND PRIVILEGE = 'INHERIT PRIVILEGES');
     --fetch objects
     SELECT DISTINCT OWNER, OBJECT_NAME, OBJECT_TYPE
     BULK COLLECT INTO l_obj
@@ -214,14 +240,25 @@ begin
         end if;
     end loop;
     dbms_output.put_line('SET DEFINE OFF;');
+    for l_prof_idx in 1 .. l_prof.count loop
+        dbms_output.put_line('SELECT ''' || l_prof(l_prof_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
+        dbms_output.put_line(l_prof(l_prof_idx).EXEC_STMT);
+    end loop;        
     dbms_output.put_line('@install-user.sql');
+    for l_quot_idx in 1 .. l_quot.count loop
+        dbms_output.put_line('SELECT ''' || l_quot(l_quot_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
+        dbms_output.put_line(l_quot(l_quot_idx).EXEC_STMT);
+    end loop;    
     dbms_output.put_line('@install-db_links.sql');
     dbms_output.put_line('@install-public_db_links.sql');
-    dbms_output.put_line('@preparations.sql');
+    for l_grn_idx in 1 .. l_grn.count loop
+        dbms_output.put_line('SELECT ''' || l_grn(l_grn_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
+        dbms_output.put_line(l_grn(l_grn_idx).EXEC_STMT);
+    end loop;        
     for l_exec_idx in 1 .. l_exec.count loop
         dbms_output.put_line('SELECT ''' || l_exec(l_exec_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
         dbms_output.put_line(l_exec(l_exec_idx).EXEC_STMT);
-    end loop;
+    end loop;    
     dbms_output.put_line('@install-jobs.sql');
     dbms_output.put_line('@install-dbms_jobs.sql');
     dbms_output.put_line('@install-schedules.sql');
