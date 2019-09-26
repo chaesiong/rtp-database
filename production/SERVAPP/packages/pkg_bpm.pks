@@ -1,0 +1,9 @@
+CREATE OR REPLACE EDITIONABLE PACKAGE "SERVAPP"."PKG_BPM" AS 
+
+   PROCEDURE SEARCH_BLACKLIST_BIO (
+        p_request     IN BLOB,
+        p_message   OUT CLOB
+    );
+
+END PKG_BPM;
+/

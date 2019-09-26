@@ -1,0 +1,3 @@
+CREATE TABLE "PIBICSDM2"."ORN" 
+   (	"T" VARCHAR2(5 CHAR)
+   ) ;

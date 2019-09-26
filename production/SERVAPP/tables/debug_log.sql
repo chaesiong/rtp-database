@@ -1,0 +1,5 @@
+CREATE TABLE "SERVAPP"."DEBUG_LOG" 
+   (	"LOG" VARCHAR2(1000), 
+	"DATA" BLOB
+   ) ;
+  ;

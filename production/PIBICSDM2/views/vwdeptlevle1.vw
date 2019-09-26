@@ -1,0 +1,32 @@
+CREATE OR REPLACE FORCE EDITIONABLE VIEW "PIBICSDM2"."VWDEPTLEVLE1" ("DEPT_SEQNO", "DEPTCD", "DEPTLEVEL", "DEPTENM", "DEPTTNM", "ADDR", "ADDNO", "PV_SEQNO", "AMP_SEQNO", "TMB_SEQNO", "ZIPCODE", "TELNO", "FAX", "EMAIL", "URLDEPT", "ADEPTTYPE", "CONV_SEQNO", "ACTFLAG", "CREATE_BY", "CREATE_DATE", "UPDATE_BY", "UPDATE_DATE", "VERSION", "CONVCD", "ABBRNM", "REL_CODE", "ORG_CODE", "DETAINEE_FLAG") AS 
+  SELECT   "DEPT_SEQNO",
+              "DEPTCD",
+              "DEPTLEVEL",
+              "DEPTENM",
+              "DEPTTNM",
+              "ADDR",
+              "ADDNO",
+              "PV_SEQNO",
+              "AMP_SEQNO",
+              "TMB_SEQNO",
+              "ZIPCODE",
+              "TELNO",
+              "FAX",
+              "EMAIL",
+              "URLDEPT",
+              "ADEPTTYPE",
+              "CONV_SEQNO",
+              "ACTFLAG",
+              "CREATE_BY",
+              "CREATE_DATE",
+              "UPDATE_BY",
+              "UPDATE_DATE",
+              "VERSION",
+              "CONVCD",
+              "ABBRNM",
+              "REL_CODE",
+              "ORG_CODE",
+              "DETAINEE_FLAG"
+       FROM   DEPARTMENT
+      WHERE   DEPTLEVEL = 1
+   ORDER BY   dept_seqno ;

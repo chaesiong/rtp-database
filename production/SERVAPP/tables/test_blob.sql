@@ -1,0 +1,5 @@
+CREATE TABLE "SERVAPP"."TEST_BLOB" 
+   (	"COLUMN1" NUMBER, 
+	"COLUMN2" BLOB
+   ) ;
+  ;
