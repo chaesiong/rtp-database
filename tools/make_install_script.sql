@@ -1,36 +1,55 @@
 declare 
-    type r_obj  is record (OWNER DBA_OBJECTS.OWNER%type, OBJECT_NAME DBA_OBJECTS.OBJECT_NAME%type,
-                           OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type);
-    type r_syn  is record (SYNONYM_NAME DBA_SYNONYMS.SYNONYM_NAME%type, OBJECT_OWNER DBA_SYNONYMS.TABLE_OWNER%type, 
-                           OBJECT_NAME DBA_SYNONYMS.TABLE_NAME%type);
+    type r_obj  is record (OWNER DBA_OBJECTS.OWNER%type, OBJECT_NAME DBA_OBJECTS.OBJECT_NAME%type, OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type);
     type r_dep  is record (OWNER DBA_OBJECTS.OWNER%type, OBJECT_NAME DBA_OBJECTS.OBJECT_NAME%type, OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type,
                            REF_OWNER DBA_OBJECTS.OWNER%type, REF_OBJECT_NAME DBA_OBJECTS.OBJECT_NAME%type, REF_OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type);
-    type r_done is record (OWNER DBA_OBJECTS.OWNER%type, OBJECT_NAME DBA_OBJECTS.OBJECT_NAME%type,
-                           OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type);
-    type r_stmt is record (EXEC_STMT VARCHAR2(4000));
+    type r_ddl  is record (STR VARCHAR2(4000));
 
-    type t_obj is table of r_obj index by pls_integer;
-    type t_syn is table of r_syn index by pls_integer;
-    type t_dep is table of r_dep index by pls_integer;
-    type t_done is table of r_done index by varchar2(255);
-    type t_stmt is table of r_stmt index by pls_integer;
-    l_done_idx varchar2(255);
-        
-    l_prof t_stmt;
-    l_grn t_stmt;
-    l_obj t_obj;
-    l_syn t_syn;
-    l_syn_ddl varchar2(4000);
-    l_quot t_stmt;
-    l_done t_done;
-    l_exec t_stmt;
-    l_exec_idx pls_integer := 1;
-    l_exec_str varchar2(4000);
-    l_dep t_dep;
-    l_obj_dep t_dep;
-
+    type t_obj      is table of r_obj index by pls_integer;
+    type t_dep      is table of r_dep index by pls_integer;
+    type t_ddl      is table of r_ddl index by pls_integer;
+    type t_ddl_obj  is table of r_ddl index by varchar2(255);
+    
+    l_quota_ddl         t_ddl;
+    l_profile_ddl       t_ddl;
+    l_ext_grants_ddl    t_ddl;
+    l_synonyms_ddl      t_ddl_obj;
+    l_grants_ddl        t_ddl_obj;
+    l_obj               t_obj;
+    l_dep               t_dep;
+    l_obj_dep           t_dep;
+    l_done              t_ddl_obj;
+    l_ddl               t_ddl;
+    l_done_idx          varchar2(255);
+    l_obj_id            varchar2(255);
+    l_str         varchar2(4000);
     l_added_cnt number := 0;
-    l_max_loops number := 100;
+    l_max_loops number := 100;    
+    
+    cursor c_grants is
+        SELECT SUB.OWNER, SUB.TABLE_NAME, SUB.TYPE,
+        LISTAGG(SUB.STMT, chr(10)) WITHIN GROUP (ORDER BY NULL) STMT
+        FROM
+        (
+            SELECT DISTINCT P.OWNER, P.TABLE_NAME, P.TYPE, 
+                   'GRANT ' || LISTAGG(PRIVILEGE, ', ') WITHIN GROUP (ORDER BY PRIVILEGE) OVER (PARTITION BY P.GRANTEE, P.OWNER, P.TABLE_NAME, P.GRANTOR) ||
+                   ' ON ' || P.OWNER || '.' || P.TABLE_NAME || ' TO ' || GRANTEE || ';' STMT
+            FROM DBA_TAB_PRIVS P
+            WHERE GRANTEE IN ('PUBLIC','DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
+            AND OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
+        )SUB
+        GROUP BY SUB.OWNER, SUB.TABLE_NAME, SUB.TYPE;
+
+    cursor c_synonyms is
+        SELECT DISTINCT SUB.TABLE_OWNER, SUB.TABLE_NAME, LISTAGG(SUB.STMT, chr(10)) WITHIN GROUP (ORDER BY NULL) STMT
+        FROM
+        (
+            SELECT TABLE_OWNER, TABLE_NAME, 
+                   'CREATE PUBLIC SYNONYM ' || SYNONYM_NAME || ' FOR ' || TABLE_OWNER || '.' || TABLE_NAME || ';' STMT
+            FROM DBA_SYNONYMS S
+            WHERE S.TABLE_OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
+            AND S.OWNER = 'PUBLIC'
+        )SUB
+        GROUP BY SUB.TABLE_OWNER, SUB.TABLE_NAME;
 
     function hasUnresolvedDependency (i_OWNER in DBA_OBJECTS.OWNER%type, i_OBJECT_NAME in DBA_OBJECTS.OBJECT_NAME%type,
                                       i_OBJECT_TYPE in DBA_OBJECTS.OBJECT_TYPE%type) return boolean
@@ -66,20 +85,6 @@ declare
         end loop;
         return l_obj_dep;
     end;    
-    
-    function publicSynonymDDL (i_OWNER in DBA_OBJECTS.OWNER%type, i_OBJECT_NAME in DBA_OBJECTS.OBJECT_NAME%type) return varchar2
-    is
-        l_syn_ddl varchar2(4000);
-    begin
-        for l_syn_idx in 1 .. l_syn.count
-        loop
-            if i_OWNER = l_syn(l_syn_idx).OBJECT_OWNER and i_OBJECT_NAME = l_syn(l_syn_idx).OBJECT_NAME then
-                l_syn_ddl := l_syn_ddl || chr(10) || 'CREATE PUBLIC SYNONYM ' || l_syn(l_syn_idx).SYNONYM_NAME || ' FOR ' || 
-                l_syn(l_syn_idx).OBJECT_OWNER || '.' || l_syn(l_syn_idx).OBJECT_NAME || ';';
-            end if;            
-        end loop;
-        return l_syn_ddl;
-    end;
     
     function folderName (i_OBJECT_TYPE DBA_OBJECTS.OBJECT_TYPE%type) return VARCHAR2
     is
@@ -122,44 +127,49 @@ begin
     SELECT 'ALTER USER ' || Q.USERNAME || ' QUOTA ' ||
     CASE WHEN Q.MAX_BYTES = -1 THEN 'UNLIMITED' ELSE to_char(Q.MAX_BYTES)
     END || ' ON ' || Q.TABLESPACE_NAME || ';' STMT
-    BULK COLLECT INTO l_quot
+    BULK COLLECT INTO l_quota_ddl
     FROM DBA_TS_QUOTAS Q
-    WHERE Q.USERNAME IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD');
+    WHERE Q.USERNAME IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING');
+    
     --fetch profiles
     SELECT DISTINCT 'CREATE PROFILE ' || PROFILE || ' LIMIT ' || chr(10) || LISTAGG((RESOURCE_NAME || ' ' || LIMIT), chr(10)) 
                     WITHIN GROUP (ORDER BY RESOURCE_NAME) OVER (PARTITION BY PROFILE) || ';' STMT
-    BULK COLLECT INTO l_prof                        
+    BULK COLLECT INTO l_profile_ddl                        
     FROM DBA_PROFILES WHERE PROFILE IN 
-            (SELECT DISTINCT PROFILE FROM DBA_USERS WHERE USERNAME IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD'))
+            (SELECT DISTINCT PROFILE FROM DBA_USERS WHERE USERNAME IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING'))
             AND PROFILE != 'DEFAULT';
+    
     --fetch grants from other schemas
     SELECT 'GRANT ' || LISTAGG(PRIVILEGE, ', ') WITHIN GROUP (ORDER BY PRIVILEGE) OVER (PARTITION BY P.GRANTEE, P.OWNER, P.TABLE_NAME, P.GRANTOR) ||
            ' ON ' || P.OWNER || '.' || P.TABLE_NAME || ' TO ' || GRANTEE || ';' STMT
-    BULK COLLECT INTO l_grn
+    BULK COLLECT INTO l_ext_grants_ddl
     FROM DBA_TAB_PRIVS P
-    WHERE GRANTEE IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
-    AND OWNER NOT IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
-    AND OWNER != 'PIBICSDM2'
+    WHERE GRANTEE IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
+    AND OWNER NOT IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
     AND NOT (GRANTOR IN ('SYS', 'SYSTEM') AND TABLE_NAME IN ('SYS', 'SYSTEM') AND PRIVILEGE = 'INHERIT PRIVILEGES');
+    
+    --fetch grants
+    for l_grant in c_grants loop
+        l_grants_ddl(l_grant.owner || '.' || l_grant.table_name || '.' || l_grant.type).STR := l_grant.stmt;
+    end loop;
+    
+    --fetch public synonyms
+    for l_synonym in c_synonyms loop
+        l_synonyms_ddl(l_synonym.table_name || '.' || l_synonym.table_name).STR := l_synonym.stmt;
+    end loop;    
+
     --fetch objects
     SELECT DISTINCT OWNER, OBJECT_NAME, OBJECT_TYPE
     BULK COLLECT INTO l_obj
     FROM DBA_OBJECTS O
     WHERE 
     O.OBJECT_NAME NOT LIKE 'BIN$%'
-    AND O.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
+    AND O.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
     AND O.OBJECT_TYPE in ('PACKAGE BODY','PROCEDURE','MATERIALIZED VIEW','SYNONYM','TYPE','SEQUENCE','PACKAGE','FUNCTION','TRIGGER','TABLE','VIEW')
     ORDER BY OWNER,
     CASE WHEN OBJECT_TYPE = 'PACKAGE' THEN 0 ELSE 1 END,
     OBJECT_NAME;
     dbms_output.put_line('-- Found ' || to_char(l_obj.count) || ' objects');
-
-    --fetch public synonyms
-    SELECT SYNONYM_NAME, TABLE_OWNER, TABLE_NAME
-    BULK COLLECT INTO l_syn
-    FROM DBA_SYNONYMS S
-    WHERE S.TABLE_OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
-    AND S.OWNER = 'PUBLIC';
     
     --fetch dependencies
     SELECT OWNER, NAME, TYPE, REFERENCED_OWNER, REFERENCED_NAME, REFERENCED_TYPE
@@ -173,21 +183,21 @@ begin
             FROM DBA_OBJECTS O
             WHERE 
             O.OBJECT_NAME NOT LIKE 'BIN$%'
-            AND O.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
+            AND O.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
             AND O.OBJECT_TYPE in ('PACKAGE BODY','PROCEDURE','MATERIALIZED VIEW','SYNONYM','TYPE','SEQUENCE','PACKAGE','FUNCTION','TRIGGER','TABLE','VIEW')    
             )
-        AND D.REFERENCED_OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
+        AND D.REFERENCED_OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
         AND D.REFERENCED_TYPE IN ('PACKAGE BODY','PROCEDURE','MATERIALIZED VIEW','SYNONYM','TYPE','SEQUENCE','PACKAGE','FUNCTION','TRIGGER','TABLE','VIEW')
         AND D.REFERENCED_NAME NOT LIKE 'BIN$%'
-    UNION
+    /*UNION
         SELECT C.OWNER, C.TABLE_NAME NAME, 'TABLE' TYPE, CC.OWNER REFERENCED_OWNER, CC.TABLE_NAME REFERENCED_NAME, 'TABLE' REFERENCED_TYPE
         FROM ALL_CONSTRAINTS C, ALL_CONS_COLUMNS CC
         WHERE C.R_OWNER = CC.OWNER
         AND C.R_CONSTRAINT_NAME = CC.CONSTRAINT_NAME
         AND C.CONSTRAINT_TYPE = 'R'
-        AND C.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
-        AND CC.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','BIO_BD')
-        AND NOT (C.OWNER = CC.OWNER AND C.TABLE_NAME = CC.TABLE_NAME)
+        AND C.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
+        AND CC.OWNER IN ('DL_COMMON','LOGGER','DL_DBA','DL_USER_MANAGEMENT','APEX_USER_MANAGEMENT','USER_MANAGEMENT','DL_BIOSTORE_BLACKLIST','DL_BIOSTORE_MOVEMENTS','DL_BORDERCONTROL','DL_BLACKLIST','DL_BORDERCONTROL_DATAMART','DL_STAGING4PIBICS','DL_STAGING4PIBICS_INTF','DL_INTERFACE','PIBICSDM2_RO','PIBICSDM2','BIO_BD','SERVAPP','JASPER_REPORTING','DL_STAGING')
+        AND NOT (C.OWNER = CC.OWNER AND C.TABLE_NAME = CC.TABLE_NAME)*/
         );
         
     dbms_output.put_line('-- Found ' || to_char(l_dep.count) || ' dependencies');
@@ -197,20 +207,23 @@ begin
         l_added_cnt := 0;
         for l_obj_idx in 1 .. l_obj.count
         loop
-            if not l_done.exists(l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME || '.' || l_obj(l_obj_idx).OBJECT_TYPE) then
+            l_obj_id := l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME || '.' || l_obj(l_obj_idx).OBJECT_TYPE;
+            if not l_done.exists(l_obj_id) then
                 if not hasUnresolvedDependency (l_obj(l_obj_idx).OWNER, l_obj(l_obj_idx).OBJECT_NAME, l_obj(l_obj_idx).OBJECT_TYPE) then
-                    l_done(l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME || '.' || l_obj(l_obj_idx).OBJECT_TYPE).OWNER := l_obj(l_obj_idx).OWNER;
-                    l_done(l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME || '.' || l_obj(l_obj_idx).OBJECT_TYPE).OBJECT_NAME := l_obj(l_obj_idx).OBJECT_NAME;
-                    l_done(l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME || '.' || l_obj(l_obj_idx).OBJECT_TYPE).OBJECT_TYPE := l_obj(l_obj_idx).OBJECT_TYPE;
-                    l_exec_str := '@./' || l_obj(l_obj_idx).OWNER || '/' || folderName(l_obj(l_obj_idx).OBJECT_TYPE) || '/' ||
-                                  replace(lower(l_obj(l_obj_idx).OBJECT_NAME),'$','\\\$') || '.' || fileEnding(l_obj(l_obj_idx).OBJECT_TYPE);
-                    --add public synonyms                                                    
-                    l_syn_ddl := publicSynonymDDL (i_OWNER => l_obj(l_obj_idx).OWNER, i_OBJECT_NAME => l_obj(l_obj_idx).OBJECT_NAME);
-                    if l_syn_ddl is not null then
-                        l_exec_str := l_exec_str || l_syn_ddl;
+                    l_str := '@./' || l_obj(l_obj_idx).OWNER || '/' || folderName(l_obj(l_obj_idx).OBJECT_TYPE) || '/' ||
+                                   replace(lower(l_obj(l_obj_idx).OBJECT_NAME),'$','\\\$') || '.' || fileEnding(l_obj(l_obj_idx).OBJECT_TYPE);
+                    --add grants
+                    if l_grants_ddl.exists(l_obj_id) then
+                        l_str := l_str || chr(10) || l_grants_ddl(l_obj_id).STR;
                     end if;
-                    l_exec(l_exec_idx).EXEC_STMT := l_exec_str;
-                    l_exec_idx := l_exec_idx + 1;
+                    
+                    --add public synonyms                                                    
+                    if l_synonyms_ddl.exists(l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME) then
+                        l_str := l_str || chr(10) || l_synonyms_ddl(l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME).STR;
+                    end if;
+
+                    l_done(l_obj_id).STR := l_obj_id;
+                    l_ddl(l_ddl.count + 1).STR := l_str;
                     l_added_cnt := l_added_cnt + 1;
                 end if;
             end if;
@@ -227,7 +240,8 @@ begin
     --list unresolved dependencies
     for l_obj_idx in 1 .. l_obj.count
     loop
-        if not l_done.exists(l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME || '.' || l_obj(l_obj_idx).OBJECT_TYPE) then    
+        l_obj_id := l_obj(l_obj_idx).OWNER || '.' || l_obj(l_obj_idx).OBJECT_NAME || '.' || l_obj(l_obj_idx).OBJECT_TYPE;
+        if not l_done.exists(l_obj_id) then    
             dbms_output.put_line('-- Could not resolve all dependencies for object ' || l_obj(l_obj_idx).OWNER ||
                                  '.' || l_obj(l_obj_idx).OBJECT_NAME || ' (' || l_obj(l_obj_idx).OBJECT_TYPE || ')');
             
@@ -240,27 +254,64 @@ begin
         end if;
     end loop;
     dbms_output.put_line('SET DEFINE OFF;');
-    for l_prof_idx in 1 .. l_prof.count loop
-        dbms_output.put_line('SELECT ''' || l_prof(l_prof_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
-        dbms_output.put_line(l_prof(l_prof_idx).EXEC_STMT);
+    
+    --create profiles
+    for l_profile_ddl_idx in 1 .. l_profile_ddl.count loop
+        dbms_output.put_line('SELECT ''' || l_profile_ddl(l_profile_ddl_idx).STR || ''' AS ">" FROM DUAL;');
+        dbms_output.put_line(l_profile_ddl(l_profile_ddl_idx).STR);
     end loop;        
+    
+    --create users
     dbms_output.put_line('@install-user.sql');
-    for l_quot_idx in 1 .. l_quot.count loop
-        dbms_output.put_line('SELECT ''' || l_quot(l_quot_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
-        dbms_output.put_line(l_quot(l_quot_idx).EXEC_STMT);
-    end loop;    
+    
+    --set quota
+    for l_quota_ddl_idx in 1 .. l_quota_ddl.count loop
+        dbms_output.put_line('SELECT ''' || l_quota_ddl(l_quota_ddl_idx).STR || ''' AS ">" FROM DUAL;');
+        dbms_output.put_line(l_quota_ddl(l_quota_ddl_idx).STR);
+    end loop;  
+    
+    --install db-links
     dbms_output.put_line('@install-db_links.sql');
     dbms_output.put_line('@install-public_db_links.sql');
-    for l_grn_idx in 1 .. l_grn.count loop
-        dbms_output.put_line('SELECT ''' || l_grn(l_grn_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
-        dbms_output.put_line(l_grn(l_grn_idx).EXEC_STMT);
+    
+    --create db-link to simulate PIBICS database_links
+    dbms_output.put_line(
+        'DECLARE ' ||
+        '    v_exec VARCHAR2(4000); ' ||
+        'BEGIN ' ||
+            'SELECT ''CREATE PUBLIC DATABASE LINK PIBICS_PROD CONNECT TO PIBICS IDENTIFIED BY PIBICS USING ' ||
+                    '''''(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=''||HOST_NAME||'')(PORT=1521))(CONNECT_DATA=(SERVICE_NAME=''||INSTANCE_NAME||'')))'''''' ' ||
+            'INTO v_exec '||
+            'FROM v$instance; ' ||
+            'EXECUTE IMMEDIATE v_exec; ' ||
+        'END;' || chr(10) || '/'
+        );
+    
+    --create PIBICS tables
+    dbms_output.put_line('@PIBICS/tables/immigration.sql');
+    dbms_output.put_line('@PIBICS/tables/tminout.sql');
+    dbms_output.put_line('@PIBICS/tables/tminout_ma.sql');
+    dbms_output.put_line('@PIBICS/tables/tmmain.sql');
+  
+    --set grants from other schemas    
+    for l_grn_ext_idx in 1 .. l_ext_grants_ddl.count loop
+        dbms_output.put_line('SELECT ''' || l_ext_grants_ddl(l_grn_ext_idx).STR || ''' AS ">" FROM DUAL;');
+        dbms_output.put_line(l_ext_grants_ddl(l_grn_ext_idx).STR);
     end loop;        
-    for l_exec_idx in 1 .. l_exec.count loop
-        dbms_output.put_line('SELECT ''' || l_exec(l_exec_idx).EXEC_STMT || ''' AS ">" FROM DUAL;');
-        dbms_output.put_line(l_exec(l_exec_idx).EXEC_STMT);
+    
+    --deploy objects
+    for l_ddl_idx in 1 .. l_ddl.count loop
+        --dbms_output.put_line('SELECT ''' || l_done(l_done_idx).STR || ''' AS ">" FROM DUAL;');
+        dbms_output.put_line(l_ddl(l_ddl_idx).STR);
     end loop;    
+    
+    --repeat table ddl to make sure all ref constraints will be installed
+    dbms_output.put_line('@install-tables.sql');
+    
+    --install jobs and schedules
     dbms_output.put_line('@install-jobs.sql');
     dbms_output.put_line('@install-dbms_jobs.sql');
     dbms_output.put_line('@install-schedules.sql');
+    
     dbms_output.put_line('quit');
 end;   
