@@ -1,85 +1,4 @@
-CREATE OR REPLACE EDITIONABLE TYPE "DL_COMMON"."OT_DB_TBLSPC" force authid current_user is object
-(
---
---
-/**
-* ???
-*
-* PARAMETERS
-*   ???
-*
-* EXCEPTIONS
-*   ???
-*
-* NOTES
-*   ???
-*
-*/
---
-/*******************************************************************************
-* Author    Date        Description                                            *
-* --------  ----------  -------------------------------------------------------*
-* WWirns    19.02.2018  DL_COMMON.OT_DB_TBLSPC:Added
-*******************************************************************************/
---
---
--- *** ATTRIBUTES ***
---
-  TBLSPC_NAME varchar2(30 byte)
---
-)
---
-not final
- alter type           "DL_COMMON"."OT_DB_TBLSPC" 
---
--- *** STATICS ***
---
---
---
---
-add static function Get_OBJECT_NAME
-  return varchar2 deterministic,
---
-add static function Get_OBJECT_COPYRIGHT
-  return varchar2 deterministic,
---
-add static function Get_OBJECT_VERSION$VC
-  return varchar2 deterministic,
---
---
---
-add static function Construct(p_TBLSPC_NAME in varchar2
-                             ,p_Is_Case_Sensitive in pls_integer default 0
-                              --
-                              )
-  return OT_DB_TBLSPC,
---
--- *** CONSTRUCTORS ***
---
---
---
---
-add constructor function OT_DB_TBLSPC(self in out nocopy OT_DB_TBLSPC
-                                     ,TBLSPC_NAME in varchar2
-                                      --
-                                      )
-  return self as result,
---
--- *** FINAL MEMBERS ***
---
---
---
---
-add final member procedure Initialize(self in out nocopy OT_DB_TBLSPC
-                                     ,p_TBLSPC_NAME in varchar2
-                                     ,p_Is_Case_Sensitive in pls_integer default 0
-                                      --
-                                      )
---
-cascade
---
-/
-CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_DB_TBLSPC" is
+CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_DB_EXCE_CODE" is
   --
   -- *** STATICS ***
   --
@@ -102,7 +21,7 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_DB_TBLSPC" is
   /*******************************************************************************
   * Author    Date        Description                                            *
   * --------  ----------  -------------------------------------------------------*
-  * WWirns    19.02.2018  DL_COMMON.OT_DB_TBLSPC:Added
+  * WWirns    02.05.2018  DL_COMMON.OT_DB_EXCE_CODE:Added
   *******************************************************************************/
   --
   static function Get_OBJECT_NAME return varchar2 deterministic is
@@ -161,22 +80,79 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_DB_TBLSPC" is
   /*******************************************************************************
   * Author    Date        Description                                            *
   * --------  ----------  -------------------------------------------------------*
-  * WWirns    19.02.2018  XX:Added
+  * WWirns    02.05.2018  XX:Added
   *******************************************************************************/
   --
-  static function Construct(p_TBLSPC_NAME       in varchar2
-                           ,p_Is_Case_Sensitive in pls_integer default 0
+  static function Construct(p_CODE in number
                             --
-                            ) return OT_DB_TBLSPC is
+                            ) return OT_DB_EXCE_CODE is
     --
-    v_Result OT_DB_TBLSPC;
+    v_Result OT_DB_EXCE_CODE;
     --
   begin
-    v_Result := new OT_DB_TBLSPC(null);
-    v_Result.Initialize(p_TBLSPC_NAME
-                       ,p_Is_Case_Sensitive);
+    v_Result := new OT_DB_EXCE_CODE(null);
+    v_Result.Initialize(p_CODE);
     return v_Result;
   end Construct;
+  --
+  --
+  /**
+  * ???
+  *
+  * PARAMETERS
+  *   ???
+  *
+  * EXCEPTIONS
+  *   ???
+  *
+  * NOTES
+  *   ???
+  *
+  */
+  --
+  /*******************************************************************************
+  * Author    Date        Description                                            *
+  * --------  ----------  -------------------------------------------------------*
+  * WWirns    02.05.2018  XX:Added
+  *******************************************************************************/
+  --
+  static procedure Check_Codes(p_CODES in TT_N5
+                               --
+                               ) is
+    --
+    i pls_integer;
+    --
+  begin
+    i := p_CODES.first;
+    while (i is not null)
+    loop
+      if (p_CODES(i) >= 1 and not p_CODES(i) = 100)
+      then
+        Raise_application_error(-20000
+                               ,'Argument p_CODES(' || trim(i) || ')[' || trim(p_CODES(i)) || '] is not negative or 0 or 100!');
+      end if;
+      i := p_CODES.next(i);
+    end loop;
+  end Check_Codes;
+  --
+  static procedure Check_Codes(p_CODES in VT_N5
+                               --
+                               ) is
+    --
+    i pls_integer;
+    --
+  begin
+    i := p_CODES.first;
+    while (i is not null)
+    loop
+      if (p_CODES(i) >= 1 and not p_CODES(i) = 100)
+      then
+        Raise_application_error(-20000
+                               ,'Argument p_CODES(' || trim(i) || ')[' || trim(p_CODES(i)) || '] is not negative or 0 or 100!');
+      end if;
+      i := p_CODES.next(i);
+    end loop;
+  end Check_Codes;
   --
   -- *** CONSTRUCTORS ***
   --
@@ -199,20 +175,20 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_DB_TBLSPC" is
   /*******************************************************************************
   * Author    Date        Description                                            *
   * --------  ----------  -------------------------------------------------------*
-  * WWirns    19.02.2018  XX:Added
+  * WWirns    02.05.2018  XX:Added
   *******************************************************************************/
   --
-  constructor function OT_DB_TBLSPC(self        in out nocopy OT_DB_TBLSPC
-                                   ,TBLSPC_NAME in varchar2
-                                    --
-                                    ) return self as result is
+  constructor function OT_DB_EXCE_CODE(self in out nocopy OT_DB_EXCE_CODE
+                                      ,CODE in number
+                                       --
+                                       ) return self as result is
   begin
     --
-    self.Initialize(TBLSPC_NAME);
+    self.Initialize(CODE);
     --
     return;
     --
-  end OT_DB_TBLSPC;
+  end OT_DB_EXCE_CODE;
   --
   -- *** FINAL MEMBERS ***
   --
@@ -235,28 +211,25 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_DB_TBLSPC" is
   /*******************************************************************************
   * Author    Date        Description                                            *
   * --------  ----------  -------------------------------------------------------*
-  * WWirns    19.02.2018  XX:Added
+  * WWirns    02.05.2018  XX:Added
   *******************************************************************************/
   --
-  final member procedure Initialize(self                in out nocopy OT_DB_TBLSPC
-                                   ,p_TBLSPC_NAME       in varchar2
-                                   ,p_Is_Case_Sensitive in pls_integer default 0
+  final member procedure Initialize(self   in out nocopy OT_DB_EXCE_CODE
+                                   ,p_CODE in number
                                     --
                                     ) is
     --
   begin
     --
-    --
-    if (nvl(p_Is_Case_Sensitive
-           ,0) != 0)
+    if (p_CODE >= 1 and not p_CODE = 100)
     then
-      self.TBLSPC_NAME := p_TBLSPC_NAME;
-    else
-      self.TBLSPC_NAME := upper(trim(p_TBLSPC_NAME));
+      Raise_application_error(-20000
+                             ,'Argument p_CODE[' || trim(p_CODE) || '] is not negative or 0 or 100!');
     end if;
+    --
+    self.CODE := p_CODE;
     --
   end Initialize;
   --
 end;
 /
-  GRANT EXECUTE ON "DL_COMMON"."OT_DB_TBLSPC" TO PUBLIC;

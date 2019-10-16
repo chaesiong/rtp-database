@@ -1,87 +1,4 @@
-CREATE OR REPLACE EDITIONABLE TYPE "DL_COMMON"."OT_CHAR_FILE" force authid current_user under OT_FILE
-(
---
---
-/**
-* ???
-*
-* PARAMETERS
-*   ???
-*
-* EXCEPTIONS
-*   ???
-*
-* NOTES
-*   ???
-*
-*/
---
-/*******************************************************************************
-* Author    Date        Description                                            *
-* --------  ----------  -------------------------------------------------------*
-* WWirns    17.08.2018  DL_COMMON.OT_CHAR_FILE:Added
-*******************************************************************************/
---
---
--- *** ATTRIBUTES ***
---
-  CONTENT clob,
---
--- *** STATICS ***
---
---
---
---
-  static function Get_OBJECT_NAME return varchar2 deterministic,
---
-  static function Get_OBJECT_COPYRIGHT return varchar2 deterministic,
---
-  static function Get_OBJECT_VERSION$VC return varchar2 deterministic,
---
--- *** CONSTRUCTORS ***
---
---
---
---
-  constructor function OT_CHAR_FILE(self    in out nocopy OT_CHAR_FILE
-                                   ,NAME$P  in varchar2
-                                   ,PATH$P  in clob
-                                   ,CONTENT in clob
-                                    --
-                                    ) return self as result,
---
-  constructor function OT_CHAR_FILE(self   in out nocopy OT_CHAR_FILE
-                                   ,NAME$P in varchar2
-                                   ,PATH$P in clob
-                                    --
-                                    ) return self as result,
---
-  constructor function OT_CHAR_FILE(self   in out nocopy OT_CHAR_FILE
-                                   ,NAME$P in varchar2
-                                    --
-                                    ) return self as result,
---
-  constructor function OT_CHAR_FILE(self in out nocopy OT_CHAR_FILE
-                                    --
-                                    ) return self as result,
---
--- *** FINAL MEMBERS ***
---
---
---
---
-  final member procedure Initialize(self      in out nocopy OT_CHAR_FILE
-                                   ,p_NAME    in varchar2
-                                   ,p_PATH    in clob
-                                   ,p_CONTENT in clob
-                                    --
-                                    )
---
-)
---
-not final
-/
-CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
+CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_BIN_FILE" is
   --
   -- *** STATICS ***
   --
@@ -104,7 +21,7 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
   /*******************************************************************************
   * Author    Date        Description                                            *
   * --------  ----------  -------------------------------------------------------*
-  * WWirns    17.08.2018  DL_COMMON.OT_CHAR_FILE:Added
+  * WWirns    17.08.2018  DL_COMMON.OT_BIN_FILE:Added
   *******************************************************************************/
   --
   static function Get_OBJECT_NAME return varchar2 deterministic is
@@ -169,12 +86,12 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
   * WWirns    17.08.2018  XX:Added
   *******************************************************************************/
   --
-  constructor function OT_CHAR_FILE(self    in out nocopy OT_CHAR_FILE
-                                   ,NAME$P  in varchar2
-                                   ,PATH$P  in clob
-                                   ,CONTENT in clob
-                                    --
-                                    ) return self as result is
+  constructor function OT_BIN_FILE(self    in out nocopy OT_BIN_FILE
+                                  ,NAME$P  in varchar2
+                                  ,PATH$P  in clob
+                                  ,CONTENT in blob
+                                   --
+                                   ) return self as result is
   begin
     --
     self.Initialize(NAME$P
@@ -185,13 +102,13 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
     --
     return;
     --
-  end OT_CHAR_FILE;
+  end OT_BIN_FILE;
   --
-  constructor function OT_CHAR_FILE(self   in out nocopy OT_CHAR_FILE
-                                   ,NAME$P in varchar2
-                                   ,PATH$P in clob
-                                    --
-                                    ) return self as result is
+  constructor function OT_BIN_FILE(self   in out nocopy OT_BIN_FILE
+                                  ,NAME$P in varchar2
+                                  ,PATH$P in clob
+                                   --
+                                   ) return self as result is
   begin
     --
     self.Initialize(NAME$P
@@ -202,12 +119,12 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
     --
     return;
     --
-  end OT_CHAR_FILE;
+  end OT_BIN_FILE;
   --
-  constructor function OT_CHAR_FILE(self   in out nocopy OT_CHAR_FILE
-                                   ,NAME$P in varchar2
-                                    --
-                                    ) return self as result is
+  constructor function OT_BIN_FILE(self   in out nocopy OT_BIN_FILE
+                                  ,NAME$P in varchar2
+                                   --
+                                   ) return self as result is
   begin
     --
     self.Initialize(NAME$P
@@ -218,11 +135,11 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
     --
     return;
     --
-  end OT_CHAR_FILE;
+  end OT_BIN_FILE;
   --
-  constructor function OT_CHAR_FILE(self in out nocopy OT_CHAR_FILE
-                                    --
-                                    ) return self as result is
+  constructor function OT_BIN_FILE(self in out nocopy OT_BIN_FILE
+                                   --
+                                   ) return self as result is
   begin
     --
     self.Initialize(null
@@ -233,7 +150,7 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
     --
     return;
     --
-  end OT_CHAR_FILE;
+  end OT_BIN_FILE;
   --
   -- *** FINAL MEMBERS ***
   --
@@ -259,10 +176,10 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
   * WWirns    17.08.2018  XX:Added
   *******************************************************************************/
   --
-  final member procedure Initialize(self      in out nocopy OT_CHAR_FILE
+  final member procedure Initialize(self      in out nocopy OT_BIN_FILE
                                    ,p_NAME    in varchar2
                                    ,p_PATH    in clob
-                                   ,p_CONTENT in clob
+                                   ,p_CONTENT in blob
                                     --
                                     ) is
     --
@@ -279,4 +196,3 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."OT_CHAR_FILE" is
   --
 end;
 /
-  GRANT EXECUTE ON "DL_COMMON"."OT_CHAR_FILE" TO PUBLIC;
