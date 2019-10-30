@@ -18,7 +18,7 @@ wwv_flow_api.create_flow(
 ,p_authentication=>'PLUGIN'
 ,p_authentication_id=>wwv_flow_api.id(98891252304511059)
 ,p_application_tab_set=>0
-,p_logo_image=>'TEXT:<span class=''customLogoIcon''><i class=''fa fa-link''></i></span> Project Dashboard'
+,p_logo_image=>'TEXT:<span class=''customLogoIcon''><i class=''fa fa-link''></i></span> Biometrics Dashboard'
 ,p_public_user=>'APEX_PUBLIC_USER'
 ,p_proxy_server=> nvl(wwv_flow_application_install.get_proxy,'')
 ,p_flow_version=>'release 1.0'
@@ -31,7 +31,7 @@ wwv_flow_api.create_flow(
 ,p_rejoin_existing_sessions=>'N'
 ,p_csv_encoding=>'Y'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190704033545'
+,p_last_upd_yyyymmddhh24miss=>'20190912015225'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>27
 ,p_ui_type_name => null

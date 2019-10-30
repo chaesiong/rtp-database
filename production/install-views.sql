@@ -151,6 +151,10 @@
 @DL_BORDERCONTROL/views/adm_class_province$lc.vw
 @DL_BORDERCONTROL/views/adm_class_region$lc.vw
 @DL_BORDERCONTROL/views/adm_class_subdistrict$lc.vw
+@DL_BORDERCONTROL/views/aq$_aq_bordercontrol_hooks_tab2_f.vw
+@DL_BORDERCONTROL/views/aq$aq_bordercontrol_hooks_tab2_r.vw
+@DL_BORDERCONTROL/views/aq$aq_bordercontrol_hooks_tab2_s.vw
+@DL_BORDERCONTROL/views/aq$aq_bordercontrol_hooks_tab2.vw
 @DL_BORDERCONTROL/views/aq$_aq_bordercontrol_hooks_tab_f.vw
 @DL_BORDERCONTROL/views/aq$aq_bordercontrol_hooks_tab_r.vw
 @DL_BORDERCONTROL/views/aq$aq_bordercontrol_hooks_tab_s.vw

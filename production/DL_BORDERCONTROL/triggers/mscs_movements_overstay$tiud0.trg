@@ -187,7 +187,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."MSCS_MOVEMENTS_OVERSTA
                         ,:new.INS_BORDERPOST
                          --
                          );
-
       --
     else
       -- 'D'

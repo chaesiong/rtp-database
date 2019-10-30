@@ -1,0 +1,9 @@
+
+REM INSERTING into DL_COMMON.MOVEMENT_REASONS$TAG
+SET DEFINE OFF;
+Insert into DL_COMMON.MOVEMENT_REASONS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('AWAY_ON_BUSINESS','APEX_REENTRY','LOV-00','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.46.985896000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
+Insert into DL_COMMON.MOVEMENT_REASONS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('AWAY_ON_BUSINESS','APEX_REENTRY','LOV-01','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.46.986747000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
+Insert into DL_COMMON.MOVEMENT_REASONS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('GO_ON_HOLIDAY','APEX_VOA','LOV-11','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.46.986823000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
+Insert into DL_COMMON.MOVEMENT_REASONS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('AWAY_ON_BUSINESS','APEX_VOA','LOV-10','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.46.986886000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
+
+

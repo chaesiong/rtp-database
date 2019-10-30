@@ -143,7 +143,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."SUB_NATIONALITIES$TIUD0"
     if (v_DML_TYPE = 'I')
     then
       null;
-
     elsif (v_DML_TYPE = 'U')
     then
       --

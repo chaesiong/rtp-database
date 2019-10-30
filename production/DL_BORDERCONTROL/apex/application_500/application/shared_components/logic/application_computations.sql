@@ -56,7 +56,7 @@ wwv_flow_api.create_flow_computation(
 ,p_computation=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'if :AI_CURRENT_USER_NAME is null then',
 '	BEGIN',
-'		SELECT UPPER(NVL(TRIM(first_name || '' '' || last_name), username))',
+'		SELECT UPPER(NVL(TRIM(first_name_thai || '' '' || last_name_thai), NVL(TRIM(first_name || '' '' || last_name), username)))',
 '		INTO :AI_CURRENT_USER_NAME',
 '		FROM apex_user_management.users',
 '		WHERE username = :APP_USER',
@@ -215,6 +215,15 @@ wwv_flow_api.create_flow_computation(
 ,p_computation=>'select DEFAULTEXITFLG from terminals where id = :AI_TERMINAL_ID'
 );
 wwv_flow_api.create_flow_computation(
+ p_id=>wwv_flow_api.id(36462271476457249584)
+,p_computation_sequence=>50
+,p_computation_item=>'AI_BORDERPOST_NAME_SHORT'
+,p_computation_point=>'BEFORE_HEADER'
+,p_computation_type=>'SQL_EXPRESSION'
+,p_computation_processed=>'REPLACE_EXISTING'
+,p_computation=>'REGEXP_SUBSTR(:AI_BORDERPOST_NAME, ''[^\/]+$'')'
+);
+wwv_flow_api.create_flow_computation(
  p_id=>wwv_flow_api.id(176092154373665705)
 ,p_computation_sequence=>51
 ,p_computation_item=>'AI_TRANSPORT_MODE'
@@ -230,7 +239,10 @@ wwv_flow_api.create_flow_computation(
 ,p_computation_point=>'BEFORE_HEADER'
 ,p_computation_type=>'QUERY'
 ,p_computation_processed=>'REPLACE_EXISTING'
-,p_computation=>'select decode(:AI_DEFAULT_DIRECTION, 1, ''Departure'', 0,''Arrival'', 2, ''Both'', ''No Direction defined'') from dual'
+,p_computation=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT NVL(MAX(NVL(display_value, display_value$dlc)), ''No Direction defined'')',
+'FROM dl_common.port_movements$lc',
+'WHERE num_value = :AI_DEFAULT_DIRECTION'))
 );
 wwv_flow_api.create_flow_computation(
  p_id=>wwv_flow_api.id(78870818056902717)

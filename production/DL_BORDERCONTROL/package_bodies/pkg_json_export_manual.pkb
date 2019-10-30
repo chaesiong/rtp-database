@@ -19,7 +19,7 @@ function get_movements_jira(p_id in varchar2) return clob
                     mv.oridest,
                     mv.ins_at,
                     --translate(mv.ins_by, chr(13), ''),
-                    'Jaturong.su',
+                    'samrerng.b',
                     mv.dml_at,
                     translate(mv.dml_by, chr(13), ''),
                     mv.dml_type,
@@ -166,3 +166,5 @@ function get_movements_jira(p_id in varchar2) return clob
 END PKG_JSON_EXPORT_MANUAL;
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_JSON_EXPORT_MANUAL" TO "DL_INTERFACE";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_JSON_EXPORT_MANUAL" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_JSON_EXPORT_MANUAL" TO "BIOSUPPORT";

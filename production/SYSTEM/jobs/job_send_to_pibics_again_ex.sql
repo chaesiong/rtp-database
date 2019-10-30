@@ -3,7 +3,7 @@ dbms_scheduler.create_job('"JOB_SEND_TO_PIBICS_AGAIN_EX"',
 job_type=>'STORED_PROCEDURE', job_action=>
 'DL_INTERFACE.SP_CAN_NOT_ADD_DATA_PIBICS_1'
 , number_of_arguments=>0,
-start_date=>TO_TIMESTAMP_TZ('19-JUN-2019 05.06.00.000000000 PM +07:00','DD-MON-RRRR HH.MI.SSXFF AM TZR','NLS_DATE_LANGUAGE=english'), repeat_interval=> 
+start_date=>TO_TIMESTAMP_TZ('12-JUN-2019 03.00.00.000000000 PM +07:00','DD-MON-RRRR HH.MI.SSXFF AM TZR','NLS_DATE_LANGUAGE=english'), repeat_interval=> 
 NULL
 , end_date=>NULL,
 job_class=>'"DEFAULT_JOB_CLASS"', enabled=>FALSE, auto_drop=>FALSE,comments=>

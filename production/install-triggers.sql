@@ -65,6 +65,7 @@
 @DL_COMMON/triggers/messages$i18n$tiud0.trg
 @DL_COMMON/triggers/messages$tiud0.trg
 @DL_COMMON/triggers/module_versions$tiud0.trg
+@DL_COMMON/triggers/movement_attr_types$tiud0.trg
 @DL_COMMON/triggers/movement_reasons$i18n$tiud0.trg
 @DL_COMMON/triggers/movement_reasons$tag$tiud0.trg
 @DL_COMMON/triggers/movement_reasons$tiud0.trg
@@ -178,6 +179,13 @@
 @DL_BORDERCONTROL/triggers/visas$tiud0.trg
 @DL_BORDERCONTROL/triggers/xlib_logs_bi_trg.trg
 -- DL_BLACKLIST/triggers
+@DL_BLACKLIST/triggers/atrg_blacklist_case_identities.trg
+@DL_BLACKLIST/triggers/atrg_blacklist_cases.trg
+@DL_BLACKLIST/triggers/atrg_faces.trg
+@DL_BLACKLIST/triggers/atrg_fingerprints.trg
+@DL_BLACKLIST/triggers/atrg_hm_test.trg
+@DL_BLACKLIST/triggers/atrg_identities.trg
+@DL_BLACKLIST/triggers/atrg_travel_docs.trg
 @DL_BLACKLIST/triggers/biometrics$biur.trg
 @DL_BLACKLIST/triggers/blacklist_cases$biur_o.trg
 @DL_BLACKLIST/triggers/blacklist_cases$biur.trg

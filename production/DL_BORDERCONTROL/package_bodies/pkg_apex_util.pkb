@@ -348,7 +348,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_APEX_UTIL" is
   --
   function Get_Pibics_Image(p_IMAGE_TYPE      in varchar2,
                             p_PK_VAL          in varchar2,
-                            p_MVMNT_SRC       in varchar2 DEFAULT NULL
+                            p_MVMNT_SRC       in varchar2 DEFAULT NULL,
+                            p_DOCNO           in varchar2 DEFAULT NULL
                             --
                             ) return blob is
     --
@@ -368,7 +369,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_APEX_UTIL" is
                     (
                         p_image_type    => p_IMAGE_TYPE,
                         p_pk_val        => p_PK_VAL,
-                        p_mvmnt_src     => p_MVMNT_SRC
+                        p_mvmnt_src     => p_MVMNT_SRC,
+                        p_docno         => p_DOCNO
                     );
     exception
         when OTHERS then
@@ -401,7 +403,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_APEX_UTIL" is
   procedure Get_Pibics_Image(p_COLLECTION_NAME in varchar2,
                              p_IMAGE_TYPE      in varchar2,
                              p_PK_VAL          in varchar2,
-                             p_MVMNT_SRC       in varchar2 DEFAULT NULL
+                             p_MVMNT_SRC       in varchar2 DEFAULT NULL,
+                             p_DOCNO           in varchar2 DEFAULT NULL
                              --
                              ) is
     --
@@ -421,7 +424,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_APEX_UTIL" is
                     (
                         p_image_type    => p_IMAGE_TYPE,
                         p_pk_val        => p_PK_VAL,
-                        p_mvmnt_src     => p_MVMNT_SRC
+                        p_mvmnt_src     => p_MVMNT_SRC,
+                        p_docno         => p_DOCNO
                     );
     exception
         when OTHERS then
@@ -574,3 +578,5 @@ begin
 end PKG_APEX_UTIL;
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_APEX_UTIL" TO "DERMALOG_PROXY";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_APEX_UTIL" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_APEX_UTIL" TO "BIOSUPPORT";

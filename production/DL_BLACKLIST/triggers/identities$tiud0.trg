@@ -338,7 +338,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BLACKLIST"."IDENTITIES$TIUD0"
                 ,surname_thai
                 ,middlename_thai
                 ,givenname_thai
-
                 ,place_of_birth
                 ,country_of_birth
                 ,nationality

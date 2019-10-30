@@ -23,3 +23,5 @@ select brddocid
   from movements m
   join travel_abis_insert_error tair on m.mvmntid = tair.movement_id
 ;
+  GRANT SELECT ON "DL_BORDERCONTROL"."V_SYNC_DOCS_WITH_BIO_MOVEMENTS" TO "BIOAPPREPORT";
+  GRANT SELECT ON "DL_BORDERCONTROL"."V_SYNC_DOCS_WITH_BIO_MOVEMENTS" TO "BIOSUPPORT";

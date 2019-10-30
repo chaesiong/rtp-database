@@ -31,6 +31,7 @@
 @DL_STAGING4PIBICS_INTF/procedures/p_bk_sync_blacklist_cases.prc
 @DL_STAGING4PIBICS_INTF/procedures/p_mapp_zone_terminal.prc
 @DL_STAGING4PIBICS_INTF/procedures/prepare_scheduler_as_system.prc
+@DL_STAGING4PIBICS_INTF/procedures/p_sync_user2bio.prc
 @DL_STAGING4PIBICS_INTF/procedures/transfer_meta_data.prc
 -- DL_INTERFACE/procedures
 @DL_INTERFACE/procedures/sp_can_not_add_data_pibics_1.prc

@@ -17,8 +17,8 @@ wwv_flow_api.create_page(
 ,p_overwrite_navigation_list=>'N'
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
-,p_last_updated_by=>'CHRISTINA'
-,p_last_upd_yyyymmddhh24miss=>'20181023181727'
+,p_last_updated_by=>'ADMIN'
+,p_last_upd_yyyymmddhh24miss=>'20190912014617'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(147596441895838220)
@@ -89,7 +89,7 @@ wwv_flow_api.create_region_column(
 ,p_value_alignment=>'LEFT'
 ,p_attribute_05=>'BOTH'
 ,p_is_required=>false
-,p_max_length=>8
+,p_max_length=>20
 ,p_enable_filter=>true
 ,p_filter_operators=>'C:S:CASE_INSENSITIVE:REGEXP'
 ,p_filter_is_required=>false

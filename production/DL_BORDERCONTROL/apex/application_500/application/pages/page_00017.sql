@@ -533,7 +533,45 @@ wwv_flow_api.create_page(
 '    var focusable = $(''#Passdata'').find(''input,select,button,textarea'').filter('':visible:not([disabled]):not([tabindex^="-"])'');',
 '    if (focusable.index($("#P17_BTN_FIND_MANUALLY")) != -1) focusable.splice(focusable.index($("#P17_MANUAL_EXPIRYDATE")) + 1, 0, focusable.splice(focusable.index($("#P17_BTN_FIND_MANUALLY")), 1)[0]);',
 '    return focusable;',
-'}'))
+'}',
+'',
+'function delayFaceCapture() {',
+'    if (!DATABASE_PARAMETER_DELAY_FACE_CAPTURE) return;',
+'    $(".movement_live_video_controls").css("z-index", "1");',
+'    shortcut.remove("F3");',
+'    shortcut.add("F3", function(ev) {',
+'        ev.preventDefault();',
+'        return false;',
+'    },{',
+'        ''type'': ''keydown'',',
+'        ''propagate'': false,',
+'        ''target'': document',
+'    });',
+'    setTimeout(function() {',
+'        $(".movement_live_video_controls").css("z-index", "2");',
+'        shortcut.remove("F3");',
+'        shortcut.add("F3", resetFaceCapture, {',
+'            ''type'': ''keydown'',',
+'            ''propagate'': false,',
+'            ''target'': document',
+'        });',
+'    }, DATABASE_PARAMETER_DELAY_FACE_CAPTURE);',
+'}',
+'',
+'var resetFaceCapture = (function() {',
+'    var _resetFaceCapture = resetFaceCapture;',
+'    if (!!DATABASE_PARAMETER_DELAY_FACE_CAPTURE) {',
+'        return function() {',
+'            delayFaceCapture();',
+'            _resetFaceCapture();',
+'        }',
+'    } else {',
+'        return function() {',
+'            _resetFaceCapture();',
+'        }',
+'    }',
+'})();',
+''))
 ,p_javascript_code_onload=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'console.log("RUNTIME: On page load - " + (new Date()));',
 '$("#R132374931714191231_control_panel").hide();',
@@ -697,7 +735,8 @@ wwv_flow_api.create_page(
 '               ''propagate'':true,',
 '               ''target'':document',
 '           });',
-'		animate_cell(''#REG_SECIMAGES_DETAIL'', ''#REG_LAYOUT_ROW_1'');',
+'		   animate_cell(''#REG_SECIMAGES_DETAIL'', ''#REG_LAYOUT_ROW_1'', ''rapid'');',
+'           window.scrollTo({top: 0});',
 '       });',
 '  //}',
 '});',
@@ -906,6 +945,11 @@ wwv_flow_api.create_page(
 '$("#Passdata input,#Passdata textarea").filter('':not([tabindex^="-"])'').on(''focus'', function() { $(this).select(); });',
 '',
 'setInterval(function(){ apex.event.trigger(document, "checkSessionStatus"); }, 60000);',
+'',
+'$(''.movement_live_video_controls'').on(''click'', function() { ',
+'    if (!!DATABASE_PARAMETER_DELAY_FACE_CAPTURE)',
+'        delayFaceCapture();',
+'});',
 ''))
 ,p_css_file_urls=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '#APP_IMAGES#css/font-awesome.min.css',
@@ -924,368 +968,19 @@ wwv_flow_api.create_page(
 '#WORKSPACE_IMAGES#cropper.min.css',
 '#WORKSPACE_IMAGES#roboto.css'))
 ,p_inline_css=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'.t-item-ultraslim .t-Form-labelContainer, .t-item-ultraslim .t-Form-inputContainer{padding-top:.2rem;padding-bottom:.2rem}',
-'',
-'body {',
-'    overflow: hidden !important;',
-'    font-family: "Roboto";',
-'}',
-'',
-'.a-Region-carouselItems {',
-'margin:10px;',
-'}',
-'',
-'',
-'.a-Region-carouselLabel {',
-'font-weight:bold;',
-'}',
-'',
-'.t-Form--stretchInputs .t-Form-fieldContainer select.selectlist.apex-page-item-error {',
-'    border-color: #eb6562;',
-'}',
-'',
-'/*',
-'.t-Form-labelContainer {',
-'font-weight:bold !important;',
-'}',
-'',
-'.t-Form--large .t-Form-label, .t-Form-fieldContainer--large .t-Form-label {',
-'    padding: .2rem 0;',
-'    line-height: 1.3rem;',
-'    font-size: 1.4rem;',
-'}',
-'',
-'.t-Form--large .t-Form-field, .t-Form--large .t-Form-inputContainer input[type=text], .t-Form--large .t-Form-select[size="1"], .t-Form--large input.datepicker, .t-Form--large input.password, .t-Form--large input.popup_lov, .t-Form--large input.text_f'
-||'ield, .t-Form--large select.selectlist[size="1"], .t-Form--large select.yes_no, .t-Form-fieldContainer--large .t-Form-field, .t-Form-fieldContainer--large .t-Form-inputContainer input[type=text], .t-Form-fieldContainer--large .t-Form-select[size="1"]'
-||', .t-Form-fieldContainer--large input.datepicker, .t-Form-fieldContainer--large input.password, .t-Form-fieldContainer--large input.popup_lov, .t-Form-fieldContainer--large input.text_field, .t-Form-fieldContainer--large select.selectlist[size="1"], '
-||'.t-Form-fieldContainer--large select.yes_no, .t-Form-fieldContainer--large span.display_only {',
-'    font-size: 1.4rem;',
-'    padding: .2rem;',
-'    height: 3.2rem;',
-'}',
-'',
-'.t-Form--large span.display_only{',
-'    font-size: 1.4rem;',
-'    padding: .1rem;',
-'    height: .2rem;',
-'}',
-'',
-'.t-Form-inputContainer span.display_only {',
-'    box-shadow: none;',
-'    font-weight: 100;',
-'}',
-'',
-'.t-Form--slimPadding t-Form--stretchInputs{',
-'    font-size: 1.1rem;',
-'}',
-'*/',
-'',
-'div.t-Tabs-item, is-active {',
-'box-shadow: none;',
-'}',
-'',
-'.t-Tabs-item, is-active {',
-'border-style: none;',
-'}',
-'',
-'',
-'element.style {',
-'    zoom: 1.17;',
-'    line-height: 1.6;',
-'    margin-left: 10px;',
-'}',
-'',
-'.t-login-Region ',
-' {',
-'font-weight:bold;',
-'}',
-'',
-'',
-'.counter.counter-wheel.counter-wheel-themed {',
-'  background-color: transparent;',
-'  border: lightgray solid 10px;',
-'  color: #000;',
-'  width: 200px;',
-'  padding: 15px;',
-'  font-size: 14px;',
-'  text-transform: uppercase;',
-'  line-height: 1em;',
-'}',
-'.counter.counter-wheel.counter-wheel-themed .counter-values {',
-'  font-size: 42px;',
-'  font-weight: bold;',
-'  line-height: 1.2em;',
-'}',
-'.counter.counter-wheel.counter-wheel-themed .counter-separator {',
-'  margin: 0 2px 0 3px;',
-'}',
-'.counter.counter-wheel.counter-wheel-themed .counter-body {',
-'  border: lightgray solid 10px;',
-'  border-radius: 50%;',
-'  padding: 25px 0;',
-'}',
-'',
-'',
-'',
-'.thumbnail_img img:hover',
-'{',
-'    -webkit-transform: scale(1.5);',
-'    -moz-transform: scale(1.5);',
-'    -o-transform: scale(1.5);',
-'    -ms-transform: scale(1.5);',
-'    transform: scale(1.5);',
-'}',
-'',
-'.makegrayscale {',
-'-webkit-filter: grayscale(100%);',
-'filter: grayscale(100%);',
-'}',
-'',
-'',
-'',
-'.mandatory-field-empty {',
-'	    background-color: rgba(255, 0, 0, 0.1) !important;',
-'}',
-'',
-'.u-Processing--inline{',
-'    display: none !important;',
-'}',
-'',
-'',
-'',
-'.t-Body-topButton {',
-'    display: none !important;',
-'}',
-'',
-'/*td {',
-'	    background: linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.12));',
-'}*/',
-'',
-'#DG_ENTERMANUAL_DOCTYPE{',
-'width:203px !important;',
-'}',
-'',
-'',
-'#DG_ENTERMANUAL_PASSNUMBER{',
-'width:203px !important;',
-'}',
-'',
-'#DG_ENTERMANUAL_GENDER{',
-'width:135px !important;',
-'}',
-'',
-'#DG_ENTERMANUAL_NATIONALITY{',
-'width:535px !important;',
-'}',
-'',
-'#DG_ENTERMANUAL_ISSUINGCODE{',
-'width:535px !important;',
-'}',
-'',
-'#P17_VISUM_3{',
-'width:535px !important;',
-'}',
-'',
-'/*Decrease the padding - that way more will fit on the page*/',
-'/* TODO */',
-'/*.t-Form-inputContainer, .t-Form-inputContainer.col, .t-Form-labelContainer, .t-Form-labelContainer.col',
-'{',
-'    padding: .2rem !important;',
-'} */',
-'',
-'',
-'#Passdata .container{',
-'    background-color: white;',
-'}',
-'',
-'.my_green {  ',
-'    color: green;  ',
-'    cursor: pointer; ',
-'} ',
-'',
-'.my_red {  ',
-'    color: red;  ',
-'    cursor: pointer; ',
-'}',
-'',
-'.my_yellow {',
-'    color: yellow;  ',
-'    cursor: pointer; ',
-'}',
-'',
-'.input-disabled {',
-'    pointer-events: none;',
-'}',
-'',
-'.action-blacklist-check {',
-'    color: #ffbf00;',
-'    cursor: pointer;',
-'}',
-'',
-'.action-blacklist-check:hover {',
-'    font-weight: bold;',
-'    transition: .2s ease;',
-'}',
-'',
-'#P17_IS_CREW_MEMBER_CONTAINER .t-Form-labelContainer,',
-'#P17_IS_CREW_MEMBER_CONTAINER .t-Form-inputContainer {',
-'    padding-left: 6px;',
-'}',
-'',
-'#Passdata label.t-Form-label {',
-'    white-space: nowrap;',
-'}',
-'',
-'.cl-span-find-manually-report,',
-'.cl-span-find-resident-report {',
-'    font-size: 1.5rem;',
-'    cursor: pointer;',
-'}',
-'',
-'.cl-red {',
-'    color: red !important;',
-'}',
-'',
-'.cl-hidden {',
-'    display: none;',
-'}',
-'',
-'.cl-stateless-active {',
-'    background-color: #FFE200 !important;',
-'    color: #000000 !important;',
-'}',
-'',
-'.cl-flash {',
-'    -webkit-animation: cl-flash-a 1s ease-out;',
-'    -webkit-animation-iteration-count: 1;',
-'',
-'    -moz-animation: cl-flash-a 1s ease-out;',
-'    -moz-animation-iteration-count: 1;',
-'',
-'    -ms-animation: cl-flash-a 1s ease-out;',
-'    -ms-animation-iteration-count: 1;',
-'    ',
-'    animation:cl-flash-a 1s ease-out;',
-'    animation-iteration-count: 1;',
-'}',
-'',
-'@-webkit-keyframes cl-flash-a {',
-'    0% { background-color: transparent; }',
-'    50% { background-color: #FFC000; }',
-'    100% { background-color: transparent; }',
-'}',
-'',
-'@-moz-keyframes cl-flash-a {',
-'    0% { background-color: transparent; }',
-'    50% { background-color: #FFC000; }',
-'    100% { background-color: transparent; }',
-'}',
-'',
-'@-ms-keyframes cl-flash-a {',
-'    0% { background-color: transparent; }',
-'    50% { background-color: #FFC000; }',
-'    100% { background-color: transparent; }',
-'}',
-'',
-'@keyframes cl-flash-a {',
-'    0% { background-color: transparent; }',
-'    50% { background-color: #FFE200; }',
-'    100% { background-color: transparent; }',
-'}',
-'',
-'.cl-bold {',
-'    font-weight: bold;',
-'}',
-'',
-'#BTN_TRACK_PERSON {',
-'    background: lightgray;',
-'}',
-'',
-'#BTN_TRACK_PERSON.trace-active {',
-'    background: seagreen;',
-'}',
-'',
-'.timeout-display {',
-'    display: none;',
-'}',
-'',
-'.cl-birthday-today {',
-'    font-size: 2rem;',
-'    position: absolute !important;',
-'    right: 15px;',
-'    margin-top: 6px;',
-'}',
-'',
-'.cl-mask-lang-disp.cl-mask-lang-en:before {',
-'    content: "en";',
-'}',
-'',
-'.cl-mask-lang-disp.cl-mask-lang-th:before {',
-'    content: "th";',
-'}',
-'',
-'body.bmbs-crew-mode .t-Header-logo, body.bmbs-crew-mode .t-Header-navBar, body.bmbs-crew-mode .t-Header-branding {',
-'	background-color: #eeab00 !important;',
-'}',
-'',
-'body.bmbs-crew-mode .t-Body-main {',
-'	background: linear-gradient(to bottom, #eeab00, #4d3700 100%);',
-'}',
-'',
-'body.bmbs-crew-mode .t-NavigationBar-menu .a-Menu-content {',
-'	background-color: #eeab00 !important;',
-'}',
-'',
-'body.bmbs-crew-mode .t-NavigationBar-menu .a-Menu-item.is-focused, body.bmbs-crew-mode .t-NavigationBar-menu .a-Menu-item.is-expanded, body.bmbs-crew-mode .t-Header .t-NavigationBar button.is-active {',
-'	background-color: rgba(255, 255, 255, 0.2) !important;',
-'}',
-'',
-'',
-'body.direction-departure.bmbs-crew-mode .t-Header-logo, body.direction-departure.bmbs-crew-mode .t-Header-navBar, body.direction-departure.bmbs-crew-mode .t-Header-branding {',
-'	background-color: #009933 !important;',
-'}',
-'',
-'body.direction-departure.bmbs-crew-mode .t-Body-main {',
-'	background: linear-gradient(to bottom, #009933, #001a09 100%);',
-'}',
-'',
-'body.direction-departure.bmbs-crew-mode .t-NavigationBar-menu .a-Menu-content {',
-'	background-color: #009933 !important;',
-'}',
-'',
-'body.direction-departure.bmbs-crew-mode .t-NavigationBar-menu .a-Menu-item.is-focused, body.direction-departure.bmbs-crew-mode .t-NavigationBar-menu .a-Menu-item.is-expanded, body.direction-departure.bmbs-crew-mode .t-Header .t-NavigationBar button.i'
-||'s-active {',
-'	background-color: rgba(255, 255, 255, 0.2) !important;',
-'}',
-'',
-'#REGION_MOVEMENTS_DYNAMIC td {',
-'    padding-left: 0.25em;',
-'    padding-right: 0.25em;',
-'}',
-'',
-'#REGION_MOVEMENTS_DYNAMIC {',
-'    height: 280px;/*padding-left:15px;padding-right:15px;margin-top:0px*/',
-'    /*max-height: 25vh;*/',
-'    overflow-y: auto;',
-'}',
-'',
-'#REGION_MOVEMENTS_DYNAMIC span.nodatafound {',
-'    text-align: center;',
-'}',
-'',
-'#P17_DISPLAY_DOB {',
-'    visibility: hidden;',
-'    margin-left: -3rem;',
+'.navbarUserInformation > .t-Button > span.t-Button-label {',
+'    font-size: 1.3rem;',
 '}'))
 ,p_step_template=>wwv_flow_api.id(840871881040466776)
 ,p_page_template_options=>'#DEFAULT#'
 ,p_required_role=>wwv_flow_api.id(186479920031388043)
+,p_dialog_chained=>'Y'
 ,p_overwrite_navigation_list=>'N'
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_help_text=>'No help is available for this page.'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190729031207'
+,p_last_upd_yyyymmddhh24miss=>'20191010134359'
 );
 end;
 /
@@ -2062,7 +1757,7 @@ wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(261827073420776781)
 ,p_plug_name=>'Thai Nationality Information'
 ,p_region_name=>'DIALOG_THAI_INFORMATION'
-,p_region_template_options=>'#DEFAULT#:js-dialog-size720x480:t-Form--large:t-Form--stretchInputs:margin-left-md:margin-right-md'
+,p_region_template_options=>'#DEFAULT#:js-dialog-autoheight:js-dialog-size720x480:t-Form--large:t-Form--stretchInputs:margin-left-md:margin-right-md'
 ,p_plug_template=>wwv_flow_api.id(563819470613049616)
 ,p_plug_display_sequence=>150
 ,p_include_in_reg_disp_sel_yn=>'N'
@@ -2073,6 +1768,130 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 ,p_attribute_03=>'Y'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(4690289361752124641)
+,p_plug_name=>'Thai Info fields'
+,p_parent_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_region_template_options=>'#DEFAULT#:t-Form--slimPadding'
+,p_region_attributes=>'style="width: 95%;"'
+,p_plug_template=>wwv_flow_api.id(563812786985049615)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(4690289496964124642)
+,p_plug_name=>'Thai Passport(s) Info Report'
+,p_region_name=>'id-ir-thai-info-report'
+,p_parent_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--scrollBody:t-Form--slimPadding:margin-top-md'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_api.id(563820889302049617)
+,p_plug_display_sequence=>20
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT passportno, passportexpdte, typedpassport',
+'FROM dl_bordercontrol.v_thaipassport',
+'WHERE :P17_CITIZENID_THAI IS NOT NULL',
+'AND citizenid = :P17_CITIZENID_THAI',
+'ORDER BY passportexpdte DESC',
+';'))
+,p_plug_source_type=>'NATIVE_IR'
+,p_ajax_items_to_submit=>'P17_CITIZENID_THAI'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_prn_content_disposition=>'ATTACHMENT'
+,p_prn_document_header=>'APEX'
+,p_prn_units=>'INCHES'
+,p_prn_paper_size=>'LETTER'
+,p_prn_width=>8.5
+,p_prn_height=>11
+,p_prn_orientation=>'HORIZONTAL'
+,p_prn_page_header_font_color=>'#000000'
+,p_prn_page_header_font_family=>'Helvetica'
+,p_prn_page_header_font_weight=>'normal'
+,p_prn_page_header_font_size=>'12'
+,p_prn_page_footer_font_color=>'#000000'
+,p_prn_page_footer_font_family=>'Helvetica'
+,p_prn_page_footer_font_weight=>'normal'
+,p_prn_page_footer_font_size=>'12'
+,p_prn_header_bg_color=>'#9bafde'
+,p_prn_header_font_color=>'#000000'
+,p_prn_header_font_family=>'Helvetica'
+,p_prn_header_font_weight=>'normal'
+,p_prn_header_font_size=>'10'
+,p_prn_body_bg_color=>'#efefef'
+,p_prn_body_font_color=>'#000000'
+,p_prn_body_font_family=>'Helvetica'
+,p_prn_body_font_weight=>'normal'
+,p_prn_body_font_size=>'10'
+,p_prn_border_width=>.5
+,p_prn_page_header_alignment=>'CENTER'
+,p_prn_page_footer_alignment=>'CENTER'
+);
+wwv_flow_api.create_worksheet(
+ p_id=>wwv_flow_api.id(4690289591901124643)
+,p_max_row_count=>'500'
+,p_no_data_found_message=>'No Data Found.'
+,p_show_nulls_as=>'-'
+,p_pagination_type=>'ROWS_X_TO_Y_OF_Z'
+,p_pagination_display_pos=>'TOP_AND_BOTTOM_RIGHT'
+,p_show_search_bar=>'N'
+,p_report_list_mode=>'TABS'
+,p_show_detail_link=>'N'
+,p_owner=>'ADMIN'
+,p_internal_uid=>4690289591901124643
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(4690289638573124644)
+,p_db_column_name=>'PASSPORTNO'
+,p_display_order=>10
+,p_column_identifier=>'A'
+,p_column_label=>'Passport No.'
+,p_column_type=>'STRING'
+,p_column_alignment=>'CENTER'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(4690289798195124645)
+,p_db_column_name=>'PASSPORTEXPDTE'
+,p_display_order=>20
+,p_column_identifier=>'B'
+,p_column_label=>'Expiry Date'
+,p_column_type=>'DATE'
+,p_column_alignment=>'CENTER'
+,p_tz_dependent=>'N'
+);
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(4690289800371124646)
+,p_db_column_name=>'TYPEDPASSPORT'
+,p_display_order=>30
+,p_column_identifier=>'C'
+,p_column_label=>'Type Passport'
+,p_column_type=>'STRING'
+,p_display_text_as=>'LOV_ESCAPE_SC'
+,p_column_alignment=>'CENTER'
+,p_rpt_named_lov=>wwv_flow_api.id(36462253120549236768)
+,p_rpt_show_filter_lov=>'1'
+);
+end;
+/
+begin
+wwv_flow_api.create_worksheet_rpt(
+ p_id=>wwv_flow_api.id(4693652621165031323)
+,p_application_user=>'APXWS_DEFAULT'
+,p_report_seq=>10
+,p_report_alias=>'46936527'
+,p_status=>'PUBLIC'
+,p_is_default=>'Y'
+,p_display_rows=>50
+,p_report_columns=>'PASSPORTNO:PASSPORTEXPDTE:TYPEDPASSPORT'
+,p_flashback_enabled=>'N'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(261840901167223525)
@@ -2220,9 +2039,6 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(458671860513975123)
 ,p_plug_name=>'Right Hand Content'
@@ -2931,6 +2747,9 @@ wwv_flow_api.create_worksheet(
 ,p_owner=>'ADMIN'
 ,p_internal_uid=>40976205577574042
 );
+end;
+/
+begin
 wwv_flow_api.create_worksheet_column(
  p_id=>wwv_flow_api.id(583401874591702598)
 ,p_db_column_name=>'OFFLDID'
@@ -3131,9 +2950,6 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(276994711550050055)
 ,p_plug_name=>'REG_REGION_CONTAINER_L'
@@ -4722,7 +4538,7 @@ wwv_flow_api.create_report_region(
 ,p_ajax_enabled=>'Y'
 ,p_ajax_items_to_submit=>'P17_BRDDOC_IDENTITY,P17_DISPLAY_DOCNUMBER,P17_NATIONALITY,P17_STATELESS,P17_DISPLAY_GENDER,P17_DISPLAY_DOB_TEXT,P17_DISPLAY_LASTNAME,P17_DISPLAY_FIRSTNAME,P17_DISPLAY_MIDDLENAME,P17_CHECK_PIBICS_CONN'
 ,p_query_row_template=>wwv_flow_api.id(563829676711049621)
-,p_query_num_rows=>15
+,p_query_num_rows=>500
 ,p_query_options=>'DERIVED_REPORT_COLUMNS'
 ,p_query_show_nulls_as=>'-'
 ,p_query_no_data_found=>'No Movements yet '
@@ -4761,7 +4577,7 @@ wwv_flow_api.create_report_columns(
 ,p_query_column_id=>3
 ,p_column_alias=>'DIRECTION'
 ,p_column_display_sequence=>2
-,p_column_heading=>'<!--Direction -->'
+,p_column_heading=>'<span class="fa fa-arrow-left my_red cl-bold" aria-hidden="true" title="Departure"></span><span class="fa fa-arrow-right my_blue cl-bold" aria-hidden="true" title="Arrival"></span>'
 ,p_use_as_row_header=>'N'
 ,p_column_alignment=>'CENTER'
 ,p_display_as=>'WITHOUT_MODIFICATION'
@@ -7129,6 +6945,7 @@ wwv_flow_api.create_page_button(
 ,p_button_position=>'REGION_TEMPLATE_PREVIOUS'
 ,p_button_redirect_url=>'javascript:resetWorkstation(true);'
 ,p_button_condition_type=>'NEVER'
+,p_grid_new_grid=>false
 );
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(460611114506108238)
@@ -7558,7 +7375,7 @@ wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(65870360433818421)
 ,p_name=>'P17_CITIZENID_THAI'
 ,p_item_sequence=>40
-,p_item_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_item_plug_id=>wwv_flow_api.id(4690289361752124641)
 ,p_prompt=>'Citizen ID :'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
@@ -7574,7 +7391,7 @@ wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(65870471665818422)
 ,p_name=>'P17_MIDDLE_NAME_THAI'
 ,p_item_sequence=>70
-,p_item_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_item_plug_id=>wwv_flow_api.id(4690289361752124641)
 ,p_prompt=>'Middle Name Thai:'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
@@ -8438,21 +8255,16 @@ wwv_flow_api.create_page_item(
 ,p_source_type=>'ITEM'
 ,p_display_as=>'NATIVE_SELECT_LIST'
 ,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'select t0.DISPLAY_VALUE, t0.key_value',
-'  from dl_common.TRANS_VEHICLES$LC t0',
-' inner join dl_common.TRANS_MODES t1',
-'    on (t0.TRANS_MODE is null or t0.TRANS_MODE = t1.KEY_VALUE)',
-' inner join dl_common.BORDER_TYPES t2',
-'    on (t1.BORDER_TYPE is null or t1.BORDER_TYPE = t2.KEY_VALUE)',
-' where t2.KEY_VALUE = :AI_BORDER_TYPE',
-' and t0.is_active = ''Y''',
-' order by ',
-'   case ',
-'     when :AI_TRANSPORT_MODE = 2 and t0.key_value = ''OTHERS'' then 1',
-'     when :AI_TRANSPORT_MODE = 1 and t0.key_value = ''SHIP'' then 1',
-'     else 2',
-'   end,',
-'   t0.DISPLAY_VALUE'))
+'SELECT t0.display_value, t0.key_value',
+'FROM dl_common.trans_vehicles$lc t0',
+'WHERE t0.is_active = ''Y''',
+'ORDER BY ',
+'    CASE ',
+'        WHEN :AI_TRANSPORT_MODE = 1 AND t0.key_value = ''SHIP'' THEN 1',
+'        WHEN :AI_TRANSPORT_MODE = 2 AND t0.key_value = ''OTHERS'' THEN 1',
+'        ELSE 2',
+'    END,',
+'    t0.display_value'))
 ,p_lov_display_null=>'YES'
 ,p_tag_css_classes=>'mandatory-field CLASS_STATUSRELEVANCE'
 ,p_tag_attributes=>'style="width:200px"'
@@ -8634,9 +8446,6 @@ wwv_flow_api.create_page_item(
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attribute_01=>'N'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(187700906450290993)
 ,p_name=>'P17_VISA_NUMBER_DISPLAY'
@@ -8656,6 +8465,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(187700979427290994)
 ,p_name=>'P17_VISA_TYPE_DISPLAY'
@@ -9500,7 +9312,7 @@ wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(261827402471776793)
 ,p_name=>'P17_GIVEN_NAME_THAI'
 ,p_item_sequence=>60
-,p_item_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_item_plug_id=>wwv_flow_api.id(4690289361752124641)
 ,p_prompt=>'First Name Thai:'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
@@ -9517,7 +9329,7 @@ wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(261827866512776805)
 ,p_name=>'P17_LASTNAME_THAI'
 ,p_item_sequence=>50
-,p_item_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_item_plug_id=>wwv_flow_api.id(4690289361752124641)
 ,p_prompt=>'Last Name Thai:'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
@@ -9533,7 +9345,7 @@ wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(261832069039095776)
 ,p_name=>'P17_DISPLAY_DOCTYPE_THAI'
 ,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_item_plug_id=>wwv_flow_api.id(4690289361752124641)
 ,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Document Type:'
 ,p_source=>'DG_DOCUMENTCLASSCODE'
@@ -9550,7 +9362,7 @@ wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(261832462191117735)
 ,p_name=>'P17_DOCNUMBER_THAI'
 ,p_item_sequence=>20
-,p_item_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_item_plug_id=>wwv_flow_api.id(4690289361752124641)
 ,p_prompt=>'Document No:'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
@@ -9663,9 +9475,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(289965845774508230)
 ,p_name=>'DG_ENTERMANUAL_LASTNAME_TH'
@@ -9682,6 +9491,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(289965943009508231)
 ,p_name=>'P17_DISPLAY_FIRSTNAME_TH'
@@ -10653,9 +10465,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(487005744415941894)
 ,p_name=>'DG13_T_9_LENGTH'
@@ -10677,6 +10486,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(487005857490941895)
 ,p_name=>'DG13_T_10_LENGTH'
@@ -11315,7 +11127,7 @@ wwv_flow_api.create_page_item(
 ,p_cSize=>30
 ,p_cMaxlength=>20
 ,p_tag_css_classes=>'CLASS_STATUSRELEVANCE auto-upper-case autofocus-on-load'
-,p_tag_attributes=>'mask-pattern="a" mask-pattern-a="/[A-Za-z0-9]/" mask-option-recursive-a="true" mask-condition="''&AI_TRANSPORT_MODE.''===''0''"'
+,p_tag_attributes=>'mask-pattern="a" mask-pattern-a="/[A-Za-z0-9]/" mask-option-recursive-a="true" mask-condition="$v(''P17_MVMNT_TRANSPORT_MODE'')===''0''"'
 ,p_colspan=>8
 ,p_grid_label_column_span=>4
 ,p_grid_column_css_classes=>'CLASS_STATUSRELEVANCE '
@@ -11639,9 +11451,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(553512091210478675)
 ,p_name=>'MVT_OBSERVATION'
@@ -11661,6 +11470,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_03=>'Y'
 ,p_attribute_04=>'BOTH'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(553641256423561255)
 ,p_name=>'PASS_ICAO_FACE2'
@@ -13877,10 +13689,14 @@ wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(2842097766052083637)
 ,p_name=>'P17_TYPEDPASSPORT'
 ,p_item_sequence=>30
-,p_item_plug_id=>wwv_flow_api.id(261827073420776781)
+,p_item_plug_id=>wwv_flow_api.id(4690289361752124641)
 ,p_prompt=>'Type Passport:'
 ,p_display_as=>'NATIVE_SELECT_LIST'
-,p_lov=>'STATIC:Issued;A,Cancelled;C,Deleted;D,Lost;L'
+,p_named_lov=>'LOV_PASSPORTSTATUS'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT pps_code || '' - '' || pps_desc AS d, pps_code AS r',
+'FROM dl_bordercontrol.v_passportstatus',
+'WHERE actflag = ''Y'';'))
 ,p_lov_display_null=>'YES'
 ,p_cHeight=>1
 ,p_tag_attributes=>'readonly disabled="disabled"'
@@ -13939,6 +13755,16 @@ wwv_flow_api.create_page_item(
 ,p_item_plug_id=>wwv_flow_api.id(563601671165712112)
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attribute_01=>'N'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4690287623575124624)
+,p_name=>'P17_MVMNT_TRANSPORT_MODE'
+,p_item_sequence=>1430
+,p_item_plug_id=>wwv_flow_api.id(455376177247005495)
+,p_item_default=>'&AI_TRANSPORT_MODE.'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'N'
+,p_item_comment=>'Passed from 120'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(5173633074589838636)
@@ -14524,6 +14350,9 @@ wwv_flow_api.create_page_computation(
 'select replace(asciistr(nvl(max(message_fingers_left), pkg_common.get_parameter(''MSG_CAPTURE_LEFT''))), ''\'', ''0x'') from country_management where coutry_code = :P17_NATIONALITY;',
 ''))
 );
+end;
+/
+begin
 wwv_flow_api.create_page_computation(
  p_id=>wwv_flow_api.id(165601900176467913)
 ,p_computation_sequence=>81
@@ -14534,9 +14363,6 @@ wwv_flow_api.create_page_computation(
 'select replace(asciistr(nvl(max(message_thumbs), pkg_common.get_parameter(''MSG_CAPTURE_THUMBS''))), ''\'', ''0x'') from country_management where coutry_code = :P17_NATIONALITY;',
 ''))
 );
-end;
-/
-begin
 wwv_flow_api.create_page_computation(
  p_id=>wwv_flow_api.id(792671916809460142)
 ,p_computation_sequence=>91
@@ -15275,8 +15101,12 @@ wwv_flow_api.create_page_da_action(
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'animate_cell(last_animationtarget, last_animationsource);',
-'SCI_animate = false;'))
+'animate_cell(last_animationtarget, last_animationsource, ''rapid'');',
+'window.scrollTo({top: 0});',
+'SCI_animate = false;',
+'last_animationsource = "";',
+'last_animationtarget = "";',
+'shortcut.remove(''esc'');'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
@@ -15378,6 +15208,9 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(854050373601866371)
 ,p_name=>'DA_CUTOUTDATAPAGEPHOTO'
@@ -15387,9 +15220,6 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'click'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(854050843482866374)
 ,p_event_id=>wwv_flow_api.id(854050373601866371)
@@ -15544,6 +15374,16 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4690288273219124630)
+,p_event_id=>wwv_flow_api.id(938799942199588045)
+,p_event_result=>'TRUE'
+,p_action_sequence=>20
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>'apexCustomEvent(''getCollectivePassport'', [{src: ''BIO'', pkval: $v("P17_MVMNTID"), load: 0}]);'
+,p_stop_execution_on_error=>'Y'
+);
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(940028315779213595)
 ,p_name=>'DA_SUBMITWORKFLOWPROBLEMS'
@@ -15616,9 +15456,10 @@ wwv_flow_api.create_page_da_action(
 '}',
 '',
 'toggleBmBSRequiredFields("P17_PROVINCE", (exitFlag != 1), true);'))
+,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_action(
- p_id=>wwv_flow_api.id(31426989806686704910)
+ p_id=>wwv_flow_api.id(4686930182586369047)
 ,p_event_id=>wwv_flow_api.id(941659631237904771)
 ,p_event_result=>'TRUE'
 ,p_action_sequence=>20
@@ -16170,43 +16011,6 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
- p_id=>wwv_flow_api.id(185706495917174895)
-,p_name=>'Show/Hide P17_VISUM_4'
-,p_event_sequence=>490
-,p_triggering_element_type=>'ITEM'
-,p_triggering_element=>'MOVEMENT_ENTRY_EXIT'
-,p_condition_element=>'MOVEMENT_ENTRY_EXIT'
-,p_triggering_condition_type=>'NOT_EQUALS'
-,p_triggering_expression=>'1'
-,p_bind_type=>'bind'
-,p_bind_event_type=>'change'
-,p_display_when_type=>'NEVER'
-);
-wwv_flow_api.create_page_da_action(
- p_id=>wwv_flow_api.id(185706555204174896)
-,p_event_id=>wwv_flow_api.id(185706495917174895)
-,p_event_result=>'TRUE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'Y'
-,p_action=>'NATIVE_SHOW'
-,p_affected_elements_type=>'ITEM'
-,p_affected_elements=>'P17_VISA_TYPE_ID,P17_PERMIT_TYPE_ID,P17_VISUM_4,P17_VISUM_1,P17_VISUM,P17_VISUM_3,P17_VISUM_5,P17_VISUM_2,P17_VISUM_ADD_INFO,P17_TRAVELCARD_NO,P17_PERMIT_TYPE,P17_PERMIT_EXPIRY,P17_PROVINCE,P17_AMPUR,P17_TAMBON,P17_LC_ADDRESS,P17_LC_ADD_INFO'
-,p_attribute_01=>'N'
-,p_stop_execution_on_error=>'Y'
-);
-wwv_flow_api.create_page_da_action(
- p_id=>wwv_flow_api.id(185706713432174897)
-,p_event_id=>wwv_flow_api.id(185706495917174895)
-,p_event_result=>'FALSE'
-,p_action_sequence=>10
-,p_execute_on_page_init=>'Y'
-,p_action=>'NATIVE_HIDE'
-,p_affected_elements_type=>'ITEM'
-,p_affected_elements=>'P17_VISA_TYPE_ID,P17_PERMIT_TYPE_ID,P17_VISUM_4,P17_VISUM_1,P17_VISUM,P17_VISUM_3,P17_VISUM_5,P17_VISUM_2,P17_VISUM_ADD_INFO,P17_TRAVELCARD_NO,P17_PERMIT_TYPE,P17_PERMIT_EXPIRY,P17_PROVINCE,P17_AMPUR,P17_TAMBON,P17_LC_ADDRESS,P17_LC_ADD_INFO'
-,p_attribute_01=>'N'
-,p_stop_execution_on_error=>'Y'
-);
-wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(191036049989524390)
 ,p_name=>'ABIS Blacklist Alarm'
 ,p_event_sequence=>500
@@ -16258,9 +16062,6 @@ wwv_flow_api.create_page_da_action(
 ,p_attribute_01=>'Ich suche dann jetzt!'
 ,p_stop_execution_on_error=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(196840649382019194)
 ,p_name=>'Open COLLECTIVE PASSPORT'
@@ -16308,6 +16109,9 @@ wwv_flow_api.create_page_da_action(
 '$("#BTN_ADD_CHILDREN").click()'))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(196841078979019198)
 ,p_name=>'DA_Show_Vehicle_Ditail'
@@ -16509,7 +16313,7 @@ wwv_flow_api.create_page_da_action(
 'demographicDates();',
 '',
 '// ICPO ',
-'doICPOStandard("SLTD");'))
+'doICPOStandard();'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_action(
@@ -16526,7 +16330,7 @@ wwv_flow_api.create_page_da_action(
 'DownloadAndRenderSecurityImages();',
 'disconnectPassportReader();',
 'PARAMETER_TARGET_READ = 1; ',
-'PARAMETER_PASSREADER_SETTING = 7; //7239;',
+'PARAMETER_PASSREADER_SETTING = 0003; //7; //7239;',
 'connectPassportReader();',
 '$("#TH_DOCUMENT_NUMBER").text($v("P17_DISPLAY_DOCNUMBER"));',
 '		/*shortcut.remove("F10");',
@@ -17106,9 +16910,6 @@ wwv_flow_api.create_page_da_action(
 ''))
 ,p_stop_execution_on_error=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(128278030410666494)
 ,p_name=>'MANDATORY: P17_PROVINCE'
@@ -17142,6 +16943,9 @@ wwv_flow_api.create_page_da_action(
 ,p_attribute_01=>'apex-page-item-error'
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(128279669483666510)
 ,p_name=>'After Refresh: P17_PERMIT_TYPE'
@@ -17480,7 +17284,7 @@ wwv_flow_api.create_page_da_action(
 ,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'BEGIN',
-'    IF NVL(:AI_TRANSPORT_MODE, -1) != 2 AND NVL(TRIM(:TRNSPRTUNITID), ''~'') != NVL(:AI_LAST_TRNSPRTUNITID, ''~'') then',
+'    IF NVL(:P17_MVMNT_TRANSPORT_MODE, -1) != 2 AND NVL(TRIM(:TRNSPRTUNITID), ''~'') != NVL(:AI_LAST_TRNSPRTUNITID, ''~'') then',
 '        :AI_LAST_TRNSPRTUNITID := TRIM(:TRNSPRTUNITID);',
 '    END IF;',
 'EXCEPTION',
@@ -17623,48 +17427,6 @@ wwv_flow_api.create_page_da_action(
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'console.log("HEALTHCHECK: country=", $("#P17_HEALTHCHECK_COUNTRY").val(), " / flight=", $("#P17_HEALTHCHECK_FLIGHT").val());',
 ''))
-,p_stop_execution_on_error=>'Y'
-);
-wwv_flow_api.create_page_da_action(
- p_id=>wwv_flow_api.id(504468846897245938)
-,p_event_id=>wwv_flow_api.id(143926045768387928)
-,p_event_result=>'TRUE'
-,p_action_sequence=>30
-,p_execute_on_page_init=>'N'
-,p_action=>'NATIVE_JAVASCRIPT_CODE'
-,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'/*',
-'// check if the flight exists',
-'// current src: flights',
-'',
-'// return if trans mode is not air border ',
-'if (''&AI_TRANSPORT_MODE.'' != 0) {',
-'    console.log("Trans Mode: " + ''&AI_TRANSPORT_MODE.'');',
-'    $("#P17_TRNSPRTUNITID_EXISTS").val("1").trigger("change");',
-'    return false;',
-'}',
-'',
-'if ($v("TRNSPRTUNITID").trim().length > 0) {',
-'    apex.server.process("CHECK_FLIGHT_NUM", ',
-'    {',
-'        x01: $v("TRNSPRTUNITID"),',
-'        x02: $v("MOVEMENT_ENTRY_EXIT"),',
-'        x03: ''&AI_BORDERPOST_ID.''',
-'    }, ',
-'    {',
-'        success: function(pData) ',
-'        {',
-'            //console.log(''CHECK_FLIGHT_NUM Result: '', pData.flight_num + '' '' + pData.flight_num_exists);',
-'            //$("#TRNSPRTUNITID").removeClass("cl-red").addClass(pData.flight_num_exists != "Y" ? "cl-red" : "");',
-'            $("#P17_TRNSPRTUNITID_EXISTS").val(pData.flight_num_exists != "Y" ? "0" : "1").trigger("change");',
-'        }',
-'    });',
-'}',
-'else {',
-'    //$("#TRNSPRTUNITID").removeClass("cl-red");',
-'    $("#P17_TRNSPRTUNITID_EXISTS").val("").trigger("change");',
-'}',
-'*/'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
@@ -18059,9 +17821,6 @@ wwv_flow_api.create_page_da_action(
 ''))
 ,p_stop_execution_on_error=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(133528871323270528)
 ,p_name=>'Movements: Colorize row after refresh'
@@ -18131,6 +17890,9 @@ wwv_flow_api.create_page_da_action(
 ''))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(143926344099387931)
 ,p_name=>'P17_PASS_DETECTED: Disable Expiry Date'
@@ -18671,7 +18433,7 @@ wwv_flow_api.create_page_da_action(
 '			AND cert.rcno_year = tm13.rcno_year',
 '			AND cert.rescerttype_seqno = tm13.rescerttype_seqno',
 '			AND tm13.tm13sts = ''A''',
-'			WHERE cert.crs_sts = ''A''',
+'			WHERE cert.crs_sts IN (''A'', ''U'')',
 '			AND (l_resident_no IS NULL OR cert.rcno_pvcd || cert.rcno_runningno || cert.rcno_year = l_resident_no)',
 '			AND (l_rescerttypecd IS NULL OR certtype.rescerttypecd = l_rescerttypecd)',
 '			AND (l_th_last_name IS NULL OR UPPER(TRIM(REGEXP_REPLACE(cert.tfamilynm, ''\s{2,}'', '' ''))) = l_th_last_name)',
@@ -18930,9 +18692,6 @@ wwv_flow_api.create_page_da_action(
 ''))
 ,p_stop_execution_on_error=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(165602064930467915)
 ,p_name=>'MOVEMENT_ENTRY_EXIT Change: Show / Hide Visa fields'
@@ -18999,6 +18758,9 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'click'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(165604690760467941)
 ,p_event_id=>wwv_flow_api.id(165604523751467940)
@@ -19044,7 +18806,7 @@ wwv_flow_api.create_page_da_action(
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'var item = this.triggeringElement.getAttribute("id");',
 'let isArrival = !parseInt($v("MOVEMENT_ENTRY_EXIT"));',
-'let hasVisaInformation = (!!$("#P17_VISUM_1").val() && !!$("#P17_VISUM").val()); // Visa Number and Visa Type',
+'let hasVisaInformation = (!!$("#P17_VISUM_1").val() && !!$("#P17_VISUM").val()); ',
 '',
 'p17.nationality.set("P17_NATIONALITY_ID", "P17_NATIONALITY");',
 'p17.permitType.set("P17_PERMIT_TYPE_ID", "P17_PERMIT_TYPE");',
@@ -19118,14 +18880,20 @@ wwv_flow_api.create_page_da_action(
 '}',
 'else if(item === "P17_VISUM") {',
 '    p17.visaType.setIdItem();',
-'    //$("#P17_PERMIT_TYPE,#P17_PERMIT_TYPE_ID,#P17_PERMIT_EXPIRY").prop("disabled", !hasVisaInformation).removeClass("apex-disabled").addClass((hasVisaInformation) ? "" : "apex-disabled");',
 '}',
 'else if(item === "P17_VISUM_1") {',
 '    null;',
 '}',
 'else if(item === "P17_DISPLAY_DOCCLASS") {',
 '    p17.docClass.setIdItem();',
-'    $("#P17_DISPLAY_DOCTYPE").val(GET_BC_DOC_TYPES[$("#P17_DISPLAY_DOCCLASS").val()]).trigger("change");',
+'    let docClass = $("#P17_DISPLAY_DOCCLASS").val(), docNumberThai = $("#P17_DOCNUMBER_THAI").val();',
+'    $("#P17_DISPLAY_DOCTYPE").val(GET_BC_DOC_TYPES[docClass]).trigger("change");',
+'    if ($("#P17_NATIONALITY").val() == "THA" && ( (docClass == "1" && !docNumberThai) || (docClass != "1" && !!docNumberThai) )) {',
+'        apexCustomEvent(''getThaiPassportInfo'');',
+'        if (!!parseInt($("#P17_PASS_DETECTED").val()) || !!parseInt($("#P17_MANUAL_PASSPORT").val())) {',
+'            demographicDates2();',
+'        }',
+'    }',
 '}',
 'else if(item === "P17_DOC_CLASS_ID") {',
 '    p17.docClass.setSelectItem();',
@@ -19180,7 +18948,12 @@ wwv_flow_api.create_page_da_action(
 '}',
 '',
 'let navigatePageTravelHistory = function() {',
-'    return buildNavigationFunction(8001, ''&APP_ID.'', ''::NO:RP,8001:P8001_INIT_LOAD:Y'', true, ''wBmBS_TH'');',
+'    //return buildNavigationFunction(8001, ''&APP_ID.'', ''::NO:RP,8001:P8001_INIT_LOAD:Y'', true, ''wBmBS_TH'');',
+'    return function() {',
+'        if (!$(".ui-dialog.cl-page-th-modal-8007").length) {',
+'            $("#navbarTravelHistory")[0].click();',
+'        }',
+'    };',
 '}',
 '',
 'let snapFaceImage = resetFaceCapture;',
@@ -19560,7 +19333,12 @@ wwv_flow_api.create_page_da_action(
 '        ageText = "Age " + age;',
 '        if (age < 12) {',
 '            let e_f_cnt = getEnabledFingerCount();',
+'            let c_f_cnt = getCapturedFingerCount();',
 '            //console.log("Enabled Finger Count: " + e_f_cnt);',
+'            if (c_f_cnt > 0) {',
+'                $(".fp_recapture_left,.fp_recapture_right,.fp_recapture_thumbs").trigger("click");',
+'                executePageProcess(''PROC_CLEAR_MVMNT_FINGERS'', [$v("P17_MVMNTID")]);',
+'            }',
 '            if (e_f_cnt == 10) toggleAllFingers();',
 '        }',
 '        ',
@@ -19660,7 +19438,12 @@ wwv_flow_api.create_page_da_action(
 '        ageText = "Age " + age;',
 '        if (age < 12) {',
 '            let e_f_cnt = getEnabledFingerCount();',
+'            let c_f_cnt = getCapturedFingerCount();',
 '            //console.log("Enabled Finger Count: " + e_f_cnt);',
+'            if (c_f_cnt > 0) {',
+'                $(".fp_recapture_left,.fp_recapture_right,.fp_recapture_thumbs").trigger("click");',
+'                executePageProcess(''PROC_CLEAR_MVMNT_FINGERS'', [$v("P17_MVMNTID")]);',
+'            }',
 '            if (e_f_cnt == 10) toggleAllFingers();',
 '        }',
 '        ',
@@ -19827,9 +19610,6 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'click'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(43029558599716820)
 ,p_event_id=>wwv_flow_api.id(43029432844716819)
@@ -19867,6 +19647,9 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(95456591735695416)
 ,p_event_id=>wwv_flow_api.id(95456215890695413)
@@ -20271,11 +20054,17 @@ wwv_flow_api.create_page_da_action(
 ' l_exists     VARCHAR2(1) := ''N'';',
 ' l_tm2_seqno  NUMBER;',
 ' l_conv_seqno NUMBER;',
+' l_travel_date DATE := TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI'');',
+' l_tm2_before NUMBER := 0;',
+' l_tm2_after NUMBER := 0;',
 'BEGIN',
 '',
 ' IF TRIM(:TRNSPRTUNITID) IS NULL THEN',
 '  RETURN;',
 ' END IF;',
+'',
+' l_tm2_before := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter(''TM2_BEFORE_LIMIT''), 0));',
+' l_tm2_after := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter(''TM2_AFTER_LIMIT''), 0));',
 '',
 ' BEGIN',
 '  SELECT TO_NUMBER(NVL(notice$dlc, notice))',
@@ -20295,14 +20084,14 @@ wwv_flow_api.create_page_da_action(
 '  WHERE UPPER(flightno) = UPPER(:TRNSPRTUNITID)',
 '  AND cardtype = DECODE(:MOVEMENT_ENTRY_EXIT, 0, 1, 1, 2, :MOVEMENT_ENTRY_EXIT)',
 '  AND conv_seqno = l_conv_seqno',
-'  --AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''yyyymmdd'')',
 '  AND ',
 '  CASE ',
-'      WHEN TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''yyyymmdd'')',
-'      THEN 1',
-'      WHEN TO_NUMBER(TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''HH24MI'')) <= 200 AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:'
-||'MI'')), ''DD/MM/YYYY HH24:MI'') - 1, ''yyyymmdd'')',
-'      THEN 1',
+'   WHEN TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date, ''yyyymmdd'')',
+'   THEN 1',
+'   WHEN l_tm2_after > 0 AND TO_NUMBER(TO_CHAR(l_travel_date, ''HH24MI'')) <= l_tm2_after AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date - 1, ''yyyymmdd'')',
+'   THEN 1',
+'   WHEN l_tm2_before > 0 AND TO_NUMBER(TO_CHAR(l_travel_date, ''HH24MI'')) >= l_tm2_before AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date + 1, ''yyyymmdd'')',
+'   THEN 1',
 '  END = 1',
 '  AND ROWNUM = 1;',
 ' EXCEPTION',
@@ -20319,14 +20108,14 @@ wwv_flow_api.create_page_da_action(
 '   WHERE convregno = UPPER(:TRNSPRTUNITID)',
 '   AND cardtype = DECODE(:MOVEMENT_ENTRY_EXIT, 0, 1, 1, 2, :MOVEMENT_ENTRY_EXIT)',
 '   AND conv_seqno = l_conv_seqno',
-'   --AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''yyyymmdd'')',
 '   AND',
 '   CASE ',
-'       WHEN TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''yyyymmdd'')',
-'       THEN 1',
-'       WHEN TO_NUMBER(TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''HH24MI'')) <= 200 AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24'
-||':MI'')), ''DD/MM/YYYY HH24:MI'') - 1, ''yyyymmdd'')',
-'       THEN 1',
+'    WHEN TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date, ''yyyymmdd'')',
+'    THEN 1',
+'    WHEN l_tm2_after > 0 AND TO_NUMBER(TO_CHAR(l_travel_date, ''HH24MI'')) <= l_tm2_after AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date - 1, ''yyyymmdd'')',
+'    THEN 1',
+'    WHEN l_tm2_before > 0 AND TO_NUMBER(TO_CHAR(l_travel_date, ''HH24MI'')) >= l_tm2_before AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date + 1, ''yyyymmdd'')',
+'    THEN 1',
 '   END = 1',
 '   AND ROWNUM = 1;',
 '  EXCEPTION',
@@ -20344,14 +20133,14 @@ wwv_flow_api.create_page_da_action(
 '   WHERE convregno = UPPER(:TRNSPRTUNITID)',
 '   AND cardtype = DECODE(:MOVEMENT_ENTRY_EXIT, 0, 1, 1, 2, :MOVEMENT_ENTRY_EXIT)',
 '   AND conv_seqno = l_conv_seqno',
-'   --AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''yyyymmdd'')',
 '   AND',
 '   CASE ',
-'       WHEN TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''yyyymmdd'')',
-'       THEN 1',
-'       WHEN TO_NUMBER(TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''), ''HH24MI'')) <= 200 AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(TO_DATE(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24'
-||':MI'')), ''DD/MM/YYYY HH24:MI'') - 1, ''yyyymmdd'')',
-'       THEN 1',
+'    WHEN TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date, ''yyyymmdd'')',
+'    THEN 1',
+'    WHEN l_tm2_after > 0 AND TO_NUMBER(TO_CHAR(l_travel_date, ''HH24MI'')) <= l_tm2_after AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date - 1, ''yyyymmdd'')',
+'    THEN 1',
+'    WHEN l_tm2_before > 0 AND TO_NUMBER(TO_CHAR(l_travel_date, ''HH24MI'')) >= l_tm2_before AND TO_CHAR(iodte, ''yyyymmdd'') = TO_CHAR(l_travel_date + 1, ''yyyymmdd'')',
+'    THEN 1',
 '   END = 1',
 '   AND ROWNUM = 1;',
 '  EXCEPTION',
@@ -20722,9 +20511,6 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'click'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(2729914660898547144)
 ,p_event_id=>wwv_flow_api.id(2729914524756547143)
@@ -20785,6 +20571,9 @@ wwv_flow_api.create_page_da_action(
 '}'))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(2729915217696547150)
 ,p_name=>'MANDATORY: P17_VISUM'
@@ -21066,7 +20855,9 @@ wwv_flow_api.create_page_da_action(
 ,p_action_sequence=>20
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
-,p_attribute_01=>'$("#MOVEMENT_ENTRY_EXIT").trigger("change");'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'$("#MOVEMENT_ENTRY_EXIT").trigger("change");',
+'apexCustomEvent(''getCollectivePassport'', [{src: $v("P17_LAST_MVMNT_SRC"), pkval: $v("P17_LAST_MVMNT_SRC_SEC_PK_VAL"), load: 1}]);'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
@@ -21158,7 +20949,9 @@ wwv_flow_api.create_page_da_action(
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'$("span.my_yellow").closest("tr").addClass("cell-warn").find("td").css("background-color", "inherit");',
+'//$("span.my_yellow").closest("tr").addClass("cell-warn").find("td").css("background-color", "inherit");',
+'$("#REGION_MOVEMENTS_DYNAMIC span.row_yellow").closest("tr").addClass("cell-warn").find("td").css("background-color", "inherit");',
+'$("#REGION_MOVEMENTS_DYNAMIC span.row_red").closest("tr").addClass("cell-danger").find("td").css("background-color", "inherit");',
 '$("#TH_DOCUMENT_NUMBER").val($("#P17_DISPLAY_DOCNUMBER").val());',
 ''))
 ,p_stop_execution_on_error=>'Y'
@@ -21199,7 +20992,7 @@ wwv_flow_api.create_page_da_event(
 ,p_triggering_element_type=>'ITEM'
 ,p_triggering_element=>'P17_TRNSPRTUNITID_EXISTS'
 ,p_triggering_condition_type=>'JAVASCRIPT_EXPRESSION'
-,p_triggering_expression=>'''&AI_TRANSPORT_MODE.'' == 0 && !parseInt(this.triggeringElement.value) && $v("TRNSPRTUNITID").trim().length > 0'
+,p_triggering_expression=>'$v("P17_MVMNT_TRANSPORT_MODE") == 0 && !parseInt(this.triggeringElement.value) && $v("TRNSPRTUNITID").trim().length > 0'
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'change'
 );
@@ -21249,8 +21042,10 @@ wwv_flow_api.create_page_da_action(
 '// current src: flights',
 '',
 '// return if trans mode is not air border ',
-'if (''&AI_TRANSPORT_MODE.'' != 0) {',
-'    console.log("Trans Mode: " + ''&AI_TRANSPORT_MODE.'');',
+'let transmode = $v("P17_MVMNT_TRANSPORT_MODE");',
+'if (!transmode.length) transmode = ''&AI_TRANSPORT_MODE.'';',
+'if (transmode != 0) {',
+'    console.log("Trans Mode: " + transmode);',
 '    $("#P17_TRNSPRTUNITID_EXISTS").val("1").trigger("change");',
 '    return false;',
 '}',
@@ -21582,9 +21377,6 @@ wwv_flow_api.create_page_da_action(
 'wait for result : Yes',
 'Reason: Citizen ID (idCard) is used in BL Demographic request'))
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(31426989215354704904)
 ,p_event_id=>wwv_flow_api.id(31426989057676704902)
@@ -21604,6 +21396,10 @@ wwv_flow_api.create_page_da_action(
 '.addClass(isThai ? "button-data-available" : "")',
 '.addClass(isInvalid ? "alert" : "");',
 '',
+'if (isThai) {',
+'    apex.event.trigger("#id-ir-thai-info-report", "apexrefresh");',
+'}',
+'',
 'if (isInvalid) {',
 '    openModal("DIALOG_THAI_INFORMATION");',
 '    $("#P17_TYPEDPASSPORT").trigger("change");',
@@ -21612,6 +21408,9 @@ wwv_flow_api.create_page_da_action(
 'setStatusDiv("div_movement_status");'))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(31426989348636704905)
 ,p_name=>'P17_TYPEDPASSPORT: Change'
@@ -21667,6 +21466,115 @@ wwv_flow_api.create_page_da_action(
 '',
 'if (dob.length > 0)',
 '$("#P17_DISPLAY_DOB_TEXT").val(dob).trigger("change");'))
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4690287484654124622)
+,p_name=>'DA_SetMovementTransMode'
+,p_event_sequence=>1610
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P17_VEHICLE_TYPE_D'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'change'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4690287548070124623)
+,p_event_id=>wwv_flow_api.id(4690287484654124622)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT transport_mode',
+'INTO :P17_MVMNT_TRANSPORT_MODE',
+'FROM',
+'(',
+'    SELECT NVL(t1.num_value, TO_NUMBER(:AI_TRANSPORT_MODE)) AS TRANSPORT_MODE',
+'    FROM dl_common.trans_vehicles$lc t0, dl_common.trans_modes t1',
+'    WHERE t0.key_value = :P17_VEHICLE_TYPE_D',
+'    AND t1.key_value = t0.trans_mode',
+'    UNION ALL',
+'    SELECT TO_NUMBER(:AI_TRANSPORT_MODE) AS TRANSPORT_MODE',
+'    FROM DUAL',
+')',
+'WHERE ROWNUM = 1',
+';'))
+,p_attribute_02=>'P17_VEHICLE_TYPE_D'
+,p_attribute_03=>'P17_MVMNT_TRANSPORT_MODE'
+,p_attribute_04=>'N'
+,p_stop_execution_on_error=>'Y'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4690287730190124625)
+,p_name=>'P17_MVMNT_TRANSPORT_MODE: Change'
+,p_event_sequence=>1620
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P17_MVMNT_TRANSPORT_MODE'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'change'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4690287840295124626)
+,p_event_id=>wwv_flow_api.id(4690287730190124625)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'initMask(document.querySelector(''#TRNSPRTUNITID''));',
+'apex.event.trigger(document, "validateFlightNum");',
+'apexCustomEvent(''setLastFlightNum'');',
+''))
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4690288039093124628)
+,p_name=>'Get Collective Passport'
+,p_event_sequence=>1630
+,p_triggering_element_type=>'JAVASCRIPT_EXPRESSION'
+,p_triggering_element=>'document'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'custom'
+,p_bind_event_type_custom=>'getCollectivePassport'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4690288118153124629)
+,p_event_id=>wwv_flow_api.id(4690288039093124628)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'//src,pkval,load',
+'let src = this.data.src;',
+'let pkval = this.data.pkval;',
+'let load = this.data.load;',
+'',
+'if (src != ''BIO'' || !pkval.length) {',
+'    return false;',
+'}',
+'',
+'apex.server.process("GET_COLLECTIVE_PASSPORT", ',
+'{',
+'      x01: pkval',
+'    , x02: load',
+'}, ',
+'{',
+'    success: function(pData) ',
+'    {',
+'        console.log(''GET_COLLECTIVE_PASSPORT Result: '', pData);',
+'        let cnt = pData.result;',
+'        let cls = "button-data-available";',
+'        setCollectivePeopleCount();',
+'        $("#BTN_ADD_CHILDREN").removeClass(cls);',
+'        if (cnt > 0) {',
+'            if (load === 0) setCollectivePeopleCount(cnt);',
+'            $("#BTN_ADD_CHILDREN").addClass(cls);',
+'            if (load === 1) $("#BTN_ADD_CHILDREN").trigger("click");',
+'        }',
+'    }',
+'});'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_process(
@@ -21848,55 +21756,75 @@ wwv_flow_api.create_page_process(
 ,p_process_name=>'CREATEBORDERMOVEMENT'
 ,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'DECLARE',
-' ret_add number;',
-' --trnsport VARCHAR(20);',
-' child_lastname VARCHAR(256);',
-' child_firstname VARCHAR(256);',
-' child_nationality VARCHAR2(256);',
-' child_observation VARCHAR(256);',
-' child_dob DATE;',
-' child_face BLOB;',
-' child_sex number;',
-' Lcntr NUMBER;',
-' l_dummy_bool boolean;',
-' l_date date;',
-' l_person_type number;',
-' l_nationality VARCHAR2(20);',
-' l_visa_type VARCHAR2(32);',
-' ',
-' -- Logger',
-' l_scope logger_logs.scope%TYPE := ''APEX BmBS (500) - Page '' || v(''APP_PAGE_ID'') || '' PageProcess: CREATEBORDERMOVEMENT'';',
-' l_params logger.tab_param;',
-' ',
-' BEGIN',
-' ',
-'     -- Logging',
-'     logger.log(''START'', l_scope, null, l_params);',
+'    ret_add NUMBER;',
+'    child_lastname VARCHAR(256);',
+'    child_firstname VARCHAR(256);',
+'    child_nationality VARCHAR2(256);',
+'    child_observation VARCHAR(256);',
+'    child_dob DATE;',
+'    child_face BLOB;',
+'    child_sex NUMBER;',
+'    Lcntr NUMBER;',
+'    l_dummy_bool BOOLEAN;',
+'    l_date DATE;',
+'    l_person_type NUMBER;',
+'    l_nationality VARCHAR2(20);',
+'    l_visa_type VARCHAR2(32);',
 '',
-' ',
-'     -- M. Langer, 05.11.2018, START Logging added',
-'     logger.append_param(l_params, '':P17_MVMNTID'', :P17_MVMNTID);',
-'     logger.append_param(l_params, '':P17_BRDDOCID'', :P17_BRDDOCID);',
-'     logger.log(''P17 - START Create Border Movement Process'', ''Page Process'', null, l_params);',
-'     ',
-'     ',
-' --select decode(:AI_TRANSPORT_MODE, 0, :TRNSPRTUNITID, 1, :TRNSPRTUNITID_SEA, 2, :TRNSPRTUNITID_LAND, ''n.a.'') into trnsport from dual;',
-' ',
-' select decode(:P17_IS_CREW_MEMBER, ''Y'', 2, 1) into l_person_type from dual;',
-' ',
-' BEGIN',
-'    SELECT issuectry --nat  /*nat is also being used for stateless*/',
-'    INTO l_nationality',
-'    FROM dl_bordercontrol.borderdocuments',
-'    WHERE brddocid = :P17_BRDDOCID;',
-' EXCEPTION',
-'    WHEN OTHERS THEN',
-'        l_nationality := NULL;',
-' END;',
-' ',
-' select DECODE(l_nationality, ''THA'', DECODE(l_person_type, 2, ''0023'', ''0022''), :P17_VISUM) into l_visa_type from dual;',
-' ',
-' DL_MOVEMENTHANDLING.Update_Movement(',
+'    -- Logger',
+'    l_scope logger_logs.scope%TYPE := ''APEX BmBS (500) - Page '' || v(''APP_PAGE_ID'') || '' PageProcess: CREATEBORDERMOVEMENT'';',
+'    l_params logger.tab_param;',
+'',
+'BEGIN',
+'',
+'    -- Logging',
+'    logger.log(''START'', l_scope, null, l_params);',
+'',
+'    -- M. Langer, 05.11.2018, START Logging added',
+'    logger.append_param(l_params, '':P17_MVMNTID'', :P17_MVMNTID);',
+'    logger.append_param(l_params, '':P17_BRDDOCID'', :P17_BRDDOCID);',
+'    logger.log(''P17 - START Create Border Movement Process'', ''Page Process'', null, l_params);',
+'',
+'',
+'    -- update borderdoc before sending movement to pibics',
+'    IF :P17_BRDDOCID IS NOT NULL THEN',
+'        BEGIN',
+'            l_date := TO_DATE(:P17_MANUAL_EXPIRYDATE, ''DD/MM/YYYY'');',
+'        EXCEPTION WHEN OTHERS THEN',
+'            NULL;',
+'        END;',
+'        UPDATE',
+'            borderdocuments',
+'        SET',
+'            docclass = :P17_DISPLAY_DOCCLASS',
+'            , doctype = NVL(:P17_DISPLAY_DOCTYPE, doctype)',
+'            , nat = NVL(:P17_STATELESS, issuectry)',
+'            , sub_nationality = :P17_SUBNATIONALITY',
+'            , manual_expiry_date = l_date',
+'        WHERE',
+'            brddocid = :P17_BRDDOCID',
+'        ;',
+'    END IF;',
+'',
+'    -- get person type',
+'    SELECT DECODE(:P17_IS_CREW_MEMBER, ''Y'', 2, 1) INTO l_person_type FROM dual;',
+'',
+'    -- get nationality from doc',
+'    BEGIN',
+'        SELECT issuectry --nat  /*nat is also being used for stateless*/',
+'        INTO l_nationality',
+'        FROM dl_bordercontrol.borderdocuments',
+'        WHERE brddocid = :P17_BRDDOCID;',
+'    EXCEPTION',
+'        WHEN OTHERS THEN',
+'          l_nationality := NULL;',
+'    END;',
+'',
+'    -- get visa type',
+'    SELECT DECODE(l_nationality, ''THA'', DECODE(l_person_type, 2, ''0023'', ''0022''), :P17_VISUM) INTO l_visa_type FROM dual;',
+'',
+'    -- update movement',
+'    DL_MOVEMENTHANDLING.Update_Movement(',
 '                                p_MVMNTID           => :P17_MVMNTID,',
 '                                p_DOCNO             => :DG_DOCUMENTNUMBER,',
 '                                p_ISSUECTRY         => :DG_ISSUINGSTATECODE,',
@@ -21916,8 +21844,8 @@ wwv_flow_api.create_page_process(
 '                                p_DATE_OF_ENTRY     => to_date(NVL(:P17_DATE_OF_ENTRY, TO_CHAR(SYSDATE, ''DD/MM/YYYY HH24:MI'')), ''DD/MM/YYYY HH24:MI''),',
 '                                p_VISA_NUMBER       => :P17_VISUM_1,',
 '                                p_EXPIRY_DATE_VISA  => :P17_VISUM_5, ',
-'                                p_ISSUING_DATE       => :P17_VISUM_3,',
-'                                p_ISSUING_PLACE    => :P17_VISUM_2,',
+'                                p_ISSUING_DATE      => :P17_VISUM_3,',
+'                                p_ISSUING_PLACE     => :P17_VISUM_2,',
 '                                p_ADDITIONAL_INFO   => :P17_VISUM_ADD_INFO,',
 '                                p_PERMIT_TYPE       => :P17_PERMIT_TYPE,',
 '                                p_PERMIT_EXPIRY_DATE => :P17_PERMIT_EXPIRY,',
@@ -21943,7 +21871,7 @@ wwv_flow_api.create_page_process(
 '                                p_WSQ_RT            => NULL,                --PKG_APEX_UTIL.COLL_Get_BLOB001(''P17_FP_WSQ_RT''),',
 '                                p_VISA_IMAGE        => PKG_APEX_UTIL.COLL_Get_BLOB001(''VISA_IMAGE''),',
 '                                p_ENTRY_FORM_IMAGE  => PKG_APEX_UTIL.COLL_Get_BLOB001(''LANDINGCARD_IMAGE''),',
-'                                p_SCANNED_FLIGHT    => UPPER(:TRNSPRTUNITID), --trnsport,',
+'                                p_SCANNED_FLIGHT    => UPPER(:TRNSPRTUNITID),',
 '                             --   ',
 '                                p_PS_1              => null,                -- PS1 VARCHAR2',
 '                                p_PS_2              => null,                -- PS2 VARCHAR2',
@@ -21955,9 +21883,9 @@ wwv_flow_api.create_page_process(
 '                                p_PS_8              => NULL,                -- PS8 NUMBER',
 '                                p_PS_9              => NULL,                -- PS9 NUMBER',
 '                                p_PS_10             => NULL,                -- PS10 NUMBER',
-'                                p_PSBLOB_1          => PKG_APEX_UTIL.COLL_Get_BLOB001(''PASS_VISUAL_FACE''),        -- PSBLOB1',
-'                                p_PSBLOB_2          => NULL,                -- PSBLOB2',
-'                                p_PSBLOB_3          => NULL,                -- PSBLOB3',
+'                                p_PSBLOB_1          => PKG_APEX_UTIL.COLL_Get_BLOB001(''PASS_VISUAL_FACE''),              -- PSBLOB1',
+'                                p_PSBLOB_2          => PKG_APEX_UTIL.COLL_Get_BLOB001(''PASS_ICAO_FACE''),                -- PSBLOB2',
+'                                p_PSBLOB_3          => PKG_APEX_UTIL.COLL_Get_BLOB001(''PASS_VISUALPAGE''),               -- PSBLOB3',
 '                                p_PSBLOB_4          => NULL,                -- PSBLOB4',
 '                                p_PSBLOB_5          => NULL,                -- PSBLOB5',
 '                                p_PSBLOB_6          => NULL,                -- PSBLOB6',
@@ -21977,64 +21905,39 @@ wwv_flow_api.create_page_process(
 '                                p_TEMPLATE_RT       => NULL                 --PKG_APEX_UTIL.COLL_Get_BLOB001(''P17_FP_TEMPLATE_RT'')',
 '                                --',
 '                                );',
-'                                ',
-'    if to_char(dl_bordercontrol.pkg_common.Parse_Date( p_DATETEXT => :DG_EXPIRATIONDATE',
-'                                                      ,p_MUST_BE_PAST  => 0',
-'                                                      ,p_MUST_BE_FUTURE => 1',
-'                                                      ,p_YEARLIMIT     => 0',
-'                                                      ,p_REVERSEDATE   => 1), ''DD/MM/RRRR'') != :P17_DISPLAY_EXPIRYDATE',
-'    then update dl_bordercontrol.borderdocuments ',
-'         set MANUAL_EXPIRY_DATE = :P17_DISPLAY_EXPIRYDATE',
-'         where BRDDOCID = :P17_BRDDOCID;',
-'         commit;',
-'   end if;',
-'   if :P17_BRDDOCID is not null then',
-'       begin',
-'           l_date := to_date(:P17_MANUAL_EXPIRYDATE, ''DD/MM/YYYY'');',
-'       exception when others then',
-'           null;',
-'       end;',
-'       update',
-'           borderdocuments',
-'       set',
-'           docclass = :P17_DISPLAY_DOCCLASS',
-'           , nat = NVL(:P17_STATELESS, issuectry)',
-'           , sub_nationality = :P17_SUBNATIONALITY',
-'           , manual_expiry_date = l_date',
-'       where',
-'           brddocid = :P17_BRDDOCID',
-'       ;',
-'   end if;',
-'   if :P17_PERMIT_TYPE is not null then',
+'',
+'',
+'',
+'    IF :P17_PERMIT_TYPE IS NOT NULL THEN',
 '        l_dummy_bool := PKG_REENTRY.INCREASE_REENTRY_USED(:P17_PERMIT_TYPE);',
-'   end if;',
-'   ',
-'    IF TO_NUMBER(NVL(:P17_OVERSTAY_INFO_DAYS, 0)) > 0 THEN',
-'       -- insert movement overstay entry',
-'       INSERT INTO DL_BORDERCONTROL.MSCS_MOVEMENTS_OVERSTAY',
-'       (',
-'           MVMNTID,',
-'           EXTOVS_DATE,',
-'           FLAGOVERSTAY,',
-'           FINDOVERSTAYDAYS,',
-'           FINDOVERSTAYAMOUNT,',
-'           INS_TERMINAL,',
-'           INS_BORDERPOST',
-'       )',
-'       VALUES',
-'       (',
-'           :P17_MVMNTID --MVMNTID',
-'           , (TO_DATE(:P17_OVERSTAY_INFO_EXPIRY_DATE, ''DD/MM/YYYY'') + 1) --EXTOVS_DATE,',
-'           , ''Y'' --FLAGOVERSTAY,',
-'           , :P17_OVERSTAY_INFO_DAYS --FINDOVERSTAYDAYS,',
-'           , LEAST(20000, TO_NUMBER(NVL(:P17_OVERSTAY_INFO_DAYS, 0) * 500)) --FINDOVERSTAYAMOUNT,',
-'           , :AI_TERMINAL_ID --INS_TERMINAL,',
-'           , :AI_BORDERPOST_ID --INS_BORDERPOST ',
-'       );',
 '    END IF;',
-'   ',
-'   -- Merge identities if there were Travel Abis hits and some were marked for merging',
-'   pkg_bmbs_apex_util.p17_merge_identities;',
+'',
+'    -- insert movement overstay entry',
+'    IF TO_NUMBER(NVL(:P17_OVERSTAY_INFO_DAYS, 0)) > 0 THEN',
+'        INSERT INTO dl_bordercontrol.mscs_movements_overstay',
+'        (',
+'            mvmntid,',
+'            extovs_date,',
+'            flagoverstay,',
+'            findoverstaydays,',
+'            findoverstayamount,',
+'            ins_terminal,',
+'            ins_borderpost',
+'        )',
+'        VALUES',
+'        (',
+'            :P17_MVMNTID --MVMNTID',
+'            , (TO_DATE(:P17_OVERSTAY_INFO_EXPIRY_DATE, ''DD/MM/YYYY'') + 1) --EXTOVS_DATE,',
+'            , ''Y'' --FLAGOVERSTAY,',
+'            , :P17_OVERSTAY_INFO_DAYS --FINDOVERSTAYDAYS,',
+'            , LEAST(20000, TO_NUMBER(NVL(:P17_OVERSTAY_INFO_DAYS, 0) * 500)) --FINDOVERSTAYAMOUNT,',
+'            , :AI_TERMINAL_ID --INS_TERMINAL,',
+'            , :AI_BORDERPOST_ID --INS_BORDERPOST ',
+'        );',
+'    END IF;',
+'',
+'    -- Merge identities if there were Travel Abis hits and some were marked for merging',
+'    pkg_bmbs_apex_util.p17_merge_identities;',
 '',
 '',
 '    -- Logging',
@@ -22269,6 +22172,9 @@ wwv_flow_api.create_page_process(
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_process_when_type=>'NEVER'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(792670746615460130)
 ,p_process_sequence=>61
@@ -22335,9 +22241,6 @@ wwv_flow_api.create_page_process(
 'end;'))
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(792672037738460143)
 ,p_process_sequence=>7
@@ -23081,8 +22984,50 @@ wwv_flow_api.create_page_process(
 ':P17_FP_QUALITY_LL := NULL;'))
 );
 wwv_flow_api.create_page_process(
- p_id=>wwv_flow_api.id(883938213294125582)
+ p_id=>wwv_flow_api.id(4690288377805124631)
 ,p_process_sequence=>120
+,p_process_point=>'ON_DEMAND'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'PROC_CLEAR_MVMNT_FINGERS'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    l_mvmntid  VARCHAR2(32) := apex_application.g_x01;',
+'BEGIN',
+'',
+'    IF l_mvmntid IS NOT NULL THEN',
+'        UPDATE dl_bordercontrol.movements_blob SET ',
+'              wsq_ll      = NULL',
+'            , wsq_lr      = NULL',
+'            , wsq_lm      = NULL',
+'            , wsq_li      = NULL',
+'            , wsq_lt      = NULL',
+'            , wsq_rl      = NULL',
+'            , wsq_rr      = NULL',
+'            , wsq_rm      = NULL',
+'            , wsq_ri      = NULL',
+'            , wsq_rt      = NULL',
+'            , template_ll = NULL',
+'            , template_lr = NULL',
+'            , template_lm = NULL',
+'            , template_li = NULL',
+'            , template_lt = NULL',
+'            , template_rl = NULL',
+'            , template_rr = NULL',
+'            , template_rm = NULL',
+'            , template_ri = NULL',
+'            , template_rt = NULL',
+'        WHERE mvmnt_id = l_mvmntid;',
+'        COMMIT;',
+'    END IF;',
+'',
+'END;'))
+);
+end;
+/
+begin
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(883938213294125582)
+,p_process_sequence=>130
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'PROC_CLEAR_VISA_IMAGE'
@@ -23094,7 +23039,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(884732325685720597)
-,p_process_sequence=>130
+,p_process_sequence=>140
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'PROC_CLEAR_LC_IMAGE'
@@ -23104,7 +23049,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(951323563819419441)
-,p_process_sequence=>140
+,p_process_sequence=>150
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'PROC_CLEAR_SCANPHOTO'
@@ -23114,7 +23059,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(186861380796161696)
-,p_process_sequence=>150
+,p_process_sequence=>160
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'PROC_LOAD_RECENT_FINGERS'
@@ -23257,12 +23202,9 @@ wwv_flow_api.create_page_process(
 ''))
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(108034095441098013)
-,p_process_sequence=>160
+,p_process_sequence=>170
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'CHECK_NEED_LANDCARD'
@@ -23277,7 +23219,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(133526796898270507)
-,p_process_sequence=>170
+,p_process_sequence=>180
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'CHECK_ACTIVE_CASES'
@@ -23312,7 +23254,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(170741365918646642)
-,p_process_sequence=>180
+,p_process_sequence=>190
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'CHECK_VISA_RUN'
@@ -23472,7 +23414,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(165602886836467923)
-,p_process_sequence=>190
+,p_process_sequence=>200
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_SESSION_STATE'
 ,p_process_name=>'Clear_All_Page_Items'
@@ -23480,7 +23422,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(165602936002467924)
-,p_process_sequence=>200
+,p_process_sequence=>210
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'Clear_All_Session_Bag'
@@ -23558,7 +23500,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(159276491154564124)
-,p_process_sequence=>210
+,p_process_sequence=>220
 ,p_process_point=>'ON_DEMAND'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'SEARCH_TRAVEL_ABIS'
@@ -23688,6 +23630,43 @@ wwv_flow_api.create_page_process(
 '    apex_json.close_object;',
 'end;',
 ''))
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(4690287959036124627)
+,p_process_sequence=>230
+,p_process_point=>'ON_DEMAND'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'GET_COLLECTIVE_PASSPORT'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    l_mvmnt VARCHAR2(32) := apex_application.g_x01;',
+'    l_load_data NUMBER := NVL(TO_NUMBER(apex_application.g_x02), 0);',
+'    l_count NUMBER := 0;',
+'    l_person VARCHAR2(32);',
+'BEGIN',
+'',
+'    SELECT MAX(person), COUNT(1)',
+'    INTO l_person, l_count',
+'    FROM dl_bordercontrol.fellow_passenger',
+'    WHERE mvmntid = l_mvmnt;',
+'',
+'    IF l_load_data = 1 AND l_count > 0 AND l_person IS NOT NULL THEN',
+'        dl_bordercontrol.pkg_collective_passport.load_data(i_PERSON_FK => l_person);',
+'    END IF;',
+'',
+'    apex_json.open_object();',
+'    apex_json.write(''result'', l_count);',
+'    apex_json.write(''load_data'', l_load_data);',
+'    apex_json.close_object();',
+'',
+'EXCEPTION ',
+'    WHEN OTHERS THEN',
+'        apex_json.open_object();',
+'        apex_json.write(''result'', l_count);',
+'        apex_json.write(''load_data'', l_load_data);',
+'        apex_json.close_object();',
+'END;'))
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
 wwv_flow_api.create_page_process(

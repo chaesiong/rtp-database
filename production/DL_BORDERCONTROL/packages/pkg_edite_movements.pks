@@ -69,6 +69,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_EDITE_MOVEMENTS" A
                             ,p_VISA_EXPIRY_DATE         in DL_BORDERCONTROL.VISAS.EXPIRY_DATE%type
                             ,p_PERMIT_TYPE              in DL_BORDERCONTROL.VISAS.PERMIT_TYPE%type
                             ,p_PERMIT_EXPIRY_DATE       in DL_BORDERCONTROL.VISAS.PERMIT_EXPIRY_DATE%type
+                            ,p_DOCTYPE                  in DL_BORDERCONTROL.BORDERDOCUMENTS.DOCTYPE%type
+                            ,p_DOCCLASS                 in DL_BORDERCONTROL.BORDERDOCUMENTS.DOCCLASS%type
                             ,p_GIVENNAME                in DL_BORDERCONTROL.BORDERDOCUMENTS.GIVENNAME%type
                             ,p_SURNAME                  in DL_BORDERCONTROL.BORDERDOCUMENTS.SURNAME%type
                             ,p_MIDDLENAME               in DL_BORDERCONTROL.BORDERDOCUMENTS.MIDDLENAME%type
@@ -83,6 +85,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_EDITE_MOVEMENTS" A
                             ,p_NOTE                     in DL_BORDERCONTROL.ENTRY_FORMS.NOTE%type
                             ,p_MVMNT_MANUAL_UPDATE_NOTE in DL_BORDERCONTROL.MSCS_MOVEMENTS_MANUAL_UPDATE.NOTE%type
                             ,p_STATELESS                in DL_BORDERCONTROL.BORDERDOCUMENTS.NAT%type default null
+                            ,p_PERSON                   in DL_BORDERCONTROL.PERSON.KEY_VALUE%type default null
     );
     
   /*******************************************************************************

@@ -28,6 +28,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_USER_MANAGEMENT"."PKG_MAN_USERS" 
     18.10.2018  MStahl              Added session timeout
     03.12.2018  MStahl              Translation via messages added
     13.02.2019  MStahl              User password does not expire option
+    24.07.2019  MSCS                Added national_id, first_name_thai, last_name_thai, dob, rank,
+                                    department_level_1, department_level_2, department_level_2, position
   ********************************************************************************
   */
 
@@ -1412,7 +1414,16 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_USER_MANAGEMENT"."PKG_MAN_USERS" 
                    ,i_password            in varchar2
                    ,i_pwd_must_be_changed in varchar2 default 'N'
                    ,i_insert_source       in varchar2 default user
-                   ,i_pw_expire           in number default 1
+                   ,i_pw_expire           in number   default 1
+                   ,i_national_id         in number   default null
+                   ,i_first_name_thai     in varchar2 default null
+                   ,i_last_name_thai      in varchar2 default null
+                   ,i_dob                 in varchar2 default null
+                   ,i_rank                in varchar2 default null
+                   ,i_department_level_1  in number   default null
+                   ,i_department_level_2  in number   default null
+                   ,i_department_level_3  in number   default null
+                   ,i_position            in varchar2 default null
                     --
                     ) return varchar2 as
     --
@@ -1477,6 +1488,16 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_USER_MANAGEMENT"."PKG_MAN_USERS" 
         ,PW_MUST_BE_CHANGED
         ,INS_BY
          --
+        ,NATIONAL_ID
+        ,FIRST_NAME_THAI
+        ,LAST_NAME_THAI
+        ,DOB
+        ,RANK
+        ,DEPARTMENT_LEVEL_1
+        ,DEPARTMENT_LEVEL_2
+        ,DEPARTMENT_LEVEL_3
+        ,POSITION
+         --
          )
       values
         (upper(i_username)
@@ -1493,6 +1514,16 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_USER_MANAGEMENT"."PKG_MAN_USERS" 
         ,i_pwd_must_be_changed
         ,nvl(i_insert_source
             ,l_scope)
+         --
+        ,i_national_id
+        ,i_first_name_thai
+        ,i_last_name_thai
+        ,i_dob
+        ,i_rank
+        ,i_department_level_1
+        ,i_department_level_2
+        ,i_department_level_3
+        ,i_position
          --
          );
     exception
@@ -3789,3 +3820,6 @@ end pkg_man_users;
   GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_MAN_USERS" TO "DL_BORDERCONTROL";
   GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_MAN_USERS" TO "DERMALOG_PROXY";
   GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_MAN_USERS" TO "PIBICSAPP";
+  GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_MAN_USERS" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_MAN_USERS" TO "BIOSUPPORT";
+  GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_MAN_USERS" TO "PIBICSDM2";

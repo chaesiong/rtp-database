@@ -33,7 +33,7 @@ wwv_flow_api.create_list_of_values(
 'SELECT NVL(NAME, NAME$DLC) d, KEY_VALUE r',
 'FROM DL_BORDERCONTROL.BORDERPOSTS$LC ',
 'WHERE IS_ACTIVE = ''Y''',
-'--ORDER BY DISPLAY_ORDER;'))
+'ORDER BY DISPLAY_ORDER;'))
 );
 wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(236810439642363107)
@@ -550,6 +550,14 @@ wwv_flow_api.create_list_of_values(
 ');'))
 );
 wwv_flow_api.create_list_of_values(
+ p_id=>wwv_flow_api.id(36462252566098231464)
+,p_lov_name=>'LOV_ANUNOTE'
+,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT anunm, anu_seqno',
+'FROM dl_bordercontrol.v_anu',
+'WHERE actflag = ''Y'''))
+);
+wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(940507845487109624)
 ,p_lov_name=>'LOV_BLACKLISTACTION'
 ,p_lov_query=>'.'||wwv_flow_api.id(940507845487109624)||'.'
@@ -582,6 +590,25 @@ wwv_flow_api.create_list_of_values(
 'SELECT deptabbfmt1 d, TO_CHAR(dept_seqno) r ',
 'FROM dl_bordercontrol.v_department',
 'ORDER BY 2;'))
+);
+wwv_flow_api.create_list_of_values(
+ p_id=>wwv_flow_api.id(35878484570979863151)
+,p_lov_name=>'LOV_BORDERPOSTS_ALL'
+,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT ',
+'    NVL(name, name$dlc) d',
+'    , key_value r',
+'FROM dl_bordercontrol.borderposts$lc ',
+'WHERE is_active = ''Y''',
+'UNION ALL',
+'SELECT ',
+'    CASE ',
+'        WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = ''th_TH'' THEN NVL(depttnm, deptenm)',
+'        ELSE NVL(deptenm, depttnm)',
+'    END d',
+'    , TO_CHAR(dept_seqno) r',
+'FROM dl_bordercontrol.v_department ',
+'WHERE actflag = ''Y'''))
 );
 wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(3420954997476786159)
@@ -901,6 +928,14 @@ wwv_flow_api.create_list_of_values(
 'ORDER BY 2;'))
 );
 wwv_flow_api.create_list_of_values(
+ p_id=>wwv_flow_api.id(36462253120549236768)
+,p_lov_name=>'LOV_PASSPORTSTATUS'
+,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT pps_code || '' - '' || pps_desc AS d, pps_code AS r',
+'FROM dl_bordercontrol.v_passportstatus',
+'WHERE actflag = ''Y'';'))
+);
+wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(182009484811713195)
 ,p_lov_name=>'LOV_PERMIT_TYPE'
 ,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -953,6 +988,14 @@ wwv_flow_api.create_list_of_values(
 'WHERE is_active = ''Y'''))
 );
 wwv_flow_api.create_list_of_values(
+ p_id=>wwv_flow_api.id(36462252822625233742)
+,p_lov_name=>'LOV_REASON_DEPORTEE'
+,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT reasondptnm, reasondpt_seqno',
+'FROM dl_bordercontrol.v_reasondpt',
+'WHERE actflag = ''Y'''))
+);
+wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(192805752041171429)
 ,p_lov_name=>'LOV_RELATIONS_PK'
 ,p_lov_query=>'SELECT display_value, return_value FROM lov_relations'
@@ -998,6 +1041,9 @@ wwv_flow_api.create_list_of_values(
 ,p_lov_name=>'LOV_SOURCE_SYSTEMS'
 ,p_lov_query=>'.'||wwv_flow_api.id(34809669441552012528)||'.'
 );
+end;
+/
+begin
 wwv_flow_api.create_static_lov_data(
  p_id=>wwv_flow_api.id(34809669701398012528)
 ,p_lov_disp_sequence=>1
@@ -1044,9 +1090,6 @@ wwv_flow_api.create_list_of_values(
 '  from SEAROUTESTOPTYPE',
 ' order by 1'))
 );
-end;
-/
-begin
 wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(566474453221881719)
 ,p_lov_name=>'LOV_TRANSPORTSTATUS'

@@ -3,6 +3,7 @@
 @install-public_db_links.sql
 @install-sequences.sql
 @install-types.sql
+@install-type_bodies.sql
 @install-packages.sql
 @install-tables.sql
 @install-views.sql

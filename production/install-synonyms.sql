@@ -30,6 +30,7 @@
 @DL_USER_MANAGEMENT/synonyms/logger_prefs_by_client_id.sql
 @DL_USER_MANAGEMENT/synonyms/logger_prefs.sql
 @DL_USER_MANAGEMENT/synonyms/logger.sql
+@DL_USER_MANAGEMENT/synonyms/v_rank.sql
 -- APEX_USER_MANAGEMENT/synonyms
 @APEX_USER_MANAGEMENT/synonyms/activities$his.sql
 @APEX_USER_MANAGEMENT/synonyms/activities.sql
@@ -112,6 +113,8 @@
 @APEX_USER_MANAGEMENT/synonyms/users$sgd.sql
 @APEX_USER_MANAGEMENT/synonyms/users#sgd.sql
 @APEX_USER_MANAGEMENT/synonyms/users.sql
+@APEX_USER_MANAGEMENT/synonyms/v_department.sql
+@APEX_USER_MANAGEMENT/synonyms/v_rank.sql
 -- USER_MANAGEMENT/synonyms
 @USER_MANAGEMENT/synonyms/activities_ht.sql
 @USER_MANAGEMENT/synonyms/activities_lt.sql
@@ -171,6 +174,7 @@
 @DL_BORDERCONTROL/synonyms/pkg_dl_i18n.sql
 @DL_BORDERCONTROL/synonyms/pkg_dl_plugin_ajax.sql
 @DL_BORDERCONTROL/synonyms/v_agccontact.sql
+@DL_BORDERCONTROL/synonyms/v_anu.sql
 @DL_BORDERCONTROL/synonyms/v_chng_changevisalist.sql
 @DL_BORDERCONTROL/synonyms/v_chng_changevisa.sql
 @DL_BORDERCONTROL/synonyms/v_chng_person.sql
@@ -181,14 +185,18 @@
 @DL_BORDERCONTROL/synonyms/v_crs_rescerttype.sql
 @DL_BORDERCONTROL/synonyms/v_delprocessot.sql
 @DL_BORDERCONTROL/synonyms/v_department.sql
+@DL_BORDERCONTROL/synonyms/v_deportee.sql
 @DL_BORDERCONTROL/synonyms/v_ednq_tm13.sql
 @DL_BORDERCONTROL/synonyms/v_ext_extensionlist.sql
 @DL_BORDERCONTROL/synonyms/v_guartdept.sql
 @DL_BORDERCONTROL/synonyms/v_operationref.sql
+@DL_BORDERCONTROL/synonyms/v_passportstatus.sql
 @DL_BORDERCONTROL/synonyms/v_pibics_conn_prod.sql
 @DL_BORDERCONTROL/synonyms/v_policorganize.sql
 @DL_BORDERCONTROL/synonyms/v_processot.sql
+@DL_BORDERCONTROL/synonyms/v_prohibit.sql
 @DL_BORDERCONTROL/synonyms/v_province.sql
+@DL_BORDERCONTROL/synonyms/v_reasondpt.sql
 @DL_BORDERCONTROL/synonyms/v_reps_tm8.sql
 @DL_BORDERCONTROL/synonyms/v_rqs_person.sql
 @DL_BORDERCONTROL/synonyms/v_thaipassport.sql

@@ -655,15 +655,15 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_USER_MANAGEMENT"."PKG_AUTHORIZATI
                where menu_user = i_username);
 
       l_sql := q'[select level As lvl,
-          DISPLAY_VALUE,
+          NVL(DISPLAY_VALUE, DISPLAY_VALUE$DLC) As DISPLAY_VALUE,
           target,
           DL_COMMON.PKG_APEX_UTIL.IS_CURRENT_PAGE(i_pageid => PAGE_ID, i_app_alias => APP_ALIAS, i_current_pageid => :APP_PAGE_ID, i_current_applicationid =>  TO_NUMBER (v('APP_ID')) ) as is_current_list_entry,
           image as imagevalue
-    from dl_common.apex_menu
+    from dl_common.apex_menu$lc
     where key_value in (]' || l_menu_id || q'[)
     start with parent_key_value is null
     connect by prior key_value = parent_key_value
-    order siblings by DISPLAY_VALUE;]';
+    order siblings by DISPLAY_VALUE$DLC;]';
     return(l_sql);
   end apex_menu_sql;
   --
@@ -1354,3 +1354,5 @@ end PKG_AUTHORIZATION;
   GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_AUTHORIZATION" TO PUBLIC;
   GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_AUTHORIZATION" TO "DL_BORDERCONTROL";
   GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_AUTHORIZATION" TO "DERMALOG_PROXY";
+  GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_AUTHORIZATION" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_USER_MANAGEMENT"."PKG_AUTHORIZATION" TO "BIOSUPPORT";

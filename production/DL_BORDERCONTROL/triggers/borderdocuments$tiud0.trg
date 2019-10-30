@@ -100,12 +100,10 @@ compound trigger
                                  ,'The DOCCLASS[''' || n_DOCCLASS || '''] does not exist! For BRDDOCID[''' || p_BRDDOCID || '''], DML_TYPE[''' || v_DML_TYPE || '''].');
       end;
     end if; */
-
     /*
     -- 01.06.2018: C.Hagemann
     -- Removed logical foreign key of doctype to dl_common.bc_doc_types as the logic behind this field was changed
     -- Added field docclass as foreign key to the table borderdocuments
-
     if (n_DOCTYPE is not null and not DL_COMMON.PKG_UTIL.Is_Equal(n_DOCTYPE
                                                                  ,o_DOCTYPE))
     then
@@ -122,10 +120,8 @@ compound trigger
       exception
         when NO_DATA_FOUND then
           -- Free input of DOCTYPE is allowed!
-
           Raise_application_error(-20000
                                  ,'The DOCTYPE[''' || n_DOCTYPE || '''] does not exist! For BRDDOCID[''' || p_BRDDOCID || '''], DML_TYPE[''' || v_DML_TYPE || '''].');
-
           null;
       end;
     end if;*/
@@ -238,16 +234,13 @@ compound trigger
                                           ,2) || substr(n_DOB
                                                        ,1
                                                        ,2);
-      
       v_DOB_Partial := DL_BORDERCONTROL.PKG_COMMON.Get_Partial_Date(v_ddmmrr
                                                                    , 1
                                                                    --
                                                                    );
-      
       if v_DOB_Partial.isValidDate() = 1 then
          v_calc_DOB := v_DOB_Partial.getDate();
       end if;
-      
       :new.CALC_DOB := v_calc_DOB;
     end if;
   end;

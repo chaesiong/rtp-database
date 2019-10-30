@@ -177,7 +177,6 @@ compound trigger
                         ,:new.INS_BORDERPOST
                          --
                          );
-
       --
     else
       -- 'D'

@@ -14,12 +14,10 @@ CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "SYSTEM"."CHECK_BL_WITHPASSPORTNO" (
 from dl_bordercontrol.movements m
 inner join dl_bordercontrol.borderdocuments d on m.brddocid = d.brddocid
 inner join DL_BORDERCONTROL.ENTRY_FORMS e on m.ENTRY_FORM = e.KEY_VALUE
-
 inner join (select w.wlcd, id.DOCNO, w.REMARK, br.REASONCD, br.REASONENM, br.REASONTNM
 from PIBICSDM2.WATCHLIST w
 inner join PIBICSDM2.WLINDICATECARD id on w.wlcd = id.WLCD
 left join PIBICSDM2.BLIMPREASON br on w.REASONCD = br.REASONCD) pibics on
-
 d.DOCNO = pibics.DOCNO
 where m.SOURCE_SYSTEM = '1' and m.IS_FINISHED = 'Y'
   --and trunc(m.DATE_OF_ENTRY) = TO_DATE('11-jan-2019','dd-mon-yyyy')

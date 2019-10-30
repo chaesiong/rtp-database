@@ -1161,7 +1161,8 @@ wwv_flow_api.create_list_item(
 wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(562646192070865308)
 ,p_list_item_display_sequence=>4
-,p_list_item_link_text=>'Logged on as: &APP_USER. [&AI_TERMINAL_NAME_AND_IP.] (&AI_BORDERPOST_NAME. &AI_ENTRY_MODE_DESCRIPTION. Counter)'
+,p_list_item_link_text=>'&AI_CURRENT_USER_NAME. (&APP_USER.)'
+,p_list_item_icon=>'fa-user'
 ,p_list_text_03=>'navbarUserInformation'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
@@ -1169,7 +1170,7 @@ wwv_flow_api.create_list_item(
  p_id=>wwv_flow_api.id(110014949760629717)
 ,p_list_item_display_sequence=>100
 ,p_list_item_link_text=>'Report'
-,p_list_item_link_target=>'javascript:window.open(''http://172.155.254.21:8080/appbmbs/inout/main_report.html?un=&APP_USER.&xx=&AI_TERMINAL_IP.'', ''_blank'');'
+,p_list_item_link_target=>'javascript:window.open(''http://bmbs-report.bio-immigration.com:8080/appbmbs/inout/main_report.jsp?un=&APP_USER.&xx=&AI_TERMINAL_IP.'', ''_blank'');'
 ,p_parent_list_item_id=>wwv_flow_api.id(562646192070865308)
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
@@ -1190,15 +1191,24 @@ wwv_flow_api.create_list_item(
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_api.create_list_item(
- p_id=>wwv_flow_api.id(31504883812780249473)
+ p_id=>wwv_flow_api.id(36462296896555817706)
 ,p_list_item_display_sequence=>5
+,p_list_item_link_text=>'&AI_TERMINAL_NAME_AND_IP. (&AI_BORDERPOST_NAME_SHORT. - &AI_ENTRY_MODE_DESCRIPTION.)'
+,p_list_item_icon=>'fa-window-terminal'
+,p_list_text_03=>'navbarBorderpostInfo'
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_api.create_list_item(
+ p_id=>wwv_flow_api.id(31504883812780249473)
+,p_list_item_display_sequence=>9
 ,p_list_item_link_text=>'Travel History'
-,p_list_item_link_target=>'javascript:window.open(''f?p=BMBS:8001:&APP_SESSION.::NO:RP,8001:P8001_INIT_LOAD:Y'', ''wBmBS_TH'');'
+,p_list_item_link_target=>'f?p=&APP_ID.:8007:&SESSION.::&DEBUG.:RP,8007:P8007_INIT_LOAD:Y:'
 ,p_list_item_icon=>'fa-database-search makecssbutton'
 ,p_list_item_disp_cond_type=>'VAL_OF_ITEM_IN_COND_EQ_COND2'
 ,p_list_item_disp_condition=>'APP_PAGE_ID'
 ,p_list_item_disp_condition2=>'17'
 ,p_list_text_01=>'F2'
+,p_list_text_03=>'navbarTravelHistory'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_api.create_list_item(

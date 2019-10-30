@@ -69,7 +69,7 @@ prompt APPLICATION 535 - BBS - Biometric Blacklist System
 --       LOVs:                  16
 --       Plug-ins:              12
 --     Globalization:
---       Messages:             951
+--       Messages:             953
 --     Reports:
 --   Supporting Objects:  Included
 

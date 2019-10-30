@@ -14,3 +14,5 @@ CREATE OR REPLACE FORCE EDITIONABLE VIEW "DL_BLACKLIST"."IDENTITIES_CASES_TRAVEL
                       from dl_blacklist.blacklist_case_identities
                       where identity = bi.key_value)) as number_cases
   from dl_blacklist.identities bi;
+  GRANT SELECT ON "DL_BLACKLIST"."IDENTITIES_CASES_TRAVEL_DOCS_MOD" TO "BIOAPPREPORT";
+  GRANT SELECT ON "DL_BLACKLIST"."IDENTITIES_CASES_TRAVEL_DOCS_MOD" TO "BIOSUPPORT";

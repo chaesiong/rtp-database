@@ -26,7 +26,7 @@ wwv_flow_api.create_flow(
 ,p_favicons=>'<link rel="shortcut icon" href="#APP_IMAGES#Immigration_Thai_Thumb.png"><link rel="icon" sizes="16x16" href="#APP_IMAGES#Immigration_Thai_Thumb.png">'
 ,p_public_user=>'APEX_PUBLIC_USER'
 ,p_proxy_server=> nvl(wwv_flow_application_install.get_proxy,'')
-,p_flow_version=>'Version '
+,p_flow_version=>'V '
 ,p_flow_status=>'AVAILABLE_W_EDIT_LINK'
 ,p_flow_unavailable_text=>'This application is currently unavailable at this time.'
 ,p_exact_substitutions_only=>'Y'
@@ -47,9 +47,9 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_07=>'LDAP_DOMAIN'
 ,p_substitution_value_07=>'DHH-TESTING\'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190805052454'
+,p_last_upd_yyyymmddhh24miss=>'20191030010553'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
-,p_files_version=>1883
+,p_files_version=>1903
 ,p_ui_type_name => null
 );
 end;

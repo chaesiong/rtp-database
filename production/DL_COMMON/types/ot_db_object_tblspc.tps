@@ -170,4 +170,4 @@ add final member procedure Initialize(self in out nocopy OT_DB_OBJECT_TBLSPC
 cascade
 --
 /
- GRANT EXECUTE ON "DL_COMMON"."OT_DB_OBJECT_TBLSPC" TO PUBLIC;
+  GRANT EXECUTE ON "DL_COMMON"."OT_DB_OBJECT_TBLSPC" TO PUBLIC;

@@ -51,25 +51,5 @@ CREATE UNIQUE INDEX "DL_BLACKLIST"."FACE_POSITIONS_PK" ON "DL_BLACKLIST"."FACE_P
   GRANT UPDATE ON "DL_BLACKLIST"."FACE_POSITIONS" TO "DERMALOG_PROXY";
   GRANT INSERT ON "DL_BLACKLIST"."FACE_POSITIONS" TO "PIBICSAPP";
   GRANT SELECT ON "DL_BLACKLIST"."FACE_POSITIONS" TO "APPSUP";
-  CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BLACKLIST"."FACE_POSITIONS$BIUR" BEFORE
-    INSERT OR UPDATE ON dl_blacklist.face_positions
-    FOR EACH ROW
-BEGIN
-    IF
-        inserting
-    THEN
-        :new.ins_by := dl_common.pkg_session.get_audit_user ();
-        :new.ins_at := systimestamp;
-        :new.dml_by := dl_common.pkg_session.get_audit_user ();
-        :new.dml_at := systimestamp;
-        :new.dml_type := 'I';
-    ELSIF updating THEN
-        :new.ins_by :=:old.ins_by;
-        :new.ins_at :=:old.ins_at;
-        :new.dml_by := dl_common.pkg_session.get_audit_user ();
-        :new.dml_at := systimestamp;
-        :new.dml_type := 'U';
-    END IF;
-END;
-/
-ALTER TRIGGER "DL_BLACKLIST"."FACE_POSITIONS$BIUR" ENABLE;
+  GRANT SELECT ON "DL_BLACKLIST"."FACE_POSITIONS" TO "BIOAPPREPORT";
+  GRANT SELECT ON "DL_BLACKLIST"."FACE_POSITIONS" TO "BIOSUPPORT";

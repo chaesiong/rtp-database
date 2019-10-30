@@ -1,18 +1,14 @@
 CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
-
   /*
   Copyright (c) 2016 E.I.Sarmas (github.com/dsnz)
-
   Permission is hereby granted, free of charge, to any person obtaining a copy
   of this software and associated documentation files (the "Software"), to deal
   in the Software without restriction, including without limitation the rights
   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
   copies of the Software, and to permit persons to whom the Software is
   furnished to do so, subject to the following conditions:
-
   The above copyright notice and this permission notice shall be included in
   all copies or substantial portions of the Software.
-
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,14 +17,11 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
   THE SOFTWARE.
   */
-
   /*
     E.I.Sarmas (github.com/dsnz)   2016-02-09   first version
-
     E.I.Sarmas (github.com/dsnz)   2017-07-21   minor update, better parameter names
     E.I.Sarmas (github.com/dsnz)   2017-09-23   major update, table_mode = cartessian/nested
   */
-
   static function ODCITableDescribe(
     rtype out anytype,
     json_str clob, column_paths pljson_varray, column_names pljson_varray := null,
@@ -37,7 +30,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     atyp anytype;
   begin
     --dbms_output.put_line('>>Describe');
-
     anytype.begincreate(dbms_types.typecode_object, atyp);
     if column_names is null then
       for i in column_paths.FIRST .. column_paths.LAST loop
@@ -49,18 +41,15 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
       end loop;
     end if;
     atyp.endcreate;
-
     anytype.begincreate(dbms_types.typecode_table, rtype);
     rtype.SetInfo(null, null, null, null, null, atyp, dbms_types.typecode_object, 0);
     rtype.endcreate();
-
     --dbms_output.put_line('>>Describe end');
     return odciconst.success;
   exception
     when others then
       return odciconst.error;
   end;
-
   static function ODCITablePrepare(
     sctx out pljson_table_impl,
     ti in sys.ODCITabFuncInfo,
@@ -77,7 +66,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     aname varchar2(30);
   begin
     --dbms_output.put_line('>>Prepare');
-
     tc := ti.RetType.GetAttrElemInfo(1, prec, scale, len, csid, csfrm, elem_typ, aname);
     sctx := pljson_table_impl(
       json_str, column_paths, column_names,
@@ -91,7 +79,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     );
     return odciconst.success;
   end;
-
   -- E.I.Sarmas (github.com/dsnz)   2017-09-23   NEW support for nested/cartessian table generation
   static function ODCITableStart(
     sctx in out pljson_table_impl,
@@ -105,7 +92,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     json_arr pljson_list;
     json_elem pljson_value;
     value_array pljson_varray := pljson_varray();
-
     -- E.I.Sarmas (github.com/dsnz)   2017-09-23   NEW support for array as root json data
     root_val pljson_value;
     root_list pljson_list;
@@ -130,7 +116,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     end;
   begin
     --dbms_output.put_line('>>Start');
-
     --dbms_output.put_line('json_str='||json_str);
     -- json_obj := pljson(json_str);
     root_val := pljson_parser.parse_any(json_str);
@@ -145,12 +130,10 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
       json_obj := pljson(root_val);
     end if;
     --dbms_output.put_line('... array size = ' || root_array_size);
-
     sctx.json_obj := json_obj;
     sctx.table_mode := table_mode;
     sctx.root_array_size := root_array_size;
     sctx.data_tab.delete;
-
     if table_mode = 'cartessian' then
       for i in column_paths.FIRST .. column_paths.LAST loop
         --dbms_output.put_line('path='||column_paths(i));
@@ -213,7 +196,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
             sctx.data_tab.extend(); sctx.data_tab(sctx.data_tab.LAST) := pljson_varray(buf);
         end case;
       end loop;
-
       --dbms_output.put_line('initialize row indexes');
       sctx.row_ind.delete;
       --for i in data_tab.FIRST .. data_tab.LAST loop
@@ -290,10 +272,8 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
         sctx.column_val(sctx.column_val.LAST) := '';
       end loop;
     end if;
-
     return odciconst.success;
   end;
-
   member function ODCITableFetch(
     self in out pljson_table_impl, nrows in number, outset out anydataset
   ) return number is
@@ -302,7 +282,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     --row_ind index_array := index_array();
     j number;
     num_rows number := 0;
-
     --json_obj pljson;
     json_val pljson_value;
     buf varchar2(32767);
@@ -310,7 +289,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     json_arr pljson_list;
     json_elem pljson_value;
     value_array pljson_varray := pljson_varray();
-
     /* nested mode */
     temp_path varchar(32767);
     start_index number;
@@ -358,17 +336,13 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
     end;
   begin
     --dbms_output.put_line('>>Fetch, nrows = ' || nrows);
-
     if table_mode = 'cartessian' then
       outset := null;
-
       if row_ind(1) = 0 then
         --dbms_output.put_line('>>Fetch End');
         return odciconst.success;
       end if;
-
       anydataset.begincreate(dbms_types.typecode_object, self.ret_type, outset);
-
       /* iterative cartesian product algorithm */
       <<main_loop>>
       while True loop
@@ -387,7 +361,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
         end loop;
         --pipe row(data_row);
         num_rows := num_rows + 1;
-
         --dbms_output.put_line('adjust row indexes');
         j := row_ind.COUNT;
         <<index_loop>>
@@ -404,15 +377,12 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
           end if;
         end loop index_loop;
       end loop main_loop;
-
       outset.endcreate;
       --dbms_output.put_line('>>Fetch Complete, rows = ' || num_rows || ', row_ind(1) = ' || row_ind(1));
     else
       /* fetch nested mode */
       outset := null;
-
       anydataset.begincreate(dbms_types.typecode_object, self.ret_type, outset);
-
       <<main_loop_nested>>
       while True loop
         /* find starting column */
@@ -436,7 +406,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
             start_index := 1;
           end if;
         end if;
-
         /* fetch rows */
         --dbms_output.put_line('fetch new row, start from column# '|| start_index);
         <<row_loop_nested>>
@@ -494,19 +463,16 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_COMMON"."PLJSON_TABLE_IMPL" as
           end if;
         end loop row_loop_nested;
       end loop main_loop_nested;
-
       outset.endcreate;
       --dbms_output.put_line('>>Fetch Complete, rows = ' || num_rows);
     end if;
-
     return odciconst.success;
   end;
-
   member function ODCITableClose(self in pljson_table_impl) return number is
   begin
     --dbms_output.put_line('>>Close');
     return odciconst.success;
   end;
-
 end;
 /
+  

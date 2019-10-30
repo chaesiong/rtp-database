@@ -18,7 +18,7 @@ wwv_flow_api.create_page(
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190324041539'
+,p_last_upd_yyyymmddhh24miss=>'20190912015359'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(350405222336813025)
@@ -287,7 +287,7 @@ wwv_flow_api.create_page_button(
 ,p_button_image_alt=>'Delete other Sessions and log in here'
 ,p_button_position=>'BELOW_BOX'
 ,p_warn_on_unsaved_changes=>null
-,p_icon_css_classes=>'fa-trash'
+,p_icon_css_classes=>'fa-chevron-circle-right'
 );
 wwv_flow_api.create_page_branch(
  p_id=>wwv_flow_api.id(350404482536813017)

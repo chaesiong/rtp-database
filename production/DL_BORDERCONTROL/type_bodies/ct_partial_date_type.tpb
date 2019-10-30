@@ -38,8 +38,6 @@ CREATE OR REPLACE EDITIONABLE TYPE BODY "DL_BORDERCONTROL"."CT_PARTIAL_DATE_TYPE
         SELF.year := year;
     RETURN;
     END;
-
-
 MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
     ) RETURN VARCHAR2 AS
         l_day NUMBER := coalesce(DAY, 0);
@@ -73,10 +71,8 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             END CASE;
         END IF;
     END;
-
     MEMBER FUNCTION isValidDate RETURN INTEGER AS
         BEGIN
-
         IF TO_DATE(day ||'.'|| month||'.'||year, 'DD.MM.YYYY') IS NULL THEN
                RETURN 0;
             ELSE
@@ -85,10 +81,8 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             Exception WHEN OTHERS THEN
         RETURN 0;
     END;
-
     MEMBER FUNCTION isNull RETURN INTEGER AS
         BEGIN
-
         IF isEmptyDay = 1 and isEmptyMonth = 1 and isEmptyYear = 1 THEN
                RETURN 1;
             ELSE
@@ -97,7 +91,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             Exception WHEN OTHERS THEN
         RETURN 0;
     END;
-
     MEMBER FUNCTION isEmptyDay RETURN INTEGER AS
     BEGIN
         IF day = 0 or day is NULL THEN
@@ -106,7 +99,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN 0;
         END IF;
     END;
-
     MEMBER FUNCTION isEmptyMonth RETURN INTEGER AS
     BEGIN
         IF month = 0 or month is NULL THEN
@@ -115,7 +107,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN 0;
         END IF;
     END;
-
     MEMBER FUNCTION isEmptyYear RETURN INTEGER AS
     BEGIN
         IF year = 0 or year is NULL THEN
@@ -124,7 +115,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN 0;
         END IF;
     END;
-
     MEMBER FUNCTION isValidDay RETURN INTEGER AS
     BEGIN
         IF day > 0 and day <=31 THEN
@@ -133,7 +123,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN 0;
         END IF;
     END;
-
     MEMBER FUNCTION isValidMonth RETURN INTEGER AS
     BEGIN
         IF month > 0 and month <=12 THEN
@@ -142,7 +131,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN 0;
         END IF;
     END;
-
     MEMBER FUNCTION isValidYear RETURN INTEGER AS
     BEGIN
         IF year > 1900 and year <=2099 THEN
@@ -151,7 +139,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN 0;
         END IF;
     END;
-
     MEMBER FUNCTION getDay RETURN NUMBER AS
     BEGIN
         IF day is NULL THEN
@@ -160,7 +147,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN day;
         END IF;
     END;
-
     MEMBER FUNCTION getMonth RETURN NUMBER AS
     BEGIN
         IF month is NULL THEN
@@ -169,7 +155,6 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN month;
         END IF;
     END;
-
     MEMBER FUNCTION getYear RETURN NUMBER AS
     BEGIN
         IF year is NULL THEN
@@ -178,37 +163,31 @@ MEMBER FUNCTION getFormatData (  date_format IN VARCHAR2 DEFAULT 'DD.MM.YYYY'
             RETURN YEAR;
         END IF;
     END;
-
     MEMBER FUNCTION getDate RETURN DATE AS
     BEGIN
         RETURN TO_DATE(day ||'.'|| month||'.'||year, 'DD.MM.YYYY');
     Exception WHEN OTHERS THEN
         RETURN NULL;
     END;
-
     -- Order by definieren
-
     ORDER MEMBER FUNCTION func_order(P_PARTIAL_DATE_ORDER CT_PARTIAL_DATE_TYPE) RETURN INTEGER IS
-
     BEGIN
       IF P_PARTIAL_DATE_ORDER.day=self.day AND
          P_PARTIAL_DATE_ORDER.month=self.month AND
          P_PARTIAL_DATE_ORDER.year=self.year
          THEN
          RETURN 0;
-
       ELSIF P_PARTIAL_DATE_ORDER.day< self.day AND
             P_PARTIAL_DATE_ORDER.month< self.month AND
             P_PARTIAL_DATE_ORDER.year< self.year THEN
             RETURN 1;
-
       ELSIF P_PARTIAL_DATE_ORDER.day >self.day AND
             P_PARTIAL_DATE_ORDER.month >self.month AND
             P_PARTIAL_DATE_ORDER.year >self.year THEN
             RETURN -1;
       END IF;
-
     END;
 END;
 --
 /
+  

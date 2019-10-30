@@ -33,8 +33,8 @@ wwv_flow_api.create_flow(
 ,p_auto_time_zone=>'N'
 ,p_substitution_string_01=>'AUTHORIZATION'
 ,p_substitution_value_01=>'N'
-,p_last_updated_by=>'SUPERADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190717192012'
+,p_last_updated_by=>'CCS_USER02'
+,p_last_upd_yyyymmddhh24miss=>'20190915145836'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>39
 ,p_ui_type_name => null

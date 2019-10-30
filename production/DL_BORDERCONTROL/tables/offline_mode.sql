@@ -40,18 +40,5 @@ CREATE UNIQUE INDEX "DL_BORDERCONTROL"."SYS_IL0000539714C00002$$" ON "DL_BORDERC
   GRANT INSERT ON "DL_BORDERCONTROL"."OFFLINE_MODE" TO "DL_COMMON";
   GRANT SELECT ON "DL_BORDERCONTROL"."OFFLINE_MODE" TO "DL_COMMON";
   GRANT UPDATE ON "DL_BORDERCONTROL"."OFFLINE_MODE" TO "DL_COMMON";
-  CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."OFFLINE_MODE$TIUD0" 
-	before update on DL_BORDERCONTROL.OFFLINE_MODE for each row
---
-/*******************************************************************************
-* Author    Date        Description                                            *
-* --------  ----------  -------------------------------------------------------
-* MStahl    10.04.2019  Added
-*******************************************************************************/
---
-begin
-	:new.dml_at := systimestamp;
-	:new.dml_by := dl_common.pkg_session.get_audit_user();
-end;
-/
-ALTER TRIGGER "DL_BORDERCONTROL"."OFFLINE_MODE$TIUD0" ENABLE;
+  GRANT SELECT ON "DL_BORDERCONTROL"."OFFLINE_MODE" TO "BIOAPPREPORT";
+  GRANT SELECT ON "DL_BORDERCONTROL"."OFFLINE_MODE" TO "BIOSUPPORT";

@@ -319,7 +319,7 @@ end;');
 
   ORDS.DEFINE_TEMPLATE(
       p_module_name    => 'Interfaces',
-      p_pattern        => 'isds/syncStatus/{INTERFACENAME}/{BIOID}/{PIBICSID}',
+      p_pattern        => 'syncOut/error',
       p_priority       => 0,
       p_etag_type      => 'HASH',
       p_etag_query     => NULL,
@@ -327,18 +327,145 @@ end;');
 
   ORDS.DEFINE_HANDLER(
       p_module_name    => 'Interfaces',
-      p_pattern        => 'isds/syncStatus/{INTERFACENAME}/{BIOID}/{PIBICSID}',
-      p_method         => 'PUT',
+      p_pattern        => 'syncOut/error',
+      p_method         => 'POST',
       p_source_type    => 'plsql/block',
       p_items_per_page => 0,
-      p_mimes_allowed  => '',
+      p_mimes_allowed  => 'application/json',
       p_comments       => NULL,
       p_source         =>
-'begin
-    insert into dl_interface.sync_status
-    (interface_name, system_id, pibics_id)
-    values
-    (:INTERFACENAME, :BIOID, :PIBICSID);
+'declare
+    --
+    l_values         apex_json.t_values;
+    l_source_blob    blob := :body;
+    l_source_clob    clob;
+    --
+    l_response          clob;
+    l_response_message  varchar2(4000);
+    --
+    l_dstoff    integer := 1;
+    l_srcoff    integer := 1;
+    l_lngctx    integer := 0;
+    l_warning   integer;
+    --
+    l_sync_out_error    dl_interface.sync_out_error%ROWTYPE;
+    --
+begin
+
+    -- convert json
+    dbms_lob.createtemporary(l_source_clob, true);
+
+    dbms_lob.converttoclob(dest_lob     => l_source_clob
+                          ,src_blob     => l_source_blob
+                          ,amount       => dbms_lob.lobmaxsize
+                          ,dest_offset  => l_dstoff
+                          ,src_offset   => l_srcoff
+                          ,blob_csid    => nls_charset_id(''al32utf8'')
+                          ,lang_context => l_lngctx
+                          ,warning      => l_warning);
+
+    apex_json.parse (p_values => l_values
+                    ,p_source => l_source_clob);
+
+    -- read json and fill records
+    l_sync_out_error.object_id      := apex_json.get_varchar2(p_values => l_values, p_path => ''objectID'');
+    l_sync_out_error.payload        := apex_json.get_clob(p_values => l_values, p_path => ''payload'');
+    l_sync_out_error.error          := apex_json.get_clob(p_values => l_values, p_path => ''error'');
+    l_sync_out_error.uri            := apex_json.get_varchar2(p_values => l_values, p_path => ''uri'');
+
+    insert into dl_interface.sync_out_error( object_id
+                                            ,payload
+                                            ,error
+                                            ,uri
+                                            ,dml_by)
+    values(l_sync_out_error.object_id
+          ,l_sync_out_error.payload
+          ,l_sync_out_error.error
+          ,l_sync_out_error.uri
+          ,''ORDS - Initial insert.'');
+end;');
+
+  ORDS.DEFINE_TEMPLATE(
+      p_module_name    => 'Interfaces',
+      p_pattern        => 'syncOut/response',
+      p_priority       => 0,
+      p_etag_type      => 'HASH',
+      p_etag_query     => NULL,
+      p_comments       => NULL);
+
+  ORDS.DEFINE_HANDLER(
+      p_module_name    => 'Interfaces',
+      p_pattern        => 'syncOut/response',
+      p_method         => 'POST',
+      p_source_type    => 'plsql/block',
+      p_items_per_page => 0,
+      p_mimes_allowed  => 'application/json',
+      p_comments       => NULL,
+      p_source         =>
+'declare
+    --
+    l_values         apex_json.t_values;
+    l_source_blob    blob := :body;
+    l_source_clob    clob;
+    --
+    l_response          clob;
+    l_response_message  varchar2(4000);
+    --
+    l_dstoff    integer := 1;
+    l_srcoff    integer := 1;
+    l_lngctx    integer := 0;
+    l_warning   integer;
+    --
+    l_sync_out_allocation    dl_interface.sync_out_allocation%ROWTYPE;
+    l_already_existing       number;
+    --
+begin
+
+    -- convert json
+    dbms_lob.createtemporary(l_source_clob, true);
+
+    dbms_lob.converttoclob(dest_lob     => l_source_clob
+                          ,src_blob     => l_source_blob
+                          ,amount       => dbms_lob.lobmaxsize
+                          ,dest_offset  => l_dstoff
+                          ,src_offset   => l_srcoff
+                          ,blob_csid    => nls_charset_id(''al32utf8'')
+                          ,lang_context => l_lngctx
+                          ,warning      => l_warning);
+
+    apex_json.parse (p_values => l_values
+                    ,p_source => l_source_clob);
+
+    -- read json and fill records
+    l_sync_out_allocation.object_id      := apex_json.get_varchar2(p_values => l_values, p_path => ''objectID'');
+    l_sync_out_allocation.object_type    := apex_json.get_clob(p_values => l_values, p_path => ''objectType'');
+    l_sync_out_allocation.external_id    := apex_json.get_clob(p_values => l_values, p_path => ''externalID'');
+    l_sync_out_allocation.message        := apex_json.get_varchar2(p_values => l_values, p_path => ''message'');
+
+    -- decide when to insert and when to update
+    select count(*)
+    into l_already_existing
+    from dl_interface.sync_out_allocation soa
+    where soa.object_id = l_sync_out_allocation.object_id;
+
+    if l_already_existing >= 1 then
+        update dl_interface.sync_out_allocation
+        set object_type = nvl(l_sync_out_allocation.object_type, (select object_type from dl_interface.sync_out_allocation where object_id = l_sync_out_allocation.object_id))
+           ,external_id = l_sync_out_allocation.external_id
+           ,message     = nvl(l_sync_out_allocation.message,(select message from dl_interface.sync_out_allocation where object_id = l_sync_out_allocation.object_id))
+        where object_id = l_sync_out_allocation.object_id;
+    else
+        insert into dl_interface.sync_out_allocation
+        (object_id
+        ,object_type
+        ,external_id
+        ,message)
+        values
+        (l_sync_out_allocation.object_id
+        ,l_sync_out_allocation.object_type
+        ,l_sync_out_allocation.external_id
+        ,l_sync_out_allocation.message);
+    end if;
 end;');
 
 
@@ -350,4 +477,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.05
+Elapsed: 00:00:00.04

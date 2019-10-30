@@ -191,7 +191,7 @@ from dl_bordercontrol.v_travel_abis_insert_error');
     -- Set message
     :message := ''Number of Movements with errors while syncing with ABIS and number of Borderdocuments without ABIS ID'';
 
-    -- movement counter
+    /*-- movement counter
     select count(*)
     into :movements
     from dl_bordercontrol.v_travel_abis_insert_error;
@@ -199,7 +199,10 @@ from dl_bordercontrol.v_travel_abis_insert_error');
     -- borderdocument counter
     select count(*)
     into :borderdocuments
-    from dl_bordercontrol.v_sync_docs_with_bio_movements;
+    from dl_bordercontrol.v_sync_docs_with_bio_movements;*/
+
+    :movements := 0;
+    :borderdocuments := 0;
 
 end;');
 
@@ -245,4 +248,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.25
+Elapsed: 00:00:00.74

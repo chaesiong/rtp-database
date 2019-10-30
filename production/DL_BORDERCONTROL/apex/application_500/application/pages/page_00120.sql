@@ -518,6 +518,40 @@ wwv_flow_api.create_page(
 '    text-align: center;',
 '}',
 '',
+'#id-icpo-notice {',
+'    padding: 1rem;',
+'    cursor: default;',
+'    border-radius: 4px;',
+'}',
+'',
+'#id-icpo-notice.red {',
+'    color: #fff;',
+'    background-color: red;',
+'}',
+'',
+'#id-icpo-notice.red::after {',
+'  content: "Red";',
+'}',
+'',
+'#id-icpo-notice.green {',
+'    color: #fff;',
+'    background-color: green;',
+'}',
+'',
+'#id-icpo-notice.green::after {',
+'  content: "Green";',
+'}',
+'',
+'#id-icpo-notice.UN {',
+'    color: #333;',
+'    font-weight: bold;',
+'    background-color: #f2f2f2;',
+'}',
+'',
+'#id-icpo-notice.UN::after {',
+'  content: "UN";',
+'}',
+'',
 '.icpo_logo_bg {',
 '    background: url("#APP_IMAGES#ICPO_logo_small.png") no-repeat bottom;',
 '    background-size: 150px 150px;',
@@ -554,7 +588,7 @@ wwv_flow_api.create_page(
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190721032802'
+,p_last_upd_yyyymmddhh24miss=>'20190912010448'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(25022140095681822)
@@ -711,6 +745,7 @@ wwv_flow_api.create_page_plug(
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(168298793485934104)
 ,p_plug_name=>'Type Info : SLTD (Lost Passport)'
+,p_region_name=>'id-icpo-case-type-sltd'
 ,p_parent_plug_id=>wwv_flow_api.id(164535653695117949)
 ,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader:t-Region--noBorder:t-Region--scrollBody'
 ,p_plug_template=>wwv_flow_api.id(563820889302049617)
@@ -719,8 +754,8 @@ wwv_flow_api.create_page_plug(
 ,p_plug_display_point=>'BODY'
 ,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '<div class="cl-icpo-case-type-info">',
-'<h2>Found Lost Passport</h2>',
-'<h3>Reported as robbery from Interpol (I-24/7)</h3>',
+'    <h2>Found Lost Passport</h2>',
+'    <h3>Reported as robbery from Interpol (I-24/7)</h3>',
 '</div>'))
 ,p_plug_query_row_template=>1
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
@@ -734,9 +769,28 @@ wwv_flow_api.create_page_plug(
 ,p_region_css_classes=>'icpo_logo_bg'
 ,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader:t-Region--noBorder:t-Region--scrollBody'
 ,p_plug_template=>wwv_flow_api.id(563820889302049617)
+,p_plug_display_sequence=>50
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(4690288479001124632)
+,p_plug_name=>'Type Info : TDAWN (Notice)'
+,p_region_name=>'id-icpo-case-type-tdawn'
+,p_parent_plug_id=>wwv_flow_api.id(164535653695117949)
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader:t-Region--noBorder:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(563820889302049617)
 ,p_plug_display_sequence=>40
 ,p_include_in_reg_disp_sel_yn=>'N'
 ,p_plug_display_point=>'BODY'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<div class="cl-icpo-case-type-info cl-icpo-case-tdawn">',
+'    <h2 id="id-icpo-notice">Notice : </h2>',
+'</div>'))
 ,p_plug_query_row_template=>1
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
 ,p_attribute_01=>'N'
@@ -854,6 +908,9 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(222529826659384647)
 ,p_plug_name=>'Candidate-Data'
@@ -884,9 +941,6 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(245075828612644747)
 ,p_plug_name=>'Result'
@@ -1894,6 +1948,9 @@ wwv_flow_api.create_page_button(
 ,p_warn_on_unsaved_changes=>null
 ,p_grid_new_grid=>false
 );
+end;
+/
+begin
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(192202573050436017)
 ,p_button_sequence=>10
@@ -1925,9 +1982,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'VALUE'
 ,p_attribute_04=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(6938071809734841)
 ,p_name=>'P120_R_MIDDLENAME'
@@ -2943,6 +2997,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'VALUE'
 ,p_attribute_04=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(192206342800436027)
 ,p_name=>'P120_C_BIRTHDAY'
@@ -2976,9 +3033,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'VALUE'
 ,p_attribute_04=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(192207043116436029)
 ,p_name=>'P120_C_BEHAVIOUR'
@@ -3546,9 +3600,51 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4690288585958124633)
+,p_name=>'SetICPOType'
+,p_event_sequence=>50
+,p_bind_type=>'bind'
+,p_bind_event_type=>'ready'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4690288617713124634)
+,p_event_id=>wwv_flow_api.id(4690288585958124633)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'let candidates;',
+'let candidate_sltd, candidate_tdawn;',
+'',
+'if (parent.getICPOStandardResults) candidates = parent.getICPOStandardResults();',
+'',
+'console.log("BLACKLIST: ICPO candidates:", candidates);',
+'',
+'candidate_sltd = candidates.candidates.find(candidate => candidate[''i:status_id''] === ''NO_ERROR'' && $.inArray(candidate[''i:name''], ["IPSG", "MIND"]) != -1);',
+'candidate_tdawn = candidates.candidates.find(candidate => candidate[''i:status_id''] === ''NO_ERROR'' && $.inArray(candidate[''i:name''], ["IPSG.NOMTD", "MIND.TDAWN"]) != -1);',
+'',
+'console.log("BLACKLIST: ICPO candidate_sltd:", candidate_sltd);',
+'console.log("BLACKLIST: ICPO candidate_tdawn:", candidate_tdawn);',
+'',
+'if (!candidate_sltd) {',
+'    $("#id-icpo-case-type-sltd").hide();',
+'}',
+'',
+'if (!!candidate_tdawn) {',
+'    let color = candidate_tdawn["i:document"]["i:color"];',
+'    let notice = "Notice : " + color;',
+'    $("#id-icpo-notice").val(notice).addClass(color);',
+'    //$("#id-icpo-notice").css("background-color", color);',
+'} else {',
+'    $("#id-icpo-case-type-tdawn").hide();',
+'}'))
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(192214025480436098)
 ,p_name=>'TestCase - DELETE THIS'
-,p_event_sequence=>50
+,p_event_sequence=>60
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'ready'
 ,p_display_when_type=>'NEVER'
@@ -3927,6 +4023,9 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(95456127038695412)
 ,p_event_id=>wwv_flow_api.id(95455870515695409)
@@ -4046,9 +4145,6 @@ wwv_flow_api.create_page_da_action(
 'lspinner$.remove();'))
 ,p_stop_execution_on_error=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(168300387314934120)
 ,p_event_id=>wwv_flow_api.id(95455870515695409)
@@ -4827,7 +4923,7 @@ wwv_flow_api.create_page_process(
 '            key_value, ROW_NUMBER() OVER (PARTITION BY sender_object_id ORDER BY ins_at DESC) RN',
 '            FROM dl_interface.log_blacklist_hits',
 '            WHERE sender_object_id = :P17_MVMNTID',
-'            AND NVL(sender_system, ''~'') != ''BMBS_ICPO_SLTD''',
+'            AND NVL(sender_system, ''~'') NOT LIKE ''BMBS_ICPO%''',
 '            AND ins_at BETWEEN SYSDATE - 2/24 AND SYSDATE',
 '        )',
 '        WHERE RN = 1;',
@@ -4930,6 +5026,9 @@ wwv_flow_api.create_page_process(
 ,p_process_when=>'P120_BL_INCIDENT_ID'
 ,p_process_when_type=>'ITEM_IS_NOT_NULL'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(168299886808934115)
 ,p_process_sequence=>20
@@ -4955,7 +5054,7 @@ wwv_flow_api.create_page_process(
 '                key_value, ROW_NUMBER() OVER (PARTITION BY sender_object_id ORDER BY ins_at DESC) RN',
 '            FROM dl_interface.log_blacklist_hits',
 '            WHERE sender_object_id = :P17_MVMNTID',
-'            AND sender_system = ''BMBS_ICPO_SLTD''',
+'            AND sender_system LIKE ''BMBS_ICPO%''',
 '            AND ins_at BETWEEN SYSDATE - 2/24 AND SYSDATE',
 '        )',
 '        WHERE RN = 1;',
@@ -5030,9 +5129,6 @@ wwv_flow_api.create_page_process(
 ,p_process_when=>'P120_ICPO_INCIDENT_ID'
 ,p_process_when_type=>'ITEM_IS_NOT_NULL'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(168299709316934114)
 ,p_process_sequence=>30

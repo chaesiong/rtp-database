@@ -957,6 +957,10 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_OBJECT_HANDLING" 
     l_pibics_record_info_json.put('saveUser'    , nvl(LOWER(trim(p_crew_json.movement.ins_by)),c_pibics_username));
     l_pibics_record_info_json.put('saveDate'    , TO_CHAR(p_crew_json.movement.ins_at, c_pibics_date_format_unformat));
     l_pibics_record_info_json.put('saveIpClient', p_crew_json.terminal.ipaddress);
+    
+    IF p_dml_type = 'U' THEN
+      l_pibics_record_info_json.put('pibicsPk'  , DL_INTERFACE.PKG_OBJECT_HANDLING.AA_GET_PIBICS_PK(p_crew_json.movement.mvmntid));
+    END IF;
 
     -- travel info
     l_pibics_travel_conveyance_json := JSON();
@@ -1604,3 +1608,6 @@ END;
 /
   GRANT EXECUTE ON "DL_INTERFACE"."PKG_OBJECT_HANDLING" TO "DERMALOG_PROXY";
   GRANT EXECUTE ON "DL_INTERFACE"."PKG_OBJECT_HANDLING" TO "APPSUP";
+  GRANT EXECUTE ON "DL_INTERFACE"."PKG_OBJECT_HANDLING" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_INTERFACE"."PKG_OBJECT_HANDLING" TO "BIOSUPPORT";
+  GRANT EXECUTE ON "DL_INTERFACE"."PKG_OBJECT_HANDLING" TO "DL_BORDERCONTROL";

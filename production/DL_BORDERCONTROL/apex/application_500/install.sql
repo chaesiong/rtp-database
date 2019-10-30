@@ -145,6 +145,7 @@
 @application/pages/page_08004.sql
 @application/pages/page_08005.sql
 @application/pages/page_08006.sql
+@application/pages/page_08007.sql
 @application/pages/page_08010.sql
 @application/pages/page_08011.sql
 @application/pages/page_08020.sql

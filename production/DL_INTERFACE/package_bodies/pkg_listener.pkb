@@ -118,8 +118,9 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_LISTENER" IS
     l_log_rec.sender_object_id        := l_sender_object_id;
 
     -- get JSON Object and call service
-    l_json_object := dl_bordercontrol.pkg_json_export.get_movements(p_mvmntid);
-    l_json_object := pkg_object_handling.get_pibics_inout_from_movement(dl_bordercontrol.pkg_json_convert.extract_movement_from_json(l_json_object), trim(p_dml_type));
+    --l_json_object := dl_bordercontrol.pkg_json_export.get_movements(p_mvmntid);
+    --l_json_object := pkg_object_handling.get_pibics_inout_from_movement(dl_bordercontrol.pkg_json_convert.extract_movement_from_json(l_json_object), trim(p_dml_type));
+    l_json_object := dl_bordercontrol.pkg_pibics_unhook.get_pibics_inout_from_movement(p_mvmntid, TRIM(p_dml_type));
     l_log_rec.sender_message := l_json_object;
     
     --dbms_output.Put_line(l_json_object);
@@ -395,6 +396,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_LISTENER" IS
     -- get JSON Object and call service
     l_json_object := dl_bordercontrol.pkg_json_export.get_movements(p_mvmntid);
     l_json_object := pkg_object_handling.get_pibics_crew_from_crew(dl_bordercontrol.pkg_json_convert.extract_movement_from_json(l_json_object), p_dml_type);
+    --l_json_object := dl_bordercontrol.pkg_pibics_unhook.get_pibics_crew_inout_from_movement(p_mvmntid, TRIM(p_dml_type));
     l_log_rec.sender_message := l_json_object;
 
     -- set service address
@@ -705,6 +707,8 @@ PROCEDURE send_bordercontrol_crew_manual (p_mvmntid   IN VARCHAR2
     l_json_object     VARCHAR2(500 CHAR);
     l_json_dmltype    VARCHAR2(500 CHAR);
     l_json_pk         VARCHAR2(500 CHAR);
+    --
+    l_hook_queue_name VARCHAR2(100 CHAR) := NVL(dl_bordercontrol.pkg_common.Get_Parameter('PIBICS_AQ_QUEUE'), 'DL_BORDERCONTROL.AQ_BORDERCONTROL_HOOKS_QUEUE');
 
   BEGIN
 
@@ -714,7 +718,7 @@ PROCEDURE send_bordercontrol_crew_manual (p_mvmntid   IN VARCHAR2
 
       l_dequeue_options.wait := 5;
       l_dequeue_options.consumer_name := p_consumer_name;
-      dbms_aq.dequeue('DL_BORDERCONTROL.AQ_BORDERCONTROL_HOOKS_QUEUE', l_dequeue_options, l_message_prop, l_payload, l_message_hdl);
+      dbms_aq.dequeue(l_hook_queue_name, l_dequeue_options, l_message_prop, l_payload, l_message_hdl);
 
       send_hook_information(l_payload.obj_input);
 
@@ -730,6 +734,55 @@ PROCEDURE send_bordercontrol_crew_manual (p_mvmntid   IN VARCHAR2
     logger.log('DEQUEUE HOOK INFORMATION: No more messages for processing', l_scope, null, l_params);
     COMMIT;
   END dequeue_hooks;
+  
+  /**
+   * Dequeues and processes all entries from Queue for the given consumer name (e.g. SEND_MOVEMENT)
+   * Secondary
+   * @param p_consumer_name Name of the consumer that should be dequeued
+   */
+  PROCEDURE dequeue_hooks_sec (p_consumer_name VARCHAR2)
+  IS
+
+    l_scope logger_logs.scope%type := c_scope_prefix || 'dequeue_hooks_sec';
+    l_params logger.tab_param;
+    --
+    l_dequeue_options DBMS_AQ.DEQUEUE_OPTIONS_T;
+    l_enqueue_options DBMS_AQ.ENQUEUE_OPTIONS_T;
+    l_message_prop    DBMS_AQ.MESSAGE_PROPERTIES_T;
+    l_message_hdl     RAW(16);
+    l_payload         dl_bordercontrol.t_hook_payload;
+    --
+    l_json            APEX_JSON.T_VALUES;
+    l_json_object     VARCHAR2(500 CHAR);
+    l_json_dmltype    VARCHAR2(500 CHAR);
+    l_json_pk         VARCHAR2(500 CHAR);
+    --
+    l_hook_queue_name VARCHAR2(100 CHAR) := NVL(dl_bordercontrol.pkg_common.Get_Parameter('PIBICS_AQ_QUEUE_SEC'), 'DL_BORDERCONTROL.AQ_BORDERCONTROL_HOOKS_QUEUE2');
+
+  BEGIN
+
+    logger.log('DEQUEUE HOOK INFORMATION: start', l_scope, null, l_params);
+
+    LOOP
+
+      l_dequeue_options.wait := 5;
+      l_dequeue_options.consumer_name := p_consumer_name;
+      dbms_aq.dequeue(l_hook_queue_name, l_dequeue_options, l_message_prop, l_payload, l_message_hdl);
+
+      send_hook_information(l_payload.obj_input);
+
+      COMMIT;
+    END LOOP;
+
+    logger.log('DEQUEUE HOOK INFORMATION: done', l_scope, null, l_params);
+
+  EXCEPTION
+  WHEN OTHERS
+  THEN
+
+    logger.log('DEQUEUE HOOK INFORMATION: No more messages for processing', l_scope, null, l_params);
+    COMMIT;
+  END dequeue_hooks_sec;
 
 PROCEDURE AA_receive_country 
   IS
@@ -772,3 +825,5 @@ END;
   GRANT EXECUTE ON "DL_INTERFACE"."PKG_LISTENER" TO "DL_BORDERCONTROL";
   GRANT EXECUTE ON "DL_INTERFACE"."PKG_LISTENER" TO "DERMALOG_PROXY";
   GRANT EXECUTE ON "DL_INTERFACE"."PKG_LISTENER" TO "APPSUP";
+  GRANT EXECUTE ON "DL_INTERFACE"."PKG_LISTENER" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_INTERFACE"."PKG_LISTENER" TO "BIOSUPPORT";

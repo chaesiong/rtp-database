@@ -1,0 +1,2 @@
+CREATE OR REPLACE FORCE EDITIONABLE VIEW "DL_BORDERCONTROL"."AQ$AQ_BORDERCONTROL_HOOKS_TAB2_R" ("QUEUE", "NAME", "ADDRESS", "PROTOCOL", "RULE", "RULE_SET", "TRANSFORMATION") AS 
+  SELECT queue_name QUEUE, s.name NAME , address ADDRESS , protocol PROTOCOL, rule_condition RULE, ruleset_name RULE_SET, trans_name TRANSFORMATION  FROM "AQ$_AQ_BORDERCONTROL_HOOKS_TAB2_S" s , sys.all_rules r WHERE (bitand(s.subscriber_type, 1) = 1) AND s.rule_name = r.rule_name and r.rule_owner = 'DL_BORDERCONTROL'  WITH READ ONLY;

@@ -25,7 +25,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."RELATIONS$I18N$TIUD0"
   */
   procedure l_set_dml_type is
   begin
-
     if (INSERTING())
     then
       l_dml_type := 'I';
@@ -103,7 +102,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."RELATIONS$I18N$TIUD0"
       --
       :NEW.dml_at := SYSTIMESTAMP;
       :NEW.dml_by := dl_common.pkg_session.get_audit_user();
-
       -- does the pk value has changed?
       if (l_has_pk_value_changed())
       then
@@ -113,7 +111,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."RELATIONS$I18N$TIUD0"
         :NEW.dml_type := l_dml_type;
       end if;
       --
-
       -- If the >>>>DELETING<<<< transaction is used
     else
       -- 'D'
@@ -137,7 +134,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."RELATIONS$I18N$TIUD0"
     --
     if (l_dml_type is null)
     then
-
       -- This case can occur for example on MERGE-Statements!
       l_set_dml_type();
     end if;
@@ -145,9 +141,7 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."RELATIONS$I18N$TIUD0"
     -- If the >>>>INSERTING<<<< transaction is used
     if (l_dml_type = 'I')
     then
-
       null;
-
     elsif (l_dml_type = 'U')
     then
       --
@@ -177,7 +171,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."RELATIONS$I18N$TIUD0"
       -- UPDATE on PK-Columns is not allowed, so fake here a DELETE!
       if (l_has_pk_value_changed())
       then
-
         insert into relations$i18n$his
           (key_value
           ,locale

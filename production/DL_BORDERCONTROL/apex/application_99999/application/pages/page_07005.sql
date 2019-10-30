@@ -21,7 +21,7 @@ wwv_flow_api.create_page(
 ,p_cache_timeout_seconds=>21600
 ,p_help_text=>'Here you can change your personal password.'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190704033259'
+,p_last_upd_yyyymmddhh24miss=>'20190822023656'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(224318450424484834)
@@ -59,12 +59,42 @@ wwv_flow_api.create_page_button(
 ,p_button_sequence=>20
 ,p_button_plug_id=>wwv_flow_api.id(224318450424484834)
 ,p_button_name=>'CANCEL'
-,p_button_action=>'REDIRECT_PAGE'
+,p_button_action=>'SUBMIT'
 ,p_button_template_options=>'#DEFAULT#'
 ,p_button_template_id=>wwv_flow_api.id(92382587160433869)
 ,p_button_image_alt=>'Cancel'
 ,p_button_position=>'REGION_TEMPLATE_CLOSE'
-,p_button_redirect_url=>'f?p=&APP_ID.:111:&SESSION.::&DEBUG.:7005:P111_USERNAME:&P7005_USER_NAME.'
+,p_button_execute_validations=>'N'
+);
+wwv_flow_api.create_page_branch(
+ p_id=>wwv_flow_api.id(4683851359900328606)
+,p_branch_name=>'Go To P7005_REDIRECT_TO'
+,p_branch_action=>'DECLARE'||wwv_flow.LF||
+'    l_url    VARCHAR2(2000) := NULL;'||wwv_flow.LF||
+'BEGIN'||wwv_flow.LF||
+'    SELECT notice'||wwv_flow.LF||
+'    INTO l_url'||wwv_flow.LF||
+'    FROM user_management.lookups'||wwv_flow.LF||
+'    WHERE key_category = :P7005_REDIRECT_TO'||wwv_flow.LF||
+'    AND key_value = 0'||wwv_flow.LF||
+'    AND is_active = ''Y'''||wwv_flow.LF||
+'    AND notice IS NOT NULL;'||wwv_flow.LF||
+'    '||wwv_flow.LF||
+'    RETURN l_url;'||wwv_flow.LF||
+'END;'
+,p_branch_point=>'AFTER_PROCESSING'
+,p_branch_type=>'BRANCH_TO_FUNCTION_RETURNING_URL'
+,p_branch_sequence=>10
+,p_branch_condition_type=>'EXISTS'
+,p_branch_condition=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT NULL',
+'FROM user_management.lookups',
+'WHERE key_category = :P7005_REDIRECT_TO',
+'AND key_value = 0',
+'AND is_active = ''Y''',
+'AND notice IS NOT NULL',
+'AND TRIM(:P7005_REDIRECT_TO) IS NOT NULL',
+';'))
 );
 wwv_flow_api.create_page_branch(
  p_id=>wwv_flow_api.id(106940610281608393)
@@ -72,7 +102,7 @@ wwv_flow_api.create_page_branch(
 ,p_branch_action=>'f?p=&APP_ID.:111:&SESSION.::&DEBUG.:7005:P101_USERNAME:&P7005_USER_NAME.&success_msg=#SUCCESS_MSG#'
 ,p_branch_point=>'AFTER_PROCESSING'
 ,p_branch_type=>'REDIRECT_URL'
-,p_branch_sequence=>10
+,p_branch_sequence=>20
 );
 wwv_flow_api.create_page_branch(
  p_id=>wwv_flow_api.id(106940971133608395)
@@ -80,7 +110,7 @@ wwv_flow_api.create_page_branch(
 ,p_branch_action=>'&LOGOUT_URL.'
 ,p_branch_point=>'AFTER_PROCESSING'
 ,p_branch_type=>'REDIRECT_URL'
-,p_branch_sequence=>20
+,p_branch_sequence=>30
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(106936184223608375)
@@ -161,6 +191,14 @@ wwv_flow_api.create_page_item(
 ,p_attribute_01=>'Y'
 ,p_attribute_02=>'Y'
 );
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4683851109572328604)
+,p_name=>'P7005_REDIRECT_TO'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_api.id(224318450424484834)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'Y'
+);
 wwv_flow_api.create_page_validation(
  p_id=>wwv_flow_api.id(106938885563608386)
 ,p_validation_name=>'P7005_NEW_PW2_check'
@@ -177,7 +215,8 @@ wwv_flow_api.create_page_validation(
 'END;'))
 ,p_validation_type=>'FUNC_BODY_RETURNING_ERR_TEXT'
 ,p_always_execute=>'N'
-,p_only_for_changed_rows=>'Y'
+,p_validation_condition=>':REQUEST != ''CANCEL'''
+,p_validation_condition_type=>'SQL_EXPRESSION'
 ,p_associated_item=>wwv_flow_api.id(106937857679608384)
 ,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
 );

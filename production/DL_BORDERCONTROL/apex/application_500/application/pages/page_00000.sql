@@ -18,7 +18,7 @@ wwv_flow_api.create_page(
 ,p_protection_level=>'D'
 ,p_cache_mode=>'NOCACHE'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190719022240'
+,p_last_upd_yyyymmddhh24miss=>'20190911161958'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(143925131698387919)
@@ -77,7 +77,7 @@ wwv_flow_api.create_page_plug(
 '    for c_row in (select',
 '      ''DATABASE_PARAMETER_'' || name || '' = '' || decode(minvalue, null, ''"'', '''') || value || decode(minvalue, null, ''"'', '''') || '';'' src',
 '    from (',
-'      select name, replace(replace(replace(replace(value, ''\'', ''\\''), ''"'', ''\"''), chr(13), ''\r''), chr(10), ''\n'') value, minvalue from parameters',
+'      select name, replace(replace(replace(replace(value, ''\'', ''\\''), ''"'', ''\"''), chr(13), ''\r''), chr(10), ''\n'') value, minvalue from parameters where is_js_param = ''Y''',
 '    )) loop',
 '        htp.p(c_row.src);',
 '    end loop;',

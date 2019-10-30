@@ -36,7 +36,7 @@ prompt APPLICATION 99999 - Global Shared Dialogs
 
 -- Application Statistics:
 --   Pages:                      8
---     Items:                   49
+--     Items:                   50
 --     Computations:             9
 --     Validations:              2
 --     Processes:               25

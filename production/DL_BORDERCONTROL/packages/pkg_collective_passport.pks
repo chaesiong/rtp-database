@@ -17,9 +17,10 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_COLLECTIVE_PASSPOR
     /**
     * Returns the absolute number of Fellow Passengers that are temporarily saved right now
     * THIS WILL NOT COUNT FELLOW PASSENGERS THAT ARE PERSISTED
+    * @param i_persistable    BOOLEAN to return only persistable count. Default is false.
     *
     */
-    FUNCTION GET_FELLOW_PASSENGER_COUNT RETURN NUMBER;
+    FUNCTION GET_FELLOW_PASSENGER_COUNT(i_persistable IN BOOLEAN default false) RETURN NUMBER;
 
     /**
     * Updates a Row in the Table TMP_COLLECTIVE_PASSPORT_DATA at SEQ_ID with the provided CLOB.
@@ -48,16 +49,19 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_COLLECTIVE_PASSPOR
     /**
     * Initializes the Table TMP_COLLECTIVE_PASSPORT_DATA with one Empty Row
     *
-    * @param i_force_clear    BOOLEAN to force the Table to be emptied (for the current session) and filled with an empty row.
+    * @param i_force_clear    BOOLEAN to force the Table to be emptied (for the current session).
+    * @param i_init_record    BOOLEAN to add initial empty row to the Table (for the current session). Default is true for backward compatibility.
     */
-    PROCEDURE INIT_TEMP_TABLE(i_force_clear IN BOOLEAN default false);
+    PROCEDURE INIT_TEMP_TABLE(i_force_clear IN BOOLEAN default false, i_add_empty_row IN BOOLEAN default true);
 
     /**
     * Loads all the Fellow Passengers of a Person into the Table TMP_COLLECTIVE_PASSPORT_DATA
     *
     * @param i_PERSON_FK    Foreign Key to Table PERSON (KEY_VALUE)
+    * @param i_preserve_pk  BOOLEAN to re-use PK from source. Default is false.
+    *                       Usage Ex - true: when editing; false: when fetching arrival collective info during departure;
     */
-    PROCEDURE LOAD_DATA(i_PERSON_FK IN DL_BORDERCONTROL.FELLOW_PASSENGER.KEY_VALUE%type);
+    PROCEDURE LOAD_DATA(i_PERSON_FK IN DL_BORDERCONTROL.FELLOW_PASSENGER.KEY_VALUE%type, i_preserve_pk IN BOOLEAN default false);
 
 
     /**
