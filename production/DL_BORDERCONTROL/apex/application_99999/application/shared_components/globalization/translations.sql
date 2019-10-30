@@ -7576,5 +7576,18 @@ wwv_flow_api.create_translation(
 ,p_translate_to_text=>'HTML'
 ,p_translate_from_text=>'HTML'
 );
+wwv_flow_api.create_translation(
+ p_id=>wwv_flow_api.id(35878590908850042982)
+,p_page_id=>7005
+,p_translated_flow_id=>108
+,p_translate_to_id=>wwv_flow_api.id(4683851109572328604.108)
+,p_translate_from_id=>wwv_flow_api.id(4683851109572328604)
+,p_translate_column_id=>268
+,p_translate_to_lang_code=>'th'
+,p_translation_specific_to_item=>'NO'
+,p_template_translatable=>'N'
+,p_translate_to_text=>'Y'
+,p_translate_from_text=>'Y'
+);
 end;
 /

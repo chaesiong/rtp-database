@@ -132,6 +132,8 @@
 @DL_COMMON/tables/messages$i18n$his.sql
 @DL_COMMON/tables/messages$i18n.sql
 @DL_COMMON/tables/messages.sql
+@DL_COMMON/tables/movement_attr_types$his.sql
+@DL_COMMON/tables/movement_attr_types.sql
 @DL_COMMON/tables/movement_reasons$his.sql
 @DL_COMMON/tables/movement_reasons$i18n$his.sql
 @DL_COMMON/tables/movement_reasons$i18n.sql
@@ -305,18 +307,26 @@
 @DL_BORDERCONTROL/tables/adm_class_subdistrict$his.sql
 @DL_BORDERCONTROL/tables/adm_class_subdistrict$i18n.sql
 @DL_BORDERCONTROL/tables/adm_class_subdistrict.sql
+@DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab2_g.sql
+@DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab2_h.sql
+@DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab2_i.sql
+@DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab2_l.sql
+@DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab2_s.sql
+@DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab2_t.sql
 @DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab_g.sql
 @DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab_h.sql
 @DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab_i.sql
 @DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab_l.sql
 @DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab_s.sql
 @DL_BORDERCONTROL/tables/aq$_aq_bordercontrol_hooks_tab_t.sql
+@DL_BORDERCONTROL/tables/aq_bordercontrol_hooks_tab2.sql
 @DL_BORDERCONTROL/tables/aq_bordercontrol_hooks_tab.sql
 @DL_BORDERCONTROL/tables/bio_abisstatus$his.sql
 @DL_BORDERCONTROL/tables/bio_abisstatus.sql
 @DL_BORDERCONTROL/tables/bio_identities$his.sql
 @DL_BORDERCONTROL/tables/bio_identities.sql
 @DL_BORDERCONTROL/tables/blacklist_log.sql
+@DL_BORDERCONTROL/tables/borderdocimages_new.sql
 @DL_BORDERCONTROL/tables/borderdocimages.sql
 @DL_BORDERCONTROL/tables/borderdocuments.sql
 @DL_BORDERCONTROL/tables/borderposts$his.sql
@@ -426,6 +436,7 @@
 @DL_BLACKLIST/tables/finger_positions$i18n.sql
 @DL_BLACKLIST/tables/finger_positions.sql
 @DL_BLACKLIST/tables/fingerprints.sql
+@DL_BLACKLIST/tables/hm_test.sql
 @DL_BLACKLIST/tables/icrs_case_sync$his.sql
 @DL_BLACKLIST/tables/icrs_case_sync.sql
 @DL_BLACKLIST/tables/identities2bk.sql
@@ -556,8 +567,10 @@
 -- DL_INTERFACE/tables
 @DL_INTERFACE/tables/log_blacklist_hits.sql
 @DL_INTERFACE/tables/log_sync_webservices.sql
+@DL_INTERFACE/tables/log_webapi.sql
 @DL_INTERFACE/tables/parameters$his.sql
 @DL_INTERFACE/tables/parameters.sql
+@DL_INTERFACE/tables/system_config.sql
 @DL_INTERFACE/tables/unsuccess_list.sql
 -- SYSTEM/tables
 @SYSTEM/tables/aq$_internet_agent_privs.sql
@@ -651,6 +664,7 @@
 @SYSTEM/tables/logstdby$skip.sql
 @SYSTEM/tables/logstdby$skip_support.sql
 @SYSTEM/tables/logstdby$skip_transaction.sql
+@SYSTEM/tables/log_webapi.sql
 @SYSTEM/tables/mview$_adv_ajg.sql
 @SYSTEM/tables/mview$_adv_basetable.sql
 @SYSTEM/tables/mview$_adv_clique.sql
@@ -688,3 +702,4 @@
 @SYSTEM/tables/scheduler_job_args_tbl.sql
 @SYSTEM/tables/scheduler_program_args_tbl.sql
 @SYSTEM/tables/sqlplus_product_profile.sql
+@SYSTEM/tables/system_config.sql

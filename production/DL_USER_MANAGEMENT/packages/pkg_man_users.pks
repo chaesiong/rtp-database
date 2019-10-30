@@ -56,7 +56,16 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_USER_MANAGEMENT"."PKG_MAN_USERS" is
                    ,i_password            in varchar2
                    ,i_pwd_must_be_changed in varchar2 default 'N'
                    ,i_insert_source       in varchar2 default user
-                   ,i_pw_expire           in number default 1) return varchar2;
+                   ,i_pw_expire           in number   default 1
+                   ,i_national_id         in number   default null
+                   ,i_first_name_thai     in varchar2 default null
+                   ,i_last_name_thai      in varchar2 default null
+                   ,i_dob                 in varchar2 default null
+                   ,i_rank                in varchar2 default null
+                   ,i_department_level_1  in number   default null
+                   ,i_department_level_2  in number   default null
+                   ,i_department_level_3  in number   default null
+                   ,i_position            in varchar2 default null) return varchar2;
 
   procedure CHANGE_PASSWORD(i_username     in varchar2
                            ,i_password_new in varchar2

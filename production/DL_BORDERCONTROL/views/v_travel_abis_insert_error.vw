@@ -11,3 +11,5 @@ from (
     join borderdocuments bd on bd.brddocid = m.brddocid
 where errors.seq = 1
   and bd.afisid is null;
+  GRANT SELECT ON "DL_BORDERCONTROL"."V_TRAVEL_ABIS_INSERT_ERROR" TO "BIOAPPREPORT";
+  GRANT SELECT ON "DL_BORDERCONTROL"."V_TRAVEL_ABIS_INSERT_ERROR" TO "BIOSUPPORT";

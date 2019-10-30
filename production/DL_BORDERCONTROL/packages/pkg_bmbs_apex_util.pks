@@ -92,10 +92,11 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTIL" IS
     , p_givenname_th        IN VARCHAR2 DEFAULT NULL
     , p_middlename_th       IN VARCHAR2 DEFAULT NULL
     , p_surname_th          IN VARCHAR2 DEFAULT NULL
-    , p_dept_1              IN VARCHAR2 DEFAULT NULL
-    , p_dept_2              IN VARCHAR2 DEFAULT NULL
-    , p_dept_3              IN VARCHAR2 DEFAULT NULL
+    , p_dept_1              IN NUMBER   DEFAULT NULL
+    , p_dept_2              IN NUMBER   DEFAULT NULL
+    , p_dept_3              IN NUMBER   DEFAULT NULL
     , p_citizenid           IN VARCHAR2 DEFAULT NULL
+    , p_search_collective   IN NUMBER   DEFAULT 0
     , p_created_by          IN VARCHAR2 DEFAULT NULL
     , p_rows                IN NUMBER   DEFAULT 1000
     , p_pibics_prd_conn     IN NUMBER   DEFAULT 0
@@ -127,10 +128,11 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTIL" IS
     , p_givenname_th        IN VARCHAR2 DEFAULT NULL
     , p_middlename_th       IN VARCHAR2 DEFAULT NULL
     , p_surname_th          IN VARCHAR2 DEFAULT NULL
-    , p_dept_1              IN VARCHAR2 DEFAULT NULL
-    , p_dept_2              IN VARCHAR2 DEFAULT NULL
-    , p_dept_3              IN VARCHAR2 DEFAULT NULL
+    , p_dept_1              IN NUMBER   DEFAULT NULL
+    , p_dept_2              IN NUMBER   DEFAULT NULL
+    , p_dept_3              IN NUMBER   DEFAULT NULL
     , p_citizenid           IN VARCHAR2 DEFAULT NULL
+    , p_search_collective   IN NUMBER   DEFAULT 0
     , p_created_by          IN VARCHAR2 DEFAULT NULL
     , p_rows                IN NUMBER   DEFAULT 1000
     , p_pibics_prd_conn     IN NUMBER   DEFAULT 0

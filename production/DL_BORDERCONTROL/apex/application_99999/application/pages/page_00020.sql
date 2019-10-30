@@ -296,13 +296,13 @@ wwv_flow_api.create_page(
 ,p_page_template_options=>'#DEFAULT#:ui-dialog--stretch'
 ,p_dialog_height=>'700'
 ,p_dialog_width=>'1350'
-,p_dialog_chained=>'Y'
+,p_dialog_chained=>'N'
 ,p_overwrite_navigation_list=>'N'
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_help_text=>'No help is available for this page.'
-,p_last_updated_by=>'MSTEPHAN'
-,p_last_upd_yyyymmddhh24miss=>'20181005140838'
+,p_last_updated_by=>'ADMIN'
+,p_last_upd_yyyymmddhh24miss=>'20190912014107'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(993974773530134959)

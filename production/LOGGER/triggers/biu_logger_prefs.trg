@@ -7,13 +7,11 @@ begin
   $else
     :new.pref_name := upper(:new.pref_name);
     :new.pref_type := upper(:new.pref_type);
-
     if 1=1
       and :new.pref_type = logger.g_pref_type_logger
       and :new.pref_name = 'LEVEL' then
       :new.pref_value := upper(:new.pref_value);
     end if;
-
     -- TODO mdsouza: 3.1.1
     -- TODO mdsouza: if removing then decrease indent
     -- $if $$currently_installing is null or not $$currently_installing $then
@@ -27,7 +25,6 @@ begin
           logger.g_warning_name || ', ' || logger.g_information_name || ', ' || logger.g_debug_name || ', ' ||
           logger.g_timing_name || ', ' || logger.g_sys_context_name || ', ' || logger.g_apex_name);
       end if;
-
       -- Allow for null to be used for Plugins, then default to NONE
       if 1=1
         and :new.pref_type = logger.g_pref_type_logger
@@ -35,7 +32,6 @@ begin
         and :new.pref_value is null then
         :new.pref_value := 'NONE';
       end if;
-
       -- #103
       -- Only predefined preferences and Custom Preferences are allowed
       -- Custom Preferences must be prefixed with CUST_
@@ -57,7 +53,6 @@ begin
       then
         raise_application_error (-20000, 'Setting system level preferences are restricted to a set list.');
       end if;
-
       -- this is because the logger package is not installed yet.  We enable it in logger_configure
       logger.null_global_contexts;
     -- TODO mdsouza: 3.1.1

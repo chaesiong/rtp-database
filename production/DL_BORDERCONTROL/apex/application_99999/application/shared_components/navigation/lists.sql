@@ -23,7 +23,9 @@ wwv_flow_api.create_list_item(
 ,p_list_item_display_sequence=>10
 ,p_list_item_link_text=>'Log Out'
 ,p_list_item_link_target=>'&LOGOUT_URL.'
-,p_list_item_current_for_pages=>'&LOGOUT_URL.'
+,p_list_item_disp_cond_type=>'CURRENT_PAGE_NOT_EQUAL_CONDITION'
+,p_list_item_disp_condition=>'7005'
+,p_list_item_current_type=>'TARGET_PAGE'
 );
 end;
 /

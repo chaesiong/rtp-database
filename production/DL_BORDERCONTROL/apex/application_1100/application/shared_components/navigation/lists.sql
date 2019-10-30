@@ -93,6 +93,8 @@ wwv_flow_api.create_list_item(
 ,p_list_item_link_text=>'User Management'
 ,p_list_item_link_target=>'f?p=1000:1:&APP_SESSION.'
 ,p_list_item_icon=>' fa-user-circle'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>'return DL_USER_MANAGEMENT.PKG_AUTHORIZATION.HAS_USER_PERMISSION_(UPPER(:APP_USER),''UM_HOME'') > 0;'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_api.create_list_item(
@@ -101,6 +103,18 @@ wwv_flow_api.create_list_item(
 ,p_list_item_link_text=>'Master Data'
 ,p_list_item_link_target=>'f?p=700:1:&APP_SESSION.'
 ,p_list_item_icon=>' fa-database-edit'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>'return DL_USER_MANAGEMENT.PKG_AUTHORIZATION.HAS_USER_PERMISSION_(UPPER(:APP_USER),''MD_HOME'') > 0;'
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_api.create_list_item(
+ p_id=>wwv_flow_api.id(35885468152320624268)
+,p_list_item_display_sequence=>30
+,p_list_item_link_text=>'Reporting'
+,p_list_item_link_target=>'f?p=500:5999:&APP_SESSION.'
+,p_list_item_icon=>'fa-file-text-o'
+,p_list_item_disp_cond_type=>'FUNCTION_BODY'
+,p_list_item_disp_condition=>'return DL_USER_MANAGEMENT.PKG_AUTHORIZATION.HAS_USER_PERMISSION_(UPPER(:APP_USER),''RPT_HOME'') > 0;'
 ,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_api.create_list(
@@ -142,11 +156,29 @@ wwv_flow_api.create_list(
 ,p_list_status=>'PUBLIC'
 );
 wwv_flow_api.create_list_item(
- p_id=>wwv_flow_api.id(92881160382413919)
+ p_id=>wwv_flow_api.id(36462422966155960310)
 ,p_list_item_display_sequence=>10
+,p_list_item_link_text=>'&APP_USER.'
+,p_list_item_icon=>'fa-user'
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_api.create_list_item(
+ p_id=>wwv_flow_api.id(36462423270365963523)
+,p_list_item_display_sequence=>100
+,p_list_item_link_text=>'Change User Password'
+,p_list_item_link_target=>'f?p=BMBS:7000:&APP_SESSION.::NO:::'
+,p_list_item_icon=>'fa-lock-user'
+,p_parent_list_item_id=>wwv_flow_api.id(36462422966155960310)
+,p_list_item_current_type=>'TARGET_PAGE'
+);
+wwv_flow_api.create_list_item(
+ p_id=>wwv_flow_api.id(92881160382413919)
+,p_list_item_display_sequence=>110
 ,p_list_item_link_text=>'Log Out'
 ,p_list_item_link_target=>'&LOGOUT_URL.'
-,p_list_item_current_for_pages=>'&LOGOUT_URL.'
+,p_list_item_icon=>'fa-sign-out'
+,p_parent_list_item_id=>wwv_flow_api.id(36462422966155960310)
+,p_list_item_current_type=>'TARGET_PAGE'
 );
 wwv_flow_api.create_list(
  p_id=>wwv_flow_api.id(1765782211142189867)
@@ -173,6 +205,37 @@ wwv_flow_api.create_list(
 '    attribute10',
 'FROM dl_common.apex_lists',
 'WHERE list_name = ''APPLICATIONS_APPLICATION''',
+'START WITH parent_key_value IS NULL ',
+'CONNECT BY PRIOR key_value = parent_key_value',
+'ORDER siblings BY key_value;'))
+,p_list_status=>'PUBLIC'
+);
+wwv_flow_api.create_list(
+ p_id=>wwv_flow_api.id(35878634176450505603)
+,p_name=>'APPLICATIONS_MAIN_2'
+,p_list_type=>'SQL_QUERY'
+,p_list_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT ',
+'    level,',
+'    display_value AS LABEL, ',
+'    target, ',
+'    is_current_list_entry, ',
+'    image,',
+'    image_attribute,',
+'    image_alt_attribute,',
+'    attribute1,',
+'    attribute2,',
+'    attribute3,',
+'    attribute4,',
+'    attribute5,',
+'    attribute6,',
+'    attribute7',
+'    attribute8,',
+'    attribute9,',
+'    attribute10',
+'FROM dl_common.apex_lists',
+'WHERE list_name = ''APPLICATIONS_MAIN''',
+'AND DL_USER_MANAGEMENT.PKG_AUTHORIZATION.HAS_USER_PERMISSION_(UPPER(:APP_USER), auth_object_id) > 0',
 'START WITH parent_key_value IS NULL ',
 'CONNECT BY PRIOR key_value = parent_key_value',
 'ORDER siblings BY key_value;'))

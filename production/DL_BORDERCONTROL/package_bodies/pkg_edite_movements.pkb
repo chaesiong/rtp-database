@@ -120,6 +120,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
                             ,p_VISA_EXPIRY_DATE         in DL_BORDERCONTROL.VISAS.EXPIRY_DATE%type
                             ,p_PERMIT_TYPE              in DL_BORDERCONTROL.VISAS.PERMIT_TYPE%type
                             ,p_PERMIT_EXPIRY_DATE       in DL_BORDERCONTROL.VISAS.PERMIT_EXPIRY_DATE%type
+                            ,p_DOCTYPE                  in DL_BORDERCONTROL.BORDERDOCUMENTS.DOCTYPE%type
+                            ,p_DOCCLASS                 in DL_BORDERCONTROL.BORDERDOCUMENTS.DOCCLASS%type
                             ,p_GIVENNAME                in DL_BORDERCONTROL.BORDERDOCUMENTS.GIVENNAME%type
                             ,p_SURNAME                  in DL_BORDERCONTROL.BORDERDOCUMENTS.SURNAME%type
                             ,p_MIDDLENAME               in DL_BORDERCONTROL.BORDERDOCUMENTS.MIDDLENAME%type
@@ -134,6 +136,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
                             ,p_NOTE                     in DL_BORDERCONTROL.ENTRY_FORMS.NOTE%type
                             ,p_MVMNT_MANUAL_UPDATE_NOTE in DL_BORDERCONTROL.MSCS_MOVEMENTS_MANUAL_UPDATE.NOTE%type
                             ,p_STATELESS                in DL_BORDERCONTROL.BORDERDOCUMENTS.NAT%type default null
+                            ,p_PERSON                   in DL_BORDERCONTROL.PERSON.KEY_VALUE%type default null
     ) IS
         
         l_scope                 logger_logs.scope%type := c_scope_prefix || 'edit_last_movement_info';
@@ -144,6 +147,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
         l_exitflg               dl_bordercontrol.movements.exitflg%TYPE;
         l_visa_key_value        dl_bordercontrol.movements.visa%TYPE;
         l_entry_form_key_value  dl_bordercontrol.movements.entry_form%TYPE;
+        l_person_key_value      dl_bordercontrol.person.key_value%TYPE := p_PERSON;
+        l_count                 NUMBER := 0;
         
         e_mvmnt_does_not_exist  EXCEPTION;
         
@@ -179,6 +184,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
         FROM dl_bordercontrol.v_edit_movements
         WHERE mvmntid = p_MVMNTID;
         
+        -- borderdocuments
         IF l_brddocid IS NOT NULL THEN
             UPDATE dl_bordercontrol.borderdocuments SET 
                 givenname            = p_GIVENNAME
@@ -189,9 +195,12 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
                 ,dob_partial         = dl_bordercontrol.pkg_common.Get_Partial_Date(p_DOB, 1, 0, 0, 1)
                 ,nat                 = NVL(p_STATELESS, issuectry)
                 ,sub_nationality     = p_SUB_NATIONALITY
+                ,doctype             = NVL(p_DOCTYPE, doctype)
+                ,docclass            = NVL(p_DOCCLASS, docclass)
             WHERE brddocid = l_brddocid;
         END IF;
         
+        -- visas
         IF l_visa_key_value IS NOT NULL THEN
             UPDATE dl_bordercontrol.visas SET 
                 visa_type      = p_VISA_TYPE
@@ -203,6 +212,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
             AND borderdocument = l_brddocid;
         END IF;
         
+        -- entry_forms
         IF l_entry_form_key_value IS NOT NULL THEN
             UPDATE dl_bordercontrol.entry_forms SET 
                 form_no      = p_ENTRY_FORM_NO
@@ -238,7 +248,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
             RETURNING key_value INTO l_entry_form_key_value;
         END IF;
 
-        
+        -- movements
         UPDATE dl_bordercontrol.movements SET 
             exitflg             = p_EXITFLG
             ,max_stay_dt        = p_MAX_STAY_DT
@@ -248,7 +258,47 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
             ,visa_type          = p_VISA_TYPE
             ,entry_form         = NVL(entry_form, l_entry_form_key_value)
         WHERE mvmntid = p_MVMNTID
-        AND source_system = 1;        
+        AND source_system IN (1, 4);
+        
+        -- collective
+        IF pkg_collective_passport.get_fellow_passenger_count() > 0 THEN
+            IF l_person_key_value IS NULL THEN
+                l_person_key_value := SYS_GUID();
+            END IF;
+            
+            SELECT COUNT(1) INTO l_count FROM dl_bordercontrol.person WHERE key_value = l_person_key_value;
+            IF l_count = 0 THEN
+                INSERT INTO dl_bordercontrol.person (key_value) VALUES (l_person_key_value);
+            END IF;
+            
+            --pkg_collective_passport.persist_data(l_person_key_value); -- not using autonomous here
+            --Delete all The Fellow Passengers that are not associated with the Person anymore--
+            DELETE FROM dl_bordercontrol.fellow_passenger 
+            WHERE person = l_person_key_value 
+            AND key_value NOT IN 
+            (
+                SELECT key_value 
+                FROM dl_bordercontrol.tmp_collective_passport_data 
+                WHERE app_session = v('APP_SESSION') 
+            );
+            
+            MERGE INTO dl_bordercontrol.fellow_passenger dest
+            USING (SELECT * FROM dl_bordercontrol.tmp_collective_passport_data WHERE app_session = v('APP_SESSION') AND (last_name IS NOT NULL OR first_name IS NOT NULL ) ) src
+            ON (src.key_value = dest.key_value)
+            WHEN MATCHED THEN UPDATE SET
+                dest.relation      = src.relation,
+                dest.last_name     = src.last_name,
+                dest.first_name    = src.first_name,
+                dest.date_of_birth = src.date_of_birth,
+                dest.sex           = src.gender,
+                dest.nationality   = src.nationality,
+                dest.image         = src.image,
+                dest.tm6_no        = src.tm6_no,
+                dest.mvmntid       = p_MVMNTID
+            WHEN NOT MATCHED THEN
+            INSERT (key_value, person, relation, last_name, first_name, date_of_birth, sex, nationality, image, tm6_no, mvmntid)
+            VALUES (src.key_value,l_person_key_value ,src.relation, src.last_name, src.first_name, src.date_of_birth, src.gender, src.nationality, src.image, src.tm6_no, p_MVMNTID);
+        END IF;
         
         -- insert movement manual update note
         INSERT INTO DL_BORDERCONTROL.MSCS_MOVEMENTS_MANUAL_UPDATE
@@ -356,7 +406,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
         UPDATE dl_bordercontrol.movements SET 
             is_finished         = 'N' -- OR 'D' ??
         WHERE mvmntid = p_MVMNTID
-        AND source_system = 1; 
+        AND source_system IN (1, 4); 
         
         -- insert movement manual update note
         INSERT INTO DL_BORDERCONTROL.MSCS_MOVEMENTS_MANUAL_UPDATE
@@ -454,7 +504,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
         UPDATE dl_bordercontrol.movements SET 
             exitflg             = 2
         WHERE mvmntid = p_MVMNTID
-        AND source_system = 1; 
+        AND source_system IN (1, 4); 
         
         -- insert movement manual update note
         INSERT INTO DL_BORDERCONTROL.MSCS_MOVEMENTS_MANUAL_UPDATE
@@ -560,7 +610,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
             AND n001 = 1 
             AND c001 IS NOT NULL
         )
-        AND source_system = 1
+        AND source_system IN (1, 4)
         AND is_finished = 'Y'
         AND exitflg IN (0, 1); 
         
@@ -592,7 +642,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
             WHERE mvmntid = ac.c001
             AND is_finished = 'Y'
             AND exitflg = 2
-            AND source_system = 1
+            AND source_system IN (1, 4)
         )
         ;
     
@@ -618,7 +668,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
                 WHERE mvmntid = ac.c001
                 AND is_finished = 'Y'
                 AND exitflg = 2
-                AND source_system = 1
+                AND source_system IN (1, 4)
             )
         )
         LOOP
@@ -643,3 +693,5 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EDITE_MOVEMEN
 end;
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_EDITE_MOVEMENTS" TO "DERMALOG_PROXY";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_EDITE_MOVEMENTS" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_EDITE_MOVEMENTS" TO "BIOSUPPORT";

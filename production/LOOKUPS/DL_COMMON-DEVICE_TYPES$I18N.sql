@@ -1,0 +1,5 @@
+
+REM INSERTING into DL_COMMON.DEVICE_TYPES$I18N
+SET DEFINE OFF;
+no rows selected
+

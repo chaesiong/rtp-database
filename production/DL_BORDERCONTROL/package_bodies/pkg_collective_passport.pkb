@@ -20,12 +20,17 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_COLLECTIVE_PA
     /**
     * Returns the absolute number of Fellow Passengers that are temporarily saved right now
     * THIS WILL NOT COUNT FELLOW PASSENGERS THAT ARE PERSISTED
+    * @param i_persistable    BOOLEAN to return only persistable count. Default is false.
     *
     */
-    FUNCTION GET_FELLOW_PASSENGER_COUNT RETURN NUMBER AS
+    FUNCTION GET_FELLOW_PASSENGER_COUNT(i_persistable IN BOOLEAN default false) RETURN NUMBER AS
         l_count NUMBER;
     BEGIN
-        SELECT count(*) INTO l_count FROM TMP_COLLECTIVE_PASSPORT_DATA WHERE APP_SESSION = v('APP_SESSION');
+        IF i_persistable THEN
+            SELECT count(*) INTO l_count FROM TMP_COLLECTIVE_PASSPORT_DATA WHERE APP_SESSION = v('APP_SESSION') AND (LAST_NAME IS NOT NULL OR FIRST_NAME IS NOT NULL);
+        ELSE
+            SELECT count(*) INTO l_count FROM TMP_COLLECTIVE_PASSPORT_DATA WHERE APP_SESSION = v('APP_SESSION');
+        END IF;
         return l_count;
 
         EXCEPTION when no_data_found then
@@ -90,9 +95,10 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_COLLECTIVE_PA
     /**
     * Initializes the Table TMP_COLLECTIVE_PASSPORT_DATA with one Empty Row
     *
-    * @param i_force_clear    BOOLEAN to force the Table to be emptied (for the current session) and filled with an empty row.
+    * @param i_force_clear    BOOLEAN to force the Table to be emptied (for the current session).
+    * @param i_init_record    BOOLEAN to add initial empty row to the Table (for the current session). Default is true for backward compatibility.
     */
-    PROCEDURE INIT_TEMP_TABLE(i_force_clear IN BOOLEAN default false) AS
+    PROCEDURE INIT_TEMP_TABLE(i_force_clear IN BOOLEAN default false, i_add_empty_row IN BOOLEAN default true) AS
         PRAGMA AUTONOMOUS_TRANSACTION;
 
         l_number_of_entries NUMBER := 0;
@@ -104,7 +110,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_COLLECTIVE_PA
         END IF;
 
         SELECT count(*) INTO l_number_of_entries FROM TMP_COLLECTIVE_PASSPORT_DATA WHERE APP_SESSION = v('APP_SESSION');
-        IF( l_number_of_entries <= 0 ) then
+        IF( l_number_of_entries <= 0 AND i_add_empty_row ) then
             l_first_passenger := PKG_COLLECTIVE_PASSPORT.ADD_EMPTY_PASSENGER();
         end iF;
 
@@ -115,16 +121,37 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_COLLECTIVE_PA
     * Loads all the Fellow Passengers of a Person into the Table TMP_COLLECTIVE_PASSPORT_DATA
     *
     * @param i_PERSON_FK    Foreign Key to Table PERSON (KEY_VALUE)
+    * @param i_preserve_pk  BOOLEAN to re-use PK from source. Default is 0.
+    *                       Usage Ex - true: when editing; false: when fetching arrival collective info during departure;
     */
-    PROCEDURE LOAD_DATA(i_PERSON_FK IN DL_BORDERCONTROL.FELLOW_PASSENGER.KEY_VALUE%type) AS
+    PROCEDURE LOAD_DATA(i_PERSON_FK IN DL_BORDERCONTROL.FELLOW_PASSENGER.KEY_VALUE%type, i_preserve_pk IN BOOLEAN default false) AS
         PRAGMA AUTONOMOUS_TRANSACTION;
+        l_preserve_pk   CHAR(1) := 'N';
     BEGIN
         --Forces to Empty the Table first before we load it with Data--
-        PKG_COLLECTIVE_PASSPORT.INIT_TEMP_TABLE(true);
-
-        INSERT INTO TMP_COLLECTIVE_PASSPORT_DATA (
-        SELECT
+        PKG_COLLECTIVE_PASSPORT.INIT_TEMP_TABLE(true, false);
+        
+        IF i_preserve_pk THEN
+            l_preserve_pk := 'Y';
+        END IF;
+        
+        INSERT INTO TMP_COLLECTIVE_PASSPORT_DATA 
+        (
             KEY_VALUE,
+            APP_SESSION,
+            LAST_NAME,
+            FIRST_NAME,
+            RELATION,
+            DATE_OF_BIRTH,
+            GENDER,
+            NATIONALITY,
+            IMAGE,
+            INSERT_AT,
+            UPDATE_AT,
+            TM6_NO
+        )
+        SELECT
+            CASE l_preserve_pk WHEN 'Y' THEN KEY_VALUE ELSE NULL END,
             v('APP_SESSION'),
             LAST_NAME,
             FIRST_NAME,
@@ -136,11 +163,13 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_COLLECTIVE_PA
             sysdate,
             sysdate,
             TM6_NO
-        FROM
-            FELLOW_PASSENGER
-        WHERE
-            FELLOW_PASSENGER.PERSON = i_PERSON_FK);
+        FROM FELLOW_PASSENGER
+        WHERE FELLOW_PASSENGER.PERSON = i_PERSON_FK;
+
         commit;
+        
+        -- add a blank record if empty
+        PKG_COLLECTIVE_PASSPORT.INIT_TEMP_TABLE();
 
     END LOAD_DATA;
 
@@ -231,3 +260,5 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_COLLECTIVE_PA
 END PKG_COLLECTIVE_PASSPORT;
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_COLLECTIVE_PASSPORT" TO "DERMALOG_PROXY";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_COLLECTIVE_PASSPORT" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_COLLECTIVE_PASSPORT" TO "BIOSUPPORT";

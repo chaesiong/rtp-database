@@ -11,6 +11,8 @@ declare
   * --------  ----------  -------------------------------------------------------*
   * WWirns    01.08.2018  Added
   * MStahl    24.08.2018  Added phone number
+  * MSCS      24.07.2019  Added national_id, first_name_thai, last_name_thai, dob, rank,
+  *                       department_level_1, department_level_2, department_level_2, position
   *******************************************************************************/
   --
   v_DML_TYPE char(1);
@@ -70,6 +72,15 @@ begin
         ,ROW_FLAG_MASK
         ,TAG
         ,PW_EXPIRE
+        ,NATIONAL_ID
+        ,FIRST_NAME_THAI
+        ,LAST_NAME_THAI
+        ,DOB
+        ,RANK
+        ,DEPARTMENT_LEVEL_1
+        ,DEPARTMENT_LEVEL_2
+        ,DEPARTMENT_LEVEL_3
+        ,POSITION
         )
       values
         (:new.ID
@@ -92,7 +103,16 @@ begin
         ,:new.DML_TYPE
         ,:new.ROW_FLAG_MASK
         ,:new.TAG
-        ,1
+        ,1 -- PW_EXPIRE
+        ,:new.NATIONAL_ID
+        ,:new.FIRST_NAME_THAI
+        ,:new.LAST_NAME_THAI
+        ,:new.DOB
+        ,:new.RANK
+        ,:new.DEPARTMENT_LEVEL_1
+        ,:new.DEPARTMENT_LEVEL_2
+        ,:new.DEPARTMENT_LEVEL_3
+        ,:new.POSITION
          --
          )
       returning i.ID into v_ID;
@@ -128,6 +148,15 @@ begin
             ,u.PW_MUST_BE_CHANGED = :new.PW_MUST_BE_CHANGED
             ,u.ROW_FLAG_MASK      = :new.ROW_FLAG_MASK
             ,u.TAG                = :new.TAG
+            ,u.NATIONAL_ID        = :new.NATIONAL_ID
+            ,u.FIRST_NAME_THAI    = :new.FIRST_NAME_THAI
+            ,u.LAST_NAME_THAI     = :new.LAST_NAME_THAI
+            ,u.DOB                = :new.DOB
+            ,u.RANK               = :new.RANK
+            ,u.DEPARTMENT_LEVEL_1 = :new.DEPARTMENT_LEVEL_1
+            ,u.DEPARTMENT_LEVEL_2 = :new.DEPARTMENT_LEVEL_2
+            ,u.DEPARTMENT_LEVEL_3 = :new.DEPARTMENT_LEVEL_3
+            ,u.POSITION           = :new.POSITION
        where u.ID = :old.ID;
       --
       update USERS$SGD u

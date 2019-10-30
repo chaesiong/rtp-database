@@ -18,8 +18,8 @@ wwv_flow_api.create_page(
 ,p_page_is_public_y_n=>'N'
 ,p_protection_level=>'C'
 ,p_cache_mode=>'NOCACHE'
-,p_last_updated_by=>'CHRISTINA'
-,p_last_upd_yyyymmddhh24miss=>'20181023180707'
+,p_last_updated_by=>'ADMIN'
+,p_last_upd_yyyymmddhh24miss=>'20190820022019'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(134947327690522619)
@@ -310,7 +310,7 @@ wwv_flow_api.create_page_item(
 'SELECT NVL(NAME, NAME$DLC) d, KEY_VALUE r',
 'FROM DL_BORDERCONTROL.BORDERPOSTS$LC ',
 'WHERE IS_ACTIVE = ''Y''',
-'--ORDER BY DISPLAY_ORDER;'))
+'ORDER BY DISPLAY_ORDER;'))
 ,p_lov_display_null=>'YES'
 ,p_cHeight=>1
 ,p_colspan=>10

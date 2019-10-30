@@ -25,7 +25,6 @@ COMPOUND TRIGGER
     *
     * Raises an error if no type can be extracted
     */
-
     PROCEDURE l_set_dml_type (
         p_prevent_exce IN BOOLEAN DEFAULT false
     ) IS
@@ -49,7 +48,6 @@ COMPOUND TRIGGER
     *
     * @return BOOLEAN: True = value has changed, False = value has not changed
     */
-
     FUNCTION l_has_pk_value_changed RETURN BOOLEAN IS
     BEGIN
         IF (:new.key_value !=:old.key_value ) THEN
@@ -66,7 +64,6 @@ COMPOUND TRIGGER
     */
     -- !!! Do not check LOCALE, because the static value is already checked by a check constraint !!!
     --
-
     PROCEDURE l_check_fk_content (
         p_key_value           IN icao_doc_codes.key_value%TYPE,
         o_official_language   IN icao_doc_codes.official_language%TYPE,
@@ -88,7 +85,6 @@ COMPOUND TRIGGER
                     dl_common.languages t
                 WHERE
                     t.key_value = n_official_language;
-
                 IF ( v_vc_tmp != 'Y' ) THEN
                     raise_application_error(-20000,'The OFFICIAL_LANGUAGE['''
                                                     || n_official_language
@@ -97,9 +93,7 @@ COMPOUND TRIGGER
                                                     || '''], DML_TYPE['''
                                                     || v_dml_type
                                                     || '''].');
-
                 END IF;
-
             EXCEPTION
                 WHEN no_data_found THEN
                     raise_application_error(-20000,'The OFFICIAL_LANGUAGE['''
@@ -110,7 +104,6 @@ COMPOUND TRIGGER
                                                     || v_dml_type
                                                     || '''].');
             END;
-
         END IF;
         --
     END l_check_fk_content;
@@ -122,7 +115,6 @@ COMPOUND TRIGGER
     * Extract the dml-type variable
     * =======================================================
     */
-
     BEFORE STATEMENT IS BEGIN
         --
         l_set_dml_type(true);
@@ -163,14 +155,12 @@ COMPOUND TRIGGER
                 :new.dml_type := v_dml_type;
             END IF;
             --
-
         ELSE
             -- 'D'
             NULL;
             --
         END IF;
         --
-
     END BEFORE EACH ROW;
     --
     --
@@ -228,9 +218,7 @@ COMPOUND TRIGGER
                 :old.ins_by,
                 :old.official_language
             );
-
             --
-
             IF ( l_has_pk_value_changed () ) THEN
                 -- UPDATE on PK-Columns is not allowed, so fake here a DELETE!
                 INSERT INTO icao_doc_codes$his (
@@ -249,10 +237,8 @@ COMPOUND TRIGGER
                     'D'
                      --
                 );
-
             END IF;
             --
-
         ELSE
             -- 'D'
             INSERT INTO dl_common.icao_doc_codes$his (
@@ -287,7 +273,6 @@ COMPOUND TRIGGER
                 :old.official_language
             );
             --
-
             INSERT INTO icao_doc_codes$his (
                 key_value,
                 ins_at,
@@ -304,10 +289,8 @@ COMPOUND TRIGGER
                 'D'
             );
             --
-
         END IF;
         --
-
     END AFTER EACH ROW;
     --
     --

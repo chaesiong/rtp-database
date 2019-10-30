@@ -46,7 +46,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."TM8_APPLICATION$TIUD0"
       end if;
     end if;
   end L_Set_DML_TYPE;
-
   /** ======================================================
   * BEFORE STATEMENT EVENT
   *

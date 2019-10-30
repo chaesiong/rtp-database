@@ -2646,6 +2646,13 @@ WHERE ROWNUM = 1
     --
      where MVMNTID = p_MVMNTID;
     --
+    -- save doc images for each movement
+    UPDATE movements_blob SET
+         PSBLOB_1 = p_PSBLOB_1      -- visual face
+        ,PSBLOB_2 = p_PSBLOB_2      -- icao face
+        ,PSBLOB_3 = p_PSBLOB_3      -- visual page
+    WHERE mvmnt_id = p_MVMNTID;
+    --
     begin
       IF p_PERSON_TYPE = 2 THEN
         dl_bordercontrol.pkg_pibics_hook.set_action_crew(p_MVMNTID);
@@ -3014,7 +3021,8 @@ begin
             ,g_LOG_SCOPE_PREFIX || 'begin');
   --
 end DL_MOVEMENTHANDLING;
-
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."DL_MOVEMENTHANDLING" TO "JASPER_REPORTING";
   GRANT EXECUTE ON "DL_BORDERCONTROL"."DL_MOVEMENTHANDLING" TO "DERMALOG_PROXY";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."DL_MOVEMENTHANDLING" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."DL_MOVEMENTHANDLING" TO "BIOSUPPORT";

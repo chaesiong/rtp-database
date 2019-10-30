@@ -74,7 +74,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_APEX_UTIL" authid 
   --
   function Get_Pibics_Image(p_IMAGE_TYPE      in varchar2,
                             p_PK_VAL          in varchar2,
-                            p_MVMNT_SRC       in varchar2 DEFAULT NULL
+                            p_MVMNT_SRC       in varchar2 DEFAULT NULL,
+                            p_DOCNO           in varchar2 DEFAULT NULL
                             --
                             ) return blob;
   --
@@ -83,7 +84,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_APEX_UTIL" authid 
   procedure Get_Pibics_Image(p_COLLECTION_NAME in varchar2,
                              p_IMAGE_TYPE      in varchar2,
                              p_PK_VAL          in varchar2,
-                             p_MVMNT_SRC       in varchar2 DEFAULT NULL
+                             p_MVMNT_SRC       in varchar2 DEFAULT NULL,
+                             p_DOCNO           in varchar2 DEFAULT NULL
                              --
                              );
   --

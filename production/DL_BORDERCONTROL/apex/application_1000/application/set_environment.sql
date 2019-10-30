@@ -36,12 +36,12 @@ prompt APPLICATION 1000 - Dermalog User Management
 
 -- Application Statistics:
 --   Pages:                     20
---     Items:                  101
---     Validations:              9
---     Processes:               41
---     Regions:                 43
---     Buttons:                 51
---     Dynamic Actions:          9
+--     Items:                  110
+--     Validations:             11
+--     Processes:               42
+--     Regions:                 46
+--     Buttons:                 52
+--     Dynamic Actions:         13
 --   Shared Components:
 --     Logic:
 --       Items:                  1

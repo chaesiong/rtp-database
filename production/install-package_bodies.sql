@@ -53,6 +53,7 @@
 @DL_BORDERCONTROL/package_bodies/pkg_json_export.pkb
 @DL_BORDERCONTROL/package_bodies/pkg_messages.pkb
 @DL_BORDERCONTROL/package_bodies/pkg_pibics_hook.pkb
+@DL_BORDERCONTROL/package_bodies/pkg_pibics_unhook.pkb
 @DL_BORDERCONTROL/package_bodies/pkg_reentry.pkb
 @DL_BORDERCONTROL/package_bodies/pkg_utils.pkb
 @DL_BORDERCONTROL/package_bodies/voa_apex_pkg.pkb

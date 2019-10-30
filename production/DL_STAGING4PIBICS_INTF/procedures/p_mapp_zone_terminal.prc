@@ -24,7 +24,7 @@ BEGIN
             totalrownum := totalrownum+1;
             
         END LOOP;
-        dbms_output.put_line(totalrownum);
+        dbms_output.put_line(totalrownum); 
         
         CLOSE c1;
             exception
@@ -37,3 +37,5 @@ BEGIN
 
 END P_MAPP_ZONE_TERMINAL;
 /
+  GRANT EXECUTE ON "DL_STAGING4PIBICS_INTF"."P_MAPP_ZONE_TERMINAL" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_STAGING4PIBICS_INTF"."P_MAPP_ZONE_TERMINAL" TO "BIOSUPPORT";

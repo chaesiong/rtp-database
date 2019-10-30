@@ -262,7 +262,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_COMMON"."COUNTRIES$TIUD0"
                 ,:old.ins_at
                 ,:old.ins_by
                 ,:old.owner);
-
             --
             IF (l_has_pk_value_changed()) THEN
                 -- UPDATE on PK-Columns is not allowed, so fake here a DELETE!

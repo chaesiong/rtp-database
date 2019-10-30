@@ -379,6 +379,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTI
       */
 
       apex_util.set_session_state('P17_DISPLAY_DOCTYPE', l_borderdocument_rec.doctype, g_commit_apex_session);
+      apex_util.set_session_state('P17_DISPLAY_DOCCLASS', l_borderdocument_rec.docclass, g_commit_apex_session);
       apex_util.set_session_state('P17_DISPLAY_LASTNAME', l_borderdocument_rec.surname, g_commit_apex_session);
       apex_util.set_session_state('P17_DISPLAY_FIRSTNAME', regexp_replace(l_borderdocument_rec.givenname, '^([^ ]+).*', '\1'), g_commit_apex_session);
       apex_util.set_session_state('P17_DISPLAY_MIDDLENAME', NVL(l_borderdocument_rec.middlename, CASE WHEN INSTR(TRIM(l_borderdocument_rec.givenname), ' ') > 0 THEN regexp_replace(l_borderdocument_rec.givenname, '^[^ ]+ (.+)', '\1') ELSE NULL END), g_commit_apex_session);
@@ -387,7 +388,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTI
       apex_util.set_session_state('P17_DISPLAY_GENDER', l_borderdocument_rec.sex, g_commit_apex_session);
       apex_util.set_session_state('P17_MANUAL_EXPIRYDATE', l_borderdocument_rec.manual_expiry_date, g_commit_apex_session);
 
-      IF length(l_borderdocument_rec.doctype) >= 1              AND
+      IF NVL(l_borderdocument_rec.docclass, 'P') IN ('P', '0') AND 
+         length(l_borderdocument_rec.doctype) >= 1 AND
          upper(substr(l_borderdocument_rec.doctype, 1, 1)) = 'P'
       THEN
             apex_util.set_session_state('P17_DISPLAY_DOCCLASS', 1, g_commit_apex_session);
@@ -1854,6 +1856,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTI
     l_is_different_passport     VARCHAR2(1) := 'N';
     --
     l_nation_seqno              NUMBER;
+    l_permit_info               VARCHAR2(30) := v('P17_IS_PERMIT_INFO');
     --
 
   BEGIN
@@ -1867,7 +1870,11 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTI
 
     DL_COMMON.PKG_I18N.Alter_Sess_Data_Locale(p_LOCALE => 'en_US');
 
-    IF l_movement_direction = 0 THEN
+    -- dont check overstay for arrival/residents
+    IF 
+        l_movement_direction = 0 
+        OR l_permit_info = 'REG_ENDORSEMENT'
+    THEN
         RETURN;
     END IF;
 
@@ -2511,12 +2518,19 @@ q'[
 UNION ALL
 -- PIBICS PRD tminout_ma start --
 SELECT /*+ NO_PARALLEL */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , DECODE (v.cardtype, 2, '<span class="fa fa-arrow-left my_red fa-1-5x cl-bold" aria-hidden="true" title="Departure"></span>', 1, '<span class="fa fa-arrow-right my_blue fa-1-5x cl-bold" aria-hidden="true" title="Arrival"></span>') AS DIRECTION
+    , (
+        SELECT '<span class="cl-bold ' || DECODE(v.cardtype, 2, ' my_red ', 1, ' my_blue ') || '" aria-hidden="true" title="' || display_value$dlc || '">' 
+        || NVL(display_value, display_value$dlc) 
+        || '</span>'
+        FROM dl_common.port_movements$lc WHERE num_value = DECODE(v.cardtype, 2, 1, 1, 0, v.cardtype)
+      ) AS DIRECTION
     , v.tdtno AS DOCNUMBER
     , v.inoutdte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -2570,12 +2584,19 @@ AND
 UNION ALL
 -- PIBICS PRD tminout start --
 SELECT /*+ NO_PARALLEL */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , DECODE (v.cardtype, 2, '<span class="fa fa-arrow-left my_red fa-1-5x cl-bold" aria-hidden="true" title="Departure"></span>', 1, '<span class="fa fa-arrow-right my_blue fa-1-5x cl-bold" aria-hidden="true" title="Arrival"></span>') AS DIRECTION
+    , (
+        SELECT '<span class="cl-bold ' || DECODE(v.cardtype, 2, ' my_red ', 1, ' my_blue ') || '" aria-hidden="true" title="' || display_value$dlc || '">' 
+        || NVL(display_value, display_value$dlc) 
+        || '</span>'
+        FROM dl_common.port_movements$lc WHERE num_value = DECODE(v.cardtype, 2, 1, 1, 0, v.cardtype)
+      ) AS DIRECTION
     , v.tdtno AS DOCNUMBER
     , v.inoutdte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -2629,12 +2650,19 @@ AND
 UNION ALL
 -- PIBICS PRD tmmain IN start --
 SELECT /*+ NO_PARALLEL */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , '<span class="fa fa-arrow-right my_blue fa-1-5x cl-bold" aria-hidden="true" title="Arrival"></span>' AS DIRECTION
+    , (
+        SELECT '<span class="cl-bold my_blue" aria-hidden="true" title="' || display_value$dlc || '">' 
+        || NVL(display_value, display_value$dlc) 
+        || '</span>'
+        FROM dl_common.port_movements$lc WHERE num_value = 0
+      ) AS DIRECTION
     , v.intdtno AS DOCNUMBER
     , v.indte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -2689,12 +2717,19 @@ AND
 UNION ALL
 -- PIBICS PRD tmmain OUT start --
 SELECT /*+ NO_PARALLEL */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , '<span class="fa fa-arrow-left my_red fa-1-5x cl-bold" aria-hidden="true" title="Departure"></span>' AS DIRECTION
+    , (
+        SELECT '<span class="cl-bold my_red" aria-hidden="true" title="' || display_value$dlc || '">' 
+        || NVL(display_value, display_value$dlc) 
+        || '</span>'
+        FROM dl_common.port_movements$lc WHERE num_value = 1
+      ) AS DIRECTION
     , v.outtdtno AS DOCNUMBER
     , v.outdte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -2759,13 +2794,16 @@ select /*+ NO_PARALLEL */ * from
 (
 -- BIO start --
 SELECT /*+ NO_PARALLEL */
-    CASE
-      WHEN LENGTH((SELECT note FROM dl_bordercontrol.entry_forms WHERE key_value = m.entry_form)) > 0
-        THEN '<span class="fa fa-search my_yellow table-link-icon fa-1-5x" aria-hidden="true"></span>'
-      ELSE '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span'
-    END AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x'
+    || CASE WHEN LENGTH((SELECT note FROM dl_bordercontrol.entry_forms WHERE key_value = m.entry_form)) > 0 THEN ' row_yellow ' END 
+    || '" aria-hidden="true"></span>' AS LINK
     , DECODE(m.person_type, 2, '<span class="fa fa-crew black fa-1-5x" aria-hidden="true" title="Crew"></span>', '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>') AS USERTYPE
-    , DECODE (m.exitflg, 1, '<span class="fa fa-arrow-left my_red fa-1-5x cl-bold" aria-hidden="true" title="Departure"></span>', 0, '<span class="fa fa-arrow-right my_blue fa-1-5x cl-bold" aria-hidden="true" title="Arrival"></span>') AS DIRECTION
+    , (
+         SELECT '<span class="cl-bold ' || DECODE(m.exitflg, 1, ' my_red ', 0, ' my_blue ') || '" aria-hidden="true" title="' || display_value$dlc || '">' 
+         || NVL(display_value, display_value$dlc) 
+         || '</span>'
+         FROM dl_common.port_movements$lc WHERE num_value = m.exitflg
+      ) AS DIRECTION
     , (SELECT docno FROM dl_bordercontrol.borderdocuments WHERE brddocid = m.brddocid) AS DOCNUMBER
     , m.date_of_entry AS TRAVELDATE
     , DECODE(NVL(m.source_system, -999), 1, 'BIO', 2, 'PIB', 3, 'ATC', 4, 'OFF', -999, 'N/A', '' || m.source_system) AS SOURCE_SYSTEM
@@ -2816,12 +2854,19 @@ AND m.is_finished = 'Y'
 UNION ALL
 -- PIBICS tminout_ma start --
 SELECT /*+ NO_PARALLEL INDEX(v tminout_ma TMINOUT_MA_COMPOSITE_IDX2) */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , DECODE (v.cardtype, 2, '<span class="fa fa-arrow-left my_red fa-1-5x cl-bold" aria-hidden="true" title="Departure"></span>', 1, '<span class="fa fa-arrow-right my_blue fa-1-5x cl-bold" aria-hidden="true" title="Arrival"></span>') AS DIRECTION
+    , (
+         SELECT '<span class="cl-bold ' || DECODE(v.cardtype, 2, ' my_red ', 1, ' my_blue ') || '" aria-hidden="true" title="' || display_value$dlc || '">' 
+         || NVL(display_value, display_value$dlc) 
+         || '</span>'
+         FROM dl_common.port_movements$lc WHERE num_value = DECODE(v.cardtype, 2, 1, 1, 0, v.cardtype)
+      ) AS DIRECTION
     , v.tdtno AS DOCNUMBER
     , v.inoutdte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -2875,12 +2920,19 @@ AND
 UNION ALL
 -- PIBICS tminout start --
 SELECT /*+ NO_PARALLEL INDEX(v tminout TMINOUT_COMPOSITE_IDX2) */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , DECODE (v.cardtype, 2, '<span class="fa fa-arrow-left my_red fa-1-5x cl-bold" aria-hidden="true" title="Departure"></span>', 1, '<span class="fa fa-arrow-right my_blue fa-1-5x cl-bold" aria-hidden="true" title="Arrival"></span>') AS DIRECTION
+    , (
+         SELECT '<span class="cl-bold ' || DECODE(v.cardtype, 2, ' my_red ', 1, ' my_blue ') || '" aria-hidden="true" title="' || display_value$dlc || '">' 
+         || NVL(display_value, display_value$dlc) 
+         || '</span>'
+         FROM dl_common.port_movements$lc WHERE num_value = DECODE(v.cardtype, 2, 1, 1, 0, v.cardtype)
+      ) AS DIRECTION
     , v.tdtno AS DOCNUMBER
     , v.inoutdte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -2934,12 +2986,19 @@ AND
 UNION ALL
 -- PIBICS tmmain IN start --
 SELECT /*+ NO_PARALLEL INDEX(v tmmain TMMAIN_COMPOSITE_IDX1) */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , '<span class="fa fa-arrow-right my_blue fa-1-5x cl-bold" aria-hidden="true" title="Arrival"></span>' AS DIRECTION
+    , (
+         SELECT '<span class="cl-bold my_blue" aria-hidden="true" title="' || display_value$dlc || '">' 
+         || NVL(display_value, display_value$dlc) 
+         || '</span>'
+         FROM dl_common.port_movements$lc WHERE num_value = 0
+      ) AS DIRECTION
     , v.intdtno AS DOCNUMBER
     , v.indte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -2994,12 +3053,19 @@ AND
 UNION ALL
 -- PIBICS tmmain OUT start --
 SELECT /*+ NO_PARALLEL INDEX(v tmmain TMMAIN_COMPOSITE_IDX1) */
-    '<span class="fa fa-search table-link-icon fa-1-5x" aria-hidden="true"></span' AS LINK
+    '<span class="fa fa-search table-link-icon fa-1-5x' 
+    || CASE WHEN v.typedata IN ('PHB', 'BIO-PHB') THEN ' row_red ' END
+    || '" aria-hidden="true"></span>' AS LINK
     , '<span class="fa fa-user fa-1-5x" aria-hidden="true" title="Traveler"></span>' AS USERTYPE
-    , '<span class="fa fa-arrow-left my_red fa-1-5x cl-bold" aria-hidden="true" title="Departure"></span>' AS DIRECTION
+    , (
+         SELECT '<span class="cl-bold my_red" aria-hidden="true" title="' || display_value$dlc || '">' 
+         || NVL(display_value, display_value$dlc) 
+         || '</span>'
+         FROM dl_common.port_movements$lc WHERE num_value = 1
+      ) AS DIRECTION
     , v.outtdtno AS DOCNUMBER
     , v.outdte AS TRAVELDATE
-    , DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
+    , CASE WHEN v.typedata IN ('ATC', 'PHB', 'RETH', 'BIO-PHB', 'BIO-RETH') THEN v.typedata ELSE 'PIBICS' END AS SOURCE_SYSTEM
     , (
         SELECT SUBSTR(display_value, 1, TR.len) || CASE WHEN LENGTH(display_value) > TR.len THEN TR.dots ELSE '' END
         FROM dl_bordercontrol.visa_name
@@ -3092,10 +3158,11 @@ ORDER BY traveldate DESC
     , p_givenname_th        IN VARCHAR2 DEFAULT NULL
     , p_middlename_th       IN VARCHAR2 DEFAULT NULL
     , p_surname_th          IN VARCHAR2 DEFAULT NULL
-    , p_dept_1              IN VARCHAR2 DEFAULT NULL
-    , p_dept_2              IN VARCHAR2 DEFAULT NULL
-    , p_dept_3              IN VARCHAR2 DEFAULT NULL
+    , p_dept_1              IN NUMBER   DEFAULT NULL
+    , p_dept_2              IN NUMBER   DEFAULT NULL
+    , p_dept_3              IN NUMBER   DEFAULT NULL
     , p_citizenid           IN VARCHAR2 DEFAULT NULL
+    , p_search_collective   IN NUMBER   DEFAULT 0
     , p_created_by          IN VARCHAR2 DEFAULT NULL
     , p_rows                IN NUMBER   DEFAULT 1000
     , p_pibics_prd_conn     IN NUMBER   DEFAULT 0
@@ -3108,9 +3175,9 @@ ORDER BY traveldate DESC
     l_nationality           borderdocuments.issuectry%TYPE := p_nationality;
     --
     l_query                 CLOB; --VARCHAR2(20000) := NULL;
-    --l_from                VARCHAR2(4000) := NULL;
     l_where_bio             VARCHAR2(4000) := NULL;
     l_where_bio_inner       VARCHAR2(4000) := NULL;
+    l_where_fellow          VARCHAR2(4000) := NULL;
     l_where_tminout_ma      VARCHAR2(4000) := NULL;
     l_where_tminout         VARCHAR2(4000) := NULL;
     l_where_tmmain_in       VARCHAR2(4000) := NULL;
@@ -3126,6 +3193,9 @@ ORDER BY traveldate DESC
     --l_ain                 BOOLEAN := FALSE;
     l_nationcd              VARCHAR2(32) := NULL;
     l_source                VARCHAR2(50) := p_source;
+    l_dept_1                NUMBER := p_dept_1;
+    l_dept_2                NUMBER := p_dept_2;
+    l_dept_3                NUMBER := p_dept_3;
     --
     -- pibics prod
     l_pp_query              VARCHAR2(32000) := NULL;
@@ -3155,7 +3225,7 @@ ORDER BY traveldate DESC
         --l_where_tmmain_out := l_where_tmmain_out || q'[ AND m.ins_borderpost = ']' || p_borderpost || q'[' ]';
     END IF;
 
-    -- p_scope - 0;today; 1:historical;
+    -- p_scope - 0:today; 1:historical;
     IF p_scope = 0 THEN
         l_where_bio := l_where_bio || q'[ AND TO_CHAR(m.date_of_entry, 'dd/mm/yyyy') = TO_CHAR(SYSDATE, 'dd/mm/yyyy') ]';
         l_where_tminout_ma := l_where_tminout_ma || q'[ AND TO_CHAR(v.inoutdte, 'yyyymmdd') = TO_CHAR(SYSDATE, 'yyyymmdd') ]';
@@ -3211,25 +3281,37 @@ ORDER BY traveldate DESC
             l_where_tminout := l_where_tminout || q'[ AND v.nationcd = ']' || l_nationcd || q'[' ]';
             l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.nationcd = ']' || l_nationcd || q'[' ]';
             l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.nationcd = ']' || l_nationcd || q'[' ]';
+            
+            IF p_search_collective = 1 THEN
+                l_where_fellow := l_where_fellow || q'[ AND f.nationality = ']' || l_nationality || q'[' ]';
+            END IF; 
         END IF;
     END IF;
 
     -- p_dob
     IF p_dob IS NOT NULL THEN
-        l_where_bio_inner := l_where_bio_inner || q'[ AND bd.dob = ']' || SUBSTR(p_dob, 9, 2) || SUBSTR(p_dob, 4, 2) || SUBSTR(p_dob, 1, 2) || q'[' ]';
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
-        l_where_tminout := l_where_tminout || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
+        IF p_search_collective = 1 THEN
+            l_where_fellow := l_where_fellow || q'[ AND TO_CHAR(f.date_of_birth, 'DD/MM/YYYY') = ']' || p_dob || q'[' ]';
+        ELSE
+            l_where_bio_inner := l_where_bio_inner || q'[ AND bd.dob = ']' || SUBSTR(p_dob, 9, 2) || SUBSTR(p_dob, 4, 2) || SUBSTR(p_dob, 1, 2) || q'[' ]';
+            l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
+            l_where_tminout := l_where_tminout || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
+            l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
+            l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.birthdte = ']' || p_dob || q'[' ]';
+        END IF;
     END IF;
 
     -- p_sex
     IF p_sex IS NOT NULL THEN
-        l_where_bio_inner := l_where_bio_inner || q'[ AND bd.sex = ]' || p_sex || q'[ ]';
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
-        l_where_tminout := l_where_tminout || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
+        IF p_search_collective = 1 THEN
+            l_where_fellow := l_where_fellow || q'[ AND f.sex = DECODE(]' || p_sex || q'[, 1, 'MALE', 2, 'FEMALE', 0, 'UNKNOWN', f.sex) ]';
+        ELSE
+            l_where_bio_inner := l_where_bio_inner || q'[ AND bd.sex = ]' || p_sex || q'[ ]';
+            l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
+            l_where_tminout := l_where_tminout || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
+            l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
+            l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.sex = DECODE(]' || p_sex || q'[, 1, 'M', 2, 'F', v.sex) ]';
+        END IF;
     END IF;
 
     -- p_docno
@@ -3243,11 +3325,15 @@ ORDER BY traveldate DESC
 
     -- p_tm6
     IF p_tm6 IS NOT NULL THEN
-        l_where_bio := l_where_bio || q'[ AND e.form_no = UPPER(']' || p_tm6 || q'[') ]';
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.tm6no = UPPER(']' || p_tm6 || q'[') ]';
-        l_where_tminout := l_where_tminout || q'[ AND v.tm6no = UPPER(']' || p_tm6 || q'[') ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.intm6no = UPPER(']' || p_tm6 || q'[') ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.outtm6no = UPPER(']' || p_tm6 || q'[') ]';
+        IF p_search_collective = 1 THEN
+            l_where_fellow := l_where_fellow || q'[ AND f.tm6_no = UPPER(']' || p_tm6 || q'[') ]';
+        ELSE
+            l_where_bio := l_where_bio || q'[ AND e.form_no = UPPER(']' || p_tm6 || q'[') ]';
+            l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.tm6no = UPPER(']' || p_tm6 || q'[') ]';
+            l_where_tminout := l_where_tminout || q'[ AND v.tm6no = UPPER(']' || p_tm6 || q'[') ]';
+            l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.intm6no = UPPER(']' || p_tm6 || q'[') ]';
+            l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.outtm6no = UPPER(']' || p_tm6 || q'[') ]';
+        END IF;
     END IF;
 
     -- p_vehicle_no
@@ -3279,29 +3365,41 @@ ORDER BY traveldate DESC
 
     -- p_givenname
     IF p_givenname IS NOT NULL THEN
-        l_where_bio_inner := l_where_bio_inner || q'[ AND bd.givenname LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
-        l_where_tminout := l_where_tminout || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
+        IF p_search_collective = 1 THEN
+            l_where_fellow := l_where_fellow || q'[ AND f.first_name LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
+        ELSE
+            l_where_bio_inner := l_where_bio_inner || q'[ AND bd.givenname LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
+            l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
+            l_where_tminout := l_where_tminout || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
+            l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
+            l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.efirstnm LIKE UPPER(TRIM(']' || p_givenname || q'[')) || '%' ]';
+        END IF;
     END IF;
 
     -- p_middlename
     IF p_middlename IS NOT NULL THEN
-        l_where_bio_inner := l_where_bio_inner || q'[ AND bd.middlename LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
-        l_where_tminout := l_where_tminout || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
+        IF p_search_collective = 1 THEN
+            l_where_fellow := l_where_fellow || q'[ AND f.middle_name LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
+        ELSE
+            l_where_bio_inner := l_where_bio_inner || q'[ AND bd.middlename LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
+            l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
+            l_where_tminout := l_where_tminout || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
+            l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
+            l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.emiddlenm LIKE UPPER(TRIM(']' || p_middlename || q'[')) || '%' ]';
+        END IF;
     END IF;
 
     -- p_surname
     IF p_surname IS NOT NULL THEN
-        l_where_bio_inner := l_where_bio_inner || q'[ AND bd.surname LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
-        l_where_tminout := l_where_tminout || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
+        IF p_search_collective = 1 THEN
+            l_where_fellow := l_where_fellow || q'[ AND f.last_name LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
+        ELSE
+            l_where_bio_inner := l_where_bio_inner || q'[ AND bd.surname LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
+            l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
+            l_where_tminout := l_where_tminout || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
+            l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
+            l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.efamilynm LIKE UPPER(TRIM(']' || p_surname || q'[')) || '%' ]';
+        END IF;
     END IF;
 
     -- p_givenname_th
@@ -3331,28 +3429,33 @@ ORDER BY traveldate DESC
         l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.tfamilynm LIKE UPPER(TRIM(']' || p_surname_th || q'[')) || '%' ]';
     END IF;
 
-    -- p_dept_1
-    IF p_dept_1 IS NOT NULL THEN
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND dept.deptcd = ']' || p_dept_1 || q'[' AND dept.deptlevel = '1' ]';
-        l_where_tminout := l_where_tminout || q'[ AND dept.deptcd = ']' || p_dept_1 || q'[' AND dept.deptlevel = '1' ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND dept.deptcd = ']' || p_dept_1 || q'[' AND dept.deptlevel = '1' ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND dept.deptcd = ']' || p_dept_1 || q'[' AND dept.deptlevel = '1' ]';
+    -- l_dept_3 (p_dept_3)
+    IF l_dept_3 IS NOT NULL THEN
+        l_dept_1 := NULL;
+        l_dept_2 := NULL;
+        
+        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.dept_seqno = ]' || l_dept_3 || q'[ ]';
+        l_where_tminout := l_where_tminout || q'[ AND v.dept_seqno = ]' || l_dept_3 || q'[ ]';
+        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.indept_seqno = ]' || l_dept_3 || q'[ ]';
+        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.outdept_seqno = ]' || l_dept_3 || q'[ ]';
     END IF;
-
-    -- p_dept_2
-    IF p_dept_2 IS NOT NULL THEN
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND dept.deptcd = ']' || p_dept_2 || q'[' AND dept.deptlevel = '2' ]';
-        l_where_tminout := l_where_tminout || q'[ AND dept.deptcd = ']' || p_dept_2 || q'[' AND dept.deptlevel = '2' ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND dept.deptcd = ']' || p_dept_2 || q'[' AND dept.deptlevel = '2' ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND dept.deptcd = ']' || p_dept_2 || q'[' AND dept.deptlevel = '2' ]';
+    
+    -- l_dept_2 (p_dept_2)
+    IF l_dept_2 IS NOT NULL THEN
+        l_dept_1 := NULL;
+        
+        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.dept_seqno = ]' || l_dept_2 || q'[ ]';
+        l_where_tminout := l_where_tminout || q'[ AND v.dept_seqno = ]' || l_dept_2 || q'[ ]';
+        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.indept_seqno = ]' || l_dept_2 || q'[ ]';
+        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.outdept_seqno = ]' || l_dept_2 || q'[ ]';
     END IF;
-
-    -- p_dept_3
-    IF p_dept_3 IS NOT NULL THEN
-        l_where_tminout_ma := l_where_tminout_ma || q'[ AND dept.deptcd = ']' || p_dept_3 || q'[' AND dept.deptlevel = '3' ]';
-        l_where_tminout := l_where_tminout || q'[ AND dept.deptcd = ']' || p_dept_3 || q'[' AND dept.deptlevel = '3' ]';
-        l_where_tmmain_in := l_where_tmmain_in || q'[ AND dept.deptcd = ']' || p_dept_3 || q'[' AND dept.deptlevel = '3' ]';
-        l_where_tmmain_out := l_where_tmmain_out || q'[ AND dept.deptcd = ']' || p_dept_3 || q'[' AND dept.deptlevel = '3' ]';
+    
+    -- l_dept_1 (p_dept_1)
+    IF l_dept_1 IS NOT NULL THEN
+        l_where_tminout_ma := l_where_tminout_ma || q'[ AND v.dept_seqno = ]' || l_dept_1 || q'[ ]';
+        l_where_tminout := l_where_tminout || q'[ AND v.dept_seqno = ]' || l_dept_1 || q'[ ]';
+        l_where_tmmain_in := l_where_tmmain_in || q'[ AND v.indept_seqno = ]' || l_dept_1 || q'[ ]';
+        l_where_tmmain_out := l_where_tmmain_out || q'[ AND v.outdept_seqno = ]' || l_dept_1 || q'[ ]';
     END IF;
 
     -- p_rows
@@ -3365,6 +3468,12 @@ ORDER BY traveldate DESC
     IF TRIM(p_created_by) IS NOT NULL THEN
         l_source := 'BIO'; -- overwrite source to BIO
         l_where_bio := l_where_bio || q'[ AND m.ins_by LIKE ']' || UPPER(TRIM(p_created_by)) || q'[ %' ]';
+    END IF;
+    
+    -- p_search_collective - 0:no; 1:yes
+    IF p_search_collective = 1 THEN
+        l_source := 'BIO'; -- overwrite source to BIO
+        l_where_bio := l_where_bio || q'[ AND EXISTS (SELECT NULL FROM dl_bordercontrol.fellow_passenger f WHERE f.mvmntid = m.mvmntid AND 1 = 1 ]' || l_where_fellow || q'[) ]';
     END IF;
 
     -- l_source (p_source): ALL;BIO;PIBICS;ATC;OFF
@@ -3418,12 +3527,12 @@ q'[
       ,v.visatypecd AS VISA_TYPE
       ,NVL(TRIM(v.flightprefix || v.flightnumber), v.convregno) AS VEHICLE_NO
       ,v.inoutdte AS TRAVEL_DATE
-      ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+      ,TO_CHAR(v.dept_seqno) AS BORDERPOST
       ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
       ,UPPER(v.creusr) AS CREATED_BY
+      ,0 AS COLLECTIVE_COUNT
   FROM dl_bordercontrol.v_tminout_ma_1hr_prod v
   --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-  INNER JOIN dl_bordercontrol.v_department dept ON v.dept_seqno = dept.dept_seqno
   WHERE 1 = 1
   AND 
   (
@@ -3462,12 +3571,12 @@ q'[
       ,v.visatypecd AS VISA_TYPE
       ,NVL(TRIM(v.flightprefix || v.flightnumber), v.convregno) AS VEHICLE_NO
       ,v.inoutdte AS TRAVEL_DATE
-      ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+      ,TO_CHAR(v.dept_seqno) AS BORDERPOST
       ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
       ,UPPER(v.creusr) AS CREATED_BY
+      ,0 AS COLLECTIVE_COUNT
   FROM dl_bordercontrol.v_tminout_1hr_prod v
   --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-  INNER JOIN dl_bordercontrol.v_department dept ON v.dept_seqno = dept.dept_seqno
   WHERE 1 = 1
   AND 
   (
@@ -3506,12 +3615,12 @@ q'[
       ,v.invisatypecd AS VISA_TYPE
       ,NVL(TRIM(v.inflightprefix || v.inflightnumber), v.inconvregno) AS VEHICLE_NO
       ,v.indte AS TRAVEL_DATE
-      ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+      ,TO_CHAR(v.indept_seqno) AS BORDERPOST
       ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
       ,UPPER(v.increusr) AS CREATED_BY
+      ,0 AS COLLECTIVE_COUNT
   FROM dl_bordercontrol.v_tmmain_in_1hr_prod v
   --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-  INNER JOIN dl_bordercontrol.v_department dept ON v.indept_seqno = dept.dept_seqno
   WHERE 1 = 1
   AND v.indte IS NOT NULL
   AND 
@@ -3551,12 +3660,12 @@ q'[
       ,v.outvisatypecd AS VISA_TYPE
       ,NVL(TRIM(v.outflightprefix || v.outflightnumber), v.outconvregno) AS VEHICLE_NO
       ,v.outdte AS TRAVEL_DATE
-      ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+      ,TO_CHAR(v.outdept_seqno) AS BORDERPOST
       ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
       ,UPPER(v.outcreusr) AS CREATED_BY
+      ,0 AS COLLECTIVE_COUNT
   FROM dl_bordercontrol.v_tmmain_out_1hr_prod v
   --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-  INNER JOIN dl_bordercontrol.v_department dept ON v.outdept_seqno = dept.dept_seqno
   WHERE 1 = 1
   AND v.outdte IS NOT NULL
   AND 
@@ -3606,6 +3715,7 @@ q'[
         ,borderpost
         ,source_system
         ,created_by
+        ,collective_count
     FROM
     (
         -- BIO start --
@@ -3635,6 +3745,7 @@ q'[
             ,m.ins_borderpost AS BORDERPOST
             ,DECODE(NVL(m.source_system, -999), 1, 'BIO', 2, 'PIBICS', 3, 'ATC', 4, 'OFF', -999, 'N/A', '' || m.source_system) AS SOURCE_SYSTEM
             ,TRIM(SUBSTR(m.ins_by, 1, INSTR(m.ins_by, ' ') - 1)) AS CREATED_BY
+            ,(SELECT COUNT(1) FROM dl_bordercontrol.fellow_passenger WHERE mvmntid = m.mvmntid) AS COLLECTIVE_COUNT
         FROM dl_bordercontrol.movements m
         INNER JOIN dl_bordercontrol.borderdocuments b ON b.brddocid = m.brddocid
         LEFT JOIN dl_bordercontrol.entry_forms e ON m.entry_form = e.key_value
@@ -3695,12 +3806,12 @@ q'[
             ,v.visatypecd AS VISA_TYPE
             ,NVL(TRIM(v.flightprefix || v.flightnumber), v.convregno) AS VEHICLE_NO
             ,v.inoutdte AS TRAVEL_DATE
-            ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+            ,TO_CHAR(v.dept_seqno) AS BORDERPOST
             ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
             ,UPPER(v.creusr) AS CREATED_BY
+            ,0 AS COLLECTIVE_COUNT
         FROM dl_bordercontrol.v_tminout_ma v
         --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-        INNER JOIN dl_bordercontrol.v_department dept ON v.dept_seqno = dept.dept_seqno
         WHERE 1 = 1
         AND 
         (
@@ -3739,12 +3850,12 @@ q'[
             ,v.visatypecd AS VISA_TYPE
             ,NVL(TRIM(v.flightprefix || v.flightnumber), v.convregno) AS VEHICLE_NO
             ,v.inoutdte AS TRAVEL_DATE
-            ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+            ,TO_CHAR(v.dept_seqno) AS BORDERPOST
             ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
             ,UPPER(v.creusr) AS CREATED_BY
+            ,0 AS COLLECTIVE_COUNT
         FROM dl_bordercontrol.v_tminout v
         --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-        INNER JOIN dl_bordercontrol.v_department dept ON v.dept_seqno = dept.dept_seqno
         WHERE 1 = 1
         AND 
         (
@@ -3783,12 +3894,12 @@ q'[
             ,v.invisatypecd AS VISA_TYPE
             ,NVL(TRIM(v.inflightprefix || v.inflightnumber), v.inconvregno) AS VEHICLE_NO
             ,v.indte AS TRAVEL_DATE
-            ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+            ,TO_CHAR(v.indept_seqno) AS BORDERPOST
             ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
             ,UPPER(v.increusr) AS CREATED_BY
+            ,0 AS COLLECTIVE_COUNT
         FROM dl_bordercontrol.v_tmmain v
         --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-        INNER JOIN dl_bordercontrol.v_department dept ON v.indept_seqno = dept.dept_seqno
         WHERE 1 = 1
         AND v.indte IS NOT NULL
         AND 
@@ -3828,12 +3939,12 @@ q'[
             ,v.outvisatypecd AS VISA_TYPE
             ,NVL(TRIM(v.outflightprefix || v.outflightnumber), v.outconvregno) AS VEHICLE_NO
             ,v.outdte AS TRAVEL_DATE
-            ,CASE WHEN DL_COMMON.PKG_I18N.Get_Sess_Data_Locale() = 'th_TH' THEN NVL(dept.depttnm, dept.deptenm) ELSE NVL(dept.deptenm, dept.depttnm) END AS BORDERPOST
+            ,TO_CHAR(v.outdept_seqno) AS BORDERPOST
             ,DECODE(v.typedata, 'ATC', 'ATC', 'PIBICS') AS SOURCE_SYSTEM
             ,UPPER(v.outcreusr) AS CREATED_BY
+            ,0 AS COLLECTIVE_COUNT
         FROM dl_bordercontrol.v_tmmain v
         --INNER JOIN dl_common.icao_doc_codes$lc icao ON v.nationcd = icao.notice$dlc
-        INNER JOIN dl_bordercontrol.v_department dept ON v.outdept_seqno = dept.dept_seqno
         WHERE 1 = 1
         AND v.outdte IS NOT NULL
         AND 
@@ -3896,10 +4007,11 @@ q'[
     , p_givenname_th        IN VARCHAR2 DEFAULT NULL
     , p_middlename_th       IN VARCHAR2 DEFAULT NULL
     , p_surname_th          IN VARCHAR2 DEFAULT NULL
-    , p_dept_1              IN VARCHAR2 DEFAULT NULL
-    , p_dept_2              IN VARCHAR2 DEFAULT NULL
-    , p_dept_3              IN VARCHAR2 DEFAULT NULL
+    , p_dept_1              IN NUMBER   DEFAULT NULL
+    , p_dept_2              IN NUMBER   DEFAULT NULL
+    , p_dept_3              IN NUMBER   DEFAULT NULL
     , p_citizenid           IN VARCHAR2 DEFAULT NULL
+    , p_search_collective   IN NUMBER   DEFAULT 0
     , p_created_by          IN VARCHAR2 DEFAULT NULL
     , p_rows                IN NUMBER   DEFAULT 1000
     , p_pibics_prd_conn     IN NUMBER   DEFAULT 0
@@ -3941,6 +4053,7 @@ q'[
                     , p_dept_2              => p_dept_2
                     , p_dept_3              => p_dept_3
                     , p_citizenid           => p_citizenid
+                    , p_search_collective   => p_search_collective
                     , p_created_by          => p_created_by
                     , p_rows                => p_rows
                     , p_pibics_prd_conn     => p_pibics_prd_conn
@@ -4188,3 +4301,5 @@ q'[
 END;
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTIL" TO "DERMALOG_PROXY";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTIL" TO "BIOAPPREPORT";
+  GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_BMBS_APEX_UTIL" TO "BIOSUPPORT";

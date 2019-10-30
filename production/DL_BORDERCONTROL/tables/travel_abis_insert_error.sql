@@ -25,18 +25,5 @@ CREATE UNIQUE INDEX "DL_BORDERCONTROL"."SYS_IL0000539705C00003$$" ON "DL_BORDERC
   ;
 CREATE UNIQUE INDEX "DL_BORDERCONTROL"."TRAVEL_ABIS_INSERT_ERROR$PK" ON "DL_BORDERCONTROL"."TRAVEL_ABIS_INSERT_ERROR" ("KEY_VALUE") 
   ;
-  CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."TRAVEL_ABIS_INSERT_ERROR$TIUD0" 
-	before update on DL_BORDERCONTROL.TRAVEL_ABIS_INSERT_ERROR for each row
---
-/*******************************************************************************
-* Author    Date        Description                                            *
-* --------  ----------  -------------------------------------------------------
-* MStahl    29.04.2019  Added
-*******************************************************************************/
---
-begin
-	:new.dml_at := systimestamp;
-	:new.dml_by := dl_common.pkg_session.get_audit_user();
-end;
-/
-ALTER TRIGGER "DL_BORDERCONTROL"."TRAVEL_ABIS_INSERT_ERROR$TIUD0" ENABLE;
+  GRANT SELECT ON "DL_BORDERCONTROL"."TRAVEL_ABIS_INSERT_ERROR" TO "BIOAPPREPORT";
+  GRANT SELECT ON "DL_BORDERCONTROL"."TRAVEL_ABIS_INSERT_ERROR" TO "BIOSUPPORT";

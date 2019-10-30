@@ -1,0 +1,9 @@
+
+REM INSERTING into DL_COMMON.ICAO_DC_LISTS$I18N
+SET DEFINE OFF;
+Insert into DL_COMMON.ICAO_DC_LISTS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('ENTRY_FORM_FREE','de_DE','Einreiseformular freie Einreise',to_timestamp('23-NOV-18 10.07.41.192003000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
+Insert into DL_COMMON.ICAO_DC_LISTS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('VISA_ON_ARRIVAL','de_DE','Visa bei Ankunft beantragen',to_timestamp('23-NOV-18 10.07.41.192632000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
+Insert into DL_COMMON.ICAO_DC_LISTS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('VISA_FREE','de_DE','Visa freie Einreise (Touristen)',to_timestamp('23-NOV-18 10.07.41.192683000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
+Insert into DL_COMMON.ICAO_DC_LISTS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('VACCINATION_CARD_REQUIRED','de_DE','Impfausweis bei Einreise benötigt',to_timestamp('23-NOV-18 10.07.41.192718000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
+
+

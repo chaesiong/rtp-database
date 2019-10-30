@@ -16,6 +16,7 @@
 @DL_BIOSTORE_MOVEMENTS/sequences/record_seq.sql
 @DL_BIOSTORE_MOVEMENTS/sequences/template_seq.sql
 -- DL_BORDERCONTROL/sequences
+@DL_BORDERCONTROL/sequences/aq$_aq_bordercontrol_hooks_tab2_n.sql
 @DL_BORDERCONTROL/sequences/aq$_aq_bordercontrol_hooks_tab_n.sql
 @DL_BORDERCONTROL/sequences/faf_fees_and_fines$seq01.sql
 @DL_BORDERCONTROL/sequences/faf_fees_and_fines$seq02.sql

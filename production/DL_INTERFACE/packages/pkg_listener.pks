@@ -81,6 +81,13 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_INTERFACE"."PKG_LISTENER" is
    */
   PROCEDURE dequeue_hooks (p_consumer_name VARCHAR2);
   
+  /**
+   * Dequeues and processes all entries from Queue for the given consumer name (e.g. SEND_MOVEMENT)
+   * Secondary
+   * @param p_consumer_name Name of the consumer that should be dequeued
+   */
+  PROCEDURE dequeue_hooks_sec (p_consumer_name VARCHAR2);
+  
   PROCEDURE AA_receive_country;
 
 end;

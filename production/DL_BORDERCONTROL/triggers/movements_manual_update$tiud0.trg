@@ -187,7 +187,6 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."MOVEMENTS_MANUAL_UPDAT
                         ,:new.INS_BORDERPOST
                          --
                          );
-
       --
     else
       -- 'D'

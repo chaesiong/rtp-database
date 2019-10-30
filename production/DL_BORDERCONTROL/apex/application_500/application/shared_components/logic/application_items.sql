@@ -37,6 +37,11 @@ wwv_flow_api.create_flow_item(
 ,p_protection_level=>'I'
 );
 wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(36462238836184578483)
+,p_name=>'AI_BORDERPOST_NAME_SHORT'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
  p_id=>wwv_flow_api.id(1291258957972285881)
 ,p_name=>'AI_BORDERPOST_PROVINCE_ID'
 ,p_protection_level=>'I'

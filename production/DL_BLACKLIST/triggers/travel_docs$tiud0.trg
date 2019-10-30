@@ -22,7 +22,6 @@ COMPOUND TRIGGER
     *
     * Raises an error if no type can be extracted
     */
-
     PROCEDURE l_set_dml_type (
         p_prevent_exce IN   BOOLEAN DEFAULT false
     ) IS
@@ -46,7 +45,6 @@ COMPOUND TRIGGER
     *
     * @return BOOLEAN: True = value has changed, False = value has not changed
     */
-
     FUNCTION l_has_pk_value_changed RETURN BOOLEAN IS
     BEGIN
         --
@@ -74,7 +72,6 @@ COMPOUND TRIGGER
     */
     -- !!! Do not check LOCALE, because the static value is already checked by a check constraint !!!
     --
-
     PROCEDURE l_check_fk_content (
         p_key_value         IN                  travel_docs.key_value%TYPE,
         o_issuing_country   IN                  travel_docs.issuing_country%TYPE,
@@ -100,7 +97,6 @@ COMPOUND TRIGGER
                     dl_common.icao_doc_codes t
                 WHERE
                     t.key_value = n_issuing_country;
-
                 IF ( v_vc_tmp != 'Y' ) THEN
                     raise_application_error(-20000, 'The ISSUING_COUNTRY['''
                                                     || n_issuing_country
@@ -109,9 +105,7 @@ COMPOUND TRIGGER
                                                     || '''], DML_TYPE['''
                                                     || v_dml_type
                                                     || '''].');
-
                 END IF;
-
             EXCEPTION
                 WHEN no_data_found THEN
                     raise_application_error(-20000, 'The ISSUING_COUNTRY['''
@@ -125,7 +119,6 @@ COMPOUND TRIGGER
         END IF;
         --
         --
-
         IF ( n_nationality IS NOT NULL AND NOT dl_common.pkg_util.is_equal(n_nationality, o_nationality) ) THEN
             BEGIN
                 SELECT
@@ -135,7 +128,6 @@ COMPOUND TRIGGER
                     dl_common.icao_doc_codes t
                 WHERE
                     t.key_value = n_nationality;
-
                 IF ( v_vc_tmp != 'Y' ) THEN
                     raise_application_error(-20000, 'The NATIONALITY['''
                                                     || n_nationality
@@ -144,9 +136,7 @@ COMPOUND TRIGGER
                                                     || '''], DML_TYPE['''
                                                     || v_dml_type
                                                     || '''].');
-
                 END IF;
-
             EXCEPTION
                 WHEN no_data_found THEN
                     raise_application_error(-20000, 'The NATIONALITY['''
@@ -157,11 +147,9 @@ COMPOUND TRIGGER
                                                     || v_dml_type
                                                     || '''].');
             END;
-
         END IF;
         --
         --
-
         IF ( n_sex IS NOT NULL AND NOT dl_common.pkg_util.is_equal(n_sex, o_sex) ) THEN
             BEGIN
                 SELECT
@@ -171,7 +159,6 @@ COMPOUND TRIGGER
                     dl_common.human_sexes t
                 WHERE
                     t.icao = n_sex;
-
                 IF ( v_vc_tmp != 'Y' ) THEN
                     raise_application_error(-20000, 'The SEX['''
                                                     || n_sex
@@ -180,9 +167,7 @@ COMPOUND TRIGGER
                                                     || '''], DML_TYPE['''
                                                     || v_dml_type
                                                     || '''].');
-
                 END IF;
-
             EXCEPTION
                 WHEN no_data_found THEN
                     raise_application_error(-20000, 'The SEX['''
@@ -195,7 +180,6 @@ COMPOUND TRIGGER
             END;
         END IF;
         --
-
     END l_check_fk_content;
     --
     --
@@ -205,7 +189,6 @@ COMPOUND TRIGGER
     * Extract the dml-type variable
     * =======================================================
     */
-
     BEFORE STATEMENT IS BEGIN
         --
         l_set_dml_type(true);
@@ -248,7 +231,6 @@ COMPOUND TRIGGER
             :new.dml_at := systimestamp;
             :new.dml_type := v_dml_type;
         END IF;
-
     END BEFORE EACH ROW;
     --
     --
@@ -269,14 +251,12 @@ COMPOUND TRIGGER
                                --
             );
             --
-
         ELSIF ( v_dml_type = 'U' ) THEN
             --
             l_check_fk_content(:new.key_value, :old.issuing_country, :new.issuing_country, :old.nationality, :new.nationality,
             :old.sex, :new.sex
                                --
             );
-
             INSERT INTO travel_docs$his (
                 key_value,
                 unique_value,
@@ -343,7 +323,6 @@ COMPOUND TRIGGER
                 --
             );
             --
-
             IF ( l_has_pk_value_changed() ) THEN
                 -- UPDATE on PK-Columns is not allowed, so fake here a DELETE!
                 INSERT INTO travel_docs$his (
@@ -364,10 +343,8 @@ COMPOUND TRIGGER
                     'D'
                      --
                 );
-
             END IF;
             --
-
         ELSE
             -- 'D'
             INSERT INTO travel_docs$his (
@@ -433,7 +410,6 @@ COMPOUND TRIGGER
                 :old.middle_name,
                 :old.unique_value
             );
-
             INSERT INTO travel_docs$his (
                 key_value,
                 unique_value,
@@ -453,10 +429,8 @@ COMPOUND TRIGGER
                  --
             );
             --
-
         END IF;
         --
-
     END AFTER EACH ROW;
     --
     --

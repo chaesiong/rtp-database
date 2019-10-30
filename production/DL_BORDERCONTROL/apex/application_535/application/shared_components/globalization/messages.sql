@@ -6014,5 +6014,17 @@ wwv_flow_api.create_message(
 ,p_message_text=>'Could not connect to Device'
 ,p_is_js_message=>true
 );
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(36559070334355603325)
+,p_name=>'NIST:UPLOAD.LOADING.ERROR.CAPTION'
+,p_message_text=>'Error while Loading NIST File!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(36559070484772603325)
+,p_name=>'NIST:UPLOAD.LOADING.ERROR.OK'
+,p_message_text=>'OK'
+,p_is_js_message=>true
+);
 end;
 /

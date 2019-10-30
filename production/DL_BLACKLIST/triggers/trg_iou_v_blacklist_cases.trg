@@ -63,13 +63,10 @@ BEGIN
     l_rec.lost_pp_new_pp_issue_date     := :new.lost_pp_new_pp_issue_date;
     l_rec.lost_pp_new_pp_place_of_issue := :new.lost_pp_new_pp_place_of_issue;
     l_rec.lost_pp_new_pp_expire_date    := :new.lost_pp_new_pp_expire_date;
-
     dl_blacklist.pkg_db_access.put_blacklistcase(pi_case         => l_rec,
                                                  po_blacklist_id => l_blacklist_case_id);
-
     dl_blacklist.pkg_camunda_rest.update_biometrics(i_biometric_json    => :new.biometric_json,
                                                     i_blacklist_case_id => :new.id);
-
 END trg_iou_v_blacklist_cases;
 /
 ALTER TRIGGER "DL_BLACKLIST"."TRG_IOU_V_BLACKLIST_CASES" ENABLE;

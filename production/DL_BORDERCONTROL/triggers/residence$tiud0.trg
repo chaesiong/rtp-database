@@ -25,7 +25,6 @@ COMPOUND TRIGGER
   PROCEDURE l_set_dml_type
   IS
   BEGIN
-
     IF (INSERTING())
     THEN
       l_dml_type := 'I';
@@ -106,7 +105,6 @@ COMPOUND TRIGGER
       --
       :NEW.dml_at := SYSTIMESTAMP;
       :NEW.dml_by := dl_common.pkg_session.get_audit_user();
-
       -- does the pk value has changed?
       IF (l_has_pk_value_changed())
       THEN
@@ -116,7 +114,6 @@ COMPOUND TRIGGER
         :NEW.dml_type := l_dml_type;
       END IF;
       --
-
     -- If the >>>>DELETING<<<< transaction is used
     ELSE
       -- 'D'
@@ -137,7 +134,6 @@ COMPOUND TRIGGER
     --
     IF (l_dml_type IS NULL)
     THEN
-
       -- This case can occur for example on MERGE-Statements!
       l_set_dml_type();
     END IF;

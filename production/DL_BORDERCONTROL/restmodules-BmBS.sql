@@ -37,136 +37,159 @@ BEGIN
       p_source         =>
 'declare
     --
-    l_values         apex_json.t_values;
-    l_source_blob    blob := :body;
-    l_source_clob    clob;
+    l_values      apex_json.t_values;
+    l_source_blob blob := :body;
+    l_source_clob clob;
     --
-    l_response          clob;
-    l_response_message  varchar2(4000);
-    l_status            integer := 400;
+    l_response         clob;
+    l_response_message varchar2(4000);
+    l_status           integer := 400;
     --
-    l_borderpost            dl_bordercontrol.borderposts.key_value%TYPE;
-    l_terminal              dl_bordercontrol.terminals.id%TYPE;
-    l_borderdocument_rec    dl_bordercontrol.borderdocuments%ROWTYPE;
-    l_identity              dl_bordercontrol.identities.identity%TYPE;
-    l_movement_rec          dl_bordercontrol.movements%ROWTYPE;
-    l_movement_blob_rec     dl_bordercontrol.movements_blob%ROWTYPE;
-    l_visas_rec              dl_bordercontrol.visas%ROWTYPE;
-    l_entry_forms_rec       dl_bordercontrol.entry_forms%ROWTYPE;
+    l_borderpost         dl_bordercontrol.borderposts.key_value%TYPE;
+    l_terminal           dl_bordercontrol.terminals.id%TYPE;
+    l_borderdocument_rec dl_bordercontrol.borderdocuments%ROWTYPE;
+    l_identity           dl_bordercontrol.identities.identity%TYPE;
+    l_movement_rec       dl_bordercontrol.movements%ROWTYPE;
+    l_movement_blob_rec  dl_bordercontrol.movements_blob%ROWTYPE;
+    l_visas_rec          dl_bordercontrol.visas%ROWTYPE;
+    l_entry_forms_rec    dl_bordercontrol.entry_forms%ROWTYPE;
     --
-    l_photo_scan    blob;
-    l_photo_chip    blob;
-    l_photo_pass    blob;
+    l_photo_scan blob;
+    l_photo_chip blob;
+    l_photo_pass blob;
     --
     l_abis_insert boolean := false;
     l_abis        number;
     --
-    l_dstoff    integer := 1;
-    l_srcoff    integer := 1;
-    l_lngctx    integer := 0;
-    l_warning   integer;
+    l_dstoff  integer := 1;
+    l_srcoff  integer := 1;
+    l_lngctx  integer := 0;
+    l_warning integer;
     --
-begin
+    l_username varchar2 (4000);
+    l_ip       varchar2 (4000);
+    l_ins_by   varchar2 (4000);
+    --
+    l_incidents_rec dl_bordercontrol.incidents%ROWTYPE;
+    --
+    type t_fellow_passengers is table of dl_bordercontrol.fellow_passenger%ROWTYPE index by pls_integer;
+    l_fellow_passengers t_fellow_passengers;
+    l_fellow_passenger_cnt number;
+    l_fellow_passenger_person dl_bordercontrol.fellow_passenger.person%type;
+    --
+    l_movement_is_duplicate number := 0;
 
+begin
     -- convert json
     dbms_lob.createtemporary(l_source_clob, true);
 
-    dbms_lob.converttoclob(dest_lob     => l_source_clob
-                          ,src_blob     => l_source_blob
-                          ,amount       => dbms_lob.lobmaxsize
-                          ,dest_offset  => l_dstoff
-                          ,src_offset   => l_srcoff
-                          ,blob_csid    => nls_charset_id(''al32utf8'')
-                          ,lang_context => l_lngctx
-                          ,warning      => l_warning);
+    dbms_lob.converttoclob(
+       dest_lob      => l_source_clob
+       ,src_blob     => l_source_blob
+       ,amount       => dbms_lob.lobmaxsize
+       ,dest_offset  => l_dstoff
+       ,src_offset   => l_srcoff
+       ,blob_csid    => nls_charset_id(''al32utf8'')
+       ,lang_context => l_lngctx
+       ,warning      => l_warning);
 
     apex_json.parse (p_values => l_values
                     ,p_source => l_source_clob);
 
     -- read json and fill records
+
     -- general data
-    l_borderpost    := apex_json.get_varchar2(p_values => l_values, p_path => ''borderpost'');
-    l_terminal      := apex_json.get_varchar2(p_values => l_values, p_path => ''terminal'');
+    l_borderpost := apex_json.get_varchar2(p_values => l_values, p_path => ''borderpost'');
+    l_terminal   := apex_json.get_varchar2(p_values => l_values, p_path => ''terminal'');
+    l_username   := apex_json.get_varchar2(p_values => l_values, p_path => ''username'');
+    l_ip         := apex_json.get_varchar2(p_values => l_values, p_path => ''ip'');
+    l_ins_by     := l_username || '' @Offline Mode ('' || apex_json.get_varchar2(p_values => l_values, p_path => ''ip'') || '')'';
+
     -- borderdocument
-    l_borderdocument_rec.doctype              := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.documentType'');
-    l_borderdocument_rec.docno                := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.passportNumber'');
-    l_borderdocument_rec.issuectry            := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.issuingCountry'');
-    l_borderdocument_rec.nat                  := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.nationality'');
-    l_borderdocument_rec.dob                  := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.dateOfBirth'');
-    l_borderdocument_rec.expirydate           := apex_json.get_date(p_values => l_values, p_path => ''borderdocument.expiryDate'', p_format => ''YYYY-MM-DD'');
-    l_borderdocument_rec.givenname            := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.givenname'');
-    l_borderdocument_rec.surname              := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.surname'');
-    l_borderdocument_rec.middlename           := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.middlename'');
-    l_borderdocument_rec.optionaldata         := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.optionalData'');
-    --l_borderdocument_rec.afisid               := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.abisId'');
-    l_borderdocument_rec.mrzdg1               := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.mrz'');
-    l_borderdocument_rec.givenname_thai       := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.givennameThai'');
-    l_borderdocument_rec.middlename_thai      := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.middlenameThai'');
-    l_borderdocument_rec.surname_thai         := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.surnameThai'');
-    l_borderdocument_rec.manual_expiry_date   := apex_json.get_date(p_values => l_values, p_path => ''borderdocument.manualExpiryDate'', p_format => ''YYYY-MM-DD'');
-    l_borderdocument_rec.manual_issuing_date  := apex_json.get_date(p_values => l_values, p_path => ''borderdocument.manualIssuingDate'', p_format => ''YYYY-MM-DD'');
-    l_borderdocument_rec.manual_nationality   := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.manualNationality'');
-    l_borderdocument_rec.manual_placeofbirth  := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.manualPlaceOfBirth'');
-    l_borderdocument_rec.sex                  := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.gender'');
-    l_borderdocument_rec.docclass             := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.documentClass'');
-    l_borderdocument_rec.sub_nationality      := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.subNationalities'');
-    l_borderdocument_rec.source_system        := apex_json.get_number(p_values => l_values, p_path => ''borderdocument.sourceSystem'');
-    l_borderdocument_rec.calc_mrzdg1          := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.mrzWithCorrectCheckSum'');
-    l_photo_scan                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''borderdocument.photoScan''));
-    l_photo_chip                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''borderdocument.photoChip''));
-    l_photo_pass                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''borderdocument.photoPass''));
+    l_borderdocument_rec.doctype             := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.documentType'');
+    l_borderdocument_rec.docno               := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.passportNumber'');
+    l_borderdocument_rec.issuectry           := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.issuingCountry'');
+    l_borderdocument_rec.nat                 := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.nationality'');
+    l_borderdocument_rec.dob                 := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.dateOfBirth'');
+    l_borderdocument_rec.expirydate          := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.expiryDate''), ''YYYY-MM-DD'');
+    l_borderdocument_rec.givenname           := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.givenname'');
+    l_borderdocument_rec.surname             := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.surname'');
+    l_borderdocument_rec.middlename          := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.middlename'');
+    l_borderdocument_rec.optionaldata        := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.optionalData'');
+    --l_borderdocument_rec.afisid            := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.abisId'');
+    l_borderdocument_rec.mrzdg1              := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.mrz'');
+    l_borderdocument_rec.givenname_thai      := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.givennameThai'');
+    l_borderdocument_rec.middlename_thai     := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.middlenameThai'');
+    l_borderdocument_rec.surname_thai        := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.surnameThai'');
+    l_borderdocument_rec.manual_expiry_date  := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.manualExpiryDate''), ''YYYY-MM-DD'');
+    l_borderdocument_rec.manual_issuing_date := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.manualIssuingDate''), ''YYYY-MM-DD'');
+    l_borderdocument_rec.manual_nationality  := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.manualNationality'');
+    l_borderdocument_rec.manual_placeofbirth := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.manualPlaceOfBirth'');
+    l_borderdocument_rec.sex                 := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.gender'');
+    l_borderdocument_rec.docclass            := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.documentClass'');
+    l_borderdocument_rec.sub_nationality     := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.subNationality'');
+    l_borderdocument_rec.source_system       := apex_json.get_number(p_values => l_values, p_path => ''sourceSystem'');
+    l_borderdocument_rec.calc_mrzdg1         := apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.mrzWithCorrectCheckSum'');
+    l_photo_scan                             := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''borderdocument.photoScan''));
+    l_photo_chip                             := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''borderdocument.photoChip''));
+    l_photo_pass                             := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''borderdocument.photoPass''));
 
-        -- check if borderdocuments fields exist, abort if not
-        if l_borderpost                         is null or
-           l_terminal                           is null or
-           l_borderdocument_rec.doctype         is null or
-           l_borderdocument_rec.docno           is null or
-           l_borderdocument_rec.issuectry       is null or
-           l_borderdocument_rec.nat             is null or
-           l_borderdocument_rec.dob             is null or
-           l_borderdocument_rec.expirydate      is null or
-           l_borderdocument_rec.surname         is null or
-           l_borderdocument_rec.sex             is null
-        then
+    -- check if borderdocuments fields exist, abort if not
+    if l_borderpost                    is null or
+       l_terminal                      is null or
+       l_borderdocument_rec.doctype    is null or
+       l_borderdocument_rec.docno      is null or
+       l_borderdocument_rec.issuectry  is null or
+       l_borderdocument_rec.nat        is null or
+       l_borderdocument_rec.dob        is null or
+       l_borderdocument_rec.expirydate is null or
+       l_borderdocument_rec.surname    is null or
+       l_borderdocument_rec.sex        is null
+    then
+       l_response_message := ''Error during borderdocument data validation. The following fields must not be null: '';
 
-            l_response_message := ''Error during borderdocument data validation. The following fields must not be null: '';
+       case when l_borderpost                    is null then l_response_message := l_response_message || ''borderpost,'';                      else null; end case;
+       case when l_terminal                      is null then l_response_message := l_response_message || ''terminal, '';                       else null; end case;
+       case when l_borderdocument_rec.doctype    is null then l_response_message := l_response_message || ''borderdocument.documentType, '';    else null; end case;
+       case when l_borderdocument_rec.docno      is null then l_response_message := l_response_message || ''borderdocument.passportNumber, '';  else null; end case;
+       case when l_borderdocument_rec.issuectry  is null then l_response_message := l_response_message || ''borderdocument.issuingCountry, '';  else null; end case;
+       case when l_borderdocument_rec.nat        is null then l_response_message := l_response_message || ''borderdocument.nationality, '';     else null; end case;
+       case when l_borderdocument_rec.dob        is null then l_response_message := l_response_message || ''borderdocument.dateOfBirth, '';     else null; end case;
+       case when l_borderdocument_rec.expirydate is null then l_response_message := l_response_message || ''borderdocument.expiryDate, '';      else null; end case;
+       case when l_borderdocument_rec.surname    is null then l_response_message := l_response_message || ''borderdocument.surname, '';         else null; end case;
+       case when l_borderdocument_rec.sex        is null then l_response_message := l_response_message || ''borderdocument.gender, '';          else null; end case;
 
-            case when l_borderpost                        is null then l_response_message := l_response_message || ''terminal,'';                        else null; end case;
-            case when l_terminal                          is null then l_response_message := l_response_message || ''borderpost, '';                     else null; end case;
-            case when l_borderdocument_rec.doctype        is null then l_response_message := l_response_message || ''borderdocument.documentType, '';    else null; end case;
-            case when l_borderdocument_rec.docno          is null then l_response_message := l_response_message || ''borderdocument.passportNumber, '';  else null; end case;
-            case when l_borderdocument_rec.issuectry      is null then l_response_message := l_response_message || ''borderdocument.issuingCountry, '';  else null; end case;
-            case when l_borderdocument_rec.nat            is null then l_response_message := l_response_message || ''borderdocument.nationality, '';     else null; end case;
-            case when l_borderdocument_rec.dob            is null then l_response_message := l_response_message || ''borderdocument.dateOfBirth, '';     else null; end case;
-            case when l_borderdocument_rec.expirydate     is null then l_response_message := l_response_message || ''borderdocument.expiryDate, '';      else null; end case;
-            case when l_borderdocument_rec.surname        is null then l_response_message := l_response_message || ''borderdocument.surname, '';         else null; end case;
-            case when l_borderdocument_rec.sex            is null then l_response_message := l_response_message || ''borderdocument.gender, '';          else null; end case;
+       l_response_message := substr(l_response_message, 1, length(l_response_message) - 2) || ''. Please provide them and try again.'';
 
-            l_response_message := substr(l_response_message, 1, length(l_response_message) - 2) || ''. Please provide them and try again.'';
-
-            :status         := 406;
-            :message        := l_response_message;
-            :borderdocument := null;
-            :movement       := null;
-            :abis           := null;
-            return;
-        end if;
+       :status         := 406;
+       :message        := l_response_message;
+       :borderdocument := null;
+       :movement       := null;
+       :abis           := null;
+       return;
+    end if;
 
     -- movement
     l_movement_rec.exitflg          := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.exitFlag'');
-    l_movement_rec.max_stay_dt      := apex_json.get_date(p_values => l_values, p_path => ''movement.maxStayDate'', p_format => ''YYYY-MM-DD'');
+    l_movement_rec.max_stay_dt      := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''movement.maxStayDate''), ''YYYY-MM-DD'');
     l_movement_rec.observation      := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.observation'');
     l_movement_rec.trnsprtunitid    := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.transportUnit'');
-    l_movement_rec.person_type      := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.personType'');
+    if apex_json.get_varchar2(p_values => l_values, p_path => ''movement.personType'') = ''1'' then
+        l_movement_rec.person_type := 2; --crew
+    else
+        l_movement_rec.person_type := 1; --passenger
+    end if;
     l_movement_rec.scanned_flight   := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.scannedFlight'');
     l_movement_rec.visa_type        := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visaType'');
-    --l_movement_rec.prior_movement   := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.priorMovementId'');
-    --l_movement_rec.movement_dt      := apex_json.get_date(p_values => l_values, p_path => ''movement.movementDate'');
-    l_movement_rec.date_of_entry    := apex_json.get_date(p_values => l_values, p_path => ''movement.dateOfEntry'');
+    l_movement_rec.date_of_entry    := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''movement.dateOfEntry''),''YYYY-MM-DD HH24:MI:SS'');
     l_movement_rec.mrzvisa          := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.mrzVisa'');
     l_movement_rec.form_no_approved := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6Approved'');
+    l_movement_rec.ps_4             := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.supervisorReason'');
+    if l_movement_rec.ps_4 is not null then
+        l_movement_rec.ps_3             := l_username;
+    end if;
     l_movement_rec.ps_6             := to_number(apex_json.get_varchar2(p_values => l_values, p_path => ''movement.isBlacklisted''));
-    --! Cannot rename ps_6 because of usage in other packages and schemas
+    l_movement_rec.source_system    := l_borderdocument_rec.source_system;
     -- movement images
     l_movement_blob_rec.live_photo  := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''movement.livePhoto''));
     l_movement_blob_rec.wsq_ll      := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''movement.fingerLL''));
@@ -181,176 +204,313 @@ begin
     l_movement_blob_rec.wsq_rt      := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''movement.fingerRT''));
     --visa
     l_visas_rec.visa_number          := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visa.no'');
-    l_visas_rec.expiry_date          := apex_json.get_date(p_values => l_values, p_path => ''movement.visa.expiryDate'', p_format => ''YYYY-MM-DD'');
-    l_visas_rec.issuing_date         := apex_json.get_date(p_values => l_values, p_path => ''movement.visa.issuingDate'', p_format => ''YYYY-MM-DD'');
+    l_visas_rec.expiry_date          := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visa.expiryDate''), ''YYYY-MM-DD'');
+    l_visas_rec.issuing_date         := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visa.issuingDate''), ''YYYY-MM-DD'');
     l_visas_rec.issuing_place        := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visa.issuingPlace'');
     l_visas_rec.additional_info      := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visa.additionalInfo'');
-    l_visas_rec.permit_type          := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visa.permitDays'');
-    l_visas_rec.permit_expiry_date   := apex_json.get_date(p_values => l_values, p_path => ''movement.visa.permitExpiryDate'', p_format => ''YYYY-MM-DD'');
+    l_visas_rec.permit_type          := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.permitType'');
+    l_visas_rec.permit_expiry_date   := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''movement.visa.permitExpiryDate''), ''YYYY-MM-DD'');
     l_visas_rec.visa_image           := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''movement.visa.image''));
-
     -- entry form
     l_entry_forms_rec.form_no       := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.no'');
     l_entry_forms_rec.province      := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.province'');
-    l_entry_forms_rec.district      := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.district'');
-    l_entry_forms_rec.subdistrict   := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.subdistrict'');
+    l_entry_forms_rec.district      := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.ampur'');
+    l_entry_forms_rec.subdistrict   := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.tambon'');
     l_entry_forms_rec.address       := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.address'');
     l_entry_forms_rec.note          := apex_json.get_varchar2(p_values => l_values, p_path => ''movement.tm6.note'');
-    l_entry_forms_rec.form_image    := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''movement.tm6.mage''));
+    l_entry_forms_rec.form_image    := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''movement.tm6.image''));
 
-    l_movement_rec.source_system  := 4;
+    -- check if movement fields exist, abort if not
+    if l_movement_rec.exitflg         is null or
+       l_movement_rec.trnsprtunitid   is null or
+       l_movement_rec.person_type     is null or
+       l_movement_rec.date_of_entry   is null
+    then
+       l_response_message := ''Error during movement data validation. The following fields must not be null: '';
 
-         -- check if movement fields exist, abort if not
-        if l_movement_rec.exitflg         is null or
-           l_movement_rec.trnsprtunitid   is null or
-           l_movement_rec.person_type     is null or
-           --l_movement_rec.visa_type       is null or
-           l_movement_rec.date_of_entry   is null -- or
-           -- l_visas_rec.visa_number         is null or
-           -- l_visas_rec.expiry_date         is null or
-           -- l_visas_rec.issuing_date        is null or
-           -- l_visas_rec.issuing_place       is null or
-           -- l_visas_rec.permit_type         is null or
-           -- l_visas_rec.permit_expiry_date  is null
-        then
+       case when l_movement_rec.exitflg        is null then l_response_message := l_response_message || ''movement.exitFlag, '';      else null; end case;
+       case when l_movement_rec.trnsprtunitid  is null then l_response_message := l_response_message || ''movement.transportUnit, '';  else null; end case;
+       case when l_movement_rec.person_type    is null then l_response_message := l_response_message || ''movement.personType, '';  else null; end case;
+       case when l_movement_rec.date_of_entry  is null then l_response_message := l_response_message || ''movement.dateOfEntry, '';  else null; end case;
 
-            l_response_message := ''Error during movement data validation. The following fields must not be null: '';
+       l_response_message := substr(l_response_message, 1, length(l_response_message) - 2) || ''. Please provide them and try again.'';
 
-            case when l_movement_rec.exitflg        is null then l_response_message := l_response_message || ''movement.exitFlag, '';      else null; end case;
-            case when l_movement_rec.trnsprtunitid  is null then l_response_message := l_response_message || ''movement.transportUnit, '';  else null; end case;
-            case when l_movement_rec.person_type    is null then l_response_message := l_response_message || ''movement.personType, '';  else null; end case;
-            --case when l_movement_rec.visa_type      is null then l_response_message := l_response_message || ''movement.visaType, '';  else null; end case;
-            case when l_movement_rec.date_of_entry  is null then l_response_message := l_response_message || ''movement.dateOfEntry, '';  else null; end case;
-            -- case when l_visas_rec.visa_number        is null then l_response_message := l_response_message || ''movement.visa.no, '';  else null; end case;
-            -- case when l_visas_rec.expiry_date        is null then l_response_message := l_response_message || ''movement.visa.expiryDate, '';  else null; end case;
-            -- case when l_visas_rec.issuing_date       is null then l_response_message := l_response_message || ''movement.visa.issuingDate, '';  else null; end case;
-            -- case when l_visas_rec.issuing_place      is null then l_response_message := l_response_message || ''movement.visa.issuingPlace, '';  else null; end case;
-            -- case when l_visas_rec.permit_type        is null then l_response_message := l_response_message || ''movement.visa.permitDays, '';  else null; end case;
-            -- case when l_visas_rec.permit_expiry_date is null then l_response_message := l_response_message || ''movement.visa.permitExpiryDate, '';  else null; end case;
+       :status         := 406;
+       :message        := l_response_message;
+       :borderdocument := null;
+       :movement       := null;
+       :abis           := null;
+       return;
+    end if;
 
-            l_response_message := substr(l_response_message, 1, length(l_response_message) - 2) || ''. Please provide them and try again.'';
-
-            :status         := 406;
-            :message        := l_response_message;
-            :borderdocument := null;
-            :movement       := null;
-            :abis           := null;
-            return;
+    -- blacklist
+    if apex_json.get_count(p_values => l_values, p_path => ''borderdocument.blacklisted.record'') is not null then
+        l_incidents_rec.type                            := 10;
+        l_incidents_rec.bl_status                       := ''A'';
+        l_incidents_rec.bl_number_of_hits               := 1;
+        case l_borderdocument_rec.sex
+            when 1 then l_incidents_rec.gender          := ''M'';
+            when 2 then l_incidents_rec.gender          := ''F'';
+            else        l_incidents_rec.gender          := ''X'';
+        end case;
+        if apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.blacklisted.decision.action'') = ''1'' then
+            l_incidents_rec.bl_action                       := ''A'';
+            l_incidents_rec.bl_approved_identity_score      := apex_json.get_number(p_values => l_values, p_path => ''borderdocument.blacklisted.record.score'');
+            l_movement_rec.ps_5                             := 1;
+        else
+            l_incidents_rec.bl_action                       := ''C'';
+            l_incidents_rec.bl_approved_identity_score      := null;
+            l_movement_rec.ps_5                             := 0;
         end if;
+        l_incidents_rec.supervisor                      := regexp_substr(regexp_substr(
+                                                              apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.blacklisted.decision.reason'')
+                                                              ,''^.+[|]{2}'', 1),''^[^|]+'');
+        l_incidents_rec.bl_remarks                      := substr(regexp_substr(
+                                                              apex_json.get_varchar2(p_values => l_values, p_path => ''borderdocument.blacklisted.decision.reason'')
+                                                           ,''[|]{2}.+$'', 1),3);
+    end if;
+
+    -- fellow passengers
+    l_fellow_passenger_cnt := apex_json.get_count(p_values => l_values, p_path => ''fellowPassengers'');
+    for idx in 1 .. l_fellow_passenger_cnt loop
+        l_fellow_passengers(idx).relation        := apex_json.get_varchar2(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].relationId'');
+        l_fellow_passengers(idx).last_name       := apex_json.get_varchar2(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].surName'');
+        l_fellow_passengers(idx).first_name      := apex_json.get_varchar2(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].givenName'');
+        l_fellow_passengers(idx).date_of_birth   := to_date(apex_json.get_varchar2(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].dateOfBirth''),''YYYY-MM-DD'');
+        l_fellow_passengers(idx).sex             := apex_json.get_varchar2(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].sex'');
+        l_fellow_passengers(idx).nationality     := apex_json.get_varchar2(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].nationality'');
+        l_fellow_passengers(idx).tm6_no          := apex_json.get_varchar2(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].tm6No'');
+        l_fellow_passengers(idx).image           := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fellowPassengers['' || idx || ''].faceImage''));
+    end loop;
 
     -- inserting data into tables
     begin
 
     -- borderdocument
-        -- borderdocument check if exists
-        l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.get_document (p_docno      => l_borderdocument_rec.docno
-                                                                                           ,p_issuectry  => l_borderdocument_rec.issuectry
-                                                                                           ,p_expirydate => l_borderdocument_rec.expirydate);
-        -- borderdocument does not exist
-        if l_borderdocument_rec.brddocid is null
-        then
-            l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.create_document(l_borderdocument_rec.docno
-                                                                                                 ,l_borderdocument_rec.doctype
-                                                                                                 ,l_borderdocument_rec.issuectry
-                                                                                                 ,l_borderdocument_rec.expirydate
-                                                                                                 ,l_borderdocument_rec.surname
-                                                                                                 ,l_borderdocument_rec.middlename
-                                                                                                 ,l_borderdocument_rec.givenname
-                                                                                                 ,l_borderdocument_rec.sex
-                                                                                                 ,l_borderdocument_rec.dob
-                                                                                                 ,l_borderdocument_rec.mrzdg1
-                                                                                                 ,l_terminal
-                                                                                                 ,l_borderpost
-                                                                                                 ,l_photo_scan
-                                                                                                 ,l_photo_chip
-                                                                                                 ,l_photo_pass
-                                                                                                 ,null
-                                                                                                 ,null
-                                                                                                 ,null
-                                                                                                 ,null
-                                                                                                 ,l_borderdocument_rec.manual_expiry_date
-                                                                                                 ,l_borderdocument_rec.manual_issuing_date
-                                                                                                 ,l_borderdocument_rec.manual_nationality
-                                                                                                 ,l_borderdocument_rec.manual_placeofbirth
-                                                                                                 ,l_borderdocument_rec.docclass
-                                                                                                 ,l_identity);
+    -- borderdocument check if exists
+    l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.get_document (
+       p_docno      => l_borderdocument_rec.docno
+       ,p_issuectry  => l_borderdocument_rec.issuectry
+       ,p_expirydate => l_borderdocument_rec.expirydate);
 
-            update dl_bordercontrol.borderdocuments
-            set optionaldata    = l_borderdocument_rec.optionaldata
-               ,givenname_thai  = l_borderdocument_rec.givenname_thai
-               ,middlename_thai = l_borderdocument_rec.middlename_thai
-               ,surname_thai    = l_borderdocument_rec.surname_thai
-               ,sub_nationality = l_borderdocument_rec.sub_nationality
-               ,source_system   = l_borderdocument_rec.source_system
-               ,calc_mrzdg1     = l_borderdocument_rec.calc_mrzdg1
-            where brddocid = l_borderdocument_rec.brddocid;
+    -- borderdocument does not exist
+    if l_borderdocument_rec.brddocid is null
+    then
+        l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.create_document(
+           l_borderdocument_rec.docno
+           ,l_borderdocument_rec.doctype
+           ,l_borderdocument_rec.issuectry
+           ,l_borderdocument_rec.expirydate
+           ,l_borderdocument_rec.surname
+           ,l_borderdocument_rec.middlename
+           ,l_borderdocument_rec.givenname
+           ,l_borderdocument_rec.sex
+           ,l_borderdocument_rec.dob
+           ,l_borderdocument_rec.mrzdg1
+           ,l_terminal
+           ,l_borderpost
+           ,l_photo_scan
+           ,l_photo_chip
+           ,l_photo_pass
+           ,null
+           ,null
+           ,null
+           ,null
+           ,l_borderdocument_rec.manual_expiry_date
+           ,l_borderdocument_rec.manual_issuing_date
+           ,l_borderdocument_rec.manual_nationality
+           ,l_borderdocument_rec.manual_placeofbirth
+           ,l_borderdocument_rec.docclass
+           ,l_identity);
 
-            l_abis_insert := true;
+        update dl_bordercontrol.borderdocuments
+        set optionaldata    = l_borderdocument_rec.optionaldata
+           ,givenname_thai  = l_borderdocument_rec.givenname_thai
+           ,middlename_thai = l_borderdocument_rec.middlename_thai
+           ,surname_thai    = l_borderdocument_rec.surname_thai
+           ,sub_nationality = l_borderdocument_rec.sub_nationality
+           ,source_system   = l_borderdocument_rec.source_system
+           ,calc_mrzdg1     = l_borderdocument_rec.calc_mrzdg1
+        where brddocid = l_borderdocument_rec.brddocid;
 
+        l_abis_insert := true;
+
+    elsif l_borderdocument_rec.manual_expiry_date is not null
+    then
+        update dl_bordercontrol.borderdocuments
+        set manual_expiry_date = l_borderdocument_rec.manual_expiry_date
+        where brddocid = l_borderdocument_rec.brddocid;
+
+    end if;
+
+    -- check for duplicate movement insert
+    select count(1)
+      into l_movement_is_duplicate
+      from movements
+     where brddocid = l_borderdocument_rec.brddocid
+       and date_of_entry = l_movement_rec.date_of_entry;
+
+    if l_movement_is_duplicate = 0 then
+      -- movement
+      -- insert movement
+      l_movement_rec.mvmntid := dl_bordercontrol.dl_movementhandling.create_movement(
+         p_EXITFLG => l_movement_rec.exitflg
+         ,p_INS_TERMINAL => l_terminal
+         ,p_INS_BORDERPOST => l_borderpost
+         --,p_INS_BY => l_ins_by
+         ,p_SOURCE_SYSTEM => l_borderdocument_rec.source_system
+         );
+
+     --insert borderdocument id into movement as it is needed for the visa
+     update dl_bordercontrol.movements
+     set brddocid = l_borderdocument_rec.brddocid
+     where mvmntid = l_movement_rec.mvmntid;
+
+     dl_bordercontrol.dl_movementhandling.update_movement(
+        l_movement_rec.mvmntid
+        ,l_borderdocument_rec.docno
+        ,l_borderdocument_rec.issuectry
+        ,l_borderdocument_rec.expirydate
+        ,l_movement_rec.exitflg
+        ,l_movement_rec.max_stay_dt
+        ,l_movement_rec.observation
+        ,0
+        ,0
+        ,l_movement_rec.trnsprtunitid
+        ,l_movement_rec.person_type
+        ,l_movement_rec.visa_type
+        ,null --! todo l_movement_rec.visa
+        ,l_terminal
+        ,l_borderpost
+        ,l_movement_rec.date_of_entry
+        ,l_visas_rec.visa_number
+        ,l_visas_rec.expiry_date
+        ,l_visas_rec.issuing_date
+        ,l_visas_rec.issuing_place
+        ,l_visas_rec.additional_info
+        ,l_visas_rec.permit_type
+        ,l_visas_rec.permit_expiry_date
+        ,l_entry_forms_rec.form_no
+        ,l_entry_forms_rec.province
+        ,l_entry_forms_rec.district
+        ,l_entry_forms_rec.subdistrict
+        ,l_entry_forms_rec.address
+        ,l_entry_forms_rec.note
+        ,l_movement_rec.form_no_approved
+        ,l_movement_rec.mrzvisa
+        ,l_movement_blob_rec.live_photo
+        ,l_movement_blob_rec.wsq_ll
+        ,l_movement_blob_rec.wsq_lr
+        ,l_movement_blob_rec.wsq_lm
+        ,l_movement_blob_rec.wsq_li
+        ,l_movement_blob_rec.wsq_lt
+        ,l_movement_blob_rec.wsq_rl
+        ,l_movement_blob_rec.wsq_rr
+        ,l_movement_blob_rec.wsq_rm
+        ,l_movement_blob_rec.wsq_ri
+        ,l_movement_blob_rec.wsq_rt
+        ,l_visas_rec.visa_image
+        ,l_entry_forms_rec.form_image
+        ,l_movement_rec.scanned_flight
+        ,p_PS_3             => l_movement_rec.ps_3
+        ,p_PS_4             => l_movement_rec.ps_4
+        ,p_PS_5             => l_movement_rec.ps_5
+        ,p_PS_6             => l_movement_rec.ps_6
+        ,p_SOURCE_SYSTEM    => l_borderdocument_rec.source_system);
+
+        -- insert images
+        update dl_bordercontrol.movements_blob
+        set live_photo  = l_movement_blob_rec.live_photo
+           ,wsq_ll      = l_movement_blob_rec.wsq_ll
+           ,wsq_lr      = l_movement_blob_rec.wsq_lr
+           ,wsq_lm      = l_movement_blob_rec.wsq_lm
+           ,wsq_li      = l_movement_blob_rec.wsq_li
+           ,wsq_lt      = l_movement_blob_rec.wsq_lt
+           ,wsq_rl      = l_movement_blob_rec.wsq_rl
+           ,wsq_rr      = l_movement_blob_rec.wsq_rr
+           ,wsq_rm      = l_movement_blob_rec.wsq_rm
+           ,wsq_ri      = l_movement_blob_rec.wsq_ri
+           ,wsq_rt      = l_movement_blob_rec.wsq_rt
+        where mvmnt_id = l_movement_rec.mvmntid;
+
+        -- incident (blacklist)
+        if l_incidents_rec.type is not null then
+            pkg_incidents.create_incident(
+               p_type => 10,
+               p_ins_terminal => l_terminal,
+               p_ins_borderpost => l_borderpost,
+               p_docno => l_borderdocument_rec.docno,
+               p_issuingcountry => l_borderdocument_rec.issuectry,
+               p_lastname => l_borderdocument_rec.surname,
+               p_givenname => l_borderdocument_rec.givenname,
+               p_gender => l_incidents_rec.gender,
+               p_dob => l_borderdocument_rec.dob,
+               p_brddocid => l_borderdocument_rec.brddocid,
+               p_mvmntid => l_movement_rec.mvmntid,
+               p_bl_status => ''A'',
+               p_bl_number_of_hits => l_incidents_rec.bl_number_of_hits,
+               p_bl_action => l_incidents_rec.bl_action,
+               p_bl_remarks => l_incidents_rec.bl_remarks,
+               p_supervisor => l_incidents_rec.supervisor,
+               p_bl_approved_identity_score => l_incidents_rec.bl_approved_identity_score,
+               p_officer => l_username,
+               p_client_ip => l_ip,
+               p_id => l_incidents_rec.id,
+               p_allow_pass => ''Y'');
         end if;
 
-    -- movement
-        -- insert movement
-        l_movement_rec.mvmntid := dl_bordercontrol.dl_movementhandling.create_movement(l_movement_rec.exitflg
-                                                                                      ,l_terminal
-                                                                                      ,l_borderpost);
+        -- fellow passengers
+        for idx in 1 .. l_fellow_passenger_cnt loop
+           insert into dl_bordercontrol.person(first_name
+                                              ,last_name
+                                              ,date_of_birth
+                                              ,sex
+                                              ,image
+                                              ,nationality)
+           values(l_fellow_passengers(idx).first_name
+                 ,l_fellow_passengers(idx).last_name
+                 ,l_fellow_passengers(idx).date_of_birth
+                 ,case
+                      when l_fellow_passengers(idx).sex = 1 then ''MALE''
+                      when l_fellow_passengers(idx).sex = 2 then ''FEMALE''
+                      else ''UNKNOWN''
+                  end
+                 ,l_fellow_passengers(idx).image
+                 ,l_fellow_passengers(idx).nationality)
+           returning key_value into l_fellow_passenger_person;
 
-        --insert borderdocument id into movement as it is needed for the visa
-        update dl_bordercontrol.movements
-        set brddocid = l_borderdocument_rec.brddocid
-        where mvmntid = l_movement_rec.mvmntid;
-
-        dl_bordercontrol.dl_movementhandling.update_movement(l_movement_rec.mvmntid
-                                                            ,l_borderdocument_rec.docno
-                                                            ,l_borderdocument_rec.issuectry
-                                                            ,l_borderdocument_rec.expirydate
-                                                            ,l_movement_rec.exitflg
-                                                            ,l_movement_rec.max_stay_dt
-                                                            ,l_movement_rec.observation
-                                                            ,0
-                                                            ,0
-                                                            ,l_movement_rec.trnsprtunitid
-                                                            ,l_movement_rec.person_type
-                                                            ,l_movement_rec.visa_type
-                                                            ,null --! todo l_movement_rec.visa
-                                                            ,l_terminal
-                                                            ,l_borderpost
-                                                            ,l_movement_rec.date_of_entry
-                                                            ,l_visas_rec.visa_number
-                                                            ,l_visas_rec.expiry_date
-                                                            ,l_visas_rec.issuing_date
-                                                            ,l_visas_rec.issuing_place
-                                                            ,l_visas_rec.additional_info
-                                                            ,l_visas_rec.permit_type
-                                                            ,l_visas_rec.permit_expiry_date
-                                                            ,l_entry_forms_rec.form_no
-                                                            ,l_entry_forms_rec.province
-                                                            ,l_entry_forms_rec.district
-                                                            ,l_entry_forms_rec.subdistrict
-                                                            ,l_entry_forms_rec.address
-                                                            ,l_entry_forms_rec.note
-                                                            ,l_movement_rec.form_no_approved
-                                                            ,l_movement_rec.mrzvisa
-                                                            ,l_movement_blob_rec.live_photo
-                                                            ,l_movement_blob_rec.wsq_ll
-                                                            ,l_movement_blob_rec.wsq_lr
-                                                            ,l_movement_blob_rec.wsq_lm
-                                                            ,l_movement_blob_rec.wsq_li
-                                                            ,l_movement_blob_rec.wsq_lt
-                                                            ,l_movement_blob_rec.wsq_rl
-                                                            ,l_movement_blob_rec.wsq_rr
-                                                            ,l_movement_blob_rec.wsq_rm
-                                                            ,l_movement_blob_rec.wsq_ri
-                                                            ,l_movement_blob_rec.wsq_rt
-                                                            ,l_visas_rec.visa_image
-                                                            ,l_entry_forms_rec.form_image
-                                                            ,l_movement_rec.scanned_flight
-                                                            ,p_PS_6             => l_movement_rec.ps_6
-                                                            ,p_SOURCE_SYSTEM    => l_borderdocument_rec.source_system); -- 4 = Offline movement sync
+           insert into dl_bordercontrol.fellow_passenger(person
+                                                        ,relation
+                                                        ,nationality
+                                                        ,tm6_no
+                                                        ,first_name
+                                                        ,last_name
+                                                        ,sex
+                                                        ,date_of_birth
+                                                        ,place_of_birth
+                                                        ,image
+                                                        ,mvmntid)
+           values(l_fellow_passenger_person
+                 ,l_fellow_passengers(idx).relation
+                 ,l_fellow_passengers(idx).nationality
+                 ,l_fellow_passengers(idx).tm6_no
+                 ,l_fellow_passengers(idx).first_name
+                 ,l_fellow_passengers(idx).last_name
+                 ,case
+                      when l_fellow_passengers(idx).sex = 1 then ''MALE''
+                      when l_fellow_passengers(idx).sex = 2 then ''FEMALE''
+                      else ''UNKNOWN''
+                  end
+                 ,l_fellow_passengers(idx).date_of_birth
+                 ,l_fellow_passengers(idx).place_of_birth
+                 ,l_fellow_passengers(idx).image
+                 ,l_movement_rec.mvmntid);
+        end loop;
+    end if;
 
     exception when others then
         :status         := 500;
-        :message        := sqlerrm;
+        :message        := dbms_utility.format_error_backtrace;
         :borderdocument := null;
         :movement       := null;
         :abis           := null;
@@ -368,6 +528,7 @@ begin
             l_abis_insert := true;
         end if;
     end if;
+
     if l_abis_insert then
         if l_movement_rec.mvmntid is not null then
             l_abis := dl_bordercontrol.pkg_bmbs_apex_util.bmbs_insert_travel_abis_movement(l_movement_rec.mvmntid);
@@ -382,18 +543,13 @@ begin
     :borderdocument := l_borderdocument_rec.brddocid;
     :movement       := l_movement_rec.mvmntid;
     :abis           := l_abis;
-end;');
 
-  ORDS.DEFINE_PARAMETER(
-      p_module_name        => 'BmBS',
-      p_pattern            => 'offline/dataSync',
-      p_method             => 'POST',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
-      p_access_method      => 'OUT',
-      p_comments           => NULL);
+    exception when others then
+        :status         := 500;
+        :message        := dbms_utility.format_error_backtrace;
+        :borderdocument := null;
+        :movement       := null;
+end;');
 
   ORDS.DEFINE_PARAMETER(
       p_module_name        => 'BmBS',
@@ -436,6 +592,17 @@ end;');
       p_bind_variable_name => 'movement',
       p_source_type        => 'RESPONSE',
       p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'BmBS',
+      p_pattern            => 'offline/dataSync',
+      p_method             => 'POST',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -923,6 +1090,210 @@ join dl_user_management.users$sgd sg on us.id = sg.id');
 
   ORDS.DEFINE_TEMPLATE(
       p_module_name    => 'BmBS',
+      p_pattern        => 'selectList/blacklist/actions',
+      p_priority       => 0,
+      p_etag_type      => 'HASH',
+      p_etag_query     => NULL,
+      p_comments       => NULL);
+
+  ORDS.DEFINE_HANDLER(
+      p_module_name    => 'BmBS',
+      p_pattern        => 'selectList/blacklist/actions',
+      p_method         => 'GET',
+      p_source_type    => 'plsql/block',
+      p_items_per_page => 25,
+      p_mimes_allowed  => '',
+      p_comments       => NULL,
+      p_source         =>
+'declare
+    c1 sys_refcursor;
+begin
+    open c1 for
+        select key_value as value,
+               cursor(
+                   select *
+                   from(   select locale, display_value
+                           from dl_common.action_codes
+                           where key_value = a.key_value
+                           union all
+                           select locale, display_value
+                           from dl_common.action_codes$i18n
+                           where key_value = a.key_value
+                           )
+                   pivot (
+                      max(display_value)
+                      for locale
+                      in (''en_US'' as en_US,''th_TH'' as th_TH)
+                   )
+               ) as locales
+            from dl_common.action_codes a
+        where is_active = ''Y''
+        order by display_order;
+
+    :status := 200;
+    :result := c1;
+end;');
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'BmBS',
+      p_pattern            => 'selectList/blacklist/actions',
+      p_method             => 'GET',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'BmBS',
+      p_pattern            => 'selectList/blacklist/actions',
+      p_method             => 'GET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_TEMPLATE(
+      p_module_name    => 'BmBS',
+      p_pattern        => 'selectList/blacklist/reasons',
+      p_priority       => 0,
+      p_etag_type      => 'HASH',
+      p_etag_query     => NULL,
+      p_comments       => NULL);
+
+  ORDS.DEFINE_HANDLER(
+      p_module_name    => 'BmBS',
+      p_pattern        => 'selectList/blacklist/reasons',
+      p_method         => 'GET',
+      p_source_type    => 'plsql/block',
+      p_items_per_page => 25,
+      p_mimes_allowed  => '',
+      p_comments       => NULL,
+      p_source         =>
+'declare
+    c1 sys_refcursor;
+begin
+    open c1 for
+        select key_value as value,
+               cursor(
+                   select *
+                   from(   select locale, display_value
+                           from dl_common.reason_codes
+                           where key_value = a.key_value
+                           union all
+                           select locale, display_value
+                           from dl_common.reason_codes$i18n
+                           where key_value = a.key_value
+                           )
+                   pivot (
+                      max(display_value)
+                      for locale
+                      in (''en_US'' as en_US,''th_TH'' as th_TH)
+                   )
+               ) as locales
+            from dl_common.reason_codes a
+        where is_active = ''Y''
+        order by display_order;
+
+    :status := 200;
+    :result := c1;
+end;');
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'BmBS',
+      p_pattern            => 'selectList/blacklist/reasons',
+      p_method             => 'GET',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'BmBS',
+      p_pattern            => 'selectList/blacklist/reasons',
+      p_method             => 'GET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_TEMPLATE(
+      p_module_name    => 'BmBS',
+      p_pattern        => 'selectList/blacklist/secretLevels',
+      p_priority       => 0,
+      p_etag_type      => 'HASH',
+      p_etag_query     => NULL,
+      p_comments       => NULL);
+
+  ORDS.DEFINE_HANDLER(
+      p_module_name    => 'BmBS',
+      p_pattern        => 'selectList/blacklist/secretLevels',
+      p_method         => 'GET',
+      p_source_type    => 'plsql/block',
+      p_items_per_page => 25,
+      p_mimes_allowed  => '',
+      p_comments       => NULL,
+      p_source         =>
+'declare
+    c1 sys_refcursor;
+begin
+    open c1 for
+        select key_value as value,
+               cursor(
+                   select *
+                   from(   select locale, display_value
+                           from dl_common.secret_levels
+                           where key_value = a.key_value
+                           union all
+                           select locale, display_value
+                           from dl_common.secret_levels$i18n
+                           where key_value = a.key_value
+                           )
+                   pivot (
+                      max(display_value)
+                      for locale
+                      in (''en_US'' as en_US,''th_TH'' as th_TH)
+                   )
+               ) as locales
+            from dl_common.secret_levels a
+        where is_active = ''Y''
+        order by display_order;
+
+    :status := 200;
+    :result := c1;
+end;');
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'BmBS',
+      p_pattern            => 'selectList/blacklist/secretLevels',
+      p_method             => 'GET',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'BmBS',
+      p_pattern            => 'selectList/blacklist/secretLevels',
+      p_method             => 'GET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_TEMPLATE(
+      p_module_name    => 'BmBS',
       p_pattern        => 'selectList/borderposts',
       p_priority       => 0,
       p_etag_type      => 'HASH',
@@ -971,10 +1342,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/borderposts',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -982,10 +1353,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/borderposts',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1043,10 +1414,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/countries',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1054,10 +1425,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/countries',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1095,10 +1466,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/countriesVisaTypes',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'STRING',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1106,10 +1477,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/countriesVisaTypes',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'STRING',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1162,10 +1533,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/directions',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1173,10 +1544,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/directions',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1231,10 +1602,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/districts',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1242,10 +1613,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/districts',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1299,10 +1670,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/docClasses',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1310,10 +1681,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/docClasses',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1367,10 +1738,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/genders',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1378,10 +1749,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/genders',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1435,10 +1806,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/permitTypes',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1446,10 +1817,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/permitTypes',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1504,10 +1875,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/provinces',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1515,10 +1886,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/provinces',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1572,10 +1943,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/relations',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1583,10 +1954,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/relations',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1641,10 +2012,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/subdistricts',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1652,10 +2023,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/subdistricts',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1708,10 +2079,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/terminals',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1719,10 +2090,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/terminals',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1779,10 +2150,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/vehicles',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1790,10 +2161,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/vehicles',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1848,10 +2219,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/visaTypes',
       p_method             => 'GET',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
+      p_name               => 'options',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'RESULTSET',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1859,10 +2230,10 @@ end;');
       p_module_name        => 'BmBS',
       p_pattern            => 'selectList/visaTypes',
       p_method             => 'GET',
-      p_name               => 'options',
-      p_bind_variable_name => 'result',
-      p_source_type        => 'RESPONSE',
-      p_param_type         => 'RESULTSET',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -1875,4 +2246,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.31
+Elapsed: 00:00:00.28

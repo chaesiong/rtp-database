@@ -18,6 +18,526 @@ BEGIN
       p_status         => 'PUBLISHED',
       p_comments       => NULL);
 
+  ORDS.SET_MODULE_ORIGINS_ALLOWED(
+      p_module_name     => 'SessionBagRestService',
+      p_origins_allowed => '*');
+
+  ORDS.DEFINE_TEMPLATE(
+      p_module_name    => 'SessionBagRestService',
+      p_pattern        => 'setfingerprints',
+      p_priority       => 0,
+      p_etag_type      => 'HASH',
+      p_etag_query     => NULL,
+      p_comments       => NULL);
+
+  ORDS.DEFINE_HANDLER(
+      p_module_name    => 'SessionBagRestService',
+      p_pattern        => 'setfingerprints',
+      p_method         => 'POST',
+      p_source_type    => 'plsql/block',
+      p_items_per_page => 0,
+      p_mimes_allowed  => 'application-json',
+      p_comments       => NULL,
+      p_source         =>
+'declare
+    --
+    l_values      apex_json.t_values;
+    l_source_blob blob := :body;
+    l_source_clob clob;
+    --
+    l_dstoff  integer := 1;
+    l_srcoff  integer := 1;
+    l_lngctx  integer := 0;
+    l_warning integer;
+    --
+    l_movement_id varchar2(32 char);
+    l_clear_missing boolean := false; -- per default, all null input values will be ignored
+    --
+    l_data_clob clob;
+    l_data_blob blob;
+    l_quality   number;
+    --
+    l_cnt_images    number := 0;
+    l_cnt_templates number := 0;
+    l_cnt_qualities number := 0;
+    --
+    l_finger_rt blob;
+    l_finger_ri blob;
+    l_finger_rm blob;
+    l_finger_rr blob;
+    l_finger_rl blob;
+    l_finger_lt blob;
+    l_finger_li blob;
+    l_finger_lm blob;
+    l_finger_lr blob;
+    l_finger_ll blob;
+    --
+    l_template_rt blob;
+    l_template_ri blob;
+    l_template_rm blob;
+    l_template_rr blob;
+    l_template_rl blob;
+    l_template_lt blob;
+    l_template_li blob;
+    l_template_lm blob;
+    l_template_lr blob;
+    l_template_ll blob;
+    --
+    l_quality_rt number;
+    l_quality_ri number;
+    l_quality_rm number;
+    l_quality_rr number;
+    l_quality_rl number;
+    l_quality_lt number;
+    l_quality_li number;
+    l_quality_lm number;
+    l_quality_lr number;
+    l_quality_ll number;
+    --
+    l_log varchar2(4000 char);
+    lf varchar2(2 char) := chr(10);
+    --
+    -- {"movementId":"","fpImage01":"","fpTemplate01":"","fpQuality01":0,...,"fpImage10":"","fpTemplate10":"","fpQuality10":0}
+begin
+    -- initialize result values
+    :status           := 200;
+    :result           := ''OK'';
+    :error            := null;
+    :changedimages    := 0;
+    :changedtemplates := 0;
+    :changedqualities := 0;
+    -- convert json
+    dbms_lob.createtemporary(l_source_clob, true);
+
+    dbms_lob.converttoclob(
+         dest_lob     => l_source_clob
+       , src_blob     => l_source_blob
+       , amount       => dbms_lob.lobmaxsize
+       , dest_offset  => l_dstoff
+       , src_offset   => l_srcoff
+       , blob_csid    => nls_charset_id(''al32utf8'')
+       , lang_context => l_lngctx
+       , warning      => l_warning);
+
+    apex_json.parse (p_values => l_values
+                    ,p_source => l_source_clob);
+
+    l_movement_id := apex_json.get_varchar2(p_values => l_values, p_path => ''movementId'');
+    l_log := l_log || ''movement id '' || nvl(l_movement_id, ''NULL'') || lf;
+
+    l_log := l_log || ''clear missing fields '' || case when l_clear_missing then ''TRUE'' else ''FALSE'' end || lf;
+
+    l_finger_rt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage01'', p_default => null));
+    l_finger_ri := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage02'', p_default => null));
+    l_finger_rm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage03'', p_default => null));
+    l_finger_rr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage04'', p_default => null));
+    l_finger_rl := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage05'', p_default => null));
+    l_finger_lt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage06'', p_default => null));
+    l_finger_li := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage07'', p_default => null));
+    l_finger_lm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage08'', p_default => null));
+    l_finger_lr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage09'', p_default => null));
+    l_finger_ll := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage10'', p_default => null));
+
+    l_template_rt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate01'', p_default => null));
+    l_template_ri := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate02'', p_default => null));
+    l_template_rm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate03'', p_default => null));
+    l_template_rr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate04'', p_default => null));
+    l_template_rl := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate05'', p_default => null));
+    l_template_lt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate06'', p_default => null));
+    l_template_li := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate07'', p_default => null));
+    l_template_lm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate08'', p_default => null));
+    l_template_lr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate09'', p_default => null));
+    l_template_ll := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate10'', p_default => null));
+
+    l_quality_rt := apex_json.get_number(p_values => l_values, p_path => ''fpQuality01'', p_default => null);
+    l_quality_ri := apex_json.get_number(p_values => l_values, p_path => ''fpQuality02'', p_default => null);
+    l_quality_rm := apex_json.get_number(p_values => l_values, p_path => ''fpQuality03'', p_default => null);
+    l_quality_rr := apex_json.get_number(p_values => l_values, p_path => ''fpQuality04'', p_default => null);
+    l_quality_rl := apex_json.get_number(p_values => l_values, p_path => ''fpQuality05'', p_default => null);
+    l_quality_lt := apex_json.get_number(p_values => l_values, p_path => ''fpQuality06'', p_default => null);
+    l_quality_li := apex_json.get_number(p_values => l_values, p_path => ''fpQuality07'', p_default => null);
+    l_quality_lm := apex_json.get_number(p_values => l_values, p_path => ''fpQuality08'', p_default => null);
+    l_quality_lr := apex_json.get_number(p_values => l_values, p_path => ''fpQuality09'', p_default => null);
+    l_quality_ll := apex_json.get_number(p_values => l_values, p_path => ''fpQuality10'', p_default => null);
+
+    update movements_blob
+       set wsq_rt = case when l_finger_rt is not null then l_finger_rt else wsq_rt end
+         , wsq_ri = case when l_finger_ri is not null then l_finger_ri else wsq_ri end
+         , wsq_rm = case when l_finger_rm is not null then l_finger_rm else wsq_rm end
+         , wsq_rr = case when l_finger_rr is not null then l_finger_rr else wsq_rr end
+         , wsq_rl = case when l_finger_rl is not null then l_finger_rl else wsq_rl end
+         , wsq_lt = case when l_finger_lt is not null then l_finger_lt else wsq_lt end
+         , wsq_li = case when l_finger_li is not null then l_finger_li else wsq_li end
+         , wsq_lm = case when l_finger_lm is not null then l_finger_lm else wsq_lm end
+         , wsq_lr = case when l_finger_lr is not null then l_finger_lr else wsq_lr end
+         , wsq_ll = case when l_finger_ll is not null then l_finger_ll else wsq_ll end
+         , template_rt = case when l_template_rt is not null then l_template_rt else template_rt end
+         , template_ri = case when l_template_ri is not null then l_template_ri else template_ri end
+         , template_rm = case when l_template_rm is not null then l_template_rm else template_rm end
+         , template_rr = case when l_template_rr is not null then l_template_rr else template_rr end
+         , template_rl = case when l_template_rl is not null then l_template_rl else template_rl end
+         , template_lt = case when l_template_lt is not null then l_template_lt else template_lt end
+         , template_li = case when l_template_li is not null then l_template_li else template_li end
+         , template_lm = case when l_template_lm is not null then l_template_lm else template_lm end
+         , template_lr = case when l_template_lr is not null then l_template_lr else template_lr end
+         , template_ll = case when l_template_ll is not null then l_template_ll else template_ll end
+     where mvmnt_id = l_movement_id;
+
+    l_cnt_images :=
+                case when l_finger_rt is not null then 1 else 0 end +
+                case when l_finger_ri is not null then 1 else 0 end +
+                case when l_finger_rm is not null then 1 else 0 end +
+                case when l_finger_rr is not null then 1 else 0 end +
+                case when l_finger_rl is not null then 1 else 0 end +
+                case when l_finger_lt is not null then 1 else 0 end +
+                case when l_finger_li is not null then 1 else 0 end +
+                case when l_finger_lm is not null then 1 else 0 end +
+                case when l_finger_lr is not null then 1 else 0 end +
+                case when l_finger_ll is not null then 1 else 0 end;
+    l_log := l_log || ''finger image count: '' || to_char(l_cnt_images) || lf;
+
+    l_cnt_templates :=
+                case when l_template_rt is not null then 1 else 0 end +
+                case when l_template_ri is not null then 1 else 0 end +
+                case when l_template_rm is not null then 1 else 0 end +
+                case when l_template_rr is not null then 1 else 0 end +
+                case when l_template_rl is not null then 1 else 0 end +
+                case when l_template_lt is not null then 1 else 0 end +
+                case when l_template_li is not null then 1 else 0 end +
+                case when l_template_lm is not null then 1 else 0 end +
+                case when l_template_lr is not null then 1 else 0 end +
+                case when l_template_ll is not null then 1 else 0 end;
+    l_log := l_log || ''finger template count: '' || to_char(l_cnt_templates) || lf;
+
+    :changedimages    := l_cnt_images;
+    :changedtemplates := l_cnt_templates;
+    :changedqualities := l_cnt_qualities;
+    -- :log              := l_log;
+exception when others then
+    :status           := 500;
+    :result           := ''ERROR'';
+    :error            := dbms_utility.format_error_backtrace;
+    :log              := l_log;
+end;');
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'POST',
+      p_name               => 'changedImages',
+      p_bind_variable_name => 'changedimages',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'POST',
+      p_name               => 'changedQualities',
+      p_bind_variable_name => 'changedqualities',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'POST',
+      p_name               => 'changedTemplates',
+      p_bind_variable_name => 'changedtemplates',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'POST',
+      p_name               => 'error',
+      p_bind_variable_name => 'error',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'POST',
+      p_name               => 'log',
+      p_bind_variable_name => 'log',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'POST',
+      p_name               => 'result',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'POST',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_HANDLER(
+      p_module_name    => 'SessionBagRestService',
+      p_pattern        => 'setfingerprints',
+      p_method         => 'PUT',
+      p_source_type    => 'plsql/block',
+      p_items_per_page => 0,
+      p_mimes_allowed  => 'application-json',
+      p_comments       => NULL,
+      p_source         =>
+'declare
+    --
+    l_values      apex_json.t_values;
+    l_source_blob blob := :body;
+    l_source_clob clob;
+    --
+    l_dstoff  integer := 1;
+    l_srcoff  integer := 1;
+    l_lngctx  integer := 0;
+    l_warning integer;
+    --
+    l_movement_id varchar2(32 char);
+    l_clear_missing boolean := true; -- per default, all null input values will clear existing data in movements_blob table
+    --
+    l_data_clob clob;
+    l_data_blob blob;
+    l_quality   number;
+    --
+    l_cnt_images    number := 0;
+    l_cnt_templates number := 0;
+    l_cnt_qualities number := 0;
+    --
+    l_finger_rt blob;
+    l_finger_ri blob;
+    l_finger_rm blob;
+    l_finger_rr blob;
+    l_finger_rl blob;
+    l_finger_lt blob;
+    l_finger_li blob;
+    l_finger_lm blob;
+    l_finger_lr blob;
+    l_finger_ll blob;
+    --
+    l_template_rt blob;
+    l_template_ri blob;
+    l_template_rm blob;
+    l_template_rr blob;
+    l_template_rl blob;
+    l_template_lt blob;
+    l_template_li blob;
+    l_template_lm blob;
+    l_template_lr blob;
+    l_template_ll blob;
+    --
+    l_quality_rt number;
+    l_quality_ri number;
+    l_quality_rm number;
+    l_quality_rr number;
+    l_quality_rl number;
+    l_quality_lt number;
+    l_quality_li number;
+    l_quality_lm number;
+    l_quality_lr number;
+    l_quality_ll number;
+    --
+    l_log varchar2(4000 char);
+    lf varchar2(2 char) := chr(10);
+    --
+    -- {"movementId":"","fpImage01":"","fpTemplate01":"","fpQuality01":0,...,"fpImage10":"","fpTemplate10":"","fpQuality10":0}
+begin
+    -- initialize result values
+    :status           := 200;
+    :result           := ''OK'';
+    :error            := null;
+    :changedimages    := 0;
+    :changedtemplates := 0;
+    :changedqualities := 0;
+    -- convert json
+    dbms_lob.createtemporary(l_source_clob, true);
+
+    dbms_lob.converttoclob(
+         dest_lob     => l_source_clob
+       , src_blob     => l_source_blob
+       , amount       => dbms_lob.lobmaxsize
+       , dest_offset  => l_dstoff
+       , src_offset   => l_srcoff
+       , blob_csid    => nls_charset_id(''al32utf8'')
+       , lang_context => l_lngctx
+       , warning      => l_warning);
+
+    apex_json.parse (p_values => l_values
+                    ,p_source => l_source_clob);
+
+    l_movement_id := apex_json.get_varchar2(p_values => l_values, p_path => ''movementId'');
+    l_log := l_log || ''movement id: '' || nvl(l_movement_id, ''NULL'') || lf;
+
+    l_log := l_log || ''clear missing fields: '' || case when l_clear_missing then ''TRUE'' else ''FALSE'' end || lf;
+
+    l_finger_rt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage01'', p_default => null));
+    l_finger_ri := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage02'', p_default => null));
+    l_finger_rm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage03'', p_default => null));
+    l_finger_rr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage04'', p_default => null));
+    l_finger_rl := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage05'', p_default => null));
+    l_finger_lt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage06'', p_default => null));
+    l_finger_li := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage07'', p_default => null));
+    l_finger_lm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage08'', p_default => null));
+    l_finger_lr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage09'', p_default => null));
+    l_finger_ll := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpImage10'', p_default => null));
+
+    l_template_rt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate01'', p_default => null));
+    l_template_ri := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate02'', p_default => null));
+    l_template_rm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate03'', p_default => null));
+    l_template_rr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate04'', p_default => null));
+    l_template_rl := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate05'', p_default => null));
+    l_template_lt := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate06'', p_default => null));
+    l_template_li := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate07'', p_default => null));
+    l_template_lm := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate08'', p_default => null));
+    l_template_lr := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate09'', p_default => null));
+    l_template_ll := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => ''fpTemplate10'', p_default => null));
+
+    l_quality_rt := apex_json.get_number(p_values => l_values, p_path => ''fpQuality01'', p_default => null);
+    l_quality_ri := apex_json.get_number(p_values => l_values, p_path => ''fpQuality02'', p_default => null);
+    l_quality_rm := apex_json.get_number(p_values => l_values, p_path => ''fpQuality03'', p_default => null);
+    l_quality_rr := apex_json.get_number(p_values => l_values, p_path => ''fpQuality04'', p_default => null);
+    l_quality_rl := apex_json.get_number(p_values => l_values, p_path => ''fpQuality05'', p_default => null);
+    l_quality_lt := apex_json.get_number(p_values => l_values, p_path => ''fpQuality06'', p_default => null);
+    l_quality_li := apex_json.get_number(p_values => l_values, p_path => ''fpQuality07'', p_default => null);
+    l_quality_lm := apex_json.get_number(p_values => l_values, p_path => ''fpQuality08'', p_default => null);
+    l_quality_lr := apex_json.get_number(p_values => l_values, p_path => ''fpQuality09'', p_default => null);
+    l_quality_ll := apex_json.get_number(p_values => l_values, p_path => ''fpQuality10'', p_default => null);
+
+    update movements_blob
+       set wsq_rt = l_finger_rt
+         , wsq_ri = l_finger_ri
+         , wsq_rm = l_finger_rm
+         , wsq_rr = l_finger_rr
+         , wsq_rl = l_finger_rl
+         , wsq_lt = l_finger_lt
+         , wsq_li = l_finger_li
+         , wsq_lm = l_finger_lm
+         , wsq_lr = l_finger_lr
+         , wsq_ll = l_finger_ll
+         , template_rt = l_template_rt
+         , template_ri = l_template_ri
+         , template_rm = l_template_rm
+         , template_rr = l_template_rr
+         , template_rl = l_template_rl
+         , template_lt = l_template_lt
+         , template_li = l_template_li
+         , template_lm = l_template_lm
+         , template_lr = l_template_lr
+         , template_ll = l_template_ll
+     where mvmnt_id = l_movement_id;
+
+    :changedimages    := 10;
+    :changedtemplates := 10;
+    :changedqualities := 10;
+    -- :log              := l_log;
+exception when others then
+    :status           := 500;
+    :result           := ''ERROR'';
+    :error            := dbms_utility.format_error_backtrace;
+    :log              := l_log;
+end;');
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'PUT',
+      p_name               => 'changedTemplates',
+      p_bind_variable_name => 'changedtemplates',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'PUT',
+      p_name               => 'error',
+      p_bind_variable_name => 'error',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'PUT',
+      p_name               => 'log',
+      p_bind_variable_name => 'log',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'PUT',
+      p_name               => 'changedImages',
+      p_bind_variable_name => 'changedimages',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'PUT',
+      p_name               => 'changedQualities',
+      p_bind_variable_name => 'changedqualities',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'PUT',
+      p_name               => 'result',
+      p_bind_variable_name => 'result',
+      p_source_type        => 'RESPONSE',
+      p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'setfingerprints',
+      p_method             => 'PUT',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
   ORDS.DEFINE_TEMPLATE(
       p_module_name    => 'SessionBagRestService',
       p_pattern        => 'uploadintosessionbag/',
@@ -239,4 +759,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.03
+Elapsed: 00:00:00.15

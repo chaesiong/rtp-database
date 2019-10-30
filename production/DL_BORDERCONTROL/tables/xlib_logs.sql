@@ -33,29 +33,5 @@ CREATE UNIQUE INDEX "DL_BORDERCONTROL"."XLIB_LOGS_PK" ON "DL_BORDERCONTROL"."XLI
   GRANT INSERT ON "DL_BORDERCONTROL"."XLIB_LOGS" TO "PIBICSAPP";
   GRANT UPDATE ON "DL_BORDERCONTROL"."XLIB_LOGS" TO "PIBICSAPP";
   GRANT SELECT ON "DL_BORDERCONTROL"."XLIB_LOGS" TO "APPSUP";
-  CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."XLIB_LOGS_BI_TRG" 
-  before insert on DL_BORDERCONTROL.XLIB_LOGS
-  referencing new as new old as old
-  for each row
---
-  --
-  /*******************************************************************************
-  *
-  *                                                                              *
-  *                                                                              *
-  * Author    Date        Description                                            *
-  * --------  ----------  -------------------------------------------------------*
-  * WWirns    06.11.2017  Added as copy of BORDERCONTROL.CAMBODIA
-  *******************************************************************************/
-  --
-  --
-begin
-  if :NEW.log_id is null
-  then
-    select XLIB_SEQ.NEXTVAL
-      into :NEW.log_id
-      from DUAL;
-  end if;
-end;
-/
-ALTER TRIGGER "DL_BORDERCONTROL"."XLIB_LOGS_BI_TRG" ENABLE;
+  GRANT SELECT ON "DL_BORDERCONTROL"."XLIB_LOGS" TO "BIOAPPREPORT";
+  GRANT SELECT ON "DL_BORDERCONTROL"."XLIB_LOGS" TO "BIOSUPPORT";

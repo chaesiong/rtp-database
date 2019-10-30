@@ -5,7 +5,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_ICPO_UTIL" IS
 * --------  ----------  -------------------------------------------------------*
 * MSCS      06.06.2019  Added to consume ICPO services
 *******************************************************************************/
-
+    
     -- search_icpo (SLTD: Stolen and Lost Travel Documents; TDAWN: Travel Documents Associated With Notices)
     PROCEDURE search_icpo
     (
@@ -23,7 +23,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."PKG_ICPO_UTIL" IS
     FUNCTION search_icpo_details
     (
         p_request_type          IN VARCHAR2, -- SLTD:TDAWN
-        p_item_id               IN VARCHAR2
+        p_item_id               IN VARCHAR2,
+        p_request_data_obj      IN JSON_OBJECT_T DEFAULT NULL
     ) RETURN NUMBER;
     --
     --

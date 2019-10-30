@@ -124,7 +124,6 @@
         <value>COMMENT</value>
         <value>INDEX</value>
         <value>OBJECT_GRANT</value>
-        <value>TRIGGER</value>
     </set>
     </entry>
     <entry key="VIEW">
@@ -230,7 +229,7 @@
     <property name="connectionCachingEnabled" value="true" />
 </bean>
 <bean id="writer" class="com.googlecode.scheme2ddl.UserObjectWriter">
-    <property name="outputPath" value="/home/oracle/fetch_db_sources/20675-sources-2019-08-13T2224" />
+    <property name="outputPath" value="/home/oracle/fetch_db_sources/20675-sources-tibpbio-bk001.immigration.go.th-2019-10-30T1359" />
 </bean>
 <!-- list of schema for processing, used only if oracle user connected as sysdba-->
 <util:list id="schemaList">

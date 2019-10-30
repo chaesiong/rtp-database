@@ -46,6 +46,19 @@ wwv_flow_api.create_page(
 '',
 '$(".t-TabsRegion-items").attr("style", "");',
 'window.setTimeout(function() { $(".t-TabsRegion-items").attr("style", ""); }, 100);',
+'',
+'var pdfrendererurl = null;',
+'$( document.body ).on( "atabsactivate", function ( e, ui ) {',
+'if(ui.active.href === "#SR_171-Tabs-Container-PrintPDF") {',
+'    if (pdfrendererurl === null) {',
+'        pdfrendererurl = "../JasperReportsIntegration/report?_repName=travel_history_person&_repFormat=pdf&_dataSource=default&_outFilename=&_repLocale=&_repEncoding=&_printIsEnabled=&_printPrinterName=&_printPrinterTray=&_printCopies=&_printDuplex=&'
+||'_printCollate=&_saveIsEnabled=&_saveFileName=&P_BRDDOCID=&P171_BRDDOCID.";',
+'',
+'        $("#pdfrenderer").attr("href", pdfrendererurl + "#zoom=80");',
+'        $("#pdfrendererobject").attr("data", pdfrendererurl + "#zoom=80");',
+'    }',
+'}',
+'});',
 ''))
 ,p_javascript_code_onload=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '$("#ID_REG_HIDDEN").hide();',
@@ -203,15 +216,6 @@ wwv_flow_api.create_page(
 '	$(".t-TabsRegion-items").css("min-height", "0");',
 '}, 100);',
 '',
-'',
-'',
-'',
-'',
-'var url = "../JasperReportsIntegration/report?_repName=travel_history_person&_repFormat=pdf&_dataSource=default&_outFilename=&_repLocale=&_repEncoding=&_printIsEnabled=&_printPrinterName=&_printPrinterTray=&_printCopies=&_printDuplex=&_printCollate=&'
-||'_saveIsEnabled=&_saveFileName=&P_BRDDOCID=&P171_BRDDOCID.";',
-'',
-'  $("#pdfrenderer").attr("href", url + "#zoom=80");',
-'  $("#pdfrendererobject").attr("data", url + "#zoom=80");',
 ''))
 ,p_css_file_urls=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '#WORKSPACE_IMAGES#fotorama.css',
@@ -244,14 +248,14 @@ wwv_flow_api.create_page(
 ,p_dialog_height=>'980'
 ,p_dialog_width=>'1100'
 ,p_dialog_css_classes=>'css_white_background'
-,p_dialog_chained=>'Y'
+,p_dialog_chained=>'N'
 ,p_overwrite_navigation_list=>'N'
 ,p_page_is_public_y_n=>'N'
 ,p_protection_level=>'C'
 ,p_cache_mode=>'NOCACHE'
 ,p_help_text=>'No help is available for this page.'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190729165202'
+,p_last_upd_yyyymmddhh24miss=>'20191030010553'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(460741210200069164)
@@ -674,7 +678,9 @@ wwv_flow_api.create_page_plug(
 '        ',
 '       sex,',
 '        ',
-'      ''<img src="''||APEX_UTIL.GET_BLOB_FILE_SRC(''P18_IMAGE'',KEY_VALUE,null,''inline'')||''" height="100" width="140"/>'' childphoto ',
+'      ''<img src="''||APEX_UTIL.GET_BLOB_FILE_SRC(''P18_IMAGE'',KEY_VALUE,null,''inline'')||''" height="100" width="140"/>'' childphoto,',
+'      ',
+'      tm6_no',
 'from dl_bordercontrol.fellow_passenger',
 'where MVMNTID = :P171_MVMNTID'))
 ,p_plug_source_type=>'NATIVE_IR'
@@ -688,13 +694,10 @@ wwv_flow_api.create_worksheet(
 ,p_max_row_count_message=>'The maximum row count for this report is #MAX_ROW_COUNT# rows.  Please apply a filter to reduce the number of records in your query.'
 ,p_no_data_found_message=>'No data found.'
 ,p_allow_report_categories=>'N'
-,p_pagination_display_pos=>'BOTTOM_RIGHT'
 ,p_show_search_bar=>'N'
 ,p_report_list_mode=>'TABS'
 ,p_show_detail_link=>'N'
 ,p_show_calendar=>'N'
-,p_detail_link_text=>'<img src="#IMAGE_PREFIX#menu/pencil16x16.gif" alt="" />'
-,p_icon_view_columns_per_row=>1
 ,p_owner=>'ADMIN'
 ,p_internal_uid=>634576222763569648
 );
@@ -741,6 +744,15 @@ wwv_flow_api.create_worksheet_column(
 ,p_column_type=>'STRING'
 ,p_display_text_as=>'WITHOUT_MODIFICATION'
 );
+wwv_flow_api.create_worksheet_column(
+ p_id=>wwv_flow_api.id(31426990072598704912)
+,p_db_column_name=>'TM6_NO'
+,p_display_order=>60
+,p_column_identifier=>'Q'
+,p_column_label=>'TM6 No'
+,p_column_type=>'STRING'
+,p_column_alignment=>'CENTER'
+);
 wwv_flow_api.create_worksheet_rpt(
  p_id=>wwv_flow_api.id(911933953571529199)
 ,p_application_user=>'APXWS_DEFAULT'
@@ -749,9 +761,9 @@ wwv_flow_api.create_worksheet_rpt(
 ,p_status=>'PUBLIC'
 ,p_is_default=>'Y'
 ,p_display_rows=>100000
-,p_report_columns=>'LAST_NAME:FIRST_NAME:DATE_OF_BIRTH:SEX:CHILDPHOTO:'
-,p_break_on=>'CHILDID:0:0:0:0:0'
-,p_break_enabled_on=>'CHILDID:0:0:0:0:0'
+,p_report_columns=>'LAST_NAME:FIRST_NAME:DATE_OF_BIRTH:SEX:TM6_NO:CHILDPHOTO:'
+,p_break_on=>'0:0:0:0:0'
+,p_break_enabled_on=>'0:0:0:0:0'
 ,p_flashback_enabled=>'N'
 );
 wwv_flow_api.create_page_plug(
@@ -838,6 +850,9 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_02=>'HTML'
 ,p_attribute_03=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(911896361058439695)
 ,p_plug_name=>'Travel Card Data'
@@ -853,9 +868,6 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_02=>'HTML'
 ,p_attribute_03=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(914176834720385395)
 ,p_plug_name=>'Travel Card-Image'
@@ -908,6 +920,7 @@ wwv_flow_api.create_page_plug(
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(951882879294415189)
 ,p_plug_name=>'Print PDF'
+,p_region_name=>'171-Tabs-Container-PrintPDF'
 ,p_parent_plug_id=>wwv_flow_api.id(911242294983997345)
 ,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
 ,p_plug_template=>wwv_flow_api.id(563820889302049617)
@@ -1204,10 +1217,17 @@ wwv_flow_api.create_page_item(
 ,p_item_plug_id=>wwv_flow_api.id(930711547053648041)
 ,p_prompt=>'Permit Type:'
 ,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_named_lov=>'LOV_PERMIT_TYPE'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select NVL(display_value,DISPLAY_VALUE$DLC)  d,',
+'   key_value r',
+'from DL_COMMON.PERMIT_TYPES$LC t',
+'order by t.DISPLAY_ORDER'))
 ,p_field_template=>wwv_flow_api.id(563841216965049626)
 ,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
 ,p_attribute_01=>'Y'
-,p_attribute_02=>'VALUE'
+,p_attribute_02=>'LOV'
 ,p_attribute_04=>'Y'
 );
 wwv_flow_api.create_page_item(
@@ -1841,6 +1861,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'VALUE'
 ,p_attribute_04=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(850416015974064815)
 ,p_name=>'P171_MVMNT_SCANPHOTO'
@@ -1877,9 +1900,6 @@ wwv_flow_api.create_page_item(
 ,p_item_template_options=>'#DEFAULT#'
 ,p_attribute_01=>'DB_COLUMN'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(870739828785639313)
 ,p_name=>'P171_WSQ_LI'
@@ -2224,6 +2244,7 @@ wwv_flow_api.create_page_item(
 'WHERE icao.is_active = ''Y''',
 'ORDER BY LOWER(NVL2(pib.counttnm, pib.nationenm || '' / '' || pib.counttnm, NVL(icao.display_value, icao.display_value$dlc))) ASC',
 ';'))
+,p_tag_css_classes=>'cl-h100'
 ,p_grid_label_column_span=>5
 ,p_field_template=>wwv_flow_api.id(563841216965049626)
 ,p_item_template_options=>'#DEFAULT#'
@@ -2527,7 +2548,7 @@ wwv_flow_api.create_page_item(
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4686928433199369030)
 ,p_name=>'P171_LAST_EDIT_DATE'
-,p_item_sequence=>140
+,p_item_sequence=>190
 ,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
 ,p_prompt=>'Last Edit Date:'
 ,p_display_as=>'NATIVE_DISPLAY_ONLY'
@@ -2543,7 +2564,7 @@ wwv_flow_api.create_page_item(
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4686928597690369031)
 ,p_name=>'P171_LAST_EDIT_BY'
-,p_item_sequence=>150
+,p_item_sequence=>200
 ,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
 ,p_prompt=>'Last Edit By:'
 ,p_display_as=>'NATIVE_DISPLAY_ONLY'
@@ -2566,7 +2587,7 @@ wwv_flow_api.create_page_item(
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4686928657313369032)
 ,p_name=>'P171_LAST_EDIT_REMARK'
-,p_item_sequence=>160
+,p_item_sequence=>210
 ,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
 ,p_prompt=>'Last Edit Remark:'
 ,p_display_as=>'NATIVE_DISPLAY_ONLY'
@@ -2596,6 +2617,102 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'N'
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'NONE'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4690288747087124635)
+,p_name=>'P171_MVMNT_TYPE_DATA'
+,p_item_sequence=>140
+,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
+,p_prompt=>'Type Data:'
+,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_grid_label_column_span=>5
+,p_display_when=>'P171_MVMNT_TYPE_DATA'
+,p_display_when_type=>'ITEM_IS_NOT_NULL'
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'VALUE'
+,p_attribute_04=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4690288892033124636)
+,p_name=>'P171_PHB_ANU_SEQNO'
+,p_item_sequence=>150
+,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
+,p_prompt=>'Prohibit Anu:'
+,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_named_lov=>'LOV_ANUNOTE'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT anunm, anu_seqno',
+'FROM dl_bordercontrol.v_anu',
+'WHERE actflag = ''Y'''))
+,p_tag_css_classes=>'cl-h100'
+,p_grid_label_column_span=>5
+,p_display_when=>'P171_PHB_ANU_SEQNO'
+,p_display_when_type=>'ITEM_IS_NOT_NULL'
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'LOV'
+,p_attribute_04=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4690288944792124637)
+,p_name=>'P171_PHB_ANUNOTE'
+,p_item_sequence=>160
+,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
+,p_prompt=>'Prohibit Anunote:'
+,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_tag_css_classes=>'cl-h100'
+,p_grid_label_column_span=>5
+,p_display_when=>'P171_PHB_ANUNOTE'
+,p_display_when_type=>'ITEM_IS_NOT_NULL'
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'VALUE'
+,p_attribute_04=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4690289075005124638)
+,p_name=>'P171_RETH_REASON_SEQNO'
+,p_item_sequence=>170
+,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
+,p_prompt=>'Deportee Reason:'
+,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_named_lov=>'LOV_REASON_DEPORTEE'
+,p_lov=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT reasondptnm, reasondpt_seqno',
+'FROM dl_bordercontrol.v_reasondpt',
+'WHERE actflag = ''Y'''))
+,p_tag_css_classes=>'cl-h100'
+,p_grid_label_column_span=>5
+,p_display_when=>'P171_RETH_REASON_SEQNO'
+,p_display_when_type=>'ITEM_IS_NOT_NULL'
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'LOV'
+,p_attribute_04=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4690289127940124639)
+,p_name=>'P171_RETH_NOTE'
+,p_item_sequence=>180
+,p_item_plug_id=>wwv_flow_api.id(934013349991259460)
+,p_prompt=>'Deportee Note:'
+,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_tag_css_classes=>'cl-h100'
+,p_grid_label_column_span=>5
+,p_display_when=>'P171_RETH_NOTE'
+,p_display_when_type=>'ITEM_IS_NOT_NULL'
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'VALUE'
+,p_attribute_04=>'Y'
 );
 wwv_flow_api.create_page_computation(
  p_id=>wwv_flow_api.id(6936176580734822)
@@ -2749,6 +2866,9 @@ wwv_flow_api.create_page_process(
 ,p_process_when_button_id=>wwv_flow_api.id(906224950666759666)
 ,p_process_success_message=>'Successfully changed Movement to Deportee'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(906570693519808122)
 ,p_process_sequence=>11
@@ -2952,9 +3072,6 @@ wwv_flow_api.create_page_process(
 ,p_process_when=>'P171_MVMNTID'
 ,p_process_when_type=>'ITEM_IS_NOT_NULL'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(137870475136874832)
 ,p_process_sequence=>40
@@ -2967,7 +3084,8 @@ wwv_flow_api.create_page_process(
 '    (',
 '        p_COLLECTION_NAME => ''COLL_PIBICS_PASSPORT_IMAGE'',',
 '        p_IMAGE_TYPE      => ''PASSPORT'',',
-'        p_PK_VAL          => :P171_PERSONID',
+'        p_PK_VAL          => :P171_PERSONID,',
+'        p_DOCNO           => :P171_DOCNUMBER',
 '    );',
 '    ',
 '    DL_BORDERCONTROL.PKG_APEX_UTIL.Get_Pibics_Image',
@@ -3047,7 +3165,7 @@ wwv_flow_api.create_page_process(
 '        , source_system',
 '        -- visa data',
 '        , visum_number',
-'        , visa_type_name',
+'        , visa_type',
 '        , visum_end',
 '        , permit_type',
 '        , permit_expiry_date',
@@ -3151,7 +3269,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.dept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            , DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , NULL',
 '            , visatypecd',
@@ -3196,6 +3315,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3240,7 +3360,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.dept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            ,  DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , NULL',
 '            , visatypecd',
@@ -3285,6 +3406,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3329,7 +3451,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.indept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            ,  DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , visano',
 '            , invisatypecd',
@@ -3374,6 +3497,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3418,7 +3542,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.outdept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            ,  DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , visano',
 '            , outvisatypecd',
@@ -3463,6 +3588,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3490,6 +3616,9 @@ wwv_flow_api.create_page_process(
 'AND :P171_DATA_SOURCE_SEC NOT LIKE ''%PRD'''))
 ,p_process_when_type=>'SQL_EXPRESSION'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(137869557689874823)
 ,p_process_sequence=>50
@@ -3535,7 +3664,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.dept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            ,  DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , NULL',
 '            , visatypecd',
@@ -3580,6 +3710,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3624,7 +3755,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.dept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            ,  DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , NULL',
 '            , visatypecd',
@@ -3669,6 +3801,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3713,7 +3846,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.indept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            ,  DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , visano',
 '            , invisatypecd',
@@ -3758,6 +3892,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3802,7 +3937,8 @@ wwv_flow_api.create_page_process(
 '                FROM dl_bordercontrol.v_department',
 '                WHERE dept_seqno = v.outdept_seqno',
 '              )',
-'            , DECODE(typedata, ''ATC'', 3, 2)',
+'            ,  DECODE(SUBSTR(typedata, 1, 3), ''ATC'', 3, ''BIO'', 1, 2)',
+'            , typedata',
 '            -- visa data',
 '            , visano',
 '            , outvisatypecd',
@@ -3847,6 +3983,7 @@ wwv_flow_api.create_page_process(
 '            , :P171_INS_BY',
 '            , :P171_SERVER_ID',
 '            , :P171_MVMNT_SOURCE_SYSTEM',
+'            , :P171_MVMNT_TYPE_DATA',
 '            -- visa data',
 '            , :P171_VISUM_NUMBER',
 '            , :P171_VISA_TYPE',
@@ -3877,9 +4014,6 @@ wwv_flow_api.create_page_process(
 'AND :P171_DATA_SOURCE_SEC LIKE ''%PRD'''))
 ,p_process_when_type=>'SQL_EXPRESSION'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(4686928356939369029)
 ,p_process_sequence=>60
@@ -3901,7 +4035,7 @@ wwv_flow_api.create_page_process(
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 ,p_process_when=>wwv_flow_string.join(wwv_flow_t_varchar2(
 ':P171_NATIONALITY = ''THA''',
-'AND NVL(:P171_DOCTYPE, 1) = 1'))
+'AND NVL(decode(:P171_DOCTYPE, ''P'', 1, :P171_DOCTYPE), 1) = 1'))
 ,p_process_when_type=>'SQL_EXPRESSION'
 );
 wwv_flow_api.create_page_process(
@@ -3931,6 +4065,38 @@ wwv_flow_api.create_page_process(
 ,p_process_when=>'P171_DATA_SOURCE'
 ,p_process_when_type=>'VAL_OF_ITEM_IN_COND_EQ_COND2'
 ,p_process_when2=>'BIO'
+);
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(4690289270471124640)
+,p_process_sequence=>80
+,p_process_point=>'BEFORE_HEADER'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Fetch Reasons (PHB, RETH)'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'BEGIN',
+'    IF :P171_MVMNT_TYPE_DATA IN (''PHB'', ''BIO-PHB'') THEN ',
+'        SELECT anu_seqno, anunote',
+'        INTO :P171_PHB_ANU_SEQNO, :P171_PHB_ANUNOTE',
+'        FROM dl_bordercontrol.v_prohibit',
+'        WHERE tminout_seqno = :P171_DATA_SOURCE_SEC_PK_VAL;',
+'    ELSIF :P171_MVMNT_TYPE_DATA IN (''RETH'', ''BIO-RETH'') THEN',
+'        SELECT reasondpt_seqno, dptreasonnote',
+'        INTO :P171_RETH_REASON_SEQNO, :P171_RETH_NOTE',
+'        FROM dl_bordercontrol.v_deportee',
+'        WHERE inout_seqno = :P171_DATA_SOURCE_SEC_PK_VAL;',
+'    END IF;',
+'EXCEPTION',
+'    WHEN NO_DATA_FOUND THEN',
+'        :P171_PHB_ANU_SEQNO := NULL;',
+'        :P171_PHB_ANUNOTE := NULL;',
+'        :P171_RETH_REASON_SEQNO := NULL;',
+'        :P171_RETH_NOTE := NULL;',
+'END;'))
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>wwv_flow_string.join(wwv_flow_t_varchar2(
+':P171_DATA_SOURCE = ''PIBICS''',
+'AND :P171_MVMNT_TYPE_DATA IN (''PHB'', ''BIO-PHB'', ''RETH'', ''BIO-RETH'')'))
+,p_process_when_type=>'SQL_EXPRESSION'
 );
 end;
 /

@@ -38,7 +38,7 @@ prompt APPLICATION 1100 - Dashboard
 --   Pages:                      3
 --     Items:                    2
 --     Processes:                5
---     Regions:                  8
+--     Regions:                  9
 --     Buttons:                  1
 --     Dynamic Actions:          6
 --   Shared Components:
@@ -47,7 +47,7 @@ prompt APPLICATION 1100 - Dashboard
 --       Processes:              2
 --       Computations:           3
 --     Navigation:
---       Lists:                  7
+--       Lists:                  8
 --       Breadcrumbs:            1
 --         Entries:              1
 --     Security:

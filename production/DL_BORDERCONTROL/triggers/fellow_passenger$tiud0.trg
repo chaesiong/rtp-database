@@ -26,7 +26,6 @@ COMPOUND TRIGGER
   PROCEDURE l_set_dml_type
   IS
   BEGIN
-
     IF (INSERTING())
     THEN
       l_dml_type := 'I';
@@ -104,14 +103,11 @@ COMPOUND TRIGGER
     -- Check FK if the column has changed
     IF (n_adm_class_province IS NOT NULL AND NOT dl_common.pkg_util.is_equal(n_adm_class_province, o_adm_class_province))
     THEN
-
       BEGIN
-
         SELECT 1
           INTO l_check
           FROM adm_class_province
          WHERE key_value = n_adm_class_province;
-
         IF (l_check != 'Y')
         THEN
           RAISE_APPLICATION_ERROR(-20000,'The "adm_class_province"[''' || n_adm_class_province || '''] is not active! For KEY_VALUE[''' || p_key_value || '''], DML_TYPE[''' || l_dml_type || '''].');
@@ -124,7 +120,6 @@ COMPOUND TRIGGER
     END IF;
     --
   END l_check_fk_content;*/
-
   /** ======================================================
    * BEFORE STATEMENT EVENT
    *
@@ -171,7 +166,6 @@ COMPOUND TRIGGER
       --
       :NEW.dml_at := SYSTIMESTAMP;
       :NEW.dml_by := dl_common.pkg_session.get_audit_user();
-
       -- does the pk value has changed?
       IF (l_has_pk_value_changed())
       THEN
@@ -181,7 +175,6 @@ COMPOUND TRIGGER
         :NEW.dml_type := l_dml_type;
       END IF;
       --
-
     -- If the >>>>DELETING<<<< transaction is used
     ELSE
       -- 'D'
@@ -202,7 +195,6 @@ COMPOUND TRIGGER
     --
     IF (l_dml_type IS NULL)
     THEN
-
       -- This case can occur for example on MERGE-Statements!
       l_set_dml_type();
     END IF;
@@ -210,12 +202,10 @@ COMPOUND TRIGGER
     -- If the >>>>INSERTING<<<< transaction is used
     IF (l_dml_type = 'I')
     THEN
-
       L_Check_FK_Content(:new.MVMNTID
                         ,:new.PERSON
                          --
                          );
-
     -- If the >>>>UPDATING<<<< transaction is used
     ELSIF (l_dml_type = 'U')
     THEN
@@ -254,11 +244,9 @@ COMPOUND TRIGGER
         ,:OLD.row_flag_mask
         ,:OLD.adm_class_province );
       --
-
       -- UPDATE on PK-Columns is not allowed, so fake here a DELETE!
       IF (l_has_pk_value_changed())
       THEN
-
         INSERT INTO dl_bordercontrol.adm_class_district$HIS
           (key_value
           ,dml_at
@@ -273,7 +261,6 @@ COMPOUND TRIGGER
            );
       END IF;
       --
-
     -- If the >>>>DELETING<<<< transaction is used
     ELSE
       -- 'D'

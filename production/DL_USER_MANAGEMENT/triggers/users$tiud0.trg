@@ -1,6 +1,6 @@
 CREATE OR REPLACE EDITIONABLE TRIGGER "DL_USER_MANAGEMENT"."USERS$TIUD0" 
-  for insert or update or delete on DL_USER_MANAGEMENT.USERS
-  compound trigger
+  for insert or update or delete ON DL_USER_MANAGEMENT.USERS 
+compound trigger
 --
   --
   /*******************************************************************************
@@ -15,6 +15,8 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_USER_MANAGEMENT"."USERS$TIUD0"
   * WWirns    08.08.2018  Add procedure L_Check_Row4DML
   * WWirns    27.08.2018  Add loosing INS_AT and INS_BY at code point "L_Has_PK_Value_Changed"
   * MStahl    24.09.2018  Added phone number
+  * MSCS      24.07.2019  Added pw_expire, national_id, first_name_thai, last_name_thai, dob, rank,
+  *                       department_level_1, department_level_2, department_level_2, position
   *******************************************************************************/
   --
   --
@@ -229,6 +231,38 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_USER_MANAGEMENT"."USERS$TIUD0"
                          );
       --
       insert into USERS$HIS
+        (id
+        ,username
+        ,first_name
+        ,last_name
+        ,mail_address
+        ,phone_number
+        ,state
+        ,pw_hash
+        ,pw_salt
+        ,pw_iteration_count
+        ,pw_expiration_date
+        ,pw_must_be_changed
+        ,locale
+        ,ins_at
+        ,ins_by
+        ,dml_at
+        ,dml_by
+        ,dml_type
+        ,row_flag_mask
+        ,tag
+        ,pw_expire
+        ,national_id
+        ,first_name_thai
+        ,last_name_thai
+        ,dob
+        ,rank
+        ,department_level_1
+        ,department_level_2
+        ,department_level_3
+        ,position
+         --
+         )
       values
         (:old.ID
         ,:old.USERNAME
@@ -250,6 +284,16 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_USER_MANAGEMENT"."USERS$TIUD0"
         ,:old.DML_TYPE
         ,:old.ROW_FLAG_MASK
         ,:old.TAG
+        ,:old.pw_expire
+        ,:old.national_id
+        ,:old.first_name_thai
+        ,:old.last_name_thai
+        ,:old.dob
+        ,:old.rank
+        ,:old.department_level_1
+        ,:old.department_level_2
+        ,:old.department_level_3
+        ,:old.position
          --
          );
       --
@@ -284,6 +328,38 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_USER_MANAGEMENT"."USERS$TIUD0"
       end if;
       --
       insert into USERS$HIS
+        (id
+        ,username
+        ,first_name
+        ,last_name
+        ,mail_address
+        ,phone_number
+        ,state
+        ,pw_hash
+        ,pw_salt
+        ,pw_iteration_count
+        ,pw_expiration_date
+        ,pw_must_be_changed
+        ,locale
+        ,ins_at
+        ,ins_by
+        ,dml_at
+        ,dml_by
+        ,dml_type
+        ,row_flag_mask
+        ,tag
+        ,pw_expire
+        ,national_id
+        ,first_name_thai
+        ,last_name_thai
+        ,dob
+        ,rank
+        ,department_level_1
+        ,department_level_2
+        ,department_level_3
+        ,position
+         --
+         )
       values
         (:old.ID
         ,:old.USERNAME
@@ -305,6 +381,16 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_USER_MANAGEMENT"."USERS$TIUD0"
         ,:old.DML_TYPE
         ,:old.ROW_FLAG_MASK
         ,:old.TAG
+        ,:old.pw_expire
+        ,:old.national_id
+        ,:old.first_name_thai
+        ,:old.last_name_thai
+        ,:old.dob
+        ,:old.rank
+        ,:old.department_level_1
+        ,:old.department_level_2
+        ,:old.department_level_3
+        ,:old.position
          --
          );
       --
