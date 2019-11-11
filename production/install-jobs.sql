@@ -78,6 +78,8 @@
 @DL_INTERFACE/jobs/check_queue_i3_10.sql
 @DL_INTERFACE/jobs/sj_send_to_pibics_case_gender.sql
 @DL_INTERFACE/jobs/sj_sp_send_to_pibics_again.sql
+-- DL_MAINTENANCE/jobs
+@DL_MAINTENANCE/jobs/hm_main_scheduler.sql
 -- SYSTEM/jobs
 @SYSTEM/jobs/job_send_to_pibics_again_ex.sql
 @SYSTEM/jobs/j_send_to_pibics_unsuccess_1.sql

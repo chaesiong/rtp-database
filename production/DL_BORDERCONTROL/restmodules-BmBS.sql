@@ -364,6 +364,7 @@ begin
      --insert borderdocument id into movement as it is needed for the visa
      update dl_bordercontrol.movements
      set brddocid = l_borderdocument_rec.brddocid
+        ,ins_by   = l_ins_by
      where mvmntid = l_movement_rec.mvmntid;
 
      dl_bordercontrol.dl_movementhandling.update_movement(
@@ -2246,4 +2247,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.28
+Elapsed: 00:00:00.17

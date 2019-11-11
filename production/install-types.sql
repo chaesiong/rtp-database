@@ -77,6 +77,8 @@
 @DL_BLACKLIST/types/tt_blt_search_result_ext.tps
 @DL_BLACKLIST/types/tt_blt_search_result.tps
 @DL_BLACKLIST/types/tt_varchar2.tps
+-- DL_MAINTENANCE/types
+@DL_MAINTENANCE/types/trig_data.tps
 -- SYSTEM/types
 @SYSTEM/types/ct_partial_date.tps
 @SYSTEM/types/logmnr$col_gg_recs.tps

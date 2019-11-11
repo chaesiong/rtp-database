@@ -1,10 +1,10 @@
 CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."MOVEMENTS$TIUD0" 
-  for insert or update or delete on DL_BORDERCONTROL.MOVEMENTS
-  compound trigger
+  for insert or update or delete ON DL_BORDERCONTROL.MOVEMENTS 
+compound trigger
 --
   --
   /*******************************************************************************
-  *
+  * 
   *                                                                              *
   *                                                                              *
   * Author    Date        Description                                            *
@@ -24,6 +24,7 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."MOVEMENTS$TIUD0"
   * WWirns    02.03.2018  Add check for MUST_APPROVE_ENTRY_FORM_NO
   * WWirns    20.03.2018  Add column MOVEMENT_DT
   * WWirns    20.03.2018  Improve assignments of v_DML_TYPE and v_PORT_MOVEMENTS
+  * M.Bock    19.07.2019  Allow INS_BY, DML_BY to be set explicitly
   *******************************************************************************/
   --
   --
@@ -362,16 +363,20 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."MOVEMENTS$TIUD0"
       -- End:PK is a surrogate key
       --
       :new.INS_AT   := sysdate;
-      :new.INS_BY   := DL_COMMON.PKG_SESSION.Get_AUDIT_User();
+      if :new.INS_BY = user then 
+        :new.INS_BY := DL_COMMON.PKG_SESSION.Get_AUDIT_User();
+      end if;
       :new.DML_AT   := systimestamp;
-      :new.DML_BY   := DL_COMMON.PKG_SESSION.Get_AUDIT_User();
+      if :new.DML_BY = user then
+        :new.DML_BY := DL_COMMON.PKG_SESSION.Get_AUDIT_User();
+      end if;
       :new.DML_TYPE := v_DML_TYPE;
       --
     elsif (v_DML_TYPE = 'U')
     then
       --
       :new.INS_AT := :old.INS_AT;
-      :new.INS_BY := :old.INS_BY;
+    --  :new.INS_BY := :old.INS_BY;
       :new.DML_AT := systimestamp;
       :new.DML_BY := DL_COMMON.PKG_SESSION.Get_AUDIT_User();
       /*

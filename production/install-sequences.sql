@@ -34,6 +34,10 @@
 -- DL_BORDERCONTROL_DATAMART/sequences
 @DL_BORDERCONTROL_DATAMART/sequences/seq_import_run_events.sql
 @DL_BORDERCONTROL_DATAMART/sequences/seq_run.sql
+-- DL_MAINTENANCE/sequences
+@DL_MAINTENANCE/sequences/global_audit_s.sql
+@DL_MAINTENANCE/sequences/hm_log_s.sql
+@DL_MAINTENANCE/sequences/trig_log_s.sql
 -- SYSTEM/sequences
 @SYSTEM/sequences/logmnr_dids$.sql
 @SYSTEM/sequences/logmnr_evolve_seq$.sql

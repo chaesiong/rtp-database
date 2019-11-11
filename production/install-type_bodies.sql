@@ -23,4 +23,5 @@
 @DL_BORDERCONTROL/type_bodies/ct_partial_date_type.tpb
 -- DL_BLACKLIST/type_bodies
 @DL_BLACKLIST/type_bodies/ct_partial_date.tpb
+-- DL_MAINTENANCE/type_bodies
 -- SYSTEM/type_bodies

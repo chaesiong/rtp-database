@@ -125,5 +125,9 @@
 @DL_INTERFACE/packages/pkg_object_handling.pks
 @DL_INTERFACE/packages/pkg_utils.pks
 @DL_INTERFACE/packages/pkg_webservices_blacklist.pks
+-- DL_MAINTENANCE/packages
+@DL_MAINTENANCE/packages/hm_mail.pks
+@DL_MAINTENANCE/packages/hm_main.pks
+@DL_MAINTENANCE/packages/trig_main.pks
 -- SYSTEM/packages
 @SYSTEM/packages/pkg_search_new.pks

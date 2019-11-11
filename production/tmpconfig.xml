@@ -229,7 +229,7 @@
     <property name="connectionCachingEnabled" value="true" />
 </bean>
 <bean id="writer" class="com.googlecode.scheme2ddl.UserObjectWriter">
-    <property name="outputPath" value="/home/oracle/fetch_db_sources/20675-sources-tibpbio-bk001.immigration.go.th-2019-10-30T1359" />
+    <property name="outputPath" value="/home/oracle/fetch_db_sources/20675-sources-tibpbio-bk001.immigration.go.th-2019-11-11T1842" />
 </bean>
 <!-- list of schema for processing, used only if oracle user connected as sysdba-->
 <util:list id="schemaList">
@@ -274,6 +274,9 @@
     
 
     <value>DL_INTERFACE</value>
+    
+
+    <value>DL_MAINTENANCE</value>
     
 
     <value>PIBICSDM2_RO</value>
