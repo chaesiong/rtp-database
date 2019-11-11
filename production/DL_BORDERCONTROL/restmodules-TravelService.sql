@@ -655,4 +655,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.08
+Elapsed: 00:00:00.06

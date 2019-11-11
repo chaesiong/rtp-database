@@ -565,6 +565,7 @@
 @DL_STAGING4PIBICS_INTF/tables/trcd_visabynation.sql
 @DL_STAGING4PIBICS_INTF/tables/trcd_visatype.sql
 -- DL_INTERFACE/tables
+@DL_INTERFACE/tables/log_blacklist_hits_bak.sql
 @DL_INTERFACE/tables/log_blacklist_hits.sql
 @DL_INTERFACE/tables/log_sync_webservices.sql
 @DL_INTERFACE/tables/log_webapi.sql
@@ -572,6 +573,11 @@
 @DL_INTERFACE/tables/parameters.sql
 @DL_INTERFACE/tables/system_config.sql
 @DL_INTERFACE/tables/unsuccess_list.sql
+-- DL_MAINTENANCE/tables
+@DL_MAINTENANCE/tables/global_audit.sql
+@DL_MAINTENANCE/tables/hm_log.sql
+@DL_MAINTENANCE/tables/hm_settings.sql
+@DL_MAINTENANCE/tables/trig_log.sql
 -- SYSTEM/tables
 @SYSTEM/tables/aq$_internet_agent_privs.sql
 @SYSTEM/tables/aq$_internet_agents.sql

@@ -10,6 +10,9 @@ job_class=>'"DEFAULT_JOB_CLASS"', enabled=>FALSE, auto_drop=>TRUE,comments=>
 'Advanced Queuing for Movements to PIBICS. Secondary.'
 );
 sys.dbms_scheduler.set_attribute('"CHECK_QUEUE_I3_04"','NLS_ENV','NLS_LANGUAGE=''AMERICAN'' NLS_TERRITORY=''AMERICA'' NLS_CURRENCY=''$'' NLS_ISO_CURRENCY=''AMERICA'' NLS_NUMERIC_CHARACTERS=''.,'' NLS_CALENDAR=''GREGORIAN'' NLS_DATE_FORMAT=''DD-MON-RR'' NLS_DATE_LANGUAGE=''AMERICAN'' NLS_SORT=''BINARY'' NLS_TIME_FORMAT=''HH.MI.SSXFF AM'' NLS_TIMESTAMP_FORMAT=''DD-MON-RR HH.MI.SSXFF AM'' NLS_TIME_TZ_FORMAT=''HH.MI.SSXFF AM TZR'' NLS_TIMESTAMP_TZ_FORMAT=''DD-MON-RR HH.MI.SSXFF AM TZR'' NLS_DUAL_CURRENCY=''$'' NLS_COMP=''BINARY'' NLS_LENGTH_SEMANTICS=''BYTE'' NLS_NCHAR_CONV_EXCP=''FALSE''');
+dbms_scheduler.set_attribute('"CHECK_QUEUE_I3_04"','instance_stickiness',FALSE);
+dbms_scheduler.set_attribute('"CHECK_QUEUE_I3_04"','instance_id',3);
+dbms_scheduler.enable('"CHECK_QUEUE_I3_04"');
 COMMIT; 
 END; 
 /

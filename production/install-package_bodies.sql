@@ -125,6 +125,10 @@
 @DL_INTERFACE/package_bodies/pkg_object_handling.pkb
 @DL_INTERFACE/package_bodies/pkg_utils.pkb
 @DL_INTERFACE/package_bodies/pkg_webservices_blacklist.pkb
+-- DL_MAINTENANCE/package_bodies
+@DL_MAINTENANCE/package_bodies/hm_mail.pkb
+@DL_MAINTENANCE/package_bodies/hm_main.pkb
+@DL_MAINTENANCE/package_bodies/trig_main.pkb
 -- SYSTEM/package_bodies
 @SYSTEM/package_bodies/pkg_search.pkb
 @SYSTEM/package_bodies/pkg_transcode_reverse_manual.pkb

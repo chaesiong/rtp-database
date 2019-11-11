@@ -6026,5 +6026,19 @@ wwv_flow_api.create_message(
 ,p_message_text=>'OK'
 ,p_is_js_message=>true
 );
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(38156741576736442763)
+,p_name=>'NIST:UPLOAD.LOADING.ERROR.CAPTION'
+,p_message_language=>'th'
+,p_message_text=>'Error while Loading NIST File!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(38156741658189442763)
+,p_name=>'NIST:UPLOAD.LOADING.ERROR.OK'
+,p_message_language=>'th'
+,p_message_text=>'OK'
+,p_is_js_message=>true
+);
 end;
 /
