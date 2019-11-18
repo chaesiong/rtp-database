@@ -46,6 +46,7 @@ declare
             SELECT 'BIO_BD'                     AS OWNER FROM DUAL UNION ALL
             SELECT 'SERVAPP'                    AS OWNER FROM DUAL UNION ALL
             SELECT 'JASPER_REPORTING'           AS OWNER FROM DUAL UNION ALL
+            SELECT 'DL_MAINTENANCE'             AS OWNER FROM DUAL UNION ALL
             SELECT 'DL_STAGING'                 AS OWNER FROM DUAL
         ),
         FOLDER_NAMES AS (
@@ -148,6 +149,7 @@ declare
                 Q.SYNONYM_NAME,
                 Q.TABLE_OWNER,
                 Q.TABLE_NAME,
+                'DROP PUBLIC SYNONYM ' || Q.SYNONYM_NAME || ';' || chr(10) ||
                 'CREATE PUBLIC SYNONYM ' || Q.SYNONYM_NAME || ' FOR ' || Q.TABLE_OWNER || '.' || Q.TABLE_NAME || ';' STMT
             FROM 
                 (
@@ -478,6 +480,7 @@ begin
     
     --deploy objects
     for l_ddl_idx in 1 .. l_ddl.count loop
+        dbms_output.put_line('SELECT ' || l_ddl_idx || ' DDL# FROM DUAL;');
         dbms_output.put_line(l_ddl(l_ddl_idx).STMT);
     end loop;    
     
@@ -493,3 +496,4 @@ begin
     dbms_output.put_line('quit'); 
    
 end;
+
