@@ -31,6 +31,190 @@ function FUNCDEBUG
     return 0
 }
 
+function DL_BLACKLIST { #grepme
+cat <<-'EOFTABLES'
+FACE_MISSING_REASONS
+FACE_POSITIONS
+FACE_QUALITY_TYPES
+FINGER_IMPRESSION_TYPES
+FINGER_MISSING_REASONS
+FINGER_POSITIONS
+OPS_PREFERENCES
+EOFTABLES
+}
+
+function DL_BORDERCONTROL { #grepme
+cat <<-'EOFTABLES'
+BORDERPOSTS
+COUNTRY_MANAGEMENT
+DISPLAY_OBJECTS
+FAF_FEES_AND_FINES
+FAF_FEES_AND_FINES_DETAILS
+FAF_PAYMENT_RATE
+FAF_PAYMENT_RATE$I18N
+FAF_PAYMENT_RATE$TAG
+FAF_PERMIT_TYPE
+FAF_PERMIT_TYPE$I18N
+FAF_PERMIT_TYPE$TAG
+PARAMETERS
+TERMINALS
+X_VISARUN_RULES
+EOFTABLES
+}
+
+function DL_BORDERCONTROL_DATAMART { #grepme
+cat <<-'EOFTABLES'
+EVENT_TYPES
+EOFTABLES
+}
+
+function DL_COMMON { #grepme
+cat <<-'EOFTABLES'
+ACTION_CODES
+ACTION_CODES$I18N
+AIRPORTS
+AIRPORTS$I18N
+APEX_MENU
+APEX_MENU$I18N
+ARRESTED_STATUSES
+ARRESTED_STATUSES$I18N
+ARRESTED_TYPES
+ARRESTED_TYPES$I18N
+BC_DOC_CLASS
+BC_DOC_CLASS$I18N
+BC_PERSON_TYPES
+BC_PERSON_TYPES$I18N
+B_LIST_REASONS
+B_LIST_REASONS$I18N
+BOOLS
+BOOLS$I18N
+BORDER_TYPES
+BORDER_TYPES$I18N
+BS_RELATIONSHIPS
+BS_RELATIONSHIPS$I18N
+CARD_TYPES
+CARD_TYPES$I18N
+CARRIERS
+CARRIERS$I18N
+CASE_TYPES
+CONTINENTS
+CONTINENTS$I18N
+COUNTRIES
+COUNTRIES_ICAO_DOC_CODES
+COUNTRIES$I18N
+DEVICE_TYPES
+DEVICE_TYPES$I18N
+ENTRY_EXITS
+ENTRY_EXITS$I18N
+FINGER_MISS_REASONS
+FINGER_MISS_REASONS$I18N
+FINGER_STATUS
+FINGER_STATUS$I18N
+HUMAN_FINGERS
+HUMAN_FINGERS$I18N
+HUMAN_SEXES
+HUMAN_SEXES$I18N
+ICAO_DC_LIST_ITMS
+ICAO_DC_LISTS
+ICAO_DC_LISTS$I18N
+ICAO_DOC_CODES
+ICAO_DOC_CODES$I18N
+ICAO_DOC_CODE$VISA_TYPE
+INCIDENT_TYPES
+INCIDENT_TYPES$I18N
+LANGUAGES
+LANGUAGES$I18N
+LOCALES
+MESSAGES
+MESSAGES$I18N
+MOVEMENT_REASONS
+MOVEMENT_REASONS$I18N
+MOVEMENT_REASONS$TAG
+OWNERS
+OWNERS$I18N
+OWNERS$TAG
+PERMIT_TYPES
+PERMIT_TYPES$I18N
+PORT_MOVEMENTS
+PORT_MOVEMENTS$I18N
+PORT_MOVEMENTS$TAG
+PORTS
+PORTS$I18N
+PROFESSIONS
+PROFESSIONS$I18N
+REASON_CODES
+REASON_CODES$I18N
+SALUTATIONS
+SALUTATIONS$I18N
+SECRET_LEVELS
+SECRET_LEVELS$I18N
+STATUSES
+STATUSES$I18N
+STATUSES$TAG
+SUB_NATIONALITIES
+TRANS_GRP_STATES
+TRANS_GRP_STATES$I18N
+TRANS_MODES
+TRANS_MODES$I18N
+TRANS_VEHICLES
+TRANS_VEHICLES$I18N
+VISA_TYPES
+VISA_TYPES$I18N
+YES_NOS
+YES_NOS$I18N
+EOFTABLES
+}
+
+function DL_DBA { #grepme
+cat <<-'EOFTABLES'
+TEMPLATES
+TEMPLATES$I18N
+TEMPLATES$TAG
+EOFTABLES
+}
+
+function DL_INTERFACE { #grepme
+cat <<-'EOFTABLES'
+PARAMETERS
+EOFTABLES
+}
+
+function DL_STAGING4PIBICS { #grepme
+cat <<-'EOFTABLES'
+OPS_PIBICS_LOAD_PROCESSES
+OPS_PIBICS_TABLE
+OPS_PREFERENCES
+EOFTABLES
+}
+
+function DL_STAGING4PIBICS_INTF { #grepme
+cat <<-'EOFTABLES'
+OPS_BACKEND_PROCESSES
+OPS_PREFERENCES
+OPS_STAGING_PROCESSES
+OPS_SYNC_PROCESSES
+TRCD_BORDERPOST
+TRCD_RANKCRW
+EOFTABLES
+}
+
+function DL_USER_MANAGEMENT { #grepme
+cat <<-'EOFTABLES'
+GRANTS
+LOOKUPS
+LOOKUPS$I18N
+OBJECT_GRANT_REL
+OBJECT_PAGE_RELOBJECTS
+OBJECTS
+PARAMETER_SETTINGS
+ROLE_OBJECT_GRANT_REL
+ROLES
+USER_ROLE_REL
+USERS
+USERS$SGD
+EOFTABLES
+}
+
 function schemas
 {
 cat <<-EOFSCHEMAS
@@ -66,6 +250,7 @@ db_links
 public_db_links
 sequences
 types
+type_bodies
 packages
 tables
 views
@@ -110,6 +295,7 @@ function showUsage {
             Create drafts for installation files, that sources all objects as created with -o.
             In order not to overwrite existing files (as they are likely changed already to
             circumvent dependency problems), the files are prefixed with PREFIX.
+        -v  Lookups as INSERT statements
         -z  create tar.gz archive
 
     Note: This script must be run as oracle user and needs the following files/dependencies:
@@ -505,6 +691,44 @@ function exportObjects {
 EOXML
     # scheme2ddl uses relative path
     "$S2DDL" -c "$(basename "$EXPORTDIR")/tmpconfig.xml"
+
+    # these types do not install using sqlplus, if they have empty lines,
+    # therefore we remove empty lines
+    for TYPE in triggers types tables views; do
+        find "$EXPORTDIR" -type d -name "$TYPE"
+    done |\
+    while read TYPEPATH; do
+        find "$TYPEPATH" -type f -exec sed -i '/^[[:space:]]*$/d' "{}" \;
+    done
+
+    # separate type specs and body
+    find "$EXPORTDIR" -type d -name types |\
+    while read TYPEDIR; do
+        mkdir "$(dirname "$TYPEDIR")/type_bodies"
+        find "$TYPEDIR" -type f -name "*sql" | while read TYPEPATH; do
+            SPECPATH="$TYPEDIR/$(basename "$TYPEPATH" .sql).tps"
+
+            # check if there type is inline without explicit body
+            if [ $(grep -h -c -i "create.*or.*replace" "$TYPEPATH") -eq 1 ]; then
+                mv "$TYPEPATH" "$SPECPATH"
+                continue
+            fi
+
+            # search boundaries
+            BODY=$(grep -h -n -i "create.*or.*replace" "$TYPEPATH" | cut -d ':' -f1 | tail -1)
+            SPEC=$(($BODY-1))
+
+            # separate spec and add grant statement
+            sed -n "1, ${SPEC}p" "$TYPEPATH" > "$SPECPATH"
+            grep -i "grant.*execute" "$TYPEPATH" >> "$SPECPATH"
+
+            # separate body and remove grant statement there
+            sed -n "$BODY, \$p" "$TYPEPATH" | sed 's/grant.*execute.*//gI' > "$(dirname "$TYPEDIR")/type_bodies/$(basename "$TYPEPATH" .sql).tpb"
+
+            # clean up
+            rm "$TYPEPATH"
+        done
+    done
 }
 
 function createProxyConnectDL_BORDERCONTROL
@@ -669,13 +893,28 @@ EOF
     [ -z "$DL_BORDERCONTROL_PROXY" ] || { removeProxyConnectDL_BORDERCONTROL; trap - EXIT ; }
 }
 
+function getLookups {
+    LOOKUPS="$EXPORTDIR/LOOKUPS"
+    test -d "$LOOKUPS" || mkdir -p "$LOOKUPS"
+    grep "^function.*#grepme" "$SCRIPTPATH/$(basename "$0")" | cut -d ' ' -f2 | while read SCHEMA; do
+        $SCHEMA | while read TABLE; do
+        echo $SCHEMA.$TABLE
+        sql -S / as SYSDBA <<EOF > $LOOKUPS/${SCHEMA}-${TABLE}.sql
+SET SQLFORMAT INSERT
+select * from $SCHEMA.$TABLE;
+quit;
+EOF
+        done
+    done
+}
+
 function zipArchive {
     tar -czf "$SCRIPTPATH/$(basename "$EXPORTDIR").tar.gz" "$EXPORTDIR"
 }
 
 ###############################################################
 
-while getopts "Dfld:s:x:corpwa:i:hze" opt; do
+while getopts "Dfld:s:x:corpwa:i:hzev" opt; do
   case $opt in
     D)
         FUNCDEBUG="true"
@@ -689,7 +928,11 @@ while getopts "Dfld:s:x:corpwa:i:hze" opt; do
         exportStaticWSFiles="exportStaticWSFiles"
         exportAPEXApp="exportAPEXApp"
         createInstallDraft="createInstallDraft"
+        getLookups="getLookups"
         zipArchive="zipArchive"
+        ;;
+    v)
+        getLookups="getLookups"
         ;;
     z)
         zipArchive="zipArchive"
@@ -783,6 +1026,7 @@ if [ ! -z "$exportAPEXApp" ]; then
     done
 fi
 $createInstallDraft
+$getLookups
 
 # There are some commonly spread grants that makes it impossible to diff sources. Use the following command to eliminate them before diff'ing:
 # find . -type f -exec sed -i '/CREATE UNIQUE INDEX.*SYS_.*/d; /GRANT.*PIBICSDM2.*$/d; /GRANT.*APPSUP.*$/d; /GRANT.*TESTADM.*$/d; /GRANT.*TRAINEE.*$/d; /GRANT.*PIBICSAPP.*$/d; /GRANT.*DERMALOG_PROXY.*$/d; /GRANT.*SERVAPP.*$/d; /GRANT.*BIO_BD.*$/d;' "{}" \;
