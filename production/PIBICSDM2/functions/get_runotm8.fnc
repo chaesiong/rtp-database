@@ -12,3 +12,5 @@ select tm8child_seqno  from reps_tm8child where tm8_seqno = v_tm8_seqno  order b
   return tnm;
 end;
 /
+  GRANT EXECUTE ON "PIBICSDM2"."GET_RUNOTM8" TO "APPSUP";
+  GRANT EXECUTE ON "PIBICSDM2"."GET_RUNOTM8" TO "BIOSAADM";

@@ -35,3 +35,5 @@ chkErr := 'N';
   return upper(tmp);
 end;
 /
+  GRANT EXECUTE ON "PIBICSDM2"."NAMEBOI" TO "APPSUP";
+  GRANT EXECUTE ON "PIBICSDM2"."NAMEBOI" TO "BIOSAADM";

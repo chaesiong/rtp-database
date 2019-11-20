@@ -15,3 +15,4 @@ if P_CLOB is null or LOWER(P_CLOB) ='null' or P_CLOB='' then
 END FN_CLOB_TO_BLOB;
 
 /
+  GRANT EXECUTE ON "SERVAPP"."FN_CLOB_TO_BLOB" TO "BIOSAADM";

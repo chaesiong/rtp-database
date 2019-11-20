@@ -11,7 +11,7 @@ job_type=>'PLSQL_BLOCK', job_action=>
   end;'
 , number_of_arguments=>0,
 start_date=>TO_TIMESTAMP_TZ('17-DEC-2018 04.37.30.478897000 PM ASIA/BARNAUL','DD-MON-RRRR HH.MI.SSXFF AM TZR','NLS_DATE_LANGUAGE=english'), repeat_interval=> 
-'freq=minutely;interval=5;bysecond=01'
+'freq=minutely;interval=3;bysecond=01'
 , end_date=>NULL,
 job_class=>'"DEFAULT_JOB_CLASS"', enabled=>FALSE, auto_drop=>FALSE,comments=>
 NULL

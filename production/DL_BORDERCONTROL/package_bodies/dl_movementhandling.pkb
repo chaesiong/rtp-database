@@ -131,6 +131,42 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."DL_MOVEMENTHANDLI
   end;
   */
   --
+  function Get_IMG_SEQ_OTHER#(p_MVMNTID in MOVEMENT_ATTR.MVMNTID%type) return number is
+    v_seq                   number;
+    v_img_seq_other_min     number;
+    v_img_seq_other_max     number;
+  begin
+    select MIN(NUM_VALUE), MAX(NUM_VALUE)
+    into v_img_seq_other_min, v_img_seq_other_max
+    from DL_COMMON.MOVEMENT_ATTR_TYPES
+    where KEY_VALUE LIKE 'MVMNT_OTHER_IMAGE%';
+    
+    select NULLIF(GREATEST(NVL(MAX(SEQNO), 0) + 1, v_img_seq_other_min), v_img_seq_other_max + 1)
+    into v_seq
+    from MOVEMENT_ATTR
+    where MVMNTID = p_MVMNTID
+    and seqno BETWEEN v_img_seq_other_min and v_img_seq_other_max;
+    
+    return v_seq;
+  exception
+    when others then
+        return null;
+  end;
+  --
+  function Get_ATTR_SEQ#(p_ATTR_VALUE in VARCHAR2) return number is
+    v_seq  number;
+  begin
+    select NUM_VALUE
+    into v_seq
+    from DL_COMMON.MOVEMENT_ATTR_TYPES
+    where KEY_VALUE = p_ATTR_VALUE;
+    
+    return v_seq;
+  exception
+    when others then
+        return null;
+  end;
+  --
   --
   /**
   * ???
@@ -353,6 +389,176 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."DL_MOVEMENTHANDLI
   /*******************************************************************************
   * Author    Date        Description                                            *
   * --------  ----------  -------------------------------------------------------*
+  * MSCS      29.09.2019  XX: Added
+  *******************************************************************************/
+  --
+  procedure ADD_MODIFY_BLOB(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                           ,p_SEQNO          in MOVEMENT_ATTR.SEQNO%type
+                           ,p_DATA           in MOVEMENT_ATTR.ATTRBLOB%type
+                           ,p_INS_TERMINAL   in MOVEMENT_ATTR.INS_TERMINAL%type
+                           ,p_INS_BORDERPOST in MOVEMENT_ATTR.INS_BORDERPOST%type
+                            --
+                            ) as
+    --
+    v_LOG_Scope  logger_logs.scope%type := g_LOG_SCOPE_PREFIX || 'proc_add_modify_blob';
+    v_LOG_Params logger.tab_param;
+    --
+    v_return number;
+    --
+  begin
+    --
+    logger.append_param(v_LOG_Params
+                       ,'p_MVMNTID'
+                       ,p_MVMNTID);
+    logger.append_param(v_LOG_Params
+                       ,'p_SEQNO'
+                       ,p_SEQNO);
+    logger.log('START'
+              ,v_LOG_Scope
+              ,null
+              ,v_LOG_Params);
+    --
+    --
+    /*
+    if (not g_PACKAGE_Initialized)
+    then
+      Init_PACKAGE();
+    end if;
+    */
+    --
+    v_return := ADD_MODIFY_BLOB 
+                (
+                    p_MVMNTID         => p_MVMNTID
+                    ,p_SEQNO          => p_SEQNO
+                    ,p_DATA           => p_DATA
+                    ,p_INS_TERMINAL   => p_INS_TERMINAL
+                    ,p_INS_BORDERPOST => p_INS_BORDERPOST
+                 --
+                );
+    --
+    logger.append_param(v_LOG_Params
+                       ,'v_return'
+                       ,v_return);
+    logger.log('RETURN'
+              ,v_LOG_Scope);
+    --
+  exception
+    when others then
+      logger.log_error('Unhandled Exception'
+                      ,v_LOG_Scope
+                      ,null
+                      ,v_LOG_Params);
+      -- DONT raise;
+      --
+  end ADD_MODIFY_BLOB;
+  --
+  --
+  /**
+  * ???
+  *
+  * PARAMETERS
+  *   ???
+  *
+  * EXCEPTIONS
+  *   ???
+  *
+  * NOTES
+  *   ???
+  *
+  */
+  --
+  /*******************************************************************************
+  * Author    Date        Description                                            *
+  * --------  ----------  -------------------------------------------------------*
+  * MSCS      29.09.2019  XX: Added
+  *******************************************************************************/
+  --
+  procedure ADD_MODIFY_BLOB(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                           ,p_ATTR_VALUE     in VARCHAR2
+                           ,p_DATA           in MOVEMENT_ATTR.ATTRBLOB%type
+                           ,p_INS_TERMINAL   in MOVEMENT_ATTR.INS_TERMINAL%type
+                           ,p_INS_BORDERPOST in MOVEMENT_ATTR.INS_BORDERPOST%type
+                            --
+                            ) as
+    --
+    v_LOG_Scope  logger_logs.scope%type := g_LOG_SCOPE_PREFIX || 'proc_add_modify_blob';
+    v_LOG_Params logger.tab_param;
+    --
+    v_seqno  MOVEMENT_ATTR.SEQNO%type;
+    --
+    v_return number;
+    --
+  begin
+    --
+    logger.append_param(v_LOG_Params
+                       ,'p_MVMNTID'
+                       ,p_MVMNTID);
+    logger.append_param(v_LOG_Params
+                       ,'p_ATTR_VALUE'
+                       ,p_ATTR_VALUE);
+    logger.log('START'
+              ,v_LOG_Scope
+              ,null
+              ,v_LOG_Params);
+    --
+    --
+    /*
+    if (not g_PACKAGE_Initialized)
+    then
+      Init_PACKAGE();
+    end if;
+    */
+    --
+    if p_ATTR_VALUE = 'MVMNT_OTHER_IMAGE' then
+        v_seqno := Get_IMG_SEQ_OTHER#(p_MVMNTID);
+    else
+        v_seqno := Get_ATTR_SEQ#(p_ATTR_VALUE);
+    end if;
+    --
+    v_return := ADD_MODIFY_BLOB 
+                (
+                    p_MVMNTID         => p_MVMNTID
+                    ,p_SEQNO          => v_seqno
+                    ,p_DATA           => p_DATA
+                    ,p_INS_TERMINAL   => p_INS_TERMINAL
+                    ,p_INS_BORDERPOST => p_INS_BORDERPOST
+                 --
+                );
+    --
+    logger.append_param(v_LOG_Params
+                       ,'v_return'
+                       ,v_return);
+    logger.log('RETURN'
+              ,v_LOG_Scope);
+    --
+  exception
+    when others then
+      logger.log_error('Unhandled Exception'
+                      ,v_LOG_Scope
+                      ,null
+                      ,v_LOG_Params);
+      -- DONT raise;
+      --
+  end ADD_MODIFY_BLOB;
+  --
+  --
+  /**
+  * ???
+  *
+  * PARAMETERS
+  *   ???
+  *
+  * EXCEPTIONS
+  *   ???
+  *
+  * NOTES
+  *   ???
+  *
+  */
+  --
+  /*******************************************************************************
+  * Author    Date        Description                                            *
+  * --------  ----------  -------------------------------------------------------*
   * WWirns    14.11.2017  XX:Refactor
   * WWirns    14.11.2017  LOGGER added
   *******************************************************************************/
@@ -403,11 +609,84 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."DL_MOVEMENTHANDLI
     --
   exception
     when others then
-      logger.log_error('Unhandled Exception'
+      /*logger.log_error('Unhandled Exception'
                       ,v_LOG_Scope
                       ,null
-                      ,v_LOG_Params);
-      raise;
+                      ,v_LOG_Params);*/
+      return null;
+      --DONT raise;
+      --
+  end get_VARCHAR;
+  --
+  --
+  /**
+  * ???
+  *
+  * PARAMETERS
+  *   ???
+  *
+  * EXCEPTIONS
+  *   ???
+  *
+  * NOTES
+  *   ???
+  *
+  */
+  --
+  /*******************************************************************************
+  * Author    Date        Description                                            *
+  * --------  ----------  -------------------------------------------------------*
+  * WWirns    14.11.2017  XX:Refactor
+  * WWirns    14.11.2017  LOGGER added
+  *******************************************************************************/
+  --
+  function get_VARCHAR(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                      ,p_ATTR_VALUE     in VARCHAR2
+                       --
+                       ) return MOVEMENT_ATTR.ATTRVARCHAR%type is
+    --
+    v_LOG_Scope  logger_logs.scope%type := g_LOG_SCOPE_PREFIX || 'get_VARCHAR';
+    v_LOG_Params logger.tab_param;
+    --
+    v_Result MOVEMENT_ATTR.ATTRVARCHAR%type;
+    --
+    --
+  begin
+    --
+    logger.append_param(v_LOG_Params
+                       ,'p_MVMNTID'
+                       ,p_MVMNTID);
+    logger.append_param(v_LOG_Params
+                       ,'p_ATTR_VALUE'
+                       ,p_ATTR_VALUE);
+    logger.log('START'
+              ,v_LOG_Scope
+              ,null
+              ,v_LOG_Params);
+    --
+    --
+    /*
+    if (not g_PACKAGE_Initialized)
+    then
+      Init_PACKAGE();
+    end if;
+    */
+    --
+    select t.ATTRVARCHAR
+      into v_Result
+      from MOVEMENT_ATTR t
+     where t.MVMNTID = p_MVMNTID
+       and t.SEQNO = Get_ATTR_SEQ#(p_ATTR_VALUE);
+    --
+    logger.log('RETURN'
+              ,v_LOG_Scope);
+    --
+    return v_Result;
+    --
+  exception
+    when others then
+      return null;
+      --DONT raise;
       --
   end get_VARCHAR;
   --
@@ -478,11 +757,87 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."DL_MOVEMENTHANDLI
     --
   exception
     when others then
-      logger.log_error('Unhandled Exception'
+      /*logger.log_error('Unhandled Exception'
                       ,v_LOG_Scope
                       ,null
-                      ,v_LOG_Params);
-      raise;
+                      ,v_LOG_Params);*/
+      return null;
+      --DONT raise;
+      --
+  end get_BLOB;
+  --
+  --
+  /**
+  * ???
+  *
+  * PARAMETERS
+  *   ???
+  *
+  * EXCEPTIONS
+  *   ???
+  *
+  * NOTES
+  *   ???
+  *
+  */
+  --
+  /*******************************************************************************
+  * Author    Date        Description                                            *
+  * --------  ----------  -------------------------------------------------------*
+  * WWirns    14.11.2017  XX:Refactor
+  * WWirns    14.11.2017  LOGGER added
+  *******************************************************************************/
+  --
+  function get_BLOB(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                   ,p_ATTR_VALUE     in VARCHAR2
+                    --
+                    ) return MOVEMENT_ATTR.ATTRBLOB%type is
+    --
+    v_LOG_Scope  logger_logs.scope%type := g_LOG_SCOPE_PREFIX || 'get_BLOB';
+    v_LOG_Params logger.tab_param;
+    --
+    v_Result MOVEMENT_ATTR.ATTRBLOB%type;
+    --
+  begin
+    --
+    logger.append_param(v_LOG_Params
+                       ,'p_MVMNTID'
+                       ,p_MVMNTID);
+    logger.append_param(v_LOG_Params
+                       ,'p_ATTR_VALUE'
+                       ,p_ATTR_VALUE);
+    logger.log('START'
+              ,v_LOG_Scope
+              ,null
+              ,v_LOG_Params);
+    --
+    --
+    /*
+    if (not g_PACKAGE_Initialized)
+    then
+      Init_PACKAGE();
+    end if;
+    */
+    --
+    select t.ATTRBLOB
+      into v_Result
+      from MOVEMENT_ATTR t
+     where t.MVMNTID = p_MVMNTID
+       and t.SEQNO = Get_ATTR_SEQ#(p_ATTR_VALUE);
+    --
+    logger.log('RETURN'
+              ,v_LOG_Scope);
+    --
+    return v_Result;
+    --
+  exception
+    when others then
+      /*logger.log_error('Unhandled Exception'
+                      ,v_LOG_Scope
+                      ,null
+                      ,v_LOG_Params);*/
+      return null;
+      --DONT raise;
       --
   end get_BLOB;
   --

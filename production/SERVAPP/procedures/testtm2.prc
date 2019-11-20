@@ -222,3 +222,4 @@ end if;
     p_message :=sqlerrm;
 END TESTTM2;
 /
+  GRANT EXECUTE ON "SERVAPP"."TESTTM2" TO "BIOSAADM";

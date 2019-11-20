@@ -20,3 +20,5 @@ end case;
   return to_char(D_TMP, 'dd')||' '||tmp||' '||substr(to_char(D_TMP, 'yyyy')+543,3);
 end;
 /
+  GRANT EXECUTE ON "PIBICSDM2"."GET_BENDTHAIMONTH" TO "APPSUP";
+  GRANT EXECUTE ON "PIBICSDM2"."GET_BENDTHAIMONTH" TO "BIOSAADM";

@@ -229,27 +229,15 @@
     <property name="connectionCachingEnabled" value="true" />
 </bean>
 <bean id="writer" class="com.googlecode.scheme2ddl.UserObjectWriter">
-    <property name="outputPath" value="/home/oracle/fetch_db_sources/20675-sources-tibpbio-bk001.immigration.go.th-2019-11-11T1842" />
+    <property name="outputPath" value="/home/oracle/fetch_db_sources/20675-sources-tibpbio-bk001.immigration.go.th-2019-11-20T1442" />
 </bean>
 <!-- list of schema for processing, used only if oracle user connected as sysdba-->
 <util:list id="schemaList">
     
-    <value>DL_COMMON</value>
-    
-
-    <value>LOGGER</value>
-    
-
-    <value>DL_DBA</value>
-    
-
-    <value>DL_USER_MANAGEMENT</value>
-    
-
     <value>APEX_USER_MANAGEMENT</value>
     
 
-    <value>USER_MANAGEMENT</value>
+    <value>BIO_BD</value>
     
 
     <value>DL_BIOSTORE_BLACKLIST</value>
@@ -258,19 +246,19 @@
     <value>DL_BIOSTORE_MOVEMENTS</value>
     
 
-    <value>DL_BORDERCONTROL</value>
+    <value>DL_BLACKLIST</value>
     
 
-    <value>DL_BLACKLIST</value>
+    <value>DL_BORDERCONTROL</value>
     
 
     <value>DL_BORDERCONTROL_DATAMART</value>
     
 
-    <value>DL_STAGING4PIBICS</value>
+    <value>DL_COMMON</value>
     
 
-    <value>DL_STAGING4PIBICS_INTF</value>
+    <value>DL_DBA</value>
     
 
     <value>DL_INTERFACE</value>
@@ -279,13 +267,37 @@
     <value>DL_MAINTENANCE</value>
     
 
+    <value>DL_STAGING</value>
+    
+
+    <value>DL_STAGING4PIBICS</value>
+    
+
+    <value>DL_STAGING4PIBICS_INTF</value>
+    
+
+    <value>DL_USER_MANAGEMENT</value>
+    
+
+    <value>JASPER_REPORTING</value>
+    
+
+    <value>LOGGER</value>
+    
+
+    <value>PIBICSDM2</value>
+    
+
     <value>PIBICSDM2_RO</value>
     
 
-    <value>BIO_BD</value>
+    <value>SERVAPP</value>
     
 
     <value>SYSTEM</value>
+    
+
+    <value>USER_MANAGEMENT</value>
     
 </util:list>
 </beans>

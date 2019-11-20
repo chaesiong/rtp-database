@@ -196,3 +196,4 @@ dbms_output.put_line('Insert log :' || V_Results);
  
 END P_CHK_BLACKLIST_T20190628;
 /
+  GRANT EXECUTE ON "PIBICSDM2"."P_CHK_BLACKLIST_T20190628" TO "BIOSAADM";

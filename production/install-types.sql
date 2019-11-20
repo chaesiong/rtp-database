@@ -1,5 +1,16 @@
 ---------------------
 -- types --
+-- DL_BLACKLIST/types
+@DL_BLACKLIST/types/ct_partial_date.tps
+@DL_BLACKLIST/types/ot_blt_search_result_ext.tps
+@DL_BLACKLIST/types/ot_blt_search_result.tps
+@DL_BLACKLIST/types/tt_blt_search_result_ext.tps
+@DL_BLACKLIST/types/tt_blt_search_result.tps
+@DL_BLACKLIST/types/tt_varchar2.tps
+-- DL_BORDERCONTROL/types
+@DL_BORDERCONTROL/types/ct_partial_date_type.tps
+@DL_BORDERCONTROL/types/t_hook_payload.tps
+@DL_BORDERCONTROL/types/xlib_vc2_array_t.tps
 -- DL_COMMON/types
 @DL_COMMON/types/ot_10vcc_10cl.tps
 @DL_COMMON/types/ot_bin_file.tps
@@ -62,23 +73,22 @@
 @DL_COMMON/types/vt_vc30.tps
 @DL_COMMON/types/vt_vcc.tps
 @DL_COMMON/types/vt_vc.tps
+-- DL_MAINTENANCE/types
+@DL_MAINTENANCE/types/trig_data.tps
 -- DL_USER_MANAGEMENT/types
 @DL_USER_MANAGEMENT/types/ot_ldap_role.tps
 @DL_USER_MANAGEMENT/types/tt_ldap_role.tps
 @DL_USER_MANAGEMENT/types/vt_ldap_role.tps
--- DL_BORDERCONTROL/types
-@DL_BORDERCONTROL/types/ct_partial_date_type.tps
-@DL_BORDERCONTROL/types/t_hook_payload.tps
-@DL_BORDERCONTROL/types/xlib_vc2_array_t.tps
--- DL_BLACKLIST/types
-@DL_BLACKLIST/types/ct_partial_date.tps
-@DL_BLACKLIST/types/ot_blt_search_result_ext.tps
-@DL_BLACKLIST/types/ot_blt_search_result.tps
-@DL_BLACKLIST/types/tt_blt_search_result_ext.tps
-@DL_BLACKLIST/types/tt_blt_search_result.tps
-@DL_BLACKLIST/types/tt_varchar2.tps
--- DL_MAINTENANCE/types
-@DL_MAINTENANCE/types/trig_data.tps
+-- JASPER_REPORTING/types
+@JASPER_REPORTING/types/xlib_vc2_array_t.tps
+-- PIBICSDM2/types
+@PIBICSDM2/types/7tsdj5zguwifekw4sg=.tps
+@PIBICSDM2/types/9g=.tps
+@PIBICSDM2/types/file_list.tps
+@PIBICSDM2/types/st00001o2klm4vn4dguwefeky
+@PIBICSDM2/types/st00002ki
+@PIBICSDM2/types/st00003qgtpycsybvguwufekyh1q=.tps
+@PIBICSDM2/types/str_array.tps
 -- SYSTEM/types
 @SYSTEM/types/ct_partial_date.tps
 @SYSTEM/types/logmnr$col_gg_recs.tps

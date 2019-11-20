@@ -25,3 +25,4 @@ BEGIN
         raise_application_error(-20001,'An error was encountered - PROC_DELETE_DATA'||SQLCODE||'-ERROR-'||SQLERRM); 
 END PROC_DELETE_DATA;
 /
+  GRANT EXECUTE ON "SERVAPP"."PROC_DELETE_DATA" TO "BIOSAADM";

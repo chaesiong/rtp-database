@@ -150,7 +150,7 @@ select JSON_OBJECT (
                                                    a.EFIRSTNM as  givenName,
                                                    a.EMIDDLENM as middleName,
                                                    a.SUFFIX_SEQNO as suffixName,
-                                                   to_char(a.BIRTH_DATE,'dd/mm/yyyy') as birthDate,
+                                                   a.BIRTH_DATE as birthDate,
                                                    a.SEX as gender,
                                                    a.sts,
                                                    a.CHILD_RELATIONSHIP as relationPassJoin,
@@ -783,7 +783,7 @@ select a.fees_seqno as bioPk
        ,a.emiddleNM
        ,a.efamilyNM
        ,a.sex
-       ,to_char(a.birthDte,'dd/mm/yyyy') as birthDte
+       ,a.birthDte as birthDte
        ,a.nation_seqno as nationSeqno
        ,a.conv_seqno as convSeqno
        ,a.convRegno
@@ -875,7 +875,7 @@ select a.fees_seqno as bioPk
        ,a.emiddleNM
        ,a.efamilyNM
        ,a.sex
-       ,to_char(a.birthDte,'dd/mm/yyyy') as birthDte
+       ,a.birthDte as birthDte
        ,a.nation_seqno as nationSeqno
        ,a.conv_seqno as convSeqno
        ,a.convRegno
@@ -964,7 +964,7 @@ select a.fees_seqno as bioPk
        ,a.emiddleNM
        ,a.efamilyNM
        ,a.sex
-       ,to_char(a.birthDte,'dd/mm/yyyy') as birthDte
+       ,a.birthDte as birthDte
        ,a.nation_seqno as nationSeqno
        ,a.conv_seqno as convSeqno
        ,a.convRegno
@@ -3183,3 +3183,4 @@ end if;
 
 END PKG_ISDS;
 /
+  GRANT EXECUTE ON "SERVAPP"."PKG_ISDS" TO "BIOSAADM";

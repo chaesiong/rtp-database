@@ -213,7 +213,7 @@ wwv_flow_api.create_page(
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190729165125'
+,p_last_upd_yyyymmddhh24miss=>'20191115033153'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(54506158012889726)
@@ -721,7 +721,7 @@ wwv_flow_api.create_report_region(
 'with scanned_document as (',
 '    select :P17_DISPLAY_LASTNAME lastname',
 '         , trim(trim(:P17_DISPLAY_FIRSTNAME) /*|| '' '' || trim(:P17_DISPLAY_MIDDLENAME)*/) firstname',
-'         , :P17_DISPLAY_DOB dateofbirth',
+'         , :P17_DISPLAY_DOB_TEXT dateofbirth',
 '         , :P17_DISPLAY_DOCNUMBER docno',
 '         , :P17_NATIONALITY_ID issuectry',
 '         , :P17_BRDDOCID documentid',
@@ -1272,6 +1272,7 @@ wwv_flow_api.create_page_process(
 ,p_attribute_05=>'P140_SEQNO'
 ,p_attribute_06=>'SEQNO'
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when_type=>'NEVER'
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(167981641260408427)

@@ -20,3 +20,5 @@ select deptenm,depttnm, dept_seqno into enm,tnm, tmpseqno from department where 
   return tmp;
 end;
 /
+  GRANT EXECUTE ON "PIBICSDM2"."GET_DEPARTMENTS" TO "APPSUP";
+  GRANT EXECUTE ON "PIBICSDM2"."GET_DEPARTMENTS" TO "BIOSAADM";

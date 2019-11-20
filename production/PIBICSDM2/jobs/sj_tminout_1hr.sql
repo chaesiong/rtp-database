@@ -21,7 +21,7 @@ begin
 end;'
 , number_of_arguments=>0,
 start_date=>TO_TIMESTAMP_TZ('17-JAN-2019 09.30.47.961103000 AM ASIA/BARNAUL','DD-MON-RRRR HH.MI.SSXFF AM TZR','NLS_DATE_LANGUAGE=english'), repeat_interval=> 
-'freq=hourly;byhour=01,02,03,04,05,06,07,08,09,10,11,12,13,14,15,16,17,18,19,20,21,22,23;byminute=00,30;bysecond=05'
+'freq=hourly;'
 , end_date=>NULL,
 job_class=>'"DEFAULT_JOB_CLASS"', enabled=>FALSE, auto_drop=>FALSE,comments=>
 NULL

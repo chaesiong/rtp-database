@@ -283,3 +283,4 @@ end if;
     p_message :=sqlerrm;
   END TM2_TO_PIBICS;
 /
+  GRANT EXECUTE ON "SERVAPP"."TM2_TO_PIBICS" TO "BIOSAADM";

@@ -66,6 +66,10 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."DL_MOVEMENTHANDLING" a
   function Get_ATTR_SEQ_TEMPLATE_RT# return simple_integer deterministic;
   */
   --
+  function Get_IMG_SEQ_OTHER#(p_MVMNTID in MOVEMENT_ATTR.MVMNTID%type) return number;
+  --
+  function Get_ATTR_SEQ#(p_ATTR_VALUE in VARCHAR2) return number;
+  --
   --
   --
   /*ADD_MODIFY_... Functions: return 0 when successful, 1 when failed. will either add or update an existing add-on record to a given movement*/
@@ -89,6 +93,26 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."DL_MOVEMENTHANDLING" a
   --
   --
   --
+  procedure ADD_MODIFY_BLOB(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                           ,p_SEQNO          in MOVEMENT_ATTR.SEQNO%type
+                           ,p_DATA           in MOVEMENT_ATTR.ATTRBLOB%type
+                           ,p_INS_TERMINAL   in MOVEMENT_ATTR.INS_TERMINAL%type
+                           ,p_INS_BORDERPOST in MOVEMENT_ATTR.INS_BORDERPOST%type
+                            --
+                            );
+  --
+  --
+  --
+  procedure ADD_MODIFY_BLOB(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                           ,p_ATTR_VALUE     in VARCHAR2
+                           ,p_DATA           in MOVEMENT_ATTR.ATTRBLOB%type
+                           ,p_INS_TERMINAL   in MOVEMENT_ATTR.INS_TERMINAL%type
+                           ,p_INS_BORDERPOST in MOVEMENT_ATTR.INS_BORDERPOST%type
+                            --
+                            );
+  --
+  --
+  --
   /* GET_... Functions: return NULL when not available*/
   function get_VARCHAR(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
                       ,p_SEQNO          in MOVEMENT_ATTR.SEQNO%type
@@ -98,9 +122,23 @@ CREATE OR REPLACE EDITIONABLE PACKAGE "DL_BORDERCONTROL"."DL_MOVEMENTHANDLING" a
   --
   --
   --
+  function get_VARCHAR(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                      ,p_ATTR_VALUE     in VARCHAR2
+                       --
+                       ) return MOVEMENT_ATTR.ATTRVARCHAR%type;
+  --
+  --
+  --
   function get_BLOB(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
                    ,p_SEQNO          in MOVEMENT_ATTR.SEQNO%type
                    ,p_INS_BORDERPOST in MOVEMENT_ATTR.INS_BORDERPOST%type default null
+                    --
+                    ) return MOVEMENT_ATTR.ATTRBLOB%type;
+  --
+  --
+  --
+  function get_BLOB(p_MVMNTID        in MOVEMENT_ATTR.MVMNTID%type
+                   ,p_ATTR_VALUE     in VARCHAR2
                     --
                     ) return MOVEMENT_ATTR.ATTRBLOB%type;
   --

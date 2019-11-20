@@ -62,3 +62,4 @@ WHEN OTHERS THEN ROLLBACK;
         htp.prn('{"msgInfo":{"msg_code":"99","msg_desc":"' || SQLERRM || '"}}'); 
 END PROCEDURE1;
 /
+  GRANT EXECUTE ON "SERVAPP"."PROCEDURE1" TO "BIOSAADM";

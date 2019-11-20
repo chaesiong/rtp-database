@@ -13,3 +13,4 @@ BEGIN
                       );
 END xlog;
 /
+  GRANT EXECUTE ON "JASPER_REPORTING"."XLOG" TO "BIOSAADM";

@@ -41,7 +41,7 @@ open cur_data for select a.sender_object
                                       
                     ) a
                     where a.rn =1
-                    and a.receiver_response like 'Can not%'
+                    and (a.receiver_response like 'Can not%' or a.receiver_response like 'Work offline%')
                     order by a.DML_AT;
 LOOP
             FETCH cur_data
@@ -108,3 +108,4 @@ CLOSE cur_data;
 
 END PKG_ISDS_RETRY;
 /
+  GRANT EXECUTE ON "SERVAPP"."PKG_ISDS_RETRY" TO "BIOSAADM";

@@ -1,40 +1,10 @@
 ---------------------
 -- jobs --
--- LOGGER/jobs
-@LOGGER/jobs/logger_purge_job.sql
-@LOGGER/jobs/logger_unset_prefs_by_client.sql
 -- DL_BORDERCONTROL/jobs
 @DL_BORDERCONTROL/jobs/purge_tmp_blacklist_search.sql
 @DL_BORDERCONTROL/jobs/purge_tmp_collective_passport.sql
 -- DL_BORDERCONTROL_DATAMART/jobs
 @DL_BORDERCONTROL_DATAMART/jobs/update_datamart.sql
--- DL_STAGING4PIBICS_INTF/jobs
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_ampur.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_continent.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_conveyance.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_country.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_department.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_flightnumbers.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_fs_slipsystem.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_occupation.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_paymentrate.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_permittype.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_province.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_rankcrw.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_region.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_suffix.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_tambon.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_traveldoctype.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_visabynation.sql
-@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_visatype.sql
-@DL_STAGING4PIBICS_INTF/jobs/sj_sync_lostpassport.sql
-@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist2_5min.sql
-@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist_30min.sql
-@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist.sql
-@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_lostpassport.sql
-@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_thaipassport.sql
-@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_tminout.sql
-@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_watchlist.sql
 -- DL_INTERFACE/jobs
 @DL_INTERFACE/jobs/check_queue_i1_01.sql
 @DL_INTERFACE/jobs/check_queue_i1_02.sql
@@ -80,6 +50,102 @@
 @DL_INTERFACE/jobs/sj_sp_send_to_pibics_again.sql
 -- DL_MAINTENANCE/jobs
 @DL_MAINTENANCE/jobs/hm_main_scheduler.sql
+-- DL_STAGING4PIBICS_INTF/jobs
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_ampur.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_continent.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_conveyance.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_country.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_department.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_flightnumbers.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_fs_slipsystem.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_occupation.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_paymentrate.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_permittype.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_province.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_rankcrw.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_region.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_suffix.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_tambon.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_traveldoctype.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_visabynation.sql
+@DL_STAGING4PIBICS_INTF/jobs/metadata_sync_visatype.sql
+@DL_STAGING4PIBICS_INTF/jobs/sj_sync_lostpassport.sql
+@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist2_5min.sql
+@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist_30min.sql
+@DL_STAGING4PIBICS_INTF/jobs/sj_sync_watchlist.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_lostpassport.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_thaipassport.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_tminout.sql
+@DL_STAGING4PIBICS_INTF/jobs/transaction_data_sync_watchlist.sql
+-- LOGGER/jobs
+@LOGGER/jobs/logger_purge_job.sql
+@LOGGER/jobs/logger_unset_prefs_by_client.sql
+-- PIBICSDM2/jobs
+@PIBICSDM2/jobs/sj_bmsc_snyc_non_trans.sql
+@PIBICSDM2/jobs/sj_bmsc_snyc_trans.sql
+@PIBICSDM2/jobs/sj_p_agccontact.sql
+@PIBICSDM2/jobs/sj_p_blimpreason.sql
+@PIBICSDM2/jobs/sj_p_chng_changevisalist.sql
+@PIBICSDM2/jobs/sj_p_chng_changevisa_n.sql
+@PIBICSDM2/jobs/sj_p_chng_person.sql
+@PIBICSDM2/jobs/sj_p_country.sql
+@PIBICSDM2/jobs/sj_p_crew.sql
+@PIBICSDM2/jobs/sj_p_crs_certofresidence.sql
+@PIBICSDM2/jobs/sj_p_crs_person.sql
+@PIBICSDM2/jobs/sj_p_delete_watchlist.sql
+@PIBICSDM2/jobs/sj_p_delprocessot.sql
+@PIBICSDM2/jobs/sj_p_ednq_person.sql
+@PIBICSDM2/jobs/sj_p_ednq_revoketm13.sql
+@PIBICSDM2/jobs/sj_p_ednq_tm13.sql
+@PIBICSDM2/jobs/sj_p_ednq_tm22.sql
+@PIBICSDM2/jobs/sj_p_ext_company.sql
+@PIBICSDM2/jobs/sj_p_ext_extensionlist.sql
+@PIBICSDM2/jobs/sj_p_ext_extension.sql
+@PIBICSDM2/jobs/sj_p_ext_person.sql
+@PIBICSDM2/jobs/sj_p_fact_atchannel.sql
+@PIBICSDM2/jobs/sj_p_flightnumbers.sql
+@PIBICSDM2/jobs/sj_p_fs_feesdetail.sql
+@PIBICSDM2/jobs/sj_p_fs_fees.sql
+@PIBICSDM2/jobs/sj_p_fs_finesdetail.sql
+@PIBICSDM2/jobs/sj_p_fs_fines.sql
+@PIBICSDM2/jobs/sj_p_fw_user.sql
+@PIBICSDM2/jobs/sj_p_guartbank.sql
+@PIBICSDM2/jobs/sj_p_guartdept.sql
+@PIBICSDM2/jobs/sj_p_hr_profile.sql
+@PIBICSDM2/jobs/sj_p_immigration.sql
+@PIBICSDM2/jobs/sj_p_inout_prod.sql
+@PIBICSDM2/jobs/sj_p_lostpassport.sql
+@PIBICSDM2/jobs/sj_p_occupation.sql
+@PIBICSDM2/jobs/sj_p_operationref.sql
+@PIBICSDM2/jobs/sj_p_processot.sql
+@PIBICSDM2/jobs/sj_p_que_tm8.sql
+@PIBICSDM2/jobs/sj_p_reason.sql
+@PIBICSDM2/jobs/sj_p_reps_person.sql
+@PIBICSDM2/jobs/sj_p_reps_tm8.sql
+@PIBICSDM2/jobs/sj_p_rqs_person.sql
+@PIBICSDM2/jobs/sj_p_rqs_tm14.sql
+@PIBICSDM2/jobs/sj_p_rqs_tm9.sql
+@PIBICSDM2/jobs/sj_p_sync_fw_user.sql
+@PIBICSDM2/jobs/sj_p_sync_hr_profile.sql
+@PIBICSDM2/jobs/sj_p_thaipassport.sql
+@PIBICSDM2/jobs/sj_p_tm2.sql
+@PIBICSDM2/jobs/sj_p_tm5.sql
+@PIBICSDM2/jobs/sj_p_tminformdead.sql
+@PIBICSDM2/jobs/sj_p_tminoutlog_del.sql
+@PIBICSDM2/jobs/sj_p_tmmain_om.sql
+@PIBICSDM2/jobs/sj_p_todolist.sql
+@PIBICSDM2/jobs/sj_p_wanted_polis.sql
+@PIBICSDM2/jobs/sj_p_watchlist_log.sql
+@PIBICSDM2/jobs/sj_p_watchlistnm.sql
+@PIBICSDM2/jobs/sj_p_watchlist.sql
+@PIBICSDM2/jobs/sj_p_wlindicatecard.sql
+@PIBICSDM2/jobs/sj_p_wlrelation.sql
+@PIBICSDM2/jobs/sj_tminout_1hr.sql
+-- SERVAPP/jobs
+@SERVAPP/jobs/job_retry_isds_ext.sql
+@SERVAPP/jobs/job_retry_isds_phb.sql
+@SERVAPP/jobs/job_retry_isds_reps.sql
+@SERVAPP/jobs/job_retry_isds_reth.sql
 -- SYSTEM/jobs
 @SYSTEM/jobs/job_send_to_pibics_again_ex.sql
 @SYSTEM/jobs/j_send_to_pibics_unsuccess_1.sql

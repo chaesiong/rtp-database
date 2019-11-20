@@ -206,3 +206,4 @@ b_data      := l_obj.get_blob('data');
   END sp_insert_log_api;
 END PKG_UTILS;
 /
+  GRANT EXECUTE ON "SERVAPP"."PKG_UTILS" TO "BIOSAADM";

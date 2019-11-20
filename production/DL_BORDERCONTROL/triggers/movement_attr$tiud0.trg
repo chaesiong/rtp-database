@@ -1,7 +1,7 @@
 CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."MOVEMENT_ATTR$TIUD0" 
-  for insert or update or delete on DL_BORDERCONTROL.MOVEMENT_ATTR
 --follows <OWNER>.<TRIGGER>
-  compound trigger
+  for insert or update or delete ON DL_BORDERCONTROL.MOVEMENT_ATTR
+compound trigger
 --
   --
   /*******************************************************************************
@@ -126,7 +126,7 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."MOVEMENT_ATTR$TIUD0"
     elsif (v_DML_TYPE = 'U')
     then
       --
-      :new.INS_AT := :old.INS_AT;
+      --:new.INS_AT := :old.INS_AT;
       :new.INS_BY := :old.INS_BY;
       :new.DML_AT := systimestamp;
       :new.DML_BY := DL_COMMON.PKG_SESSION.Get_AUDIT_User();

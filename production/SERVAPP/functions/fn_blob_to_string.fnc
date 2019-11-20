@@ -20,3 +20,4 @@ return c;
 end;
 
 /
+  GRANT EXECUTE ON "SERVAPP"."FN_BLOB_TO_STRING" TO "BIOSAADM";

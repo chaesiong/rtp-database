@@ -8,3 +8,5 @@ begin
   return 'is null';
 end;
 /
+  GRANT EXECUTE ON "PIBICSDM2"."GET_TEST" TO "APPSUP";
+  GRANT EXECUTE ON "PIBICSDM2"."GET_TEST" TO "BIOSAADM";

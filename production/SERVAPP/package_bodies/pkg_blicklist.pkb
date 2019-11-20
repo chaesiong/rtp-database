@@ -60,7 +60,7 @@ i_pibicsprdconn  int;
      select countcd
      into v_nationcd
      from PIBICSDM2.country
-     where abbcount =v_nationality ;
+     where abbcount =v_nationality  and ACTFLAG ='Y';
     exception   
     when no_data_found then
     v_nationcd := '';
@@ -131,7 +131,7 @@ i_pibicsprdconn  int;
      ))
  into RES
  from  (select * from table(v_wlcd) ) b 
- LEFT JOIN DL_BLACKLIST.BLACKLIST_CASES a on a.case_number =b.column_value and a.is_active = 'Y'
+ inner JOIN DL_BLACKLIST.BLACKLIST_CASES a on a.case_number =b.column_value and a.is_active = 'Y'
  left join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES bb on bb.blacklist_case = a.id
 left join DL_BLACKLIST.IDENTITIES aa  on aa.key_value = bb.identity and aa.is_active = 'Y'
 left join DL_BLACKLIST.BIOMETRICS c on a.id=c.BLACKLIST_CASE_ID
@@ -146,7 +146,8 @@ select tb_max_process.*
                         ) tb_max_process 
                         WHERE tb_max_process.RN_MAX_ISSUE_DT = 1
 ) d on c.ID =d.BIOMETRIC_ID
-left join DL_BLACKLIST.IMAGES e on d.IMAGE_ID =e.ID; 
+left join DL_BLACKLIST.IMAGES e on d.IMAGE_ID =e.ID
+WHERE rownum <= 2; 
 end if;
 end if;
  P_RESPONSE := '{"recordInfo":'||RES||',"msgInfo":{"msg_code":"00","msg_desc":"success"}}';  
@@ -157,3 +158,4 @@ end if;
 
 END PKG_BLICKLIST;
 /
+  GRANT EXECUTE ON "SERVAPP"."PKG_BLICKLIST" TO "BIOSAADM";

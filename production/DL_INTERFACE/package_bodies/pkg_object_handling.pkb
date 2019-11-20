@@ -404,6 +404,13 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_OBJECT_HANDLING" 
     l_log_rec dl_interface.log_sync_webservices%rowtype;
 
   BEGIN
+    begin
+    
+    select PIBICS_PK INTO l_result from dl_interface.mapping_pk where MVMNTID = p_id;
+    
+    exception
+              when no_data_found then
+        
     begin         
     SELECT key_value,dml_at,dml_by,dml_type,ins_at,ins_by,sender,sender_object,sender_object_id,
     sender_message,sender_response_code,sender_response_message,receiver_response_id,
@@ -433,6 +440,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_OBJECT_HANDLING" 
         
     end if;
 
+    end;
     RETURN l_result;
   END AA_get_pibics_pk;
  

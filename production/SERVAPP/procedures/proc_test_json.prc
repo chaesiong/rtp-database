@@ -265,3 +265,4 @@ from obj_data
 --P_OUT :=  c_data;     
 END PROC_TEST_JSON;
 /
+  GRANT EXECUTE ON "SERVAPP"."PROC_TEST_JSON" TO "BIOSAADM";

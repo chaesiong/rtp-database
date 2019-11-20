@@ -34,7 +34,8 @@ CREATE OR REPLACE EDITIONABLE PROCEDURE "PIBICSDM2"."P_CHK_BLACKLIST"
     l_query             VARCHAR2(32000) := NULL;
     l_sex               VARCHAR2(1) := NULL;
     --
-    l_bl_demo_search_type   NUMBER := 0;
+    l_bl_demo_search_source NUMBER := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter('BL_DEMO_SEARCH_SRC'), 0));
+    l_bl_demo_search_type   NUMBER := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter('BL_DEMO_SEARCH_TYPE'), 0));
     l_search_type_operator  VARCHAR2(1) := '%';
     l_search_type_string    VARCHAR2(4) := 'LIKE';
     --
@@ -56,9 +57,11 @@ BEGIN
     
     -- init
     P_WLCD := DL_BLACKLIST.TT_VARCHAR2();
-    l_bl_demo_search_type  := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter('BL_DEMO_SEARCH_TYPE'), 0));
+    l_bl_demo_search_source := l_bl_demo_search_source * CASE P_PIBICSPRDCONN WHEN 1 THEN 1 ELSE 0 END;
+    --
     l_search_type_operator := CASE l_bl_demo_search_type WHEN 0 THEN '%' ELSE NULL END;
     l_search_type_string   := CASE l_bl_demo_search_type WHEN 0 THEN 'LIKE' ELSE '=' END;
+    --
     
     IF P_SEX IN ('1', 'M') THEN
         l_sex := 'M';
@@ -95,7 +98,7 @@ BEGIN
                 CAST(COLLECT(DISTINCT W.WLCD) AS DL_BLACKLIST.TT_VARCHAR2) 
             ]'
             || 
-            CASE P_PIBICSPRDCONN
+            CASE l_bl_demo_search_source
                 WHEN 1 THEN q'[ FROM v_watchlist_prod W, v_WATCHLISTNM_prod WN ]'
                 ELSE q'[ FROM watchlist W, WATCHLISTNM WN ]'
             END
@@ -178,7 +181,7 @@ BEGIN
                 CAST(COLLECT(DISTINCT w.WLCD) AS DL_BLACKLIST.TT_VARCHAR2) 
             ]'
             || 
-            CASE P_PIBICSPRDCONN
+            CASE l_bl_demo_search_source
                 WHEN 1 THEN q'[ FROM v_watchlist_prod W, v_WATCHLISTNM_prod WN ]'
                 ELSE q'[ FROM watchlist W, WATCHLISTNM WN ]'
             END
@@ -261,7 +264,7 @@ BEGIN
                 CAST(COLLECT(DISTINCT w.WLCD) AS DL_BLACKLIST.TT_VARCHAR2) 
             ]'
             || 
-            CASE P_PIBICSPRDCONN
+            CASE l_bl_demo_search_source
                 WHEN 1 THEN q'[ FROM v_watchlist_prod W, v_WATCHLISTNM_prod WN, v_WLINDICATECARD_prod WC ]'
                 ELSE q'[ FROM watchlist W, WATCHLISTNM WN, WLINDICATECARD WC ]'
             END
@@ -309,7 +312,7 @@ BEGIN
                 CAST(COLLECT(DISTINCT W.WLCD) AS DL_BLACKLIST.TT_VARCHAR2) 
             ]'
             || 
-            CASE P_PIBICSPRDCONN
+            CASE l_bl_demo_search_source
                 WHEN 1 THEN q'[ FROM v_watchlist_prod W, v_WATCHLISTNM_prod WN ]'
                 ELSE q'[ FROM watchlist W, WATCHLISTNM WN ]'
             END
@@ -399,3 +402,8 @@ BEGIN
 
 END P_CHK_BLACKLIST;
 /
+  GRANT EXECUTE ON "PIBICSDM2"."P_CHK_BLACKLIST" TO "DL_BLACKLIST";
+  GRANT EXECUTE ON "PIBICSDM2"."P_CHK_BLACKLIST" TO "APPSUP";
+  GRANT EXECUTE ON "PIBICSDM2"."P_CHK_BLACKLIST" TO "SERVAPP";
+  GRANT EXECUTE ON "PIBICSDM2"."P_CHK_BLACKLIST" TO "BIOSAADM";
+  GRANT EXECUTE ON "PIBICSDM2"."P_CHK_BLACKLIST" TO "DL_BORDERCONTROL";

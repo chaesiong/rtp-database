@@ -13,3 +13,4 @@ return null;
 end;
 
 /
+  GRANT EXECUTE ON "SERVAPP"."FN_BLOB_TO_STRING_TEST" TO "BIOSAADM";

@@ -583,6 +583,15 @@ if :MVMNTID is null then
 	p_seq  => 1,
 	p_blob001 => l_blob);
 	--
+elsif :COLL_NAME = ''MVMNT_OTHER_IMAGE'' then
+    DL_BORDERCONTROL.DL_MOVEMENTHANDLING.ADD_MODIFY_BLOB (
+	p_MVMNTID => :MVMNTID,
+	p_ATTR_VALUE => :COLL_NAME,
+	p_DATA => l_blob,
+	p_INS_TERMINAL => :TERMINAL,
+	p_INS_BORDERPOST => :BORDERPOST
+	);
+	--
 elsif :COLL_NAME = ''MOVEMENT_PHOTO'' then
 	update DL_BORDERCONTROL.MOVEMENTS_BLOB
 	set LIVE_PHOTO = l_blob
@@ -750,6 +759,28 @@ end;');
       p_access_method      => 'IN',
       p_comments           => NULL);
 
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'uploadintosessionbag/',
+      p_method             => 'POST',
+      p_name               => 'BORDERPOST',
+      p_bind_variable_name => 'BORDERPOST',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'STRING',
+      p_access_method      => 'IN',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'SessionBagRestService',
+      p_pattern            => 'uploadintosessionbag/',
+      p_method             => 'POST',
+      p_name               => 'TERMINAL',
+      p_bind_variable_name => 'TERMINAL',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'STRING',
+      p_access_method      => 'IN',
+      p_comments           => NULL);
+
 
 
 COMMIT;
@@ -759,4 +790,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.06
+Elapsed: 00:00:00.11
