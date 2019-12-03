@@ -34,6 +34,8 @@
 @JASPER_REPORTING/user/create_JASPER_REPORTING.sql
 -- LOGGER/user
 @LOGGER/user/create_LOGGER.sql
+-- PIBICS/user
+@PIBICS/user/create_PIBICS.sql
 -- PIBICSDM2/user
 @PIBICSDM2/user/create_PIBICSDM2.sql
 -- PIBICSDM2_RO/user
