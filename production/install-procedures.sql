@@ -32,11 +32,11 @@
 @DL_STAGING4PIBICS_INTF/procedures/p_sync_user2bio.prc
 @DL_STAGING4PIBICS_INTF/procedures/transfer_meta_data.prc
 -- DL_USER_MANAGEMENT/procedures
-@DL_USER_MANAGEMENT/procedures/drop_db_obj$aicu.prc
-@DL_USER_MANAGEMENT/procedures/drop_db_obj$aidf.prc
+@DL_USER_MANAGEMENT/procedures/drop_db_obj\\\$aicu.prc
+@DL_USER_MANAGEMENT/procedures/drop_db_obj\\\$aidf.prc
 @DL_USER_MANAGEMENT/procedures/drop_db_obj.prc
-@DL_USER_MANAGEMENT/procedures/inst_db_obj$aicu.prc
-@DL_USER_MANAGEMENT/procedures/inst_db_obj$aidf.prc
+@DL_USER_MANAGEMENT/procedures/inst_db_obj\\\$aicu.prc
+@DL_USER_MANAGEMENT/procedures/inst_db_obj\\\$aidf.prc
 @DL_USER_MANAGEMENT/procedures/inst_db_obj.prc
 -- JASPER_REPORTING/procedures
 @JASPER_REPORTING/procedures/xlog.prc

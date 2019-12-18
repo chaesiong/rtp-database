@@ -91,13 +91,13 @@
 @PIBICSDM2/types/str_array.tps
 -- SYSTEM/types
 @SYSTEM/types/ct_partial_date.tps
-@SYSTEM/types/logmnr$col_gg_recs.tps
-@SYSTEM/types/logmnr$col_gg_rec.tps
-@SYSTEM/types/logmnr$gsba_gg_recs.tps
-@SYSTEM/types/logmnr$gsba_gg_rec.tps
-@SYSTEM/types/logmnr$key_gg_recs.tps
-@SYSTEM/types/logmnr$key_gg_rec.tps
-@SYSTEM/types/logmnr$seq_gg_recs.tps
-@SYSTEM/types/logmnr$seq_gg_rec.tps
-@SYSTEM/types/logmnr$tab_gg_recs.tps
-@SYSTEM/types/logmnr$tab_gg_rec.tps
+@SYSTEM/types/logmnr\\\$col_gg_recs.tps
+@SYSTEM/types/logmnr\\\$col_gg_rec.tps
+@SYSTEM/types/logmnr\\\$gsba_gg_recs.tps
+@SYSTEM/types/logmnr\\\$gsba_gg_rec.tps
+@SYSTEM/types/logmnr\\\$key_gg_recs.tps
+@SYSTEM/types/logmnr\\\$key_gg_rec.tps
+@SYSTEM/types/logmnr\\\$seq_gg_recs.tps
+@SYSTEM/types/logmnr\\\$seq_gg_rec.tps
+@SYSTEM/types/logmnr\\\$tab_gg_recs.tps
+@SYSTEM/types/logmnr\\\$tab_gg_rec.tps
