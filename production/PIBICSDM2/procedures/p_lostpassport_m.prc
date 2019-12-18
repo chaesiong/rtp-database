@@ -14,7 +14,7 @@ BEGIN
         USING (SELECT *
                  FROM PIBICS.LOSTPASSPORT@PIBICS_PROD
                 WHERE     TO_CHAR (CREDTE, 'yyyymmdd') >= v_dstart
-                      AND TO_CHAR (CREDTE, 'yyyymmdd') <= v_dend
+                      AND TO_CHAR (CREDTE, 'yyyymmdd') < v_dend
                       AND UPDDTE IS NULL) P
            ON (DM.LPPCD = P.LPPCD)
    WHEN MATCHED
@@ -186,7 +186,7 @@ BEGIN
         USING (SELECT *
                  FROM PIBICS.LOSTPASSPORT@PIBICS_PROD
                 WHERE     UPDDTE >= TO_DATE (v_dstart, 'yyyymmdd')
-                      AND UPDDTE <= TO_DATE (v_dend, 'yyyymmdd')) P
+                      AND UPDDTE < TO_DATE (v_dend, 'yyyymmdd')) P
            ON (DM.LPPCD = P.LPPCD)
    WHEN MATCHED
    THEN

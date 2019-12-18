@@ -12,9 +12,13 @@
 -- DL_INTERFACE/procedures
 @DL_INTERFACE/procedures/sp_can_not_add_data_pibics_1.prc
 @DL_INTERFACE/procedures/sp_ready_add_data_to_pibics.prc
+@DL_INTERFACE/procedures/sp_ready_invalid_given_format.prc
+@DL_INTERFACE/procedures/sp_ready_invalid_tm6num_format.prc
 @DL_INTERFACE/procedures/sp_ready_invelid_gender_format.prc
 @DL_INTERFACE/procedures/sp_send_to_pibics_again.prc
 @DL_INTERFACE/procedures/sp_send_to_pibics_case_gender.prc
+@DL_INTERFACE/procedures/sp_send_to_pibics_case_given.prc
+@DL_INTERFACE/procedures/sp_send_to_pibics_case_tm6num.prc
 @DL_INTERFACE/procedures/sp_send_to_pibics_unsuccess.prc
 -- DL_STAGING4PIBICS/procedures
 @DL_STAGING4PIBICS/procedures/modify_pibics_link.prc
@@ -32,12 +36,13 @@
 @DL_STAGING4PIBICS_INTF/procedures/p_sync_user2bio.prc
 @DL_STAGING4PIBICS_INTF/procedures/transfer_meta_data.prc
 -- DL_USER_MANAGEMENT/procedures
-@DL_USER_MANAGEMENT/procedures/drop_db_obj\\\$aicu.prc
-@DL_USER_MANAGEMENT/procedures/drop_db_obj\\\$aidf.prc
+@DL_USER_MANAGEMENT/procedures/drop_db_obj$aicu.prc
+@DL_USER_MANAGEMENT/procedures/drop_db_obj$aidf.prc
 @DL_USER_MANAGEMENT/procedures/drop_db_obj.prc
-@DL_USER_MANAGEMENT/procedures/inst_db_obj\\\$aicu.prc
-@DL_USER_MANAGEMENT/procedures/inst_db_obj\\\$aidf.prc
+@DL_USER_MANAGEMENT/procedures/inst_db_obj$aicu.prc
+@DL_USER_MANAGEMENT/procedures/inst_db_obj$aidf.prc
 @DL_USER_MANAGEMENT/procedures/inst_db_obj.prc
+@DL_USER_MANAGEMENT/procedures/set_last_login.prc
 -- JASPER_REPORTING/procedures
 @JASPER_REPORTING/procedures/xlog.prc
 -- LOGGER/procedures
@@ -176,6 +181,7 @@
 @PIBICSDM2/procedures/p_blimpreason.prc
 @PIBICSDM2/procedures/p_chk_blacklist_20190505.prc
 @PIBICSDM2/procedures/p_chk_blacklist_20190621.prc
+@PIBICSDM2/procedures/p_chk_blacklist_bmsc.prc
 @PIBICSDM2/procedures/p_chk_blacklist.prc
 @PIBICSDM2/procedures/p_chk_blacklist_t20190621.prc
 @PIBICSDM2/procedures/p_chk_blacklist_t20190628.prc

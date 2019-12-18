@@ -4,7 +4,7 @@ job_type=>'PLSQL_BLOCK', job_action=>
 'BEGIN dl_interface.pkg_listener.dequeue_hooks (''SEND_MOVEMENT''); END;'
 , number_of_arguments=>0,
 start_date=>TO_TIMESTAMP_TZ('25-MAR-2019 10.25.00.000000000 PM EUROPE/BERLIN','DD-MON-RRRR HH.MI.SSXFF AM TZR','NLS_DATE_LANGUAGE=english'), repeat_interval=> 
-'FREQ=Minutely; INTERVAL=1;'
+'FREQ=SECONDLY; INTERVAL=30;'
 , end_date=>NULL,
 job_class=>'"DEFAULT_JOB_CLASS"', enabled=>FALSE, auto_drop=>FALSE,comments=>
 'Advanced Queuing for Movements to PIBICS (10. asynchron job)'

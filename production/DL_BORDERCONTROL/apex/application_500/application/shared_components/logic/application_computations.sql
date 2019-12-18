@@ -206,6 +206,18 @@ wwv_flow_api.create_flow_computation(
 'RETURN :AI_BORDERPOST_PROVINCE_ID;'))
 );
 wwv_flow_api.create_flow_computation(
+ p_id=>wwv_flow_api.id(38664845467355374725)
+,p_computation_sequence=>40
+,p_computation_item=>'AI_IS_EVOA_TERMINAL'
+,p_computation_point=>'BEFORE_HEADER'
+,p_computation_type=>'QUERY'
+,p_computation_processed=>'REPLACE_EXISTING'
+,p_computation=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select MAX(is_evoa)',
+'from dl_bordercontrol.terminals',
+'where id = :AI_TERMINAL_ID'))
+);
+wwv_flow_api.create_flow_computation(
  p_id=>wwv_flow_api.id(176091944693662858)
 ,p_computation_sequence=>50
 ,p_computation_item=>'AI_DEFAULT_DIRECTION'

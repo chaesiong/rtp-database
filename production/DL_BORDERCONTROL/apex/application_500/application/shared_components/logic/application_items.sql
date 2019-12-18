@@ -228,6 +228,11 @@ wwv_flow_api.create_flow_item(
 ,p_protection_level=>'I'
 );
 wwv_flow_api.create_flow_item(
+ p_id=>wwv_flow_api.id(38664845088330368534)
+,p_name=>'AI_IS_EVOA_TERMINAL'
+,p_protection_level=>'I'
+);
+wwv_flow_api.create_flow_item(
  p_id=>wwv_flow_api.id(934274803373297680)
 ,p_name=>'AI_IS_HQ'
 ,p_protection_level=>'I'

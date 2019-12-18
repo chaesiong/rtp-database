@@ -213,7 +213,7 @@ wwv_flow_api.create_page(
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20191115033153'
+,p_last_upd_yyyymmddhh24miss=>'20191113181301'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(54506158012889726)
@@ -933,11 +933,12 @@ wwv_flow_api.create_page_button(
 ,p_button_sequence=>20
 ,p_button_plug_id=>wwv_flow_api.id(179717590190037836)
 ,p_button_name=>'P140_BTN_IGNORE'
-,p_button_action=>'SUBMIT'
+,p_button_action=>'DEFINED_BY_DA'
 ,p_button_template_options=>'#DEFAULT#'
 ,p_button_template_id=>wwv_flow_api.id(563841742376049627)
 ,p_button_image_alt=>'Ignore'
 ,p_button_position=>'REGION_TEMPLATE_NEXT'
+,p_warn_on_unsaved_changes=>null
 ,p_grid_new_grid=>false
 );
 wwv_flow_api.create_page_item(
@@ -1258,6 +1259,24 @@ wwv_flow_api.create_page_da_action(
 ,p_execute_on_page_init=>'Y'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>'updateMergeAbisIds();'
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4681221741066732002)
+,p_name=>'On Ignore'
+,p_event_sequence=>70
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_api.id(179717635245037837)
+,p_bind_type=>'bind'
+,p_bind_event_type=>'click'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4681221869688732003)
+,p_event_id=>wwv_flow_api.id(4681221741066732002)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_DIALOG_CLOSE'
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_process(

@@ -8,7 +8,7 @@ IS
 BEGIN
    /* Create date : 6-12-2108 */
    v_dstart := TO_CHAR (TRUNC (SYSDATE) - 1, 'YYYYMMDD');
-   v_dend := TO_CHAR (TRUNC (SYSDATE), 'YYYYMMDD');
+   v_dend := TO_CHAR (TRUNC (SYSDATE) + 1, 'YYYYMMDD');
 
    vstdate := SYSDATE;
 
@@ -16,7 +16,7 @@ BEGIN
         USING (SELECT *
                  FROM PIBICS.LOSTPASSPORT@PIBICS_PROD
                 WHERE     TO_CHAR (CREDTE, 'YYYYMMDD') >= v_dstart
-                      AND TO_CHAR (CREDTE, 'YYYYMMDD') <= v_dend
+                      AND TO_CHAR (CREDTE, 'YYYYMMDD') < v_dend
                       AND UPDDTE IS NULL) P
            ON (DM.LPPCD = P.LPPCD)
    WHEN MATCHED
@@ -188,7 +188,7 @@ BEGIN
         USING (SELECT *
                  FROM PIBICS.LOSTPASSPORT@PIBICS_PROD
                 WHERE     UPDDTE >= TO_DATE (v_dstart, 'YYYYMMDD')
-                      AND UPDDTE <= TO_DATE (v_dend, 'YYYYMMDD')) P
+                      AND UPDDTE < TO_DATE (v_dend, 'YYYYMMDD')) P
            ON (DM.LPPCD = P.LPPCD)
    WHEN MATCHED
    THEN

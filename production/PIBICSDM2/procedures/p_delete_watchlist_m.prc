@@ -14,7 +14,7 @@ BEGIN
 --1 day  TO_CHAR (SYSDATE-1, 'dd/mm/yyyy')
 --1 hour TO_CHAR(SYSDATE-(1/24),'dd/mm/yyyy')
 --20 min TO_CHAR (SYSDATE-(20/24/60), 'dd/mm/yyyy')
-  IF (v_dstart2 = '' OR v_dstart2 IS NULL) THEN v_dstart2 := TO_CHAR (SYSDATE-1, 'dd/mm/yyyy');
+  IF (v_dstart2 = '' OR v_dstart2 IS NULL) THEN v_dstart2 := TO_CHAR ( (SYSDATE - 7/24), 'dd/mm/yyyy');
   END IF;
 
   --WATCHLIST

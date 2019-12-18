@@ -113,6 +113,11 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_WARRANT_UTIL"
         logger.append_param(l_params, 'p_dob', p_dob);
         logger.log('SEARCH WARRANT: START', l_scope, NULL, l_params);
         
+        -- param check
+        IF p_id_no = '0000000000000' THEN
+            RETURN l_log_warrant_rec;
+        END IF;
+        
         --
         l_time_start := SYSDATE;
         --
@@ -188,9 +193,12 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_WARRANT_UTIL"
                 (
                     SELECT DISTINCT 
                         wp.id_no, wp.warrantno
-                        , wp2.warrant_date, wp2.warrant_due_date, wp2.first_name, wp2.last_name
+                        , NVL2(wp2.warrant_date_formatted, TO_CHAR(wp2.warrant_date_formatted, 'DD/MM/YYYY'), wp2.warrant_date) AS WARRANT_DATE
+                        , NVL2(wp2.warrant_due_date_formatted, TO_CHAR(wp2.warrant_due_date_formatted, 'DD/MM/YYYY'), wp2.warrant_due_date) AS WARRANT_DUE_DATE
+                        , wp2.first_name, wp2.last_name
                         , wp2.eng_first_name, wp2.eng_middle_name, wp2.eng_last_name, wp2.sex, wp2.nation_code
-                        , wp2.birth_date, wp.release_flag, wp2.polis_name, wp2.mobileno 
+                        , NVL2(wp2.birth_date_formatted, TO_CHAR(wp2.birth_date_formatted, 'DD/MM/YYYY'), wp2.birth_date) AS BIRTH_DATE
+                        , wp.release_flag, wp2.polis_name, wp2.mobileno 
                     FROM 
                     (
                         SELECT warrantno, id_no, MAX(release_flag) AS RELEASE_FLAG
@@ -202,6 +210,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_WARRANT_UTIL"
                     ) wp
                     LEFT JOIN dl_bordercontrol.v_wanted_polis wp2 ON wp.id_no = wp2.id_no AND wp.warrantno = wp2.warrantno 
                     WHERE wp.release_flag = 'N'
+                    AND NVL(wp2.warrant_due_date_formatted, TRUNC(SYSDATE)) >= TRUNC(SYSDATE)
                 ) t
             )
             LOOP
@@ -271,9 +280,12 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_WARRANT_UTIL"
                     (
                         SELECT DISTINCT 
                             wp.id_no, wp.warrantno
-                            , wp2.warrant_date, wp2.warrant_due_date, wp2.first_name, wp2.last_name
+                            , NVL2(wp2.warrant_date_formatted, TO_CHAR(wp2.warrant_date_formatted, 'DD/MM/YYYY'), wp2.warrant_date) AS WARRANT_DATE
+                            , NVL2(wp2.warrant_due_date_formatted, TO_CHAR(wp2.warrant_due_date_formatted, 'DD/MM/YYYY'), wp2.warrant_due_date) AS WARRANT_DUE_DATE
+                            , wp2.first_name, wp2.last_name
                             , wp2.eng_first_name, wp2.eng_middle_name, wp2.eng_last_name, wp2.sex, wp2.nation_code
-                            , wp2.birth_date, wp.release_flag, wp2.polis_name, wp2.mobileno 
+                            , NVL2(wp2.birth_date_formatted, TO_CHAR(wp2.birth_date_formatted, 'DD/MM/YYYY'), wp2.birth_date) AS BIRTH_DATE
+                            , wp.release_flag, wp2.polis_name, wp2.mobileno 
                         FROM 
                         (
                             SELECT warrantno, id_no, MAX(release_flag) AS RELEASE_FLAG
@@ -290,6 +302,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_WARRANT_UTIL"
                         ) wp
                         LEFT JOIN dl_bordercontrol.v_wanted_polis wp2 ON wp.id_no = wp2.id_no AND wp.warrantno = wp2.warrantno 
                         WHERE wp.release_flag = 'N'
+                        AND NVL(wp2.warrant_due_date_formatted, TRUNC(SYSDATE)) >= TRUNC(SYSDATE)
                     ) t
                 )
                 LOOP

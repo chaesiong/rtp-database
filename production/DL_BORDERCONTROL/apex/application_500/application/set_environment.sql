@@ -35,19 +35,19 @@ prompt APPLICATION 500 - BmBS - Biometric Bordercontrol System
 --
 
 -- Application Statistics:
---   Pages:                    120
---     Items:                1,716
+--   Pages:                    121
+--     Items:                1,765
 --     Computations:            50
---     Validations:             61
---     Processes:              291
---     Regions:                650
---     Buttons:                331
---     Dynamic Actions:        356
+--     Validations:             63
+--     Processes:              302
+--     Regions:                666
+--     Buttons:                336
+--     Dynamic Actions:        379
 --   Shared Components:
 --     Logic:
---       Items:                122
+--       Items:                123
 --       Processes:             14
---       Computations:          37
+--       Computations:          38
 --       Web Services:          11
 --     Navigation:
 --       Lists:                  9
@@ -68,7 +68,7 @@ prompt APPLICATION 500 - BmBS - Biometric Bordercontrol System
 --         Breadcrumb:           3
 --         Button:               8
 --         Report:              21
---       LOVs:                 101
+--       LOVs:                 102
 --       Shortcuts:              2
 --       Plug-ins:               2
 --     Globalization:

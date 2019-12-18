@@ -27,10 +27,427 @@ wwv_flow_api.create_page(
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190621232407'
+,p_last_upd_yyyymmddhh24miss=>'20191118215148'
 );
 wwv_flow_api.create_page_plug(
- p_id=>wwv_flow_api.id(165686898418910907)
+ p_id=>wwv_flow_api.id(9457938623953395570)
+,p_plug_name=>'Transaction Data Analysis'
+,p_region_template_options=>'#DEFAULT#:is-collapsed:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(563817264244049616)
+,p_plug_display_sequence=>72
+,p_include_in_reg_disp_sel_yn=>'Y'
+,p_plug_display_point=>'BODY'
+,p_plug_query_row_template=>1
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_attribute_01=>'N'
+,p_attribute_02=>'HTML'
+);
+wwv_flow_api.create_report_region(
+ p_id=>wwv_flow_api.id(9457938682234395571)
+,p_name=>'Data'
+,p_parent_plug_id=>wwv_flow_api.id(9457938623953395570)
+,p_template=>wwv_flow_api.id(563820889302049617)
+,p_display_sequence=>30
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_component_template_options=>'#DEFAULT#:t-Report--altRowsDefault:t-Report--rowHighlight'
+,p_display_point=>'BODY'
+,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select dates',
+'      ,day_movements',
+'      ,total_movements',
+'      ,day_abis',
+'      ,total_abis',
+'      ,day_borderdocuments',
+'      ,total_borderdocuments',
+'      ,remaining_face',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_source_type=>'NATIVE_SQL_REPORT'
+,p_ajax_enabled=>'Y'
+,p_query_row_template=>wwv_flow_api.id(563829676711049621)
+,p_query_num_rows=>15
+,p_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_query_show_nulls_as=>'-'
+,p_query_num_rows_type=>'ROW_RANGES_IN_SELECT_LIST'
+,p_pagination_display_position=>'BOTTOM_RIGHT'
+,p_csv_output=>'N'
+,p_prn_output=>'N'
+,p_sort_null=>'L'
+,p_plug_query_strip_html=>'N'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700012610120854003)
+,p_query_column_id=>1
+,p_column_alias=>'DATES'
+,p_column_display_sequence=>1
+,p_column_heading=>'Dates'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700013036273854009)
+,p_query_column_id=>2
+,p_column_alias=>'DAY_MOVEMENTS'
+,p_column_display_sequence=>2
+,p_column_heading=>'Movements per Day'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700013416089854009)
+,p_query_column_id=>3
+,p_column_alias=>'TOTAL_MOVEMENTS'
+,p_column_display_sequence=>3
+,p_column_heading=>'Movements Total'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700013846053854012)
+,p_query_column_id=>4
+,p_column_alias=>'DAY_ABIS'
+,p_column_display_sequence=>4
+,p_column_heading=>'ABIS per Day'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700014272303854013)
+,p_query_column_id=>5
+,p_column_alias=>'TOTAL_ABIS'
+,p_column_display_sequence=>5
+,p_column_heading=>'ABIS Total'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700014628309854013)
+,p_query_column_id=>6
+,p_column_alias=>'DAY_BORDERDOCUMENTS'
+,p_column_display_sequence=>6
+,p_column_heading=>'Borderdocuments per Day'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700015031146854014)
+,p_query_column_id=>7
+,p_column_alias=>'TOTAL_BORDERDOCUMENTS'
+,p_column_display_sequence=>7
+,p_column_heading=>'Borderdocuments Total'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(4700015496766854014)
+,p_query_column_id=>8
+,p_column_alias=>'REMAINING_FACE'
+,p_column_display_sequence=>8
+,p_column_heading=>'Remaining Licenses'
+,p_use_as_row_header=>'N'
+,p_disable_sort_column=>'N'
+,p_derived_column=>'N'
+,p_include_in_export=>'Y'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(9457939635920395580)
+,p_plug_name=>'Totals'
+,p_parent_plug_id=>wwv_flow_api.id(9457938623953395570)
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_escape_on_http_output=>'Y'
+,p_plug_template=>wwv_flow_api.id(563820889302049617)
+,p_plug_display_sequence=>20
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''dd.mm.yyyy'')',
+'from dl_bordercontrol.mv_transaction_data_analysis'))
+,p_plug_source_type=>'NATIVE_JET_CHART'
+,p_plug_query_row_template=>1
+,p_plug_query_num_rows=>15
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_jet_chart(
+ p_id=>wwv_flow_api.id(4700016187489854094)
+,p_region_id=>wwv_flow_api.id(9457939635920395580)
+,p_chart_type=>'line'
+,p_animation_on_display=>'none'
+,p_animation_on_data_change=>'none'
+,p_orientation=>'vertical'
+,p_data_cursor=>'auto'
+,p_data_cursor_behavior=>'auto'
+,p_hide_and_show_behavior=>'none'
+,p_hover_behavior=>'none'
+,p_stack=>'off'
+,p_zoom_and_scroll=>'off'
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_legend_rendered=>'on'
+,p_legend_title=>'Legend'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(4700018870810854218)
+,p_chart_id=>wwv_flow_api.id(4700016187489854094)
+,p_seq=>10
+,p_name=>'Movements'
+,p_data_source_type=>'SQL_QUERY'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''yyyy.mm.dd'')',
+'      ,total_movements',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_items_value_column_name=>'TOTAL_MOVEMENTS'
+,p_items_label_column_name=>'TO_CHAR(DATES,''YYYY.MM.DD'')'
+,p_items_short_desc_column_name=>'TOTAL_MOVEMENTS'
+,p_line_style=>'solid'
+,p_line_type=>'auto'
+,p_marker_rendered=>'auto'
+,p_marker_shape=>'auto'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(4700019431929854218)
+,p_chart_id=>wwv_flow_api.id(4700016187489854094)
+,p_seq=>20
+,p_name=>'Borderdocuments'
+,p_data_source_type=>'SQL_QUERY'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''yyyy.mm.dd'')',
+'      ,total_borderdocuments',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_items_value_column_name=>'TOTAL_BORDERDOCUMENTS'
+,p_items_label_column_name=>'TO_CHAR(DATES,''YYYY.MM.DD'')'
+,p_items_short_desc_column_name=>'TOTAL_BORDERDOCUMENTS'
+,p_line_style=>'solid'
+,p_line_type=>'auto'
+,p_marker_rendered=>'auto'
+,p_marker_shape=>'auto'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(4700017710379854214)
+,p_chart_id=>wwv_flow_api.id(4700016187489854094)
+,p_seq=>30
+,p_name=>'ABIS'
+,p_data_source_type=>'SQL_QUERY'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''yyyy.mm.dd'')',
+'      ,total_abis',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_items_value_column_name=>'TOTAL_ABIS'
+,p_items_label_column_name=>'TO_CHAR(DATES,''YYYY.MM.DD'')'
+,p_items_short_desc_column_name=>'TOTAL_ABIS'
+,p_line_style=>'solid'
+,p_line_type=>'auto'
+,p_marker_rendered=>'auto'
+,p_marker_shape=>'auto'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(4700018255016854217)
+,p_chart_id=>wwv_flow_api.id(4700016187489854094)
+,p_seq=>40
+,p_name=>'Remaining Licenses'
+,p_data_source_type=>'SQL_QUERY'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''yyyy.mm.dd'')',
+'      ,remaining_face',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_items_value_column_name=>'REMAINING_FACE'
+,p_items_label_column_name=>'TO_CHAR(DATES,''YYYY.MM.DD'')'
+,p_items_short_desc_column_name=>'REMAINING_FACE'
+,p_line_style=>'solid'
+,p_line_type=>'auto'
+,p_marker_rendered=>'auto'
+,p_marker_shape=>'auto'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_api.create_jet_chart_axis(
+ p_id=>wwv_flow_api.id(4700016502339854135)
+,p_chart_id=>wwv_flow_api.id(4700016187489854094)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_format_type=>'date-short'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+,p_tick_label_rotation=>'auto'
+,p_tick_label_position=>'outside'
+);
+wwv_flow_api.create_jet_chart_axis(
+ p_id=>wwv_flow_api.id(4700017134861854138)
+,p_chart_id=>wwv_flow_api.id(4700016187489854094)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(9457940410991395588)
+,p_plug_name=>'Daily Increments'
+,p_parent_plug_id=>wwv_flow_api.id(9457938623953395570)
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_escape_on_http_output=>'Y'
+,p_plug_template=>wwv_flow_api.id(563820889302049617)
+,p_plug_display_sequence=>10
+,p_include_in_reg_disp_sel_yn=>'N'
+,p_plug_display_point=>'BODY'
+,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select dates',
+'      ,day_movements',
+'      ,total_movements',
+'      ,day_abis',
+'      ,total_abis',
+'      ,day_borderdocuments',
+'      ,total_borderdocuments',
+'      ,remaining_face',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)',
+''))
+,p_plug_source_type=>'NATIVE_JET_CHART'
+,p_plug_query_row_template=>1
+,p_plug_query_num_rows=>15
+,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+);
+wwv_flow_api.create_jet_chart(
+ p_id=>wwv_flow_api.id(4700020393028854220)
+,p_region_id=>wwv_flow_api.id(9457940410991395588)
+,p_chart_type=>'bar'
+,p_animation_on_display=>'none'
+,p_animation_on_data_change=>'none'
+,p_orientation=>'vertical'
+,p_data_cursor=>'auto'
+,p_data_cursor_behavior=>'auto'
+,p_hide_and_show_behavior=>'none'
+,p_hover_behavior=>'none'
+,p_stack=>'off'
+,p_zoom_and_scroll=>'off'
+,p_tooltip_rendered=>'Y'
+,p_show_series_name=>true
+,p_show_group_name=>true
+,p_show_value=>true
+,p_show_label=>true
+,p_legend_rendered=>'on'
+,p_legend_title=>'Legend'
+,p_legend_position=>'auto'
+,p_overview_rendered=>'off'
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(4700022083793854226)
+,p_chart_id=>wwv_flow_api.id(4700020393028854220)
+,p_seq=>10
+,p_name=>'Movements'
+,p_data_source_type=>'SQL_QUERY'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''yyyy.mm.dd'')',
+'      ,day_movements',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_items_value_column_name=>'DAY_MOVEMENTS'
+,p_items_label_column_name=>'TO_CHAR(DATES,''YYYY.MM.DD'')'
+,p_items_short_desc_column_name=>'DAY_MOVEMENTS'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(4700022657881854227)
+,p_chart_id=>wwv_flow_api.id(4700020393028854220)
+,p_seq=>20
+,p_name=>'Borderdocuments'
+,p_data_source_type=>'SQL_QUERY'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''yyyy.mm.dd'')',
+'      ,day_borderdocuments',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_items_value_column_name=>'DAY_BORDERDOCUMENTS'
+,p_items_label_column_name=>'TO_CHAR(DATES,''YYYY.MM.DD'')'
+,p_items_short_desc_column_name=>'DAY_BORDERDOCUMENTS'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_api.create_jet_chart_series(
+ p_id=>wwv_flow_api.id(4700023213608854227)
+,p_chart_id=>wwv_flow_api.id(4700020393028854220)
+,p_seq=>30
+,p_name=>'ABIS'
+,p_data_source_type=>'SQL_QUERY'
+,p_data_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'select to_char(dates, ''yyyy.mm.dd'')',
+'      ,day_abis',
+'from dl_bordercontrol.mv_transaction_data_analysis',
+'where dates > trunc(sysdate - 30)'))
+,p_items_value_column_name=>'DAY_ABIS'
+,p_items_label_column_name=>'TO_CHAR(DATES,''YYYY.MM.DD'')'
+,p_items_short_desc_column_name=>'DAY_ABIS'
+,p_assigned_to_y2=>'off'
+,p_items_label_rendered=>false
+);
+wwv_flow_api.create_jet_chart_axis(
+ p_id=>wwv_flow_api.id(4700020862288854224)
+,p_chart_id=>wwv_flow_api.id(4700020393028854220)
+,p_axis=>'x'
+,p_is_rendered=>'on'
+,p_format_type=>'date-short'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+,p_tick_label_rotation=>'auto'
+,p_tick_label_position=>'outside'
+);
+wwv_flow_api.create_jet_chart_axis(
+ p_id=>wwv_flow_api.id(4700021420921854224)
+,p_chart_id=>wwv_flow_api.id(4700020393028854220)
+,p_axis=>'y'
+,p_is_rendered=>'on'
+,p_format_scaling=>'auto'
+,p_scaling=>'linear'
+,p_baseline_scaling=>'zero'
+,p_position=>'auto'
+,p_major_tick_rendered=>'on'
+,p_minor_tick_rendered=>'off'
+,p_tick_label_rendered=>'on'
+);
+wwv_flow_api.create_page_plug(
+ p_id=>wwv_flow_api.id(9531315630602458347)
 ,p_plug_name=>'License Information'
 ,p_region_template_options=>'#DEFAULT#'
 ,p_plug_template=>wwv_flow_api.id(563812786985049615)
@@ -44,7 +461,7 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_02=>'HTML'
 );
 wwv_flow_api.create_page_plug(
- p_id=>wwv_flow_api.id(248479453529594281)
+ p_id=>wwv_flow_api.id(9614108185713141721)
 ,p_plug_name=>'Dynamic Object List'
 ,p_region_template_options=>'#DEFAULT#'
 ,p_component_template_options=>'#DEFAULT#'
@@ -65,42 +482,14 @@ wwv_flow_api.create_page_plug(
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
 );
 wwv_flow_api.create_page_plug(
- p_id=>wwv_flow_api.id(29694414707753864501)
-,p_plug_name=>'New'
-,p_region_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_api.id(563812786985049615)
-,p_plug_display_sequence=>70
-,p_include_in_reg_disp_sel_yn=>'N'
-,p_plug_display_point=>'BODY'
-,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
-,p_attribute_01=>'N'
-,p_attribute_02=>'HTML'
-);
-wwv_flow_api.create_page_plug(
- p_id=>wwv_flow_api.id(165686396220910902)
-,p_plug_name=>'Text Information'
-,p_parent_plug_id=>wwv_flow_api.id(29694414707753864501)
-,p_region_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_api.id(563812786985049615)
-,p_plug_display_sequence=>10
-,p_include_in_reg_disp_sel_yn=>'N'
-,p_plug_grid_column_span=>5
-,p_plug_display_point=>'BODY'
-,p_plug_query_row_template=>1
-,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
-,p_attribute_01=>'N'
-,p_attribute_02=>'HTML'
-);
-wwv_flow_api.create_page_plug(
- p_id=>wwv_flow_api.id(248479984228594286)
-,p_plug_name=>'License Information'
-,p_parent_plug_id=>wwv_flow_api.id(29694414707753864501)
-,p_region_template_options=>'#DEFAULT#'
-,p_plug_template=>wwv_flow_api.id(563812786985049615)
-,p_plug_display_sequence=>20
-,p_include_in_reg_disp_sel_yn=>'N'
+ p_id=>wwv_flow_api.id(9614108716412141726)
+,p_plug_name=>'Product License Certificate'
+,p_region_template_options=>'#DEFAULT#:is-collapsed:t-Region--scrollBody'
+,p_plug_template=>wwv_flow_api.id(563817264244049616)
+,p_plug_display_sequence=>62
+,p_include_in_reg_disp_sel_yn=>'Y'
 ,p_plug_new_grid_row=>false
-,p_plug_grid_column_span=>6
+,p_plug_new_grid_column=>false
 ,p_plug_display_point=>'BODY'
 ,p_plug_query_row_template=>1
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
@@ -108,31 +497,18 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_02=>'HTML'
 );
 wwv_flow_api.create_page_item(
- p_id=>wwv_flow_api.id(165686256515910901)
-,p_name=>'P8006_LICENSE'
-,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_api.id(248479984228594286)
-,p_prompt=>'License'
-,p_display_as=>'NATIVE_DISPLAY_IMAGE'
-,p_tag_attributes=>'style="max-width:90%"'
-,p_grid_label_column_span=>0
-,p_field_template=>wwv_flow_api.id(563841216965049626)
-,p_item_template_options=>'#DEFAULT#'
-,p_attribute_01=>'SQL'
-,p_attribute_06=>'select PKG_APEX_UTIL.Get_APP_Static_File_Content(''License.png'') from dual'
-);
-wwv_flow_api.create_page_item(
- p_id=>wwv_flow_api.id(165686491570910903)
+ p_id=>wwv_flow_api.id(4700024774566854233)
 ,p_name=>'P8006_SYSTEM_TIME'
 ,p_item_sequence=>10
-,p_item_plug_id=>wwv_flow_api.id(165686396220910902)
+,p_item_plug_id=>wwv_flow_api.id(9614108716412141726)
 ,p_prompt=>'System Time:'
 ,p_format_mask=>'fmDay, fmDD fmMonth, YYYY'
 ,p_source=>'Select to_char(sysdate, ''Day'')||'', ''|| to_char(sysdate, ''Month DD, YYYY'') from dual'
 ,p_source_type=>'QUERY'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
-,p_grid_label_column_span=>4
+,p_colspan=>4
+,p_grid_label_column_span=>2
 ,p_read_only_when_type=>'ALWAYS'
 ,p_field_template=>wwv_flow_api.id(563841216965049626)
 ,p_item_template_options=>'t-Form-fieldContainer--large:margin-right-none'
@@ -142,10 +518,30 @@ wwv_flow_api.create_page_item(
 ,p_attribute_05=>'BOTH'
 );
 wwv_flow_api.create_page_item(
- p_id=>wwv_flow_api.id(165686611280910904)
-,p_name=>'P8006_LICENSE_ABIS'
+ p_id=>wwv_flow_api.id(4700025140011854234)
+,p_name=>'P8006_LICENSE_PROJECT'
 ,p_item_sequence=>20
-,p_item_plug_id=>wwv_flow_api.id(165686396220910902)
+,p_item_plug_id=>wwv_flow_api.id(9614108716412141726)
+,p_prompt=>'License Project:'
+,p_source=>'RTP Bio Project'
+,p_source_type=>'STATIC'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
+,p_begin_on_new_line=>'N'
+,p_begin_on_new_field=>'N'
+,p_read_only_when_type=>'ALWAYS'
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#:t-Form-fieldContainer--large'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'BOTH'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4700025533586854234)
+,p_name=>'P8006_LICENSE_ABIS'
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_api.id(9614108716412141726)
 ,p_use_cache_before_default=>'NO'
 ,p_prompt=>'Remaining ABIS licenses:'
 ,p_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -167,7 +563,8 @@ wwv_flow_api.create_page_item(
 ,p_source_type=>'QUERY'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
-,p_grid_label_column_span=>4
+,p_begin_on_new_line=>'N'
+,p_begin_on_new_field=>'N'
 ,p_read_only_when_type=>'ALWAYS'
 ,p_field_template=>wwv_flow_api.id(563841216965049626)
 ,p_item_template_options=>'#DEFAULT#:t-Form-fieldContainer--large'
@@ -177,34 +574,15 @@ wwv_flow_api.create_page_item(
 ,p_attribute_05=>'BOTH'
 );
 wwv_flow_api.create_page_item(
- p_id=>wwv_flow_api.id(165686632170910905)
-,p_name=>'P8006_LICENSE_PROJECT'
-,p_item_sequence=>30
-,p_item_plug_id=>wwv_flow_api.id(165686396220910902)
-,p_prompt=>'License Project:'
-,p_source=>'RTP Bio Project'
-,p_source_type=>'STATIC'
-,p_display_as=>'NATIVE_TEXT_FIELD'
-,p_cSize=>30
-,p_grid_label_column_span=>4
-,p_read_only_when_type=>'ALWAYS'
-,p_field_template=>wwv_flow_api.id(563841216965049626)
-,p_item_template_options=>'#DEFAULT#:t-Form-fieldContainer--large'
-,p_attribute_01=>'N'
-,p_attribute_02=>'N'
-,p_attribute_04=>'TEXT'
-,p_attribute_05=>'BOTH'
-);
-wwv_flow_api.create_page_item(
- p_id=>wwv_flow_api.id(165686809228910906)
+ p_id=>wwv_flow_api.id(4700025915497854235)
 ,p_name=>'P8006_CUSTOMER'
 ,p_item_sequence=>40
-,p_item_plug_id=>wwv_flow_api.id(165686396220910902)
+,p_item_plug_id=>wwv_flow_api.id(9614108716412141726)
 ,p_prompt=>'Customer:'
 ,p_display_as=>'NATIVE_TEXT_FIELD'
 ,p_cSize=>30
-,p_grid_label_column_span=>4
-,p_display_when_type=>'NEVER'
+,p_begin_on_new_line=>'N'
+,p_begin_on_new_field=>'N'
 ,p_read_only_when_type=>'ALWAYS'
 ,p_field_template=>wwv_flow_api.id(563841216965049626)
 ,p_item_template_options=>'#DEFAULT#:t-Form-fieldContainer--large'
@@ -212,6 +590,20 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'N'
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4700026340870854235)
+,p_name=>'P8006_LICENSE'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_api.id(9614108716412141726)
+,p_display_as=>'NATIVE_DISPLAY_IMAGE'
+,p_tag_attributes=>'style="height:570px"'
+,p_begin_on_new_line=>'N'
+,p_grid_label_column_span=>0
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'SQL'
+,p_attribute_06=>'select PKG_APEX_UTIL.Get_APP_Static_File_Content(''License.png'') from dual'
 );
 end;
 /

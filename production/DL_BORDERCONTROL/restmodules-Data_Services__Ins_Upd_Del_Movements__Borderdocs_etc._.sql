@@ -1139,4 +1139,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.11
+Elapsed: 00:00:00.23

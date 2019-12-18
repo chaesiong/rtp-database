@@ -742,6 +742,16 @@ wwv_flow_api.create_static_lov_data(
 ,p_lov_return_value=>'2'
 );
 wwv_flow_api.create_list_of_values(
+ p_id=>wwv_flow_api.id(38664845894698378524)
+,p_lov_name=>'LOV_EVOA_CODES'
+,p_lov_query=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT NVL(display_value, display_value$dlc) d, key_value r',
+'FROM dl_common.evoa_codes$lc',
+'WHERE is_active = ''Y''',
+'ORDER BY display_order',
+';'))
+);
+wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(487098868238599867)
 ,p_lov_name=>'LOV_FINGERPOSITIONS'
 ,p_lov_query=>'.'||wwv_flow_api.id(487098868238599867)||'.'
@@ -1036,14 +1046,14 @@ wwv_flow_api.create_list_of_values(
 ' WHERE num_value IS NOT NULL',
 ' ORDER BY display_order;'))
 );
+end;
+/
+begin
 wwv_flow_api.create_list_of_values(
  p_id=>wwv_flow_api.id(34809669441552012528)
 ,p_lov_name=>'LOV_SOURCE_SYSTEMS'
 ,p_lov_query=>'.'||wwv_flow_api.id(34809669441552012528)||'.'
 );
-end;
-/
-begin
 wwv_flow_api.create_static_lov_data(
  p_id=>wwv_flow_api.id(34809669701398012528)
 ,p_lov_disp_sequence=>1

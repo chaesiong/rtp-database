@@ -24,7 +24,7 @@ wwv_flow_api.create_page(
 ,p_cache_mode=>'NOCACHE'
 ,p_help_text=>'No help is available for this page.'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190805052454'
+,p_last_upd_yyyymmddhh24miss=>'20191120101558'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(187242908866694368)
@@ -64,7 +64,8 @@ wwv_flow_api.create_report_region(
 '"FLOOR_ID",',
 '"BIO_CAPTURING",',
 '"NAME",',
-'"DEFAULT_CAMERA_DIRECTION"',
+'"DEFAULT_CAMERA_DIRECTION",',
+'"IS_EVOA"',
 'from "#OWNER#"."TERMINALS"',
 'where "BORDER_POST" = :P2010_KEY_VALUE',
 ''))
@@ -349,8 +350,29 @@ wwv_flow_api.create_report_columns(
 ,p_include_in_export=>'Y'
 );
 wwv_flow_api.create_report_columns(
- p_id=>wwv_flow_api.id(187283588951694512)
+ p_id=>wwv_flow_api.id(4699027895927625946)
 ,p_query_column_id=>16
+,p_column_alias=>'IS_EVOA'
+,p_column_display_sequence=>17
+,p_column_heading=>'IsEvoa?'
+,p_use_as_row_header=>'N'
+,p_column_alignment=>'CENTER'
+,p_heading_alignment=>'LEFT'
+,p_disable_sort_column=>'N'
+,p_display_as=>'SELECT_LIST_FROM_LOV'
+,p_named_lov=>wwv_flow_api.id(235001392283894561)
+,p_lov_show_nulls=>'YES'
+,p_derived_column=>'N'
+,p_column_default=>'0'
+,p_column_default_type=>'FUNCTION'
+,p_lov_display_extra=>'YES'
+,p_include_in_export=>'Y'
+,p_ref_table_name=>'TERMINALS'
+,p_ref_column_name=>'IS_EVOA'
+);
+wwv_flow_api.create_report_columns(
+ p_id=>wwv_flow_api.id(187283588951694512)
+,p_query_column_id=>17
 ,p_column_alias=>'CHECK$01'
 ,p_column_display_sequence=>1
 ,p_column_heading=>'Select Row'
@@ -465,6 +487,7 @@ wwv_flow_api.create_page_button(
 ,p_button_redirect_url=>'javascript:apex.confirm(htmldb_delete_message,''DELETE'');'
 ,p_button_execute_validations=>'N'
 ,p_button_condition_type=>'NEVER'
+,p_grid_new_grid=>false
 ,p_database_action=>'DELETE'
 );
 wwv_flow_api.create_page_button(
@@ -906,6 +929,9 @@ wwv_flow_api.create_page_validation(
 ,p_associated_column=>'WIDTH'
 ,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_validation(
  p_id=>wwv_flow_api.id(187275954494694493)
 ,p_tabular_form_region_id=>wwv_flow_api.id(187257658147694449)
@@ -922,9 +948,6 @@ wwv_flow_api.create_page_validation(
 ,p_associated_column=>'HEIGHT'
 ,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_validation(
  p_id=>wwv_flow_api.id(187276391349694494)
 ,p_tabular_form_region_id=>wwv_flow_api.id(187257658147694449)
@@ -987,6 +1010,38 @@ wwv_flow_api.create_page_validation(
 ,p_exec_cond_for_each_row=>'N'
 ,p_only_for_changed_rows=>'Y'
 ,p_associated_column=>'NAME'
+,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
+);
+wwv_flow_api.create_page_validation(
+ p_id=>wwv_flow_api.id(4699027977635625947)
+,p_tabular_form_region_id=>wwv_flow_api.id(187257658147694449)
+,p_validation_name=>'ISEVOA not null'
+,p_validation_sequence=>150
+,p_validation=>'IS_EVOA'
+,p_validation_type=>'ITEM_NOT_NULL'
+,p_error_message=>'#COLUMN_HEADER# must have a value.'
+,p_always_execute=>'N'
+,p_validation_condition=>':request like (''SAVE'') or :request like ''GET_NEXT%'' or :request like ''GET_PREV%'''
+,p_validation_condition_type=>'PLSQL_EXPRESSION'
+,p_exec_cond_for_each_row=>'N'
+,p_only_for_changed_rows=>'Y'
+,p_associated_column=>'IS_EVOA'
+,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
+);
+wwv_flow_api.create_page_validation(
+ p_id=>wwv_flow_api.id(4699028098537625948)
+,p_tabular_form_region_id=>wwv_flow_api.id(187257658147694449)
+,p_validation_name=>'ISEVOA must be numeric'
+,p_validation_sequence=>160
+,p_validation=>'IS_EVOA'
+,p_validation_type=>'ITEM_IS_NUMERIC'
+,p_error_message=>'#COLUMN_HEADER# must be numeric.'
+,p_always_execute=>'N'
+,p_validation_condition=>':request like (''SAVE'') or :request like ''GET_NEXT%'' or :request like ''GET_PREV%'''
+,p_validation_condition_type=>'PLSQL_EXPRESSION'
+,p_exec_cond_for_each_row=>'N'
+,p_only_for_changed_rows=>'Y'
+,p_associated_column=>'IS_EVOA'
 ,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
 );
 wwv_flow_api.create_page_da_event(

@@ -513,43 +513,22 @@ wwv_flow_api.create_page(
 '    margin-left: -5rem;',
 '}',
 '',
-'.cl-icpo-case-type-info {',
+'.cl-icpo-info {',
 '    color: #cc0000;',
 '    text-align: center;',
+'    font-size: 2rem;',
+'    line-height: 1.2;',
+'    font-weight: 400;',
 '}',
 '',
-'#id-icpo-notice {',
-'    padding: 1rem;',
-'    cursor: default;',
-'    border-radius: 4px;',
+'.cl-icpo-info--header {',
+'    margin: 1rem 0 .8rem;',
+'    font-size: 2.2rem;',
 '}',
 '',
-'#id-icpo-notice.red {',
-'    color: #fff;',
-'    background-color: red;',
-'}',
-'',
-'#id-icpo-notice.red::after {',
-'  content: "Red";',
-'}',
-'',
-'#id-icpo-notice.green {',
-'    color: #fff;',
-'    background-color: green;',
-'}',
-'',
-'#id-icpo-notice.green::after {',
-'  content: "Green";',
-'}',
-'',
-'#id-icpo-notice.UN {',
-'    color: #333;',
-'    font-weight: bold;',
-'    background-color: #f2f2f2;',
-'}',
-'',
-'#id-icpo-notice.UN::after {',
-'  content: "UN";',
+'.cl-icpo-info--footer {',
+'    margin: .8rem 0 1rem;',
+'    font-size: 1.8rem;',
 '}',
 '',
 '.icpo_logo_bg {',
@@ -579,6 +558,19 @@ wwv_flow_api.create_page(
 '',
 '.cl-red {',
 '    color: red !important;',
+'}',
+'',
+'.cl-red-label label {',
+'    color: #cc0000;',
+'}',
+'',
+'#P120_ICPO_T_NOTICE {',
+'    text-transform: uppercase;',
+'    margin: 0 2rem 0 .5rem;',
+'    text-align: center;',
+'    color: #333;',
+'    border-color: #ccc;',
+'    cursor: default;',
 '}'))
 ,p_page_template_options=>'#DEFAULT#'
 ,p_dialog_width=>'96%'
@@ -588,7 +580,7 @@ wwv_flow_api.create_page(
 ,p_page_is_public_y_n=>'N'
 ,p_cache_mode=>'NOCACHE'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190912010448'
+,p_last_upd_yyyymmddhh24miss=>'20191208230814'
 );
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(25022140095681822)
@@ -732,7 +724,7 @@ wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(168298482926934101)
 ,p_plug_name=>'Display Items'
 ,p_parent_plug_id=>wwv_flow_api.id(164535653695117949)
-,p_region_template_options=>'#DEFAULT#:t-Region--removeHeader:t-Region--scrollBody:t-Form--slimPadding:t-Form--xlarge:t-Form--stretchInputs'
+,p_region_template_options=>'#DEFAULT#:t-Region--removeHeader:t-Region--scrollBody:t-Form--slimPadding:t-Form--xlarge:t-Form--stretchInputs:margin-bottom-sm'
 ,p_plug_template=>wwv_flow_api.id(563820889302049617)
 ,p_plug_display_sequence=>20
 ,p_include_in_reg_disp_sel_yn=>'N'
@@ -747,18 +739,25 @@ wwv_flow_api.create_page_plug(
 ,p_plug_name=>'Type Info : SLTD (Lost Passport)'
 ,p_region_name=>'id-icpo-case-type-sltd'
 ,p_parent_plug_id=>wwv_flow_api.id(164535653695117949)
-,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader:t-Region--noBorder:t-Region--scrollBody'
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader:t-Region--scrollBody:t-Form--slimPadding:t-Form--xlarge:t-Form--stretchInputs:margin-bottom-sm'
 ,p_plug_template=>wwv_flow_api.id(563820889302049617)
 ,p_plug_display_sequence=>30
 ,p_include_in_reg_disp_sel_yn=>'N'
 ,p_plug_display_point=>'BODY'
-,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'<div class="cl-icpo-case-type-info">',
-'    <h2>Found Lost Passport</h2>',
-'    <h3>Reported as robbery from Interpol (I-24/7)</h3>',
-'</div>'))
 ,p_plug_query_row_template=>1
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_plug_header=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<!--',
+'<div class="cl-icpo-info cl-icpo-info--header">',
+'    Found Lost Passport',
+'</div>',
+'-->'))
+,p_plug_footer=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<!--',
+'<div class="cl-icpo-info cl-icpo-info--footer">',
+'    Reported as robbery from Interpol (I-24/7)',
+'</div>',
+'-->'))
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
@@ -782,17 +781,19 @@ wwv_flow_api.create_page_plug(
 ,p_plug_name=>'Type Info : TDAWN (Notice)'
 ,p_region_name=>'id-icpo-case-type-tdawn'
 ,p_parent_plug_id=>wwv_flow_api.id(164535653695117949)
-,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader:t-Region--noBorder:t-Region--scrollBody'
+,p_region_template_options=>'#DEFAULT#:t-Region--noPadding:t-Region--removeHeader:t-Region--scrollBody:t-Form--slimPadding:t-Form--xlarge:t-Form--stretchInputs:margin-bottom-sm'
 ,p_plug_template=>wwv_flow_api.id(563820889302049617)
 ,p_plug_display_sequence=>40
 ,p_include_in_reg_disp_sel_yn=>'N'
 ,p_plug_display_point=>'BODY'
-,p_plug_source=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'<div class="cl-icpo-case-type-info cl-icpo-case-tdawn">',
-'    <h2 id="id-icpo-notice">Notice : </h2>',
-'</div>'))
 ,p_plug_query_row_template=>1
 ,p_plug_query_options=>'DERIVED_REPORT_COLUMNS'
+,p_plug_header=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'<!--',
+'<div class="cl-icpo-info cl-icpo-info--header">',
+'    Notice',
+'</div>',
+'-->'))
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
@@ -891,6 +892,9 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(222529730491384646)
 ,p_plug_name=>'Candidate-Face'
@@ -908,9 +912,6 @@ wwv_flow_api.create_page_plug(
 ,p_attribute_01=>'N'
 ,p_attribute_02=>'HTML'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_plug(
  p_id=>wwv_flow_api.id(222529826659384647)
 ,p_plug_name=>'Candidate-Data'
@@ -1800,7 +1801,7 @@ wwv_flow_api.create_page_button(
 ,p_button_template_id=>wwv_flow_api.id(563841742376049627)
 ,p_button_image_alt=>'Search for more information'
 ,p_button_position=>'BELOW_BOX'
-,p_button_redirect_url=>'javascript:window.open(''http://i247.i'', ''wBmBSICPO_EXT'');'
+,p_button_redirect_url=>'javascript:window.open(''http://i247.ip'', ''wBmBSICPO_EXT'');'
 ,p_button_execute_validations=>'N'
 ,p_grid_new_grid=>false
 );
@@ -1919,6 +1920,9 @@ wwv_flow_api.create_page_button(
 ,p_button_cattributes=>'style="width: 200px"'
 ,p_grid_new_grid=>false
 );
+end;
+/
+begin
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(152673472352483376)
 ,p_button_sequence=>10
@@ -1948,9 +1952,6 @@ wwv_flow_api.create_page_button(
 ,p_warn_on_unsaved_changes=>null
 ,p_grid_new_grid=>false
 );
-end;
-/
-begin
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(192202573050436017)
 ,p_button_sequence=>10
@@ -2964,6 +2965,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'VALUE'
 ,p_attribute_04=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(192205559108436026)
 ,p_name=>'P120_C_NATIONALITY'
@@ -2997,9 +3001,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_02=>'VALUE'
 ,p_attribute_04=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(192206342800436027)
 ,p_name=>'P120_C_BIRTHDAY'
@@ -3357,6 +3358,76 @@ wwv_flow_api.create_page_item(
 ,p_attribute_01=>'NONE'
 ,p_attribute_02=>'N'
 );
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4699902804518992511)
+,p_name=>'P120_ICPO_S_DB_INSERT_ON'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_api.id(168298793485934104)
+,p_prompt=>'Lost Passport :'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
+,p_tag_css_classes=>'cl-display-only'
+,p_tag_attributes=>'readonly'
+,p_grid_label_column_span=>5
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_css_classes=>'cl-red-label'
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'BOTH'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4699902968704992512)
+,p_name=>'P120_ICPO_S_RESPONSE_BY'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_api.id(168298793485934104)
+,p_prompt=>'Response By :'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
+,p_tag_css_classes=>'cl-display-only'
+,p_tag_attributes=>'readonly'
+,p_grid_label_column_span=>5
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'BOTH'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4699903097537992513)
+,p_name=>'P120_ICPO_T_NOTICE'
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_api.id(4690288479001124632)
+,p_prompt=>'Notice :'
+,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_grid_label_column_span=>5
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_css_classes=>'cl-red-label'
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'VALUE'
+,p_attribute_04=>'Y'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4699903160915992514)
+,p_name=>'P120_ICPO_T_RESPONSE_BY'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_api.id(4690288479001124632)
+,p_prompt=>'Response By :'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
+,p_tag_css_classes=>'cl-display-only'
+,p_tag_attributes=>'readonly'
+,p_grid_label_column_span=>5
+,p_field_template=>wwv_flow_api.id(563841216965049626)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'N'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'BOTH'
+);
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(192209900391436080)
 ,p_name=>'SetFacePhoto'
@@ -3601,7 +3672,7 @@ wwv_flow_api.create_page_da_action(
 );
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(4690288585958124633)
-,p_name=>'SetICPOType'
+,p_name=>'SetICPOInfo'
 ,p_event_sequence=>50
 ,p_bind_type=>'bind'
 ,p_bind_event_type=>'ready'
@@ -3614,31 +3685,94 @@ wwv_flow_api.create_page_da_action(
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'let candidates;',
-'let candidate_sltd, candidate_tdawn;',
+'let candidates = [];',
+'let icpo_source, candidate_sltd, candidate_tdawn;',
 '',
-'if (parent.getICPOStandardResults) candidates = parent.getICPOStandardResults();',
+'if (parent.getICPOStandardResults) candidates = parent.getICPOStandardResults().candidates;',
 '',
-'console.log("BLACKLIST: ICPO candidates:", candidates);',
+'if (candidates.length > 0) {',
+'    console.log("BLACKLIST: ICPO candidates:", candidates);',
 '',
-'candidate_sltd = candidates.candidates.find(candidate => candidate[''i:status_id''] === ''NO_ERROR'' && $.inArray(candidate[''i:name''], ["IPSG", "MIND"]) != -1);',
-'candidate_tdawn = candidates.candidates.find(candidate => candidate[''i:status_id''] === ''NO_ERROR'' && $.inArray(candidate[''i:name''], ["IPSG.NOMTD", "MIND.TDAWN"]) != -1);',
+'    if (candidates[0].hasOwnProperty("ServiceName")) {',
+'        icpo_source = candidates[0]["ServiceName"];',
+'    }',
 '',
-'console.log("BLACKLIST: ICPO candidate_sltd:", candidate_sltd);',
-'console.log("BLACKLIST: ICPO candidate_tdawn:", candidate_tdawn);',
+'    if (icpo_source === "MIND") {',
+'        candidate_sltd = candidates.find(candidate => candidate[''urn1:status_id''] === ''NO_ERROR'' && candidate[''urn1:name''] === ''MIND'');',
+'        candidate_tdawn = candidates.find(candidate => candidate[''urn1:status_id''] === ''NO_ERROR'' && candidate[''urn1:name''] === ''MIND.TDAWN'');',
+'    }',
+'    else if (icpo_source === "FIND") {',
+'        candidate_sltd = candidates.find(candidate => candidate[''i:status_id''] === ''NO_ERROR'' && candidate[''i:name''] === ''IPSG'');',
+'        candidate_tdawn = candidates.find(candidate => candidate[''i:status_id''] === ''NO_ERROR'' && candidate[''i:name''] === ''IPSG.NOMTD'');',
+'    }',
 '',
-'if (!candidate_sltd) {',
+'    console.log("BLACKLIST: ICPO candidate_sltd:", candidate_sltd);',
+'    console.log("BLACKLIST: ICPO candidate_tdawn:", candidate_tdawn);',
+'}',
+'',
+'//SLTD',
+'if (!!candidate_sltd) {',
+'    let hasDetails = false, db_insert_on, ServiceName;',
+'',
+'    hasDetails = candidate_sltd.hasOwnProperty("ICPODetails");',
+'',
+'    if (hasDetails) {',
+'        db_insert_on = candidate_sltd.ICPODetails.db_insert_on;',
+'        ServiceName = candidate_sltd.ICPODetails.ServiceName;',
+'    }',
+'',
+'	if (!ServiceName) ServiceName = icpo_source;',
+'',
+'    apex.item("P120_ICPO_S_DB_INSERT_ON").setValue(db_insert_on);',
+'    apex.item("P120_ICPO_S_RESPONSE_BY").setValue(ServiceName);',
+'}',
+'else {',
 '    $("#id-icpo-case-type-sltd").hide();',
 '}',
 '',
+'//TDAWN',
 'if (!!candidate_tdawn) {',
-'    let color = candidate_tdawn["i:document"]["i:color"];',
-'    let notice = "Notice : " + color;',
-'    $("#id-icpo-notice").val(notice).addClass(color);',
-'    //$("#id-icpo-notice").css("background-color", color);',
-'} else {',
+'    let hasDetails = false, color, ServiceName, bgcolor, fcolor = "#fff";',
+'',
+'    hasDetails = candidate_tdawn.hasOwnProperty("ICPODetails");',
+'',
+'    if (icpo_source === "MIND") {',
+'        color = candidate_tdawn["urn1:document"]["urn1:color"];',
+'    }',
+'    else if (icpo_source === "FIND" && hasDetails) {',
+'        color = candidate_tdawn.ICPODetails.color;',
+'    }',
+'',
+'    if (hasDetails) {',
+'        ServiceName = candidate_tdawn.ICPODetails.ServiceName;',
+'    }',
+'',
+'    if (!ServiceName) ServiceName = icpo_source;',
+'',
+'    if (!!color) {',
+'        bgcolor = color.toUpperCase();',
+'        switch (bgcolor) {',
+'            case ''YELLOW'':',
+'                fcolor = "#000";',
+'                break;',
+'            case ''NOT FOUND'':',
+'                bgcolor = "#4B92DB";',
+'                break;',
+'            default:',
+'                fcolor = "#fff";',
+'        }',
+'        const bg = new Option().style;',
+'        bg.color = bgcolor;',
+'        if (bg.color === "") {bgcolor = "#fff"; fcolor = "#333";}',
+'        $("#P120_ICPO_T_NOTICE").css({"background-color": bgcolor, "color": fcolor});',
+'        apex.item("P120_ICPO_T_NOTICE").setValue(color);',
+'    }',
+'    apex.item("P120_ICPO_T_RESPONSE_BY").setValue(ServiceName);',
+'} ',
+'else {',
 '    $("#id-icpo-case-type-tdawn").hide();',
-'}'))
+'}',
+''))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
@@ -3817,6 +3951,9 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_event_type=>'custom'
 ,p_bind_event_type_custom=>'closeThisDialog'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(95457075807695421)
 ,p_event_id=>wwv_flow_api.id(65870582971818423)
@@ -4023,9 +4160,6 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(95456127038695412)
 ,p_event_id=>wwv_flow_api.id(95455870515695409)
@@ -4731,6 +4865,9 @@ wwv_flow_api.create_page_da_action(
 ,p_attribute_01=>'apex.navigation.redirect(apex.item("P120_REDIRECT_CASE_URL").getValue());'
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(4686927250349369018)
 ,p_name=>'P120_C_AUTHORITY_TMP: Change'
@@ -5026,9 +5163,6 @@ wwv_flow_api.create_page_process(
 ,p_process_when=>'P120_BL_INCIDENT_ID'
 ,p_process_when_type=>'ITEM_IS_NOT_NULL'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(168299886808934115)
 ,p_process_sequence=>20

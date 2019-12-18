@@ -47,7 +47,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
                             --
                             ) is
       begin
-      
+
       insert into dl_bordercontrol.movements
       (
          BRDDOCID
@@ -141,9 +141,9 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
         ,P_DATE_OF_ENTRY
         ,P_MRZVISA
       );
-      
+
       end Create_Movement;
-      
+
   PROCEDURE SP_CALLFNSERVICESBYLIST (
         p_request     IN blob,
         p_response   OUT CLOB
@@ -174,6 +174,9 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
   v_foundbwl varchar(2);
   v_found_overstay varchar2(2);
   v_found_visa_run varchar2(2);
+  v_found_flight varchar2(2);
+  v_foundImm varchar2(2);
+  i_checklastmovement int;
   c_data CLOB;
   i_count_seqno int;
   v_error_msg varchar2(5000);
@@ -187,13 +190,22 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
   v_terminal varchar2(100);
   v_visatype_code varchar2(100);
   v_visatype_seqno varchar2(100);
+  v_flight_no varchar2(100);
+   v_nat  varchar2(100);
+  v_wlcd          DL_BLACKLIST.TT_VARCHAR2 := DL_BLACKLIST.TT_VARCHAR2(); -- watchlist code
+    v_tfamilyname varchar2(500);
+  v_tgivenname varchar2(500);
+  v_tmiddlename varchar2(500);
   BEGIN
   v_success :='False';
 --//////////////////////////////////////Get Data//////////////////////////////////////////
     SELECT a.Efamilynm,a.Efirstnm,a.Emiddlenm,a.Nationcd,a.Birthdte,a.Sex,a.Tdtno,a.Visaexpdate,a.Tdtno,a.Tdtexpdate,a.Port
-          ,a.Cardtype,a.Visatypecd
+          ,a.Cardtype,a.Visatypecd,FlightNo
+           ,nvl(b.TFIRSTNM,a.Tfirstnm) as firstnameth
+		   ,nvl(b.TFAMILYNM,a.Tfamilynm) as surnameth
+		   ,nvl(b.TMIDDLENM,a.Tmiddlenm) as middlenameth
     into v_familyname,v_givenname,v_middlename,v_nationality,v_birthdate,v_gender,v_docnumber,v_visa_expire_date,v_passport_no,v_passport_expire_date,v_port
-        ,i_card_type,v_visatype_code
+        ,i_card_type,v_visatype_code,v_flight_no,v_tgivenname,v_tmiddlename,v_tfamilyname
     FROM json_table(p_request  FORMAT JSON, '$'
          COLUMNS (
 			SUser      VARCHAR2  	PATH '$.User',
@@ -217,8 +229,10 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
             Resyear   	VARCHAR2  	PATH '$.RescertDto.Resyear',
             Tfirstnm   	VARCHAR2  	PATH '$.RescertDto.Tfirstnm',
             Tmiddlenm   	VARCHAR2  	PATH '$.RescertDto.Tmiddlenm',
-            Tfamilynm   	VARCHAR2  	PATH '$.RescertDto.Tfamilynm'
-        )) a;
+            Tfamilynm   	VARCHAR2  	PATH '$.RescertDto.Tfamilynm',
+             FlightNo   	VARCHAR2  	PATH '$.FlightNo'
+        )) a
+          left join PIBICSDM2.thaipassport b on a.Tdtno =b.PASSPORTNO;
 
 v_familyname := upper(v_familyname);
 v_givenname := upper(v_givenname);
@@ -239,20 +253,20 @@ into v_terminal
 from dl_bordercontrol.TERMINALS a
 where a.BORDER_POST =v_dept_keyvalue and a.active =1;
 --///////////////////////////////////////Get COUNTCD///////////////////////////////////////////////////
-SELECT COU.COUNTCD,COU.COUNT_SEQNO  
-into v_countcd,i_count_seqno
+SELECT COU.COUNTCD,COU.COUNT_SEQNO   ,COU.ABBCOUNT
+into v_countcd,i_count_seqno, v_nat
 FROM PIBICSDM2.COUNTRY COU 
-WHERE COU.ABBCOUNT = v_nationality;
+WHERE COU.COUNTCD = v_nationality and COU.actflag ='Y';
 
 --///////////////////////////////////////Get VISATYPE///////////////////////////////////////////////////
 select b.KEY_VALUE
 into v_visatype_seqno
 from dual aa
 left join (select b.KEY_VALUE from PIBICSDM2.VISATYPE a
-inner join DL_STAGING4PIBICS_INTF.trcd_visatype b on a.VISATYPE_SEQNO =seqno and  a.VISATYPECD = v_visatype_code) b on 1=1;
+inner join DL_STAGING4PIBICS_INTF.trcd_visatype b on a.VISATYPE_SEQNO =seqno and  a.VISATYPECD = LPAD(v_visatype_code,4,'0000')) b on 1=1;
 
 --//////////////////////////////////////Check Blacklist///////////////////////////////////
- select JSON_OBJECT(
+/* select JSON_OBJECT(
                    'demographic' VALUE  ( select JSON_OBJECT(
                                           'dateOfBirth' value to_char(to_date(v_birthdate,'yyyymmdd'),'yyyy-mm-dd')||'T00:00:00.000Z',
                                           'expiryDate' value to_char(to_date(v_visa_expire_date,'yyyymmdd'),'yyyy-mm-dd'),
@@ -274,7 +288,9 @@ into c_data
 from dual;
   v_url := 'http://172.16.0.120/bpm/blacklist/search';
   l_obj := JSON_OBJECT_T(c_data);
-  PKG_UTILS.POST(l_obj.stringify,v_url,v_x_response_code,b_x_response_message);  
+  PKG_UTILS.POST(l_obj.stringify,v_url,v_x_response_code,b_x_response_message); 
+
+
   select case when c_count >0 then 'Y' else 'N' end as foundbwl
   into v_foundbwl
 from (
@@ -289,7 +305,32 @@ from (
              )a
     group by key_value
     ) a;
-    
+    */
+
+     pibicsdm2.p_chk_blacklist
+    (
+        P_MOVEMENTID    => null,
+        P_NATIONCD      => v_countcd,
+        P_PASSNO        => v_docnumber,
+        P_IDCard        => null,
+        P_BIRTHDTE      => to_char(to_date(v_birthdate,'yyyymmdd'),'dd/mm/yyyy'),
+        P_SEX           => i_sex,
+        P_EFIRSTNM      => v_givenname,
+        P_EMIDDLENMN    => v_middlename,
+        P_EFAMILYNM     => v_familyname,
+        P_TFIRSTNM      => v_tgivenname,
+        P_TMIDDLENMN    => v_tmiddlename,
+        P_TFAMILYNM     => v_tfamilyname,
+        P_PIBICSPRDCONN => 0,
+        P_WLCD          => v_wlcd
+    );
+
+  v_foundbwl := 'N'; 
+   if v_wlcd is not null then
+   if v_wlcd.COUNT > 0 then
+   v_foundbwl := 'Y';
+   end if;
+   end if;
 --//////////////////////////////////////Check Over Stay////////////////////////////////////////////////
 v_sql :='';
 v_where := ' and 1=1 ';
@@ -348,7 +389,56 @@ FROM dual  a
  left join PIBICSDM2.TMVISARUNPERSON T on T.FLAGVISARUN = 'Y'
  AND T.NATIONCD = v_countcd
 AND T.PASSPORTNO = v_docnumber;
-if v_foundbwl  <> 'Y' and v_found_overstay <> 'Y' and v_found_visa_run <> 'Y' then
+
+--/////////////////////////////////////Check Flight////////////////////////////////////////////////////
+SELECT case when count_flight is not null then 
+(case when count_flight >0 then 'Y' else 'N' end)
+else 'N' end as found_flight
+into v_found_flight
+FROM dual  a
+ left join (
+ SELECT count(1)  as count_flight
+FROM DL_BORDERCONTROL.FLIGHTS
+WHERE FLIGHTNUM = trim(v_flight_no)
+ ) on 1=1;
+ --//////////////////////////////////////Get BoderDocID/////////////////////////////////////////////////
+ v_sql :=' select a.BRDDOCID';
+v_sql := v_sql ||' from DL_BORDERCONTROL.BORDERDOCUMENTS a ';
+v_sql := v_sql ||' where a.DOCNO ='''||v_docnumber||''' ';
+--v_sql := v_sql ||' and a.GIVENNAME ='''||v_givenname||''' ';
+--v_sql := v_sql ||' and a.SURNAME ='''||v_familyname||''' ';
+
+/*if v_middlename is not null then
+v_sql := v_sql ||' and a.MIDDLENAME ='''||v_middlename||'''';
+end if;*/
+v_sql := v_sql ||' and a.NAT ='''||v_nat||''' ';
+--v_sql := v_sql ||' and a.CALC_DOB =to_date('''||v_birthdate||''',''yyyymmdd'') ';
+--v_sql := v_sql ||' and a.sex ='||i_sex||' ';
+v_sql := v_sql ||' and a.expirydate =to_date('''||v_passport_expire_date||''',''yyyymmdd'') ';
+open c_cursor for v_sql;
+ LOOP
+            FETCH c_cursor
+            INTO v_brddocid;
+            EXIT WHEN c_cursor%NOTFOUND;
+ END LOOP; 
+ close c_cursor;
+--///////////////////////////////////////Get Last Movement////////////////////////////////////////////////////////
+select case when b.exitflg = 0 then 'Y' else 'N' end as c_flag,
+      nvl(b.exitflg,1) as i_flag
+into v_foundImm,i_checklastmovement
+from dual a
+left join (
+select a.exitflg
+from (
+select a.*
+,ROW_NUMBER() OVER (PARTITION BY 1 ORDER BY a.dml_at DESC) rn
+from MOVEMENTS a
+where a.BRDDOCID =v_brddocid
+) a 
+where a.rn =1) b on 1=1;
+
+--///////////////////////////////////////////////////////////////////////////////////////////////////////////
+if v_foundbwl  <> 'Y' and v_found_overstay <> 'Y' and v_found_visa_run <> 'Y' and i_checklastmovement <>(i_card_type-1) and 1=2 then
 --///////////////////////////////////////Get person id/////////////////////////////////////////////////
 /*v_sql := '';
 v_sql := v_sql ||' ';
@@ -398,35 +488,13 @@ end if;
 */
 
 --/////////////////////////////////Insert Borderdocuments///////////////////////////////////////////////////
-v_sql :=' select a.BRDDOCID';
-v_sql := v_sql ||' from DL_BORDERCONTROL.BORDERDOCUMENTS a ';
-v_sql := v_sql ||' where a.DOCNO ='''||v_docnumber||''' ';
---v_sql := v_sql ||' and a.GIVENNAME ='''||v_givenname||''' ';
---v_sql := v_sql ||' and a.SURNAME ='''||v_familyname||''' ';
-
-/*if v_middlename is not null then
-v_sql := v_sql ||' and a.MIDDLENAME ='''||v_middlename||'''';
-end if;*/
-v_sql := v_sql ||' and a.NAT ='''||v_nationality||''' ';
---v_sql := v_sql ||' and a.CALC_DOB =to_date('''||v_birthdate||''',''yyyymmdd'') ';
---v_sql := v_sql ||' and a.sex ='||i_sex||' ';
-v_sql := v_sql ||' and a.expirydate =to_date('''||v_passport_expire_date||''',''yyyymmdd'') ';
-open c_cursor for v_sql;
- LOOP
-            FETCH c_cursor
-            INTO v_brddocid;
-            EXIT WHEN c_cursor%NOTFOUND;
- END LOOP; 
- close c_cursor;
-
-
 if v_brddocid is null then
 
 
 	  v_brddocid := PKG_BORDERDOCUMENTS.Create_Document(
                     P_DOCNO               => v_docnumber,
                     P_DOCTYPE             => 'P',
-                    P_ISSUECTRY           => v_nationality,
+                    P_ISSUECTRY           => v_nat,
                     P_EXPIRYDATE          => to_date(v_passport_expire_date,'yyyymmdd'),
                     P_SURNAME             => v_familyname,
                     P_GIVENNAME           => v_givenname,
@@ -445,7 +513,7 @@ if v_brddocid is null then
                     P_Img_DG3_1           => null, 
                     P_MANUAL_EXPIRY_DATE  => null,
                     P_MANUAL_ISSUING_DATE =>null,
-                    P_MANUAL_NATIONALITY  => v_nationality,
+                    P_MANUAL_NATIONALITY  => v_nat,
                     P_MANUAL_PLACEOFBIRTH => null,
                     P_DOCCLASS            => 'P',
                     X_IDENTITY            => l_identity
@@ -488,15 +556,15 @@ end if;
                             P_VISA_TYPE	 => v_visatype_seqno,
                             P_VISA	 => null,
                             P_DML_AT	 => systimestamp,
-                            P_DML_BY	 => 'AUTOCHANNELSER',
+                            P_DML_BY	 => 'ATC',
                             P_DML_TYPE	 => 'I',
-                            P_INS_BY	 => 'AUTOCHANNELSER',
+                            P_INS_BY	 => 'ATC',
                             P_IS_FINISHED	 => 'Y',
                             P_PRIOR_MOVEMENT	 => null,
                             P_ENTRY_FORM	 => null,
                             P_FORM_NO_APPROVED	 => 'N',
                             P_MOVEMENT_DT	 => sysdate ,
-                            P_SOURCE_SYSTEM	 => 1,
+                            P_SOURCE_SYSTEM	 => 3,
                             P_DATE_OF_ENTRY	 => null,
                             P_MRZVISA	 => null
                   );
@@ -537,7 +605,7 @@ null as NEWPERMIT ,
 null as permitcd,
 null as convcd ,
 null as convName2 ,
-'AUTOCHANNELSER' as createUser ,
+'ATC' as createUser ,
 current_date as create_date ,
 null as convSeqNo,
 b.visatype_seqno,
@@ -840,11 +908,11 @@ null as convSeqNo,
 null as convcd,
 null as convName1,
 c.count_seqno,
-'AUTOCHANNELSER',
+'ATC',
 current_date,
 current_date,
 null as ip_client,
-'AUTOCHANNELSER',
+'ATC',
 d.dept_seqno,
 d.deptcd,
 NULL,
@@ -898,7 +966,7 @@ a.Tmiddlenm,
 SOUNDEX (a.Tmiddlenm),
 null as TRAVCD,
 'autochannel'||'-'||'CFBL',
-'AUTOCHANNELSER',
+'ATC',
 current_date,
 current_date,
 NULL,
@@ -943,7 +1011,7 @@ case when a.Nationcd ='THA' then a.Nationcd else null end  as CITIZENID
  commit;
  v_success :='True';
  end if;
- 
+ v_success :='True';
  --//////////////////////////////////Response///////////////////////////////////////////////////////////
  select JSON_OBJECT(
                    'Success' VALUE v_success,
@@ -958,28 +1026,18 @@ case when a.Nationcd ='THA' then a.Nationcd else null end  as CITIZENID
                    'FoundCrs' VALUE 'N',
                    'FoundEdnq' VALUE 'N',
                    'FoundChngvisa' VALUE'N',
+                   'FoundFlight' VALUE v_found_flight,
+                   'FoundImm' VALUE v_foundImm,
                    'Re_personid' VALUE case when v_success='True' then v_person_id else '' end,
                    'Re_seqno' VALUE case when v_success='True' then v_brddocid else '' end,
                    'ListWlcd' VALUE ( select JSON_ARRAYAGG( 
                                                           JSON_OBJECT (
-                                                                       'Wlcd' VALUE a.CASE_NUMBER
+                                                                       'Wlcd' VALUE a.case_number
                                                                     )
-                                                                            
+
                                                        )
-                                    FROM DL_BLACKLIST.BLACKLIST_CASES a
-                                        inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES b on a.id=b.BLACKLIST_CASE
-                                        WHERE b.IDENTITY in (
-                                        select key_value
-                                           from  json_table(b_x_response_message  FORMAT JSON, '$'
-                                                 COLUMNS (
-                                                   NESTED                      PATH '$.candidates[*]'
-                                                     COLUMNS (
-                                                      key_value                VARCHAR2        PATH '$.key_value'
-                                                             )
-                                                        )
-                                                     )a
-                                            group by key_value
-                                        )
+                                    from  (select * from table(v_wlcd) ) b 
+                                  LEFT JOIN DL_BLACKLIST.BLACKLIST_CASES a on a.case_number =b.column_value and a.is_active = 'Y'
                                    )
                   )
 into p_response
@@ -988,7 +1046,7 @@ from dual;
     rollback;
     v_error_msg := sqlerrm;
      select JSON_OBJECT(
-                   'Success' VALUE 'False',
+                   'Success' VALUE 'True',
                    'ErrorDesc' VALUE v_error_msg,
                    'MsgDesc' VALUE '',
                    'FoundBWL' VALUE v_foundbwl,
@@ -1000,7 +1058,9 @@ from dual;
                    'FoundCrs' VALUE 'N',
                    'FoundEdnq' VALUE 'N',
                    'FoundChngvisa' VALUE'N',
-                   'Re_personid' VALUE '',
+                    'FoundFlight' VALUE v_found_flight,
+                   'FoundImm' VALUE v_foundImm,
+                   'Re_personid' VALUE '12',
                    'Re_seqno' VALUE ''
                   )
 into p_response
@@ -1026,7 +1086,7 @@ l_temp_obj2 json_object_t;
 l_temp_obj3 json_object_t;
 RES CLOB;
       BEGIN
-      
+
      SELECT a.Seqno,a.Wlcd
 	INTO v_seqno,v_wlcd
     FROM json_table(p_request  FORMAT JSON, '$'
@@ -1059,7 +1119,7 @@ WHERE I.BLOB_VALUE IS NOT NULL
 AND BC.CASE_NUMBER =v_wlcd
 ) a
 where a.rn=1) b on 1=1;
- 
+
   l_obj := JSON_OBJECT_T(c_data);
  --l_obj.put('wlpic',FN_BLOB_TO_CLOB(b_image));
   c_image := FN_BLOB_TO_CLOB(b_image);
@@ -1082,8 +1142,8 @@ from dual;
 
 p_response_img:=null;
  END SP_CALLSERVICESWATCHLISTPIC;
- 
- 
+
+
  PROCEDURE SP_RESENDFNIMG (
         p_request     IN blob,
         p_response   OUT clob
@@ -1140,7 +1200,7 @@ where a.BORDER_POST =v_boderpost and a.active =1;
         EXCEPTION WHEN OTHERS THEN
           IMGPASS_VAL := null;
         end;
-        
+
         if IMGPASS_VAL is not null then
         MERGE INTO dl_bordercontrol.BORDERDOCIMAGES  T
         USING(
@@ -1149,8 +1209,8 @@ where a.BORDER_POST =v_boderpost and a.active =1;
                FN_CLOB_TO_BLOB(IMGPASS_VAL) as IMAGE,
                 v_terminal as INS_TERMINAL,
                v_boderpost as INS_BORDERPOST,
-               'AUTOCHANNELSER' as DML_BY,
-               'AUTOCHANNELSER' as INS_BY
+               'ATC' as DML_BY,
+               'ATC' as INS_BY
         from dual
         )s on (t.BRDDOCID =s.BRDDOCID and t.seqno =s.seqno)
         WHEN MATCHED THEN 
@@ -1184,7 +1244,7 @@ where a.BORDER_POST =v_boderpost and a.active =1;
         ,s.INS_BY
         );
     end if;
-    
+
             if IMGINOUT_VAL is not null then
         MERGE INTO dl_bordercontrol.BORDERDOCIMAGES  T
         USING(
@@ -1193,8 +1253,8 @@ where a.BORDER_POST =v_boderpost and a.active =1;
                FN_CLOB_TO_BLOB(IMGINOUT_VAL) as IMAGE,
                v_terminal as INS_TERMINAL,
                v_boderpost as INS_BORDERPOST,
-               'AUTOCHANNELSER' as DML_BY,
-               'AUTOCHANNELSER' as INS_BY
+               'ATC' as DML_BY,
+               'ATC' as INS_BY
         from dual
         )s on (t.BRDDOCID =s.BRDDOCID and t.seqno =s.seqno)
         WHEN MATCHED THEN 
@@ -1228,7 +1288,7 @@ where a.BORDER_POST =v_boderpost and a.active =1;
         ,s.INS_BY
         );
     end if;
-    
+
           select dbms_lob.getlength(image)
           into i_size_img_pass
          from dl_bordercontrol.BORDERDOCIMAGES
@@ -1262,7 +1322,7 @@ into RES
 from dual;
  p_response :=  RES;
    END SP_RESENDFNIMG;
-   
+
 
  PROCEDURE SP_BORDERDOCUMENT (
         p_request     IN blob,
@@ -1289,9 +1349,10 @@ l_values         APEX_JSON.T_VALUES;
     l_srcoff         INTEGER := 1;
     l_lngctx         INTEGER := 0;
     l_warning        INTEGER;
+    v_dept_keyvalue varchar2(100);
   BEGIN
   l_source_blob :=p_request;
-  
+
   DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
 
     DBMS_LOB.CONVERTTOCLOB(dest_lob     => l_source_clob
@@ -1336,6 +1397,33 @@ l_values         APEX_JSON.T_VALUES;
     l_photo_chip                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => 'photoChip'));
     l_photo_pass                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => 'photoPass'));
 
+--///////////////////////Get Border post///////////////////////////////////////////////////////////////////////
+begin
+  select b.KEY_VALUE
+into l_borderdocument_rec.ins_borderpost
+from PIBICSDM2.DEPARTMENT a
+inner join DL_STAGING4PIBICS_INTF.trcd_borderpost b on a.dept_seqno =seqno
+where a.DEPTCD = LPAD(l_borderdocument_rec.ins_borderpost,5,'00');
+EXCEPTION WHEN OTHERS THEN
+l_borderdocument_rec.ins_borderpost := null;
+end;
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+--///////////////////////Get Terminal///////////////////////////////////////////////////////////////////////
+begin
+select a.ID
+into l_borderdocument_rec.ins_terminal
+from dl_bordercontrol.terminals a
+where a.ipaddress = l_borderdocument_rec.ins_terminal and a.BORDER_POST =l_borderdocument_rec.ins_borderpost;
+EXCEPTION WHEN OTHERS THEN
+l_borderdocument_rec.ins_terminal := null;
+end;
+
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////////
     -- check if mandatory fields exist
     IF l_borderdocument_rec.doctype         IS NULL OR
        l_borderdocument_rec.docno           IS NULL OR
@@ -1359,19 +1447,19 @@ l_values         APEX_JSON.T_VALUES;
       CASE WHEN l_borderdocument_rec.dob            IS NULL THEN l_response_message := l_response_message || '; dateOfBirth must not be empty';     ELSE NULL; END CASE;
       CASE WHEN l_borderdocument_rec.expirydate     IS NULL THEN l_response_message := l_response_message || '; expiryDate must not be empty';      ELSE NULL; END CASE;
       CASE WHEN l_borderdocument_rec.surname        IS NULL THEN l_response_message := l_response_message || '; surname must not be empty';         ELSE NULL; END CASE;
-      CASE WHEN l_borderdocument_rec.ins_terminal   IS NULL THEN l_response_message := l_response_message || '; terminal must not be empty';        ELSE NULL; END CASE;
-      CASE WHEN l_borderdocument_rec.ins_borderpost IS NULL THEN l_response_message := l_response_message || '; borderpost must not be empty';      ELSE NULL; END CASE;
+      CASE WHEN l_borderdocument_rec.ins_terminal   IS NULL THEN l_response_message := l_response_message || '; terminal not found';        ELSE NULL; END CASE;
+      CASE WHEN l_borderdocument_rec.ins_borderpost IS NULL THEN l_response_message := l_response_message || '; borderpost not found';      ELSE NULL; END CASE;
       CASE WHEN l_borderdocument_rec.sex            IS NULL THEN l_response_message := l_response_message || '; gender must not be empty';          ELSE NULL; END CASE;
 
     ELSE
 
         -- check if borderdocument already exists
-        l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.get_document (p_docno      => l_borderdocument_rec.docno
+        /*l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.get_document (p_docno      => l_borderdocument_rec.docno
                                                                                            ,p_issuectry  => l_borderdocument_rec.issuectry
-                                                                                           ,p_expirydate => l_borderdocument_rec.expirydate);
+                                                                                           ,p_expirydate => l_borderdocument_rec.expirydate);*/
 
-        IF l_borderdocument_rec.brddocid IS NULL
-        THEN
+       -- IF l_borderdocument_rec.brddocid IS NULL
+       -- THEN
             l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.create_document(l_borderdocument_rec.docno
                                                                                                  ,l_borderdocument_rec.doctype
                                                                                                  ,l_borderdocument_rec.issuectry
@@ -1410,14 +1498,14 @@ l_values         APEX_JSON.T_VALUES;
               -- ,source_system   = l_borderdocument_rec.source_system
             where brddocid = l_borderdocument_rec.brddocid;
 
-        END IF;
+        --END IF;
     END IF;
 
     IF l_borderdocument_rec.brddocid IS NOT NULL
     THEN
       l_status := 200;
       l_response_message := 'The borderdocument was successfully created.';
-     
+
     END IF;
 
     select JSON_OBJECT(
@@ -1433,7 +1521,7 @@ l_values         APEX_JSON.T_VALUES;
   p_response :=  RES;
 EXCEPTION 
 WHEN OTHERS THEN 
-v_error_msg := sqlerrm;
+v_error_msg := 'BorderDocument:'||sqlerrm;
      select JSON_OBJECT(
                    'response_status_code' VALUE 500,
                    'response_status_message' VALUE v_error_msg,
@@ -1445,7 +1533,7 @@ into RES
 from dual;
  p_response :=  RES;
    END SP_BORDERDOCUMENT;
-   
+
   PROCEDURE SP_MOVEMENT (
         p_request     IN blob,
         p_response   OUT clob
@@ -1468,7 +1556,7 @@ RES clob;
     l_srcoff         INTEGER := 1;
     l_lngctx         INTEGER := 0;
     l_warning        INTEGER;
-    
+
     v_visaNumber     VISAS.VISA_NUMBER%type;
     v_ISSUING_DATE     varchar2(20);
     v_ISSUING_PLACE     VISAS.ISSUING_PLACE%type;
@@ -1476,12 +1564,13 @@ RES clob;
     v_PERMIT_EXPIRY_DATE     varchar2(20);
     v_EXPIRY_DATE_VISA     varchar2(20);
     i_count_visatype int;
-    
+
     l_INCIDENTS_rec dl_bordercontrol.INCIDENTS%ROWTYPE;
     l_PERSON_rec dl_bordercontrol.PERSON%ROWTYPE;
     l_FELLOW_PASSENGER_rec dl_bordercontrol.FELLOW_PASSENGER%ROWTYPE;
-    
+   v_dept_keyvalue varchar2(100);
     l_count     PLS_INTEGER;
+    v_blacklist_flag varchar2(20);
   BEGIN
    l_source_blob :=p_request;  
 DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
@@ -1534,10 +1623,10 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
     l_entry_forms_rec.subdistrict    := apex_json.get_varchar2(p_values => l_values, p_path => 'subdistrict');
     l_entry_forms_rec.address        := apex_json.get_varchar2(p_values => l_values, p_path => 'address');
     l_entry_forms_rec.note           := apex_json.get_varchar2(p_values => l_values, p_path => 'note');
-    
+
     if l_movement_rec.source_system is null 
     then
-        l_movement_rec.source_system := 4;
+        l_movement_rec.source_system := 3;
     end if;
 
     --Visas
@@ -1547,7 +1636,7 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
     v_PERMIT_TYPE   := apex_json.get_varchar2(p_values => l_values, p_path => 'permitType');  
     v_PERMIT_EXPIRY_DATE := apex_json.get_varchar2(p_values => l_values, p_path => 'permitExpiryDate'); 
     v_EXPIRY_DATE_VISA   := apex_json.get_varchar2(p_values => l_values, p_path => 'expiryDate'); 
-    
+
     --Blacklist
     l_INCIDENTS_rec.DOCNO    := apex_json.get_varchar2(p_values => l_values, p_path => 'docno');
     l_INCIDENTS_rec.CLIENT_IP    := apex_json.get_varchar2(p_values => l_values, p_path => 'clientip');
@@ -1559,10 +1648,33 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
     l_INCIDENTS_rec.ISSUINGCOUNTRY   := apex_json.get_varchar2(p_values => l_values, p_path => 'bl_passportIssuingCountry');  
     l_INCIDENTS_rec.GENDER := apex_json.get_varchar2(p_values => l_values, p_path => 'bl_sex'); 
     l_INCIDENTS_rec.DOB   := apex_json.get_varchar2(p_values => l_values, p_path => 'bl_dateOfBirth'); 
-    
-    
-    
-    
+   v_blacklist_flag := apex_json.get_varchar2(p_values => l_values, p_path => 'blacklistFlag'); 
+
+
+   --///////////////////////Get Border post///////////////////////////////////////////////////////////////////////
+begin
+select b.KEY_VALUE
+into l_movement_rec.ins_borderpost
+from PIBICSDM2.DEPARTMENT a
+inner join DL_STAGING4PIBICS_INTF.trcd_borderpost b on a.dept_seqno =seqno
+where a.DEPTCD = LPAD(l_movement_rec.ins_borderpost,5,'00');
+EXCEPTION WHEN OTHERS THEN
+l_movement_rec.ins_borderpost := null;
+end;
+
+--///////////////////////Get Terminal///////////////////////////////////////////////////////////////////////
+begin
+select a.ID
+into l_movement_rec.ins_terminal
+from dl_bordercontrol.terminals a
+where a.ipaddress = l_movement_rec.ins_terminal;
+EXCEPTION WHEN OTHERS THEN
+l_movement_rec.ins_terminal := null;
+end;
+
+
+--/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     -- check if mandatory fields exist
     IF l_movement_rec.exitflg         IS NULL OR
        l_movement_rec.ins_terminal    IS NULL OR
@@ -1576,8 +1688,8 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
       l_response_message := '';
 
       CASE WHEN l_movement_rec.exitflg        IS NULL THEN l_response_message := l_response_message || '; exitFlag must not be empty';      ELSE NULL; END CASE;
-      CASE WHEN l_movement_rec.ins_terminal   IS NULL THEN l_response_message := l_response_message || '; terminal must not be empty';      ELSE NULL; END CASE;
-      CASE WHEN l_movement_rec.ins_borderpost IS NULL THEN l_response_message := l_response_message || '; borderpost must not be empty';    ELSE NULL; END CASE;
+      CASE WHEN l_movement_rec.ins_terminal   IS NULL THEN l_response_message := l_response_message || '; terminal not found';      ELSE NULL; END CASE;
+      CASE WHEN l_movement_rec.ins_borderpost IS NULL THEN l_response_message := l_response_message || '; borderpost not found';    ELSE NULL; END CASE;
       CASE WHEN l_movement_rec.is_finished    IS NULL THEN l_response_message := l_response_message || '; isFinished must not be empty';    ELSE NULL; END CASE;
       CASE WHEN l_movement_rec.movement_dt    IS NULL THEN l_response_message := l_response_message || '; movementDate must not be empty';  ELSE NULL; END CASE;
       CASE WHEN l_movement_rec.source_system  IS NULL THEN l_response_message := l_response_message || '; sourceSystem must not be empty';  ELSE NULL; END CASE;
@@ -1591,9 +1703,9 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
                    from DL_COMMON.VISA_TYPES t
                   where t.KEY_VALUE = l_movement_rec.visa_type
                     and t.IS_ACTIVE = 'Y';
-                    
+
          if i_count_visatype >0 then
-         
+
          insert into DL_BORDERCONTROL.VISAS i
           (VISA_TYPE
           ,INS_TERMINAL
@@ -1622,13 +1734,14 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
         returning i.KEY_VALUE into l_movement_rec.visa  ;
          end if;
         end if;
-        
+
+
         INSERT INTO dl_bordercontrol.movements(brddocid
                                               ,exitflg
                                               ,max_stay_dt
                                               ,ins_terminal
                                               ,ins_borderpost
-                                              ,trnsprtunitid
+                                             ,trnsprtunitid
                                               ,person_type
                                               ,scanned_flight
                                               ,visa_type
@@ -1640,7 +1753,7 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
                                               ,mrzvisa
                                               ,source_system)
         VALUES (l_movement_rec.brddocid
-               ,l_movement_rec.exitflg
+              ,l_movement_rec.exitflg
                ,l_movement_rec.max_stay_dt
                ,l_movement_rec.ins_terminal
                ,l_movement_rec.ins_borderpost
@@ -1729,9 +1842,10 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
         end if;
     END IF;
 
+
     IF l_movement_rec.mvmntid IS NOT NULL        
     THEN
-    
+
         IF l_INCIDENTS_rec.BL_ACTION is not null        
             THEN
                     INSERT INTO incidents (
@@ -1752,7 +1866,7 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
                     bl_number_of_hits,
                     bl_action,
                     bl_remarks
-                   
+
                 ) VALUES (
                     l_INCIDENTS_rec.DOCNO,
                     l_INCIDENTS_rec.CLIENT_IP,
@@ -1772,7 +1886,7 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
                     l_INCIDENTS_rec.BL_ACTION,
                     l_INCIDENTS_rec.BL_REMARKS);
             END IF;
-            
+            begin
               l_count := APEX_JSON.get_count(p_values => l_values,p_path => 'collectivePassport');
               FOR i IN 0 .. l_count LOOP
                    l_FELLOW_PASSENGER_rec.relation := APEX_JSON.get_varchar2(p_values => l_values,p_path => 'collectivePassport[%d].col_relation', p0 => i);
@@ -1781,13 +1895,13 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
                    l_FELLOW_PASSENGER_rec.first_name :=     APEX_JSON.get_varchar2(p_values => l_values,p_path => 'collectivePassport[%d].col_givenName', p0 => i);
                    l_FELLOW_PASSENGER_rec.last_name :=     APEX_JSON.get_varchar2(p_values => l_values,p_path => 'collectivePassport[%d].col_surName', p0 => i);
                    l_FELLOW_PASSENGER_rec.sex :=     APEX_JSON.get_varchar2(p_values => l_values,p_path => 'collectivePassport[%d].col_sex', p0 => i);
-                   l_FELLOW_PASSENGER_rec.date_of_birth :=     APEX_JSON.get_date(p_values => l_values,p_path => 'collectivePassport[%d].col_dateOfBirth', p0 => i);
+                   l_FELLOW_PASSENGER_rec.date_of_birth :=     APEX_JSON.get_varchar2(p_values => l_values,p_path => 'collectivePassport[%d].col_dateOfBirth', p0 => i);
                    l_FELLOW_PASSENGER_rec.image :=     dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => 'collectivePassport[%d].col_photo'));
-                   
+
                         INSERT INTO dl_bordercontrol.person(FIRST_NAME) 
                         values (null)
                         returning key_value into l_PERSON_rec.KEY_VALUE;
-                        
+
                         INSERT INTO dl_bordercontrol.fellow_passenger (
                         person,
                         relation,
@@ -1813,11 +1927,34 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
                         l_movement_rec.mvmntid   
                         );
               END LOOP;
-            
+            EXCEPTION WHEN OTHERS THEN
+             null;
+            end;
+
+      if v_blacklist_flag ='N' then
+      insert into interface_addon(
+      MVMNTID,
+      SYSTEMCODE,
+      FLAGNAME,
+      VALUE1,
+      VALUE2,
+      INT_BY,
+      INT_AT
+      )values(
+      l_movement_rec.mvmntid,
+      l_movement_rec.source_system,
+      'blacklistFlag',
+      v_blacklist_flag,
+      null,
+      'ATC',
+      current_timestamp
+      );
+      end if;
       l_status := 200;
       l_response_message := 'The movement was successfully created.';
-     
+
     END IF;
+
 
      commit;
       select JSON_OBJECT(
@@ -1832,7 +1969,7 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
   p_response :=  RES;
 EXCEPTION 
 WHEN OTHERS THEN 
-v_error_msg := sqlerrm;
+v_error_msg := 'Movement: '||sqlerrm;
      select JSON_OBJECT(
                    'response_status_code' VALUE 500,
                    'response_status_message' VALUE v_error_msg,
@@ -1844,6 +1981,453 @@ into RES
 from dual;
  p_response :=  RES;
    END SP_MOVEMENT;
+
+PROCEDURE SP_CALLSERVICESBYLIST (
+        p_request     IN blob,
+        p_response   OUT CLOB
+    ) AS
+  v_person_id varchar2(200);
+  v_familyname varchar2(500);
+  v_givenname varchar2(500);
+  v_middlename varchar2(500);
+  v_nationality varchar2(500);
+  v_birthdate varchar2(500);
+  v_gender varchar2(500);
+  v_docnumber varchar2(500);
+  v_visa_expire_date VARCHAR2(100);
+  v_passport_no VARCHAR2(100);
+  v_place_of_birth VARCHAR2(100);
+  v_passport_expire_date VARCHAR2(100);
+  v_passport_issuing_country VARCHAR2(100);
+  i_inout_seqno int;
+  v_sql varchar2(5000);
+  v_countcd varchar2(200);
+  c_cursor SYS_REFCURSOR;
+  c_cursor_overstay SYS_REFCURSOR;
+  l_obj json_object_t;
+  v_url VARCHAR2(5000);
+  v_where VARCHAR2(5000);
+  v_x_response_code VARCHAR2(5000);
+  b_x_response_message CLOB;
+  v_foundbwl varchar(2);
+  v_found_overstay varchar2(2);
+  v_found_visa_run varchar2(2);
+  v_found_thaipassport varchar2(20);
+  c_data CLOB;
+  i_count_seqno int;
+  v_error_msg varchar2(5000);
+  v_success varchar2(10);
+  v_brddocid varchar2(200);
+  i_sex int;
+  l_identity  identities.identity%TYPE;
+  v_dept_keyvalue varchar2(200);
+  v_port varchar2(20);
+  i_card_type int;
+  v_terminal varchar2(100);
+  v_visatype_code varchar2(100);
+  v_visatype_seqno varchar2(100);
+  v_flight_no varchar2(100);
+  v_wlcd          DL_BLACKLIST.TT_VARCHAR2 := DL_BLACKLIST.TT_VARCHAR2(); -- watchlist code
+  v_citizenid varchar2(100);
+  v_tm6no varchar2(100);
+  v_entry_form  varchar2(100);
+  v_nat  varchar2(100);
+  v_tfamilyname varchar2(500);
+  v_tgivenname varchar2(500);
+  v_tmiddlename varchar2(500);
+  v_foundImm  varchar2(20);
+  BEGIN
+  v_success :='False';
+--//////////////////////////////////////Get Data//////////////////////////////////////////
+    SELECT a.Efamilynm,a.Efirstnm,a.Emiddlenm,a.Nationcd,a.Birthdte,a.Sex,a.Tdtno,a.Visaexpdate,a.Tdtno,a.Tdtexpdate,a.Port
+          ,a.Cardtype,a.Visatypecd,a.FlightNo,a.Citizenid,a.Tm6no
+           ,nvl(b.TFIRSTNM,a.Tfirstnm) as firstnameth
+		   ,nvl(b.TFAMILYNM,a.Tfamilynm) as surnameth
+		   ,nvl(b.TMIDDLENM,a.Tmiddlenm) as middlenameth
+    into v_familyname,v_givenname,v_middlename,v_nationality,v_birthdate,v_gender,v_docnumber,v_visa_expire_date,v_passport_no,v_passport_expire_date,v_port
+        ,i_card_type,v_visatype_code,v_flight_no,v_citizenid,v_tm6no,v_tfamilyname,v_tgivenname,v_tmiddlename
+    FROM json_table(p_request  FORMAT JSON, '$'
+         COLUMNS (
+			SUser      VARCHAR2  	PATH '$.User',
+			SPassword  VARCHAR2  	PATH '$.Password',
+			Efirstnm  VARCHAR2   	PATH '$.Efirstnm',
+		    Emiddlenm VARCHAR2    PATH '$.Emiddlenm',
+			Efamilynm  VARCHAR2  	PATH '$.Efamilynm',
+			Tdtno      VARCHAR2  	PATH '$.Tdtno',
+			Tdtexpdate  VARCHAR2  	PATH '$.Tdtexpdate',
+            Sex   		VARCHAR2  	PATH '$.Sex',
+            Birthdte   	VARCHAR2  	PATH '$.Birthdte',
+			Cardtype    VARCHAR2  	PATH '$.Cardtype',
+			GateID      VARCHAR2  	PATH '$.GateID',
+            Port   		VARCHAR2  	PATH '$.Port',
+            Nationcd   	VARCHAR2  	PATH '$.Nationcd',
+            Visatypecd   	VARCHAR2  	PATH '$.Visatypecd',
+            Visaexpdate   	VARCHAR2  	PATH '$.Visaexpdate',
+            Rescerttypecd   	VARCHAR2  	PATH '$.RescertDto.Rescerttypecd',
+            Respvcd   	VARCHAR2  	PATH '$.RescertDto.Respvcd',
+            Resno   	VARCHAR2  	PATH '$.RescertDto.Resno',
+            Resyear   	VARCHAR2  	PATH '$.RescertDto.Resyear',
+            Tfirstnm   	VARCHAR2  	PATH '$.RescertDto.Tfirstnm',
+            Tmiddlenm   	VARCHAR2  	PATH '$.RescertDto.Tmiddlenm',
+            Tfamilynm   	VARCHAR2  	PATH '$.RescertDto.Tfamilynm',
+             FlightNo   	VARCHAR2  	PATH '$.Convregno',
+             Citizenid VARCHAR2  	PATH '$.Citizenid',
+             Tm6no  VARCHAR2  	PATH '$.Tm6No'
+        )) a
+         left join PIBICSDM2.thaipassport b on a.Tdtno =b.PASSPORTNO;
+
+v_familyname := upper(v_familyname);
+v_givenname := upper(v_givenname);
+v_middlename := upper(v_middlename);
+v_passport_no := upper(v_passport_no);
+v_docnumber := upper(v_docnumber);
+if v_gender ='M' then i_sex :=1; end if;
+if v_gender ='F' then i_sex :=2; end if;
+--///////////////////////////////////////Get Dept Keyvalue/////////////////////////////////////////////
+select b.KEY_VALUE
+into v_dept_keyvalue
+from PIBICSDM2.DEPARTMENT a
+inner join DL_STAGING4PIBICS_INTF.trcd_borderpost b on a.dept_seqno =seqno
+where a.DEPTCD = LPAD(v_port,5,'00');
+
+select max(id)
+into v_terminal
+from dl_bordercontrol.TERMINALS a
+where a.BORDER_POST =v_dept_keyvalue and a.active =1;
+--///////////////////////////////////////Get COUNTCD///////////////////////////////////////////////////
+SELECT COU.COUNTCD,COU.COUNT_SEQNO  ,COU.ABBCOUNT
+into v_countcd,i_count_seqno,v_nat
+FROM PIBICSDM2.COUNTRY COU 
+WHERE COU.COUNTCD = v_nationality and COU.actflag ='Y';
+
+--///////////////////////////////////////Get VISATYPE///////////////////////////////////////////////////
+select b.KEY_VALUE
+into v_visatype_seqno
+from dual aa
+left join (select b.KEY_VALUE from PIBICSDM2.VISATYPE a
+inner join DL_STAGING4PIBICS_INTF.trcd_visatype b on a.VISATYPE_SEQNO =seqno and  a.VISATYPECD = LPAD(v_visatype_code,4,'0000')) b on 1=1;
+
+--//////////////////////////////////////Check Blacklist///////////////////////////////////
+     pibicsdm2.p_chk_blacklist
+    (
+        P_MOVEMENTID    => null,
+        P_NATIONCD      => v_countcd,
+        P_PASSNO        => v_docnumber,
+        P_IDCard        => null,
+        P_BIRTHDTE      => to_char(to_date(v_birthdate,'yyyymmdd'),'dd/mm/yyyy'),
+        P_SEX           => i_sex,
+        P_EFIRSTNM      => v_givenname,
+        P_EMIDDLENMN    => v_middlename,
+        P_EFAMILYNM     => v_familyname,
+        P_TFIRSTNM      => v_tgivenname,
+        P_TMIDDLENMN    => v_tmiddlename,
+        P_TFAMILYNM     => v_tfamilyname,
+        P_PIBICSPRDCONN => 0,
+        P_WLCD          => v_wlcd
+    );
+
+
+  v_foundbwl := 'N'; 
+   if v_wlcd is not null then
+   if v_wlcd.COUNT > 0 then
+   v_foundbwl := 'Y';
+   end if;
+   end if;
+
+--/////////////////////////////////////Check ThaiPassport////////////////////////////////////////////////////
+SELECT case when count_thaipassport is not null then 
+(case when count_thaipassport >0 then 'True' else 'False' end)
+else 'False' end as found_thaipassport
+into v_found_thaipassport 
+FROM dual  a
+ left join (
+ select count(1) as count_thaipassport
+from PIBICSDM2.thaipassport a
+inner join PIBICSDM2.COUNTRY b on a.NATIONCD =b.COUNTCD and b.actflag ='Y'
+where a.CITIZENID =v_citizenid and
+      a.PASSPORTNO =v_passport_no and
+       a.NATIONCD =v_nationality
+      and a.SEX =v_gender
+ ) on 1=1;
+
+v_foundImm := 'N';
+ --//////////////////////////////////////Get BoderDocID/////////////////////////////////////////////////
+ v_sql :=' select a.BRDDOCID';
+v_sql := v_sql ||' from DL_BORDERCONTROL.BORDERDOCUMENTS a ';
+v_sql := v_sql ||' where a.DOCNO ='''||v_docnumber||''' ';
+--v_sql := v_sql ||' and a.GIVENNAME ='''||v_givenname||''' ';
+--v_sql := v_sql ||' and a.SURNAME ='''||v_familyname||''' ';
+
+/*if v_middlename is not null then
+v_sql := v_sql ||' and a.MIDDLENAME ='''||v_middlename||'''';
+end if;*/
+v_sql := v_sql ||' and a.NAT ='''||v_nat||''' ';
+--v_sql := v_sql ||' and a.CALC_DOB =to_date('''||v_birthdate||''',''yyyymmdd'') ';
+--v_sql := v_sql ||' and a.sex ='||i_sex||' ';
+v_sql := v_sql ||' and a.expirydate =to_date('''||v_passport_expire_date||''',''yyyymmdd'') ';
+open c_cursor for v_sql;
+ LOOP
+            FETCH c_cursor
+            INTO v_brddocid;
+            EXIT WHEN c_cursor%NOTFOUND;
+ END LOOP; 
+ close c_cursor;
+--///////////////////////////////////////Get Last Movement////////////////////////////////////////////////////////
+select case when b.exitflg = 0 then 'Y' else 'N' end as c_flag
+into v_foundImm
+from dual a
+left join (
+select a.exitflg
+from (
+select a.*
+,ROW_NUMBER() OVER (PARTITION BY 1 ORDER BY a.dml_at DESC) rn
+from MOVEMENTS a
+where a.BRDDOCID =v_brddocid
+) a 
+where a.rn =1) b on 1=1;
+ --//////////////////////////////////////////////////////////////////////////////////////////////////////
+if v_foundbwl  <> 'Y' and 1=2 then
+
+--///////////////////////////////////////Get person id/////////////////////////////////////////////////
+/*v_sql := '';
+v_sql := v_sql ||' ';
+v_sql := v_sql ||' SELECT max(IMM.PERSONID) as PERSONID ';
+v_sql := v_sql ||' FROM  PIBICSDM2.IMMIGRATION IMM ';
+v_sql := v_sql ||' WHERE 1=1 ';
+
+if v_familyname is not null then
+v_sql := v_sql ||' and IMM.EFAMILYNM ='''||v_familyname||'''';
+end if;
+
+if v_givenname  is not null then
+v_sql := v_sql ||' and IMM.EFIRSTNM ='''||v_givenname ||'''';
+end if;
+
+if v_middlename is not null then
+v_sql := v_sql ||' and IMM.EMIDDLENM ='''||v_middlename||'''';
+end if;
+
+if v_countcd is not null then
+v_sql := v_sql ||' and IMM.NATIONCD ='''||v_countcd||'''';
+end if;
+
+if v_birthdate is not null then
+v_sql := v_sql ||' and IMM.BIRTHDTE ='''||v_birthdate||'''';
+end if;
+
+if v_gender is not null then
+v_sql := v_sql ||' and IMM.SEX ='''||v_gender||'''';
+end if;
+
+if v_docnumber is not null then
+v_sql := v_sql ||' and IMM.TDTNO ='''||v_docnumber||'''';
+end if;
+
+open c_cursor for v_sql;
+ LOOP
+            FETCH c_cursor
+            INTO v_person_id;
+            EXIT WHEN c_cursor%NOTFOUND;
+ END LOOP; 
+ close c_cursor;
+if v_person_id is null then
+--Generate person id
+SELECT 'S'||to_char(current_timestamp(5),'ddmmyyyyhh24missFF') AS PersonID into v_person_id  FROM DUAL ;
+end if;
+*/
+--/////////////////////////////////Insert Borderdocuments///////////////////////////////////////////////////
+v_sql :=' select a.BRDDOCID';
+v_sql := v_sql ||' from DL_BORDERCONTROL.BORDERDOCUMENTS a ';
+v_sql := v_sql ||' where a.DOCNO ='''||v_docnumber||''' ';
+--v_sql := v_sql ||' and a.GIVENNAME ='''||v_givenname||''' ';
+--v_sql := v_sql ||' and a.SURNAME ='''||v_familyname||''' ';
+
+/*if v_middlename is not null then
+v_sql := v_sql ||' and a.MIDDLENAME ='''||v_middlename||'''';
+end if;*/
+v_sql := v_sql ||' and a.NAT ='''||v_nat||''' ';
+--v_sql := v_sql ||' and a.CALC_DOB =to_date('''||v_birthdate||''',''yyyymmdd'') ';
+--v_sql := v_sql ||' and a.sex ='||i_sex||' ';
+v_sql := v_sql ||' and a.expirydate =to_date('''||v_passport_expire_date||''',''yyyymmdd'') ';
+open c_cursor for v_sql;
+ LOOP
+            FETCH c_cursor
+            INTO v_brddocid;
+            EXIT WHEN c_cursor%NOTFOUND;
+ END LOOP; 
+ close c_cursor;
+
+
+if v_brddocid is null then
+
+
+	  v_brddocid := PKG_BORDERDOCUMENTS.Create_Document(
+                    P_DOCNO               => v_docnumber,
+                    P_DOCTYPE             => 'P',
+                    P_ISSUECTRY           => v_nat,
+                    P_EXPIRYDATE          => to_date(v_passport_expire_date,'yyyymmdd'),
+                    P_SURNAME             => v_familyname,
+                    P_GIVENNAME           => v_givenname,
+                    P_MIDDLENAME          => v_middlename,
+                    P_SEX                 => i_sex,
+                    P_DOB                 =>to_char(to_date(v_birthdate,'yyyymmdd'),'yymmdd'),
+                    P_MRZDG1              => null,
+                    P_INS_TERMINAL        => v_terminal,
+                    P_INS_BORDERPOST      => v_dept_keyvalue,
+                    P_Img_VISUAL_FACE     =>null, -- several Collections are called (more performance possible?)
+                    P_Img_ICAO_FACE       => null,
+                    P_Img_VISUALPAGE      => null,
+                    P_Img_UVPAGE          => null,
+                    P_Img_IRPAGE          => null,
+                    P_Img_DG3_0           => null, 
+                    P_Img_DG3_1           => null, 
+                    P_MANUAL_EXPIRY_DATE  => null,
+                    P_MANUAL_ISSUING_DATE =>null,
+                    P_MANUAL_NATIONALITY  => v_nat,
+                    P_MANUAL_PLACEOFBIRTH => null,
+                    P_DOCCLASS            => 'P',
+                    X_IDENTITY            => l_identity
+                  );
+end if;
+
+--/////////////////////////////////Insert Entry Form///////////////////////////////////////////////////////
+ if v_tm6no is not null then
+ insert into DL_BORDERCONTROL.ENTRY_FORMS i
+(
+     i.FORM_NO
+    ,i.INS_TERMINAL
+    ,i.INS_BORDERPOST
+)
+values
+(
+     v_tm6no
+    ,v_terminal
+    ,v_dept_keyvalue
+)
+returning i.KEY_VALUE into v_entry_form;
+ end if;
+
+--/////////////////////////////////Insert Movements/////////////////////////////////////////////////////////
+                 Create_Movement(
+                            P_BRDDOCID	 => v_brddocid,
+                            P_LANDBARCD	 => null,
+                            P_EXITFLG	 => i_card_type-1,
+                            P_MAX_STAY_DT	 => null,
+                            P_FINGERMATCH	 => null,
+                            P_FACEMATCH	 => null,
+                            P_MVMNTADDR	 => null,
+                            P_ORIDEST	 => null,
+                            P_INS_AT	 => sysdate,
+                            P_INS_TERMINAL	 => v_terminal,
+                            P_INS_BORDERPOST	 => v_dept_keyvalue,
+                            P_REFUSEDFLG	 => null,
+                            P_OBSERVATION	 => null,
+                            P_TRNSPRTUNITID	 => 1,
+                            P_PERSON_TYPE	 => 1,
+                            P_SCANNED_FLIGHT	 => v_flight_no,
+                            P_PS_1	 => null,
+                            P_PS_2	 => null,
+                            P_PS_3	 => null,
+                            P_PS_4	 => null,
+                            P_PS_5	 => null,
+                            P_PS_6	 => null,
+                            P_PS_7	 => null,
+                            P_PS_8	 => '99',
+                            P_PS_9	 => null,
+                            P_PS_10	 => null,
+                            P_FINGERMATCH_HISTORY	 => null,
+                            P_FACEMATC_HISTORY	 => null,
+                            P_REASON_OFFLOAD	 => null,
+                            P_REASON_DEPORTEE	 => null,
+                            P_VISA_TYPE	 => v_visatype_seqno,
+                            P_VISA	 => null,
+                            P_DML_AT	 => systimestamp,
+                            P_DML_BY	 => 'ATC',
+                            P_DML_TYPE	 => 'I',
+                            P_INS_BY	 => 'ATC',
+                            P_IS_FINISHED	 => 'Y',
+                            P_PRIOR_MOVEMENT	 => null,
+                            P_ENTRY_FORM	 => v_entry_form,
+                            P_FORM_NO_APPROVED	 => 'N',
+                            P_MOVEMENT_DT	 => sysdate ,
+                            P_SOURCE_SYSTEM	 => 3,
+                            P_DATE_OF_ENTRY	 => null,
+                            P_MRZVISA	 => null
+                  );
+ commit;
+ v_success :='True';
+ end if;
+ v_success :='True';
+ --//////////////////////////////////Response///////////////////////////////////////////////////////////
+ if v_foundbwl ='Y' then
+ select JSON_OBJECT(
+                   'Success' VALUE v_success,
+                   'ErrorDesc' VALUE '',
+                   'MsgDesc' VALUE '',
+                   'ThaiPassport' VALUE nvl(v_found_thaipassport,'False'),
+                   'FoundBWL' VALUE v_foundbwl,
+                   'FoundImm' VALUE v_foundImm,
+                   'Re_personid' VALUE case when v_success='True' then v_person_id else '' end,
+                   'Re_seqno' VALUE case when v_success='True' then v_brddocid else '' end,
+                   'BWListOfPassenger_OutputList' VALUE ( select JSON_ARRAYAGG(JSON_OBJECT (
+                                         'Wlcd' value  wc.wlcd,
+                                         'Seqno' value  wc.seqno,
+                                         'Efirstnm' value  wn.wlefirstnm,
+                                        'Efamilynm' value   wn.wlelastnm,
+                                          'Emiddlenm' value   WN.WLEMIDDLENM,
+                                       'Tfirstnm' value    WN.WLTFIRSTNM,
+                                        'Tfamilynm' value  WN.WLTLASTNM,
+                                          'Tmiddlenm' value WN.WLTMIDDLENM,
+                                       'Sex' value  W.SEX,
+                                      'Birthdte' value   WN.BIRTHDTE,
+                                      'Nationtnm' value    d.NATIONTNM,
+                                       'Nationenm' value   d.NATIONENM,
+                                       'Tdtnm' value   W.REMARK ,
+                                        'Reasontnm' value  W.REASON_SEQNO,
+                                       'Orgnm' value    W.OWNERORG ,
+                                        'Operrefnm' value  W.OPERREF ,
+                                       'Warrno' value   W.WARRNO ,
+                                       'Agcphone' value   w.AGCPHONE 
+                                         ))
+                                     from  (select * from table(v_wlcd)  ) b 
+                                          left join  pibicsdm2.watchlist W on w.WLCD =b.column_value  
+                                          left join pibicsdm2.WATCHLISTNM WN on WN.WLCD = W.WLCD
+                                          left join pibicsdm2.WLINDICATECARD WC on W.WLCD = WC.WLCD
+                                           left join PIBICSDM2.COUNTRY d on W.NATIONCD = d.COUNTCD and d.actflag ='Y'
+                                   )
+                  )
+into p_response
+from dual;
+else
+select JSON_OBJECT(
+                   'Success' VALUE v_success,
+                   'ErrorDesc' VALUE '',
+                   'MsgDesc' VALUE '',
+                   'FoundImm' VALUE v_foundImm,
+                   'ThaiPassport' VALUE nvl(v_found_thaipassport,'False'),
+                   'FoundBWL' VALUE v_foundbwl,
+                   'Re_personid' VALUE case when v_success='True' then v_person_id else '' end,
+                   'Re_seqno' VALUE case when v_success='True' then v_brddocid else '' end
+                  )
+into p_response
+from dual;
+end if;
+   exception when others then
+    rollback;
+    v_error_msg := sqlerrm;
+     select JSON_OBJECT(
+                   'Success' VALUE 'False',
+                   'ErrorDesc' VALUE v_error_msg,
+                   'MsgDesc' VALUE '',
+                      'FoundImm' VALUE v_foundImm,
+                   'ThaiPassport' VALUE nvl(v_found_thaipassport,'False'),
+                   'FoundBWL' VALUE v_foundbwl,
+                   'Re_personid' VALUE '',
+                   'Re_seqno' VALUE ''
+                  )
+into p_response
+from dual;
+  END SP_CALLSERVICESBYLIST;
 END PKG_AUTO_CHANNEL;
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL" TO "BIOAPPREPORT";

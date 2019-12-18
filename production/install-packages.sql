@@ -29,6 +29,7 @@
 @DL_BORDERCONTROL/packages/pkg_dl_authorization.pks
 @DL_BORDERCONTROL/packages/pkg_edite_movements.pks
 @DL_BORDERCONTROL/packages/pkg_evoa.pks
+@DL_BORDERCONTROL/packages/pkg_evoa_util.pks
 @DL_BORDERCONTROL/packages/pkg_icpo_util.pks
 @DL_BORDERCONTROL/packages/pkg_identities.pks
 @DL_BORDERCONTROL/packages/pkg_incidents.pks
@@ -53,6 +54,7 @@
 @DL_BORDERCONTROL_DATAMART/packages/pkg_reporting.pks
 -- DL_COMMON/packages
 @DL_COMMON/packages/pkg_apex_util.pks
+@DL_COMMON/packages/pkg_dynamic_sqls.pks
 @DL_COMMON/packages/pkg_i18n.pks
 @DL_COMMON/packages/pkg_json_convert.pks
 @DL_COMMON/packages/pkg_json_export.pks
@@ -145,6 +147,7 @@
 -- SERVAPP/packages
 @SERVAPP/packages/pkg_blicklist.pks
 @SERVAPP/packages/pkg_bpm.pks
+@SERVAPP/packages/pkg_evoa.pks
 @SERVAPP/packages/pkg_ext.pks
 @SERVAPP/packages/pkg_fine.pks
 @SERVAPP/packages/pkg_isdr.pks

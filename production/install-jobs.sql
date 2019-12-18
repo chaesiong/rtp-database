@@ -1,6 +1,7 @@
 ---------------------
 -- jobs --
 -- DL_BORDERCONTROL/jobs
+@DL_BORDERCONTROL/jobs/check_evoa_queue.sql
 @DL_BORDERCONTROL/jobs/purge_tmp_blacklist_search.sql
 @DL_BORDERCONTROL/jobs/purge_tmp_collective_passport.sql
 -- DL_BORDERCONTROL_DATAMART/jobs

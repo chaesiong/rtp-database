@@ -1390,6 +1390,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."DL_MOVEMENTHANDLI
                     )
                )
                and EXITFLG != 2 -- ignoring OFFLOAD
+               and SOURCE_SYSTEM != 5 -- temporarily ignoring PRE-REGISTRATION dummy records
                and (case
                    when p_EXITFLG is null
                    then 1
@@ -1444,9 +1445,6 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."DL_MOVEMENTHANDLI
     v_source                    VARCHAR2(30);
     --
     v_return                    last_movement_info_rec_typ;
-    --
-    l_pibics_query              CLOB;
-    l_pibics_prod_query         VARCHAR2(32000);
     --
 
   begin
@@ -1565,628 +1563,26 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."DL_MOVEMENTHANDLI
     /* PIBICS fetch starts */
     logger.log('PIBICS fetch starts', v_LOG_Scope, null, v_LOG_Params);
     BEGIN
-        --*--SELECT
-        --*--    source_sec
-        --*--    , source_sec_pk_val
-        --*--    , traveldate
-        --*--    , visa_type
-        --*--    , visa_expiry_date
-        --*--    , direction
-        --*--    , entry_form_no
-        --*--    -----------
-        --*--    , (
-        --*--          SELECT acp.key_value
-        --*--          FROM dl_bordercontrol.v_province vp,
-        --*--          dl_bordercontrol.adm_class_province acp
-        --*--          WHERE vp.pv_seqno = t.province
-        --*--          AND acp.display_code = vp.pvcd
-        --*--      ) PROVINCE
-        --*--    -----------
-        --*--    , note
-        --*--    , docno
-        --*--    , TRUNC(docno_expiry_date)
-        --*--INTO
-        --*--    v_last_pib_movement_info.source_sec
-        --*--    , v_last_pib_movement_info.source_sec_pk_val
-        --*--    , v_last_pib_movement_info.travel_date
-        --*--    , v_last_pib_movement_info.visa_type
-        --*--    , v_last_pib_movement_info.visa_expiry_date
-        --*--    , v_last_pib_movement_info.direction
-        --*--    , v_last_pib_movement_info.entry_form_no
-        --*--    , v_last_pib_movement_info.province
-        --*--    , v_last_pib_movement_info.note
-        --*--    , v_last_pib_movement_info.docno
-        --*--    , v_last_pib_movement_info.docno_expiry_date
-        --*--FROM
-        --*--(
-        --*--    SELECT /*+ NO_PARALLEL */
-        --*--        source_sec
-        --*--        , source_sec_pk_val
-        --*--        , traveldate
-        --*--        , visa_type
-        --*--        , visa_expiry_date
-        --*--        , direction
-        --*--        , entry_form_no
-        --*--        , province
-        --*--        , note
-        --*--        , docno
-        --*--        , docno_expiry_date
-        --*--    FROM
-        --*--    (
-        --*--        -- 1
-        --*--        SELECT /*+ NO_PARALLEL INDEX(v_tminout_ma tminout_ma TMINOUT_MA_COMPOSITE_IDX2) */
-        --*--            'TMINOUT_MA' AS SOURCE_SEC
-        --*--            , seqno AS SOURCE_SEC_PK_VAL
-        --*--            , inoutdte AS TRAVELDATE
-        --*--            , visatypecd AS VISA_TYPE
-        --*--            , visaexpdte AS VISA_EXPIRY_DATE
-        --*--            , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
-        --*--            , tm6no AS ENTRY_FORM_NO
-        --*--            , pv_seqno AS PROVINCE
-        --*--            , remark AS NOTE
-        --*--            , tdtno AS DOCNO
-        --*--            , passportexpdte AS DOCNO_EXPIRY_DATE
-        --*--        FROM dl_bordercontrol.v_tminout_ma
-        --*--        WHERE nationcd = v_nationcd
-        --*--        AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
-        --*--        --AND birthdte = p_DOB
-        --*--        AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
-        --*--        AND
-        --*--        (
-        --*--            tdtno = p_DOCNO
-        --*--            OR
-        --*--            (
-        --*--                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
-        --*--                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
-        --*--            )
-        --*--        )
-        --*--        AND
-        --*--        (
-        --*--            CASE
-        --*--                WHEN p_EXITFLG IS NULL THEN 1
-        --*--                WHEN (p_EXITFLG = 0 AND cardtype = 1) THEN 1 -- arrival
-        --*--                WHEN (p_EXITFLG = 1 AND cardtype = 2) THEN 1 -- departure
-        --*--            END
-        --*--        ) = 1
-        --*--        AND 
-        --*--        (
-        --*--           typedata IN ('BIO-PHB', 'BIO-RETH')
-        --*--           OR
-        --*--           NVL(typedata, '~') NOT LIKE 'BIO%'
-        --*--        )
-        --*--        -- 2
-        --*--        UNION ALL
-        --*--        SELECT /*+ NO_PARALLEL INDEX(v_tminout tminout TMINOUT_COMPOSITE_IDX2) */
-        --*--            'TMINOUT' AS SOURCE_SEC
-        --*--            , seqno AS SOURCE_SEC_PK_VAL
-        --*--            , inoutdte AS TRAVELDATE
-        --*--            , visatypecd AS VISA_TYPE
-        --*--            , visaexpdte AS VISA_EXPIRY_DATE
-        --*--            , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
-        --*--            , tm6no AS ENTRY_FORM_NO
-        --*--            , pv_seqno AS PROVINCE
-        --*--            , remark AS NOTE
-        --*--            , tdtno AS DOCNO
-        --*--            , passportexpdte AS DOCNO_EXPIRY_DATE
-        --*--        FROM dl_bordercontrol.v_tminout
-        --*--        WHERE nationcd = v_nationcd
-        --*--        AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
-        --*--        --AND birthdte = p_DOB
-        --*--        AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
-        --*--        AND
-        --*--        (
-        --*--            tdtno = p_DOCNO
-        --*--            OR
-        --*--            (
-        --*--                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
-        --*--                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
-        --*--            )
-        --*--        )
-        --*--        AND
-        --*--        (
-        --*--            CASE
-        --*--                WHEN p_EXITFLG IS NULL THEN 1
-        --*--                WHEN (p_EXITFLG = 0 AND cardtype = 1) THEN 1 -- arrival
-        --*--                WHEN (p_EXITFLG = 1 AND cardtype = 2) THEN 1 -- departure
-        --*--            END
-        --*--        ) = 1
-        --*--        AND 
-        --*--        (
-        --*--           typedata IN ('BIO-PHB', 'BIO-RETH')
-        --*--           OR
-        --*--           NVL(typedata, '~') NOT LIKE 'BIO%'
-        --*--        )
-        --*--        -- 3
-        --*--        UNION ALL
-        --*--        SELECT /*+ NO_PARALLEL INDEX(v_tmmain tmmain TMMAIN_COMPOSITE_IDX1) */
-        --*--            'TMMAIN_IN' AS SOURCE_SEC
-        --*--            , tmrunno AS SOURCE_SEC_PK_VAL
-        --*--            , indte AS TRAVELDATE
-        --*--            , invisatypecd AS VISA_TYPE
-        --*--            , invisaexpdte AS VISA_EXPIRY_DATE
-        --*--            , 0 DIRECTION
-        --*--            , intm6no AS ENTRY_FORM_NO
-        --*--            , pv_seqno AS PROVINCE
-        --*--            , inremark AS NOTE
-        --*--            , intdtno AS DOCNO
-        --*--            , inpassportexpdte AS DOCNO_EXPIRY_DATE
-        --*--        FROM dl_bordercontrol.v_tmmain
-        --*--        WHERE indte IS NOT NULL
-        --*--        AND nationcd = v_nationcd
-        --*--        AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
-        --*--        --AND birthdte = p_DOB
-        --*--        AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
-        --*--        AND
-        --*--        (
-        --*--            intdtno = p_DOCNO
-        --*--            OR
-        --*--            (
-        --*--                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
-        --*--                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
-        --*--            )
-        --*--        )
-        --*--        AND
-        --*--        (
-        --*--            CASE
-        --*--                WHEN p_EXITFLG IS NULL THEN 1
-        --*--                WHEN p_EXITFLG = 0 THEN 1 -- arrival
-        --*--            END
-        --*--        ) = 1
-        --*--        AND 
-        --*--        (
-        --*--           typedata IN ('BIO-PHB', 'BIO-RETH')
-        --*--           OR
-        --*--           NVL(typedata, '~') NOT LIKE 'BIO%'
-        --*--        )
-        --*--        -- 4
-        --*--        UNION ALL
-        --*--        SELECT /*+ NO_PARALLEL INDEX(v_tmmain tmmain TMMAIN_COMPOSITE_IDX1) */
-        --*--            'TMMAIN_OUT' AS SOURCE_SEC
-        --*--            , tmrunno AS SOURCE_SEC_PK_VAL
-        --*--            , outdte AS TRAVELDATE
-        --*--            , outvisatypecd AS VISA_TYPE
-        --*--            , outvisaexpdte AS VISA_EXPIRY_DATE
-        --*--            , 1 DIRECTION
-        --*--            , outtm6no AS ENTRY_FORM_NO
-        --*--            , pv_seqno AS PROVINCE
-        --*--            , outremark AS NOTE
-        --*--            , outtdtno AS DOCNO
-        --*--            , outpassportexpdte AS DOCNO_EXPIRY_DATE
-        --*--        FROM dl_bordercontrol.v_tmmain
-        --*--        WHERE outdte IS NOT NULL
-        --*--        AND nationcd = v_nationcd
-        --*--        AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
-        --*--        --AND birthdte = p_DOB
-        --*--        AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
-        --*--        AND
-        --*--        (
-        --*--            outtdtno = p_DOCNO
-        --*--            OR
-        --*--            (
-        --*--                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
-        --*--                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
-        --*--            )
-        --*--        )
-        --*--        AND
-        --*--        (
-        --*--            CASE
-        --*--                WHEN p_EXITFLG IS NULL THEN 1
-        --*--                WHEN p_EXITFLG = 1 THEN 1 -- departure
-        --*--            END
-        --*--        ) = 1
-        --*--        AND 
-        --*--        (
-        --*--           typedata IN ('BIO-PHB', 'BIO-RETH')
-        --*--           OR
-        --*--           NVL(typedata, '~') NOT LIKE 'BIO%'
-        --*--        )
-        --*--    )
-        --*--    ORDER BY traveldate DESC NULLS LAST
-        --*--) t
-        --*--WHERE ROWNUM = 1;
-
-
-        -- PIBICS PRD DATA
-        IF p_PIBICS_PRD_CONN = 1 THEN
-        l_pibics_prod_query :=
-        q'[
-        UNION ALL
-        -- PIBICS PRD tminout_ma start --
-        SELECT /*+ NO_PARALLEL */
-            'TMINOUT_MA_PRD' AS SOURCE_SEC
-            , seqno AS SOURCE_SEC_PK_VAL
-            , inoutdte AS TRAVELDATE
-            , visatypecd AS VISA_TYPE
-            , visaexpdte AS VISA_EXPIRY_DATE
-            , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
-            , tm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , remark AS NOTE
-            , tdtno AS DOCNO
-            , passportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tminout_ma_1hr_prod
-        WHERE nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            tdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME|| q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN (']' || p_EXITFLG || q'[' = 0 AND cardtype = 1) THEN 1 -- arrival
-                WHEN (']' || p_EXITFLG || q'[' = 1 AND cardtype = 2) THEN 1 -- departure
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS PRD tminout_ma end --
-        UNION ALL
-        -- PIBICS PRD tminout start --
-        SELECT /*+ NO_PARALLEL */
-            'TMINOUT_PRD' AS SOURCE_SEC
-            , seqno AS SOURCE_SEC_PK_VAL
-            , inoutdte AS TRAVELDATE
-            , visatypecd AS VISA_TYPE
-            , visaexpdte AS VISA_EXPIRY_DATE
-            , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
-            , tm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , remark AS NOTE
-            , tdtno AS DOCNO
-            , passportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tminout_1hr_prod
-        WHERE nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            tdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME || q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN (']' || p_EXITFLG || q'[' = 0 AND cardtype = 1) THEN 1 -- arrival
-                WHEN (']' || p_EXITFLG || q'[' = 1 AND cardtype = 2) THEN 1 -- departure
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS PRD tminout end --
-        UNION ALL
-        -- PIBICS PRD tmmain IN start --
-        SELECT /*+ NO_PARALLEL */
-            'TMMAIN_IN_PRD' AS SOURCE_SEC
-            , tmrunno AS SOURCE_SEC_PK_VAL
-            , indte AS TRAVELDATE
-            , invisatypecd AS VISA_TYPE
-            , invisaexpdte AS VISA_EXPIRY_DATE
-            , 0 DIRECTION
-            , intm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , inremark AS NOTE
-            , intdtno AS DOCNO
-            , inpassportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tmmain_in_1hr_prod
-        WHERE indte IS NOT NULL
-        AND nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            intdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME || q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN ']' || p_EXITFLG || q'[' = 0 THEN 1 -- arrival
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS PRD tmmain IN end --
-        UNION ALL
-        -- PIBICS PRD tmmain OUT start --
-        SELECT /*+ NO_PARALLEL */
-            'TMMAIN_OUT_PRD' AS SOURCE_SEC
-            , tmrunno AS SOURCE_SEC_PK_VAL
-            , outdte AS TRAVELDATE
-            , outvisatypecd AS VISA_TYPE
-            , outvisaexpdte AS VISA_EXPIRY_DATE
-            , 1 DIRECTION
-            , outtm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , outremark AS NOTE
-            , outtdtno AS DOCNO
-            , outpassportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tmmain_out_1hr_prod
-        WHERE outdte IS NOT NULL
-        AND nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            outtdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME || q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN ']' || p_EXITFLG || q'[' = 1 THEN 1 -- departure
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS PRD tmmain OUT end --
-        ]';
-        END IF;
-
-        -- MAIN
-        l_pibics_query :=
-q'[
-SELECT
-    source_sec
-    , source_sec_pk_val
-    , traveldate
-    , visa_type
-    , visa_expiry_date
-    , direction
-    , entry_form_no
-    -----------
-    , (
-          SELECT acp.key_value
-          FROM dl_bordercontrol.v_province vp,
-          dl_bordercontrol.adm_class_province acp
-          WHERE vp.pv_seqno = t.province
-          AND acp.display_code = vp.pvcd
-      ) PROVINCE
-    -----------
-    , note
-    , docno
-    , TRUNC(docno_expiry_date)
-FROM
-(
-    SELECT /*+ NO_PARALLEL */
-        source_sec
-        , source_sec_pk_val
-        , traveldate
-        , visa_type
-        , visa_expiry_date
-        , direction
-        , entry_form_no
-        , province
-        , note
-        , docno
-        , docno_expiry_date
-    FROM
-    (
-        -- PIBICS tminout_ma start --
-        SELECT /*+ NO_PARALLEL INDEX(v_tminout_ma tminout_ma TMINOUT_MA_COMPOSITE_IDX2) */
-            'TMINOUT_MA' AS SOURCE_SEC
-            , seqno AS SOURCE_SEC_PK_VAL
-            , inoutdte AS TRAVELDATE
-            , visatypecd AS VISA_TYPE
-            , visaexpdte AS VISA_EXPIRY_DATE
-            , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
-            , tm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , remark AS NOTE
-            , tdtno AS DOCNO
-            , passportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tminout_ma
-        WHERE nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            tdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME|| q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN (']' || p_EXITFLG || q'[' = 0 AND cardtype = 1) THEN 1 -- arrival
-                WHEN (']' || p_EXITFLG || q'[' = 1 AND cardtype = 2) THEN 1 -- departure
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS tminout_ma end --
-        UNION ALL
-        -- PIBICS tminout start --
-        SELECT /*+ NO_PARALLEL INDEX(v_tminout tminout TMINOUT_COMPOSITE_IDX2) */
-            'TMINOUT' AS SOURCE_SEC
-            , seqno AS SOURCE_SEC_PK_VAL
-            , inoutdte AS TRAVELDATE
-            , visatypecd AS VISA_TYPE
-            , visaexpdte AS VISA_EXPIRY_DATE
-            , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
-            , tm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , remark AS NOTE
-            , tdtno AS DOCNO
-            , passportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tminout
-        WHERE nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            tdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME || q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN (']' || p_EXITFLG || q'[' = 0 AND cardtype = 1) THEN 1 -- arrival
-                WHEN (']' || p_EXITFLG || q'[' = 1 AND cardtype = 2) THEN 1 -- departure
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS tminout end --
-        UNION ALL
-        -- PIBICS tmmain IN start --
-        SELECT /*+ NO_PARALLEL INDEX(v_tmmain tmmain TMMAIN_COMPOSITE_IDX1) */
-            'TMMAIN_IN' AS SOURCE_SEC
-            , tmrunno AS SOURCE_SEC_PK_VAL
-            , indte AS TRAVELDATE
-            , invisatypecd AS VISA_TYPE
-            , invisaexpdte AS VISA_EXPIRY_DATE
-            , 0 DIRECTION
-            , intm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , inremark AS NOTE
-            , intdtno AS DOCNO
-            , inpassportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tmmain
-        WHERE indte IS NOT NULL
-        AND nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            intdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME || q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN ']' || p_EXITFLG || q'[' = 0 THEN 1 -- arrival
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS tmmain IN end --
-        UNION ALL
-        -- PIBICS tmmain OUT start --
-        SELECT /*+ NO_PARALLEL INDEX(v_tmmain tmmain TMMAIN_COMPOSITE_IDX1) */
-            'TMMAIN_OUT' AS SOURCE_SEC
-            , tmrunno AS SOURCE_SEC_PK_VAL
-            , outdte AS TRAVELDATE
-            , outvisatypecd AS VISA_TYPE
-            , outvisaexpdte AS VISA_EXPIRY_DATE
-            , 1 DIRECTION
-            , outtm6no AS ENTRY_FORM_NO
-            , pv_seqno AS PROVINCE
-            , outremark AS NOTE
-            , outtdtno AS DOCNO
-            , outpassportexpdte AS DOCNO_EXPIRY_DATE
-        FROM dl_bordercontrol.v_tmmain
-        WHERE outdte IS NOT NULL
-        AND nationcd = ']' || v_nationcd || q'['
-        AND sex = DECODE(']' || p_GENDER || q'[', 1, 'M', 2, 'F', sex)
-        --AND birthdte = ']' || p_DOB || q'['
-        AND (birthdte = ']' || p_DOB || q'[' OR birthdte = SUBSTR(']' || p_DOB || q'[', -4, 4) OR birthdte = SUBSTR(']' || p_DOB || q'[', -7, 7) OR birthdte = SUBSTR(']' || p_DOB || q'[', -8, 8) OR birthdte = '//' || SUBSTR(']' || p_DOB || q'[', -4, 4))
-        AND
-        (
-            outtdtno = ']' || p_DOCNO || q'['
-            OR
-            (
-                UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(']' || p_SURNAME || q'['))
-                AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(']' || p_GIVENNAME || q'[')) || NVL2(TRIM(']' || p_MIDDLENAME || q'['), ' ' || UPPER(TRIM(']' || p_MIDDLENAME || q'[')), NULL)
-            )
-        )
-        AND
-        (
-            CASE
-                WHEN ']' || p_EXITFLG || q'[' IS NULL THEN 1
-                WHEN ']' || p_EXITFLG || q'[' = 1 THEN 1 -- departure
-            END
-        ) = 1
-        AND 
-        (
-            typedata IN ('BIO-PHB', 'BIO-RETH')
-            OR
-            NVL(typedata, '~') NOT LIKE 'BIO%'
-        )
-        -- PIBICS tmmain OUT end --
-        ]'
-        || l_pibics_prod_query
-        || q'[
-    )
-    ORDER BY traveldate DESC NULLS LAST
-) t
-WHERE ROWNUM = 1
-]';
-
-
-
-        EXECUTE IMMEDIATE l_pibics_query
+        SELECT
+            source_sec
+            , source_sec_pk_val
+            , traveldate
+            , visa_type
+            , visa_expiry_date
+            , direction
+            , entry_form_no
+            -----------
+            , (
+                SELECT acp.key_value
+                FROM dl_bordercontrol.v_province vp,
+                dl_bordercontrol.adm_class_province acp
+                WHERE vp.pv_seqno = t.province
+                AND acp.display_code = vp.pvcd
+            ) PROVINCE
+            -----------
+            , note
+            , docno
+            , TRUNC(docno_expiry_date)
         INTO
             v_last_pib_movement_info.source_sec
             , v_last_pib_movement_info.source_sec_pk_val
@@ -2199,8 +1595,362 @@ WHERE ROWNUM = 1
             , v_last_pib_movement_info.note
             , v_last_pib_movement_info.docno
             , v_last_pib_movement_info.docno_expiry_date
-        ;
-
+        FROM
+        (
+            SELECT /*+ NO_PARALLEL */
+                source_sec
+                , source_sec_pk_val
+                , traveldate
+                , visa_type
+                , visa_expiry_date
+                , direction
+                , entry_form_no
+                , province
+                , note
+                , docno
+                , docno_expiry_date
+            FROM
+            (
+                -- PIBICS tminout_ma start --
+                SELECT /*+ NO_PARALLEL INDEX(v_tminout_ma tminout_ma TMINOUT_MA_COMPOSITE_IDX2) */
+                    'TMINOUT_MA' AS SOURCE_SEC
+                    , seqno AS SOURCE_SEC_PK_VAL
+                    , inoutdte AS TRAVELDATE
+                    , visatypecd AS VISA_TYPE
+                    , visaexpdte AS VISA_EXPIRY_DATE
+                    , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
+                    , tm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , remark AS NOTE
+                    , tdtno AS DOCNO
+                    , passportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tminout_ma
+                WHERE nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    tdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN (p_EXITFLG = 0 AND cardtype = 1) THEN 1 -- arrival
+                        WHEN (p_EXITFLG = 1 AND cardtype = 2) THEN 1 -- departure
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS tminout_ma end --
+                UNION ALL
+                -- PIBICS tminout start --
+                SELECT /*+ NO_PARALLEL INDEX(v_tminout tminout TMINOUT_COMPOSITE_IDX2) */
+                    'TMINOUT' AS SOURCE_SEC
+                    , seqno AS SOURCE_SEC_PK_VAL
+                    , inoutdte AS TRAVELDATE
+                    , visatypecd AS VISA_TYPE
+                    , visaexpdte AS VISA_EXPIRY_DATE
+                    , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
+                    , tm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , remark AS NOTE
+                    , tdtno AS DOCNO
+                    , passportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tminout
+                WHERE nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    tdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN (p_EXITFLG = 0 AND cardtype = 1) THEN 1 -- arrival
+                        WHEN (p_EXITFLG = 1 AND cardtype = 2) THEN 1 -- departure
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS tminout end --
+                UNION ALL
+                -- PIBICS tmmain IN start --
+                SELECT /*+ NO_PARALLEL INDEX(v_tmmain tmmain TMMAIN_COMPOSITE_IDX1) */
+                    'TMMAIN_IN' AS SOURCE_SEC
+                    , tmrunno AS SOURCE_SEC_PK_VAL
+                    , indte AS TRAVELDATE
+                    , invisatypecd AS VISA_TYPE
+                    , invisaexpdte AS VISA_EXPIRY_DATE
+                    , 0 DIRECTION
+                    , intm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , inremark AS NOTE
+                    , intdtno AS DOCNO
+                    , inpassportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tmmain
+                WHERE indte IS NOT NULL
+                AND nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    intdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN p_EXITFLG = 0 THEN 1 -- arrival
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS tmmain IN end --
+                UNION ALL
+                -- PIBICS tmmain OUT start --
+                SELECT /*+ NO_PARALLEL INDEX(v_tmmain tmmain TMMAIN_COMPOSITE_IDX1) */
+                    'TMMAIN_OUT' AS SOURCE_SEC
+                    , tmrunno AS SOURCE_SEC_PK_VAL
+                    , outdte AS TRAVELDATE
+                    , outvisatypecd AS VISA_TYPE
+                    , outvisaexpdte AS VISA_EXPIRY_DATE
+                    , 1 DIRECTION
+                    , outtm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , outremark AS NOTE
+                    , outtdtno AS DOCNO
+                    , outpassportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tmmain
+                WHERE outdte IS NOT NULL
+                AND nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    outtdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN p_EXITFLG = 1 THEN 1 -- departure
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS tmmain OUT end --
+                UNION ALL
+                -- PIBICS PRD tminout_ma start --
+                SELECT /*+ NO_PARALLEL */
+                    'TMINOUT_MA_PRD' AS SOURCE_SEC
+                    , seqno AS SOURCE_SEC_PK_VAL
+                    , inoutdte AS TRAVELDATE
+                    , visatypecd AS VISA_TYPE
+                    , visaexpdte AS VISA_EXPIRY_DATE
+                    , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
+                    , tm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , remark AS NOTE
+                    , tdtno AS DOCNO
+                    , passportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tminout_ma_1hr_prod
+                WHERE nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    tdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN (p_EXITFLG = 0 AND cardtype = 1) THEN 1 -- arrival
+                        WHEN (p_EXITFLG = 1 AND cardtype = 2) THEN 1 -- departure
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS PRD tminout_ma end --
+                UNION ALL
+                -- PIBICS PRD tminout start --
+                SELECT /*+ NO_PARALLEL */
+                    'TMINOUT_PRD' AS SOURCE_SEC
+                    , seqno AS SOURCE_SEC_PK_VAL
+                    , inoutdte AS TRAVELDATE
+                    , visatypecd AS VISA_TYPE
+                    , visaexpdte AS VISA_EXPIRY_DATE
+                    , DECODE(cardtype, 1, 0, 2, 1, cardtype) DIRECTION
+                    , tm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , remark AS NOTE
+                    , tdtno AS DOCNO
+                    , passportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tminout_1hr_prod
+                WHERE nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    tdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN (p_EXITFLG = 0 AND cardtype = 1) THEN 1 -- arrival
+                        WHEN (p_EXITFLG = 1 AND cardtype = 2) THEN 1 -- departure
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS PRD tminout end --
+                UNION ALL
+                -- PIBICS PRD tmmain IN start --
+                SELECT /*+ NO_PARALLEL */
+                    'TMMAIN_IN_PRD' AS SOURCE_SEC
+                    , tmrunno AS SOURCE_SEC_PK_VAL
+                    , indte AS TRAVELDATE
+                    , invisatypecd AS VISA_TYPE
+                    , invisaexpdte AS VISA_EXPIRY_DATE
+                    , 0 DIRECTION
+                    , intm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , inremark AS NOTE
+                    , intdtno AS DOCNO
+                    , inpassportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tmmain_in_1hr_prod
+                WHERE indte IS NOT NULL
+                AND nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    intdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN p_EXITFLG = 0 THEN 1 -- arrival
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS PRD tmmain IN end --
+                UNION ALL
+                -- PIBICS PRD tmmain OUT start --
+                SELECT /*+ NO_PARALLEL */
+                    'TMMAIN_OUT_PRD' AS SOURCE_SEC
+                    , tmrunno AS SOURCE_SEC_PK_VAL
+                    , outdte AS TRAVELDATE
+                    , outvisatypecd AS VISA_TYPE
+                    , outvisaexpdte AS VISA_EXPIRY_DATE
+                    , 1 DIRECTION
+                    , outtm6no AS ENTRY_FORM_NO
+                    , pv_seqno AS PROVINCE
+                    , outremark AS NOTE
+                    , outtdtno AS DOCNO
+                    , outpassportexpdte AS DOCNO_EXPIRY_DATE
+                FROM dl_bordercontrol.v_tmmain_out_1hr_prod
+                WHERE outdte IS NOT NULL
+                AND nationcd = v_nationcd
+                AND sex = DECODE(p_GENDER, 1, 'M', 2, 'F', sex)
+                AND (birthdte = p_DOB OR birthdte = SUBSTR(p_DOB, -4, 4) OR birthdte = SUBSTR(p_DOB, -7, 7) OR birthdte = SUBSTR(p_DOB, -8, 8) OR birthdte = '//' || SUBSTR(p_DOB, -4, 4))
+                AND
+                (
+                    outtdtno = p_DOCNO
+                    OR
+                    (
+                        UPPER(TRIM(REGEXP_REPLACE(efamilynm, '\s{2,}', ' '))) = UPPER(TRIM(p_SURNAME))
+                        AND UPPER(TRIM(REGEXP_REPLACE(efirstnm, '\s{2,}', ' '))) || NVL2(TRIM(emiddlenm), ' ' || UPPER(TRIM(REGEXP_REPLACE(emiddlenm, '\s{2,}', ' '))), NULL) = UPPER(TRIM(p_GIVENNAME)) || NVL2(TRIM(p_MIDDLENAME), ' ' || UPPER(TRIM(p_MIDDLENAME)), NULL)
+                    )
+                )
+                AND
+                (
+                    CASE
+                        WHEN p_EXITFLG IS NULL THEN 1
+                        WHEN p_EXITFLG = 1 THEN 1 -- departure
+                    END
+                ) = 1
+                AND 
+                (
+                    typedata IN ('BIO-PHB', 'BIO-RETH')
+                    OR
+                    NVL(typedata, '~') NOT LIKE 'BIO%'
+                )
+                -- PIBICS PRD tmmain OUT end --
+            )
+            ORDER BY traveldate DESC NULLS LAST
+        ) t
+        WHERE ROWNUM = 1;
+    
     EXCEPTION
         WHEN NO_DATA_FOUND THEN
             v_last_pib_movement_info.source_sec := NULL;

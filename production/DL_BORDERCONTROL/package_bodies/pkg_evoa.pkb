@@ -1,7 +1,5 @@
 CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_EVOA" AS
 
-  
-
 PROCEDURE SP_CHECK_BALCKLIST (
         p_request     IN blob,
         p_response   OUT CLOB
@@ -30,6 +28,9 @@ i_pibicsprdconn  int;
 	       ,a.firstname
 		   ,a.surname
 		   ,a.middlename
+           ,b.TFIRSTNM as firstnameth
+		   ,b.TFAMILYNM as surnameth
+		   ,b.TMIDDLENM as middlenameth
 		   ,a.nationality
 		   ,a.passportnumber
 		   ,a.sex
@@ -44,6 +45,9 @@ i_pibicsprdconn  int;
 		   ,v_sex
 		   ,v_idcard
 		   ,v_movementid
+           ,v_tfirstnm
+           ,v_tfamilynm
+           ,v_tmiddlenmn
     FROM json_table(REQ  FORMAT JSON, '$'
          COLUMNS (
 			dateofbirth      VARCHAR2  	PATH '$.dateOfBirth',
@@ -55,7 +59,8 @@ i_pibicsprdconn  int;
 			sex   		VARCHAR2  	PATH '$.sex',
 			idcard   		VARCHAR2  	PATH '$.idcard',
 			movementid   		VARCHAR2  	PATH '$.movementid'
-        )) a;
+        )) a
+         left join PIBICSDM2.thaipassport b on a.passportnumber =b.PASSPORTNO ;
 
     if v_nationality is not null then
     begin
@@ -95,13 +100,12 @@ i_pibicsprdconn  int;
         P_EFIRSTNM      => v_efirstnm,
         P_EMIDDLENMN    => v_emiddlenmn,
         P_EFAMILYNM     => v_efamilynm,
-        P_TFIRSTNM      => NULL,
-        P_TMIDDLENMN    => NULL,
-        P_TFAMILYNM     => NULL,
+        P_TFIRSTNM      => v_tfirstnm,
+        P_TMIDDLENMN    => v_tmiddlenmn,
+        P_TFAMILYNM     => v_tfamilynm,
         P_PIBICSPRDCONN => 1,
         P_WLCD          => v_wlcd
     );
-
 
   p_response := '[]';
    if v_wlcd is not null then
@@ -149,4 +153,5 @@ end if;
   raise_application_error(-20001,'An error was encountered - PKG_EVOA.SP_CHECK_BALCKLIST'||SQLCODE||'-ERROR-'||SQLERRM); 
   END SP_CHECK_BALCKLIST;
 END PKG_EVOA;
+
 /

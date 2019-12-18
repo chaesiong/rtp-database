@@ -76,6 +76,7 @@
 @application/pages/page_00091.sql
 @application/pages/page_00101.sql
 @application/pages/page_00120.sql
+@application/pages/page_00130.sql
 @application/pages/page_00140.sql
 @application/pages/page_00141.sql
 @application/pages/page_00171.sql

@@ -1,6 +1,6 @@
 CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."BORDERPOSTS$TIUD0" 
-  for insert or update or delete on DL_BORDERCONTROL.BORDERPOSTS
-  compound trigger
+  for insert or update or delete ON DL_BORDERCONTROL.BORDERPOSTS 
+compound trigger
 --
   --
   /*******************************************************************************
@@ -14,6 +14,8 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."BORDERPOSTS$TIUD0"
   * WWirns    02.01.2018  Add column DISPLAY_ORDER
   * WWirns    03.01.2018  L_Check_FK_Content changed
   * WWirns    20.03.2018  Improve assignments of v_DML_TYPE
+  * MSCS      27.09.2019  Added PROVINCEID
+  * MSCS      11.11.2019  Added CODE
   *******************************************************************************/
   --
   --
@@ -244,6 +246,8 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."BORDERPOSTS$TIUD0"
         ,:old.DISPLAY_ORDER
         ,:old.INS_AT
         ,:old.INS_BY
+        ,:old.PROVINCEID
+        ,:old.CODE
          --
          );
       --
@@ -280,6 +284,8 @@ CREATE OR REPLACE EDITIONABLE TRIGGER "DL_BORDERCONTROL"."BORDERPOSTS$TIUD0"
         ,:old.DISPLAY_ORDER
         ,:old.INS_AT
         ,:old.INS_BY
+        ,:old.PROVINCEID
+        ,:old.CODE
          --
          );
       --

@@ -578,7 +578,7 @@ wwv_flow_api.create_page(
 'console.log("RUNTIME: On page load - " + (new Date()));',
 '$("#R132374931714191231_control_panel").hide();',
 '$("#REG_TODO").hide();',
-'$("#REG_LOGGING").slideToggle(200);',
+'//$("#REG_LOGGING").slideToggle(200);',
 '',
 'console.log("RUNTIME: 1 - " + (new Date()));',
 '',
@@ -982,7 +982,7 @@ wwv_flow_api.create_page(
 ,p_cache_mode=>'NOCACHE'
 ,p_help_text=>'No help is available for this page.'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20191115234338'
+,p_last_upd_yyyymmddhh24miss=>'20191208233824'
 );
 end;
 /
@@ -6368,7 +6368,7 @@ wwv_flow_api.create_worksheet_column(
 ,p_column_alignment=>'CENTER'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(31426990165000704913)
+ p_id=>wwv_flow_api.id(4699027644713625944)
 ,p_db_column_name=>'POLIS_NAME'
 ,p_display_order=>150
 ,p_column_identifier=>'O'
@@ -6386,10 +6386,10 @@ wwv_flow_api.create_worksheet_column(
 ,p_column_type=>'STRING'
 );
 wwv_flow_api.create_worksheet_column(
- p_id=>wwv_flow_api.id(31426990200958704914)
+ p_id=>wwv_flow_api.id(4696160530983720004)
 ,p_db_column_name=>'MOBILENO'
 ,p_display_order=>160
-,p_column_identifier=>'P'
+,p_column_identifier=>'Q'
 ,p_column_label=>'Mobileno'
 ,p_allow_sorting=>'N'
 ,p_allow_filtering=>'N'
@@ -6969,8 +6969,27 @@ wwv_flow_api.create_page_button(
 ,p_grid_new_row=>'Y'
 );
 wwv_flow_api.create_page_button(
- p_id=>wwv_flow_api.id(38454545811068630)
+ p_id=>wwv_flow_api.id(4699028111368625949)
 ,p_button_sequence=>81
+,p_button_plug_id=>wwv_flow_api.id(190408527261595996)
+,p_button_name=>'P17_SHOW_EVOA_SEARCH'
+,p_button_static_id=>'P17_SHOW_EVOA_SEARCH'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_api.id(563841661582049626)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'EVOA Search'
+,p_button_position=>'BODY'
+,p_warn_on_unsaved_changes=>null
+,p_button_css_classes=>'show-dialog-button'
+,p_icon_css_classes=>'fa-etsy'
+,p_button_cattributes=>'tabindex="-1"'
+,p_grid_new_grid=>false
+,p_grid_new_row=>'Y'
+);
+wwv_flow_api.create_page_button(
+ p_id=>wwv_flow_api.id(38454545811068630)
+,p_button_sequence=>91
 ,p_button_plug_id=>wwv_flow_api.id(190408527261595996)
 ,p_button_name=>'P17_SHOW_PERMIT_INFO'
 ,p_button_static_id=>'P17_SHOW_PERMIT_INFO'
@@ -6989,7 +7008,7 @@ wwv_flow_api.create_page_button(
 );
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(43029342729716818)
-,p_button_sequence=>91
+,p_button_sequence=>101
 ,p_button_plug_id=>wwv_flow_api.id(190408527261595996)
 ,p_button_name=>'P17_SHOW_TEMP_ONLY'
 ,p_button_static_id=>'P17_SHOW_TEMP_ONLY'
@@ -7404,6 +7423,9 @@ wwv_flow_api.create_page_button(
 ,p_button_cattributes=>'style="width: 200px"'
 ,p_grid_new_grid=>false
 );
+end;
+/
+begin
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(21423522209596821417)
 ,p_button_sequence=>10
@@ -7417,9 +7439,6 @@ wwv_flow_api.create_page_button(
 ,p_warn_on_unsaved_changes=>null
 ,p_grid_new_grid=>false
 );
-end;
-/
-begin
 wwv_flow_api.create_page_button(
  p_id=>wwv_flow_api.id(107618044672742909)
 ,p_button_sequence=>20
@@ -8426,6 +8445,9 @@ wwv_flow_api.create_page_item(
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attribute_01=>'N'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(170549867351907622)
 ,p_name=>'P17_NEXT_DIALOG_URL'
@@ -8452,9 +8474,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(170550822124907632)
 ,p_name=>'P17_RESIDENT_ADDR_L2'
@@ -9453,6 +9472,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(195023019249621201)
 ,p_name=>'P17_AMPUR_DISPLAY'
@@ -9487,9 +9509,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(195023172027621203)
 ,p_name=>'P17_LC_ADDRESS_DISPLAY'
@@ -10487,6 +10506,9 @@ wwv_flow_api.create_page_item(
 ,p_display_as=>'NATIVE_HIDDEN'
 ,p_attribute_01=>'N'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(458921714609802631)
 ,p_name=>'P17_FP_QUALITY_RT'
@@ -10519,9 +10541,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_01=>'SQL'
 ,p_attribute_06=>'select PKG_APEX_UTIL.COLL_Get_BLOB001(''P17_FP_TEMPLATE_RI'') a FROM DUAL'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(458925376354802668)
 ,p_name=>'TEMPLATE_LIVE_FP_T3'
@@ -11447,6 +11466,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(504465761766245907)
 ,p_name=>'P17_INSDEPT_GUART_AMOUNTLEFT'
@@ -11466,9 +11488,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(504465834327245908)
 ,p_name=>'P17_INSBANK_BANKNM'
@@ -12496,6 +12515,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(842496880127377254)
 ,p_name=>'DG_ENTERMANUAL_ISSUINGCODE'
@@ -12522,9 +12544,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_01=>'NONE'
 ,p_attribute_02=>'N'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(842497039226377255)
 ,p_name=>'DG_ENTERMANUAL_GENDER'
@@ -13374,6 +13393,9 @@ wwv_flow_api.create_page_item(
 ,p_attribute_01=>'SQL'
 ,p_attribute_06=>'select DL_MOVEMENTHANDLING.GET_LAST_MOVEMENT_BLOB(:DG_DOCUMENTNUMBER, to_date(:DG_EXPIRATIONDATE, ''RRMMDD''), :DG_ISSUINGSTATECODE, ''TEMPLATE_LL'' ) q from dual'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(908802480897919017)
 ,p_name=>'P17_ARRIVAL_VISA_NEEDED'
@@ -13393,9 +13415,6 @@ wwv_flow_api.create_page_item(
 ,p_attribute_04=>'TEXT'
 ,p_attribute_05=>'BOTH'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(908802794912922856)
 ,p_name=>'P17_DEPARTURE_VISA_NEEDED'
@@ -14350,6 +14369,9 @@ wwv_flow_api.create_page_item(
 '    ) t ',
 'FROM DUAL'))
 );
+end;
+/
+begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4699025709953625925)
 ,p_name=>'P17_MVMNT_OTHER_IMAGE_3'
@@ -14372,9 +14394,6 @@ wwv_flow_api.create_page_item(
 '    ) t ',
 'FROM DUAL'))
 );
-end;
-/
-begin
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(4699025890938625926)
 ,p_name=>'P17_MVMNT_OTHER_IMAGE_4'
@@ -14528,6 +14547,35 @@ wwv_flow_api.create_page_item(
 '        (SELECT PKG_APEX_UTIL.Get_APP_Static_File_Content(''refresh_60x60.png'') FROM DUAL)',
 '    ) t ',
 'FROM DUAL'))
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4699901965759992502)
+,p_name=>'P17_MVMNT_EVOA_PASSENGERS'
+,p_item_sequence=>1440
+,p_item_plug_id=>wwv_flow_api.id(455376177247005495)
+,p_source=>'0'
+,p_source_type=>'STATIC'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'N'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4699902032323992503)
+,p_name=>'P17_MVMNT_EVOA_VISA_NUM'
+,p_item_sequence=>1450
+,p_item_plug_id=>wwv_flow_api.id(455376177247005495)
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'N'
+);
+wwv_flow_api.create_page_item(
+ p_id=>wwv_flow_api.id(4699903208439992515)
+,p_name=>'P17_SEARCH_TRAVEL_ABIS'
+,p_item_sequence=>1460
+,p_item_plug_id=>wwv_flow_api.id(455376177247005495)
+,p_use_cache_before_default=>'NO'
+,p_source=>'1'
+,p_source_type=>'STATIC'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_attribute_01=>'N'
 );
 wwv_flow_api.create_page_item(
  p_id=>wwv_flow_api.id(5173633074589838636)
@@ -15233,6 +15281,9 @@ wwv_flow_api.create_page_validation(
 ,p_validation_condition_type=>'NEVER'
 ,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_validation(
  p_id=>wwv_flow_api.id(190253845575851192)
 ,p_validation_name=>'VAL TM NO is paring'
@@ -15291,9 +15342,6 @@ wwv_flow_api.create_page_da_action(
 ''))
 ,p_stop_execution_on_error=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(553187423812581623)
 ,p_name=>'DA_ToggleRegion'
@@ -16087,6 +16135,9 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(937451288350416076)
 ,p_event_id=>wwv_flow_api.id(937450879597416071)
@@ -16134,9 +16185,6 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(4690288273219124630)
 ,p_event_id=>wwv_flow_api.id(938799942199588045)
@@ -16189,33 +16237,23 @@ wwv_flow_api.create_page_da_action(
 '$("#"+this.triggeringElement.id + "_DISPLAY").removeClass("animated infinite passport_stillvalid");',
 '$("#"+this.triggeringElement.id + "_LABEL").removeClass("animated infinite passport_stillvalid bounce");',
 '',
-'/*',
-'if ($v("P17_LASTDIRECTION") != "") {',
-'	if (this.triggeringElement.value == $v("P17_LASTDIRECTION")){',
-'		$("#"+this.triggeringElement.id).addClass("animated infinite passport_stillvalid");',
-'		$("#"+this.triggeringElement.id+ "_DISPLAY").addClass("animated infinite passport_stillvalid");',
-'		$("#"+this.triggeringElement.id+ "_LABEL").addClass("animated infinite passport_stillvalid bounce");',
-'		$(".okdirection").hide();',
-'		$(".wrongdirection").show().parent().addClass("passport_stillvalid animated infinite bounce");',
-'		$(".direction-icon").removeClass("fa-database").addClass("fa-exclamation-triangle");',
-'	} else {',
-'		$(".okdirection").show();',
-'		$(".wrongdirection").hide().parent().removeClass("passport_stillvalid animated infinite bounce");',
-'		$(".direction-icon").addClass("fa-database").removeClass("fa-exclamation-triangle");',
-'	}',
-'} */',
-'',
 '$(".okdirection").show();',
 '$(".wrongdirection").hide().parent().removeClass("passport_stillvalid animated infinite bounce");',
 '$(".direction-icon").addClass("fa-database").removeClass("fa-exclamation-triangle");',
 '',
-'var exitFlag = $("#MOVEMENT_ENTRY_EXIT").val();',
+'let exitFlag = $("#MOVEMENT_ENTRY_EXIT").val();',
+'let isEVOA = !!parseInt("&AI_IS_EVOA_TERMINAL.") && !parseInt(exitFlag);',
 '',
 'if (exitFlag == 1) {',
-'    //document.getElementsByTagName("body")[0].classList.add("direction-departure");',
 '    $("body").addClass("direction-departure");',
 '} else {',
 '    $("body").removeClass("direction-departure");',
+'}',
+'',
+'if (isEVOA) {',
+'    $("body").addClass("bmbs-evoa-mode");',
+'} else {',
+'    $("body").removeClass("bmbs-evoa-mode");',
 '}',
 '',
 'toggleBmBSRequiredFields("P17_PROVINCE", (exitFlag != 1), true);'))
@@ -16936,6 +16974,9 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(2729915112028547149)
 ,p_event_id=>wwv_flow_api.id(197229477959066403)
@@ -16970,9 +17011,6 @@ wwv_flow_api.create_page_da_action(
 ''))
 ,p_stop_execution_on_error=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(181665768489336797)
 ,p_event_id=>wwv_flow_api.id(197229477959066403)
@@ -17328,27 +17366,11 @@ wwv_flow_api.create_page_da_action(
 '    apexCustomEvent(''refreshVisaTM6Image'');',
 '}',
 '',
-'/*',
-'if (!!parseInt($("#P17_PASS_DETECTED").val()) || !!parseInt($("#P17_MANUAL_PASSPORT").val())) {',
-'    if ($v("MOVEMENT_ENTRY_EXIT") == "1" || $v("TRNSPRTUNITID").length === 0) {',
-'        $("#TRNSPRTUNITID").focus().select();',
-'    }',
-'    else if ($("#P17_TRAVELCARD_NO").is(":visible")) {',
-'        $("#P17_TRAVELCARD_NO").focus().select();',
-'    }',
-'    else {',
-'        let focusable = getBmBSFocusableItems(), currIdx = focusable.index($("#P17_DISPLAY_GENDER"));',
-'        if (currIdx != -1 && focusable.eq(currIdx + 1).length) focusable.eq(currIdx + 1).focus().select();',
-'    }',
-'}',
-'else {',
-'    let focusable = getBmBSFocusableItems(), currIdx = focusable.index($("#P17_DISPLAY_GENDER"));',
-'    if (currIdx != -1 && focusable.eq(currIdx + 1).length) focusable.eq(currIdx + 1).focus().select();',
-'}',
-'*/',
-'',
 'apex.event.trigger(document, "validateFlightNum");',
-'$("#TRNSPRTUNITID").focus();'))
+'$("#TRNSPRTUNITID").focus();',
+'',
+'let isEVOA = $v("P17_NATIONALITY") != "THA" && !!parseInt("&AI_IS_EVOA_TERMINAL.") && !parseInt($v("MOVEMENT_ENTRY_EXIT"));',
+'if (isEVOA) $("#P17_SHOW_EVOA_SEARCH").trigger("click");'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
@@ -17845,6 +17867,9 @@ wwv_flow_api.create_page_da_action(
 'return false;'))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(43029738338716822)
 ,p_event_id=>wwv_flow_api.id(43029632549716821)
@@ -18009,9 +18034,6 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(43029972936716824)
 ,p_event_id=>wwv_flow_api.id(43029632549716821)
@@ -18545,6 +18567,7 @@ wwv_flow_api.create_page_da_action(
 'let isThai = ($v("P17_NATIONALITY") == "THA");',
 'let vLastMvmntVisaType = $v("P17_LAST_MVMNT_VISA_TYPE") || "";',
 'let passportDetected = (!!parseInt($("#P17_PASS_DETECTED").val()) || !!parseInt($("#P17_MANUAL_PASSPORT").val()));',
+'let isEVOA = parseInt($v("P17_MVMNT_EVOA_PASSENGERS")) > 0;',
 '',
 'if ($("#P17_VISUM option").length > 1 && $("#P17_VISUM").val() == "") {',
 '    console.log("setting visa");',
@@ -18563,6 +18586,11 @@ wwv_flow_api.create_page_da_action(
 '    else if (isChangeVisa && $v("P17_CHNG_VISA_TYPE") != "") {',
 '        console.log("is Change Visa: " + $v("P17_CHNG_VISA_TYPE"));',
 '        $("#P17_VISUM").val($v("P17_CHNG_VISA_TYPE"));',
+'    }',
+'    //Case 6: is EVOA',
+'    else if (isEVOA) {',
+'        console.log("is EVOA: 0077");',
+'        $("#P17_VISUM").val("0077");',
 '    }',
 '    //Case 4: is Departure',
 '    else if (!isArrival && !isThai && $v("P17_LAST_DIRECTION") == "0" && !!vLastMvmntVisaType) {',
@@ -18776,6 +18804,9 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_event_type=>'custom'
 ,p_bind_event_type_custom=>'checkDuplicatePassport'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(170549750270907621)
 ,p_event_id=>wwv_flow_api.id(170549622851907620)
@@ -18913,9 +18944,6 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(170736459557646593)
 ,p_event_id=>wwv_flow_api.id(170737188806646600)
@@ -19340,12 +19368,11 @@ wwv_flow_api.create_page_da_action(
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'let ampur = apex.item("P17_TMP_AMPUR").getValue();',
+'let ampur = $v("P17_TMP_AMPUR");',
 'if (!!ampur) {',
-'    apex.item("P17_AMPUR").setValue(ampur);',
-'    apex.item("P17_TMP_AMPUR").setValue("");',
-'}',
-''))
+'    $s("P17_AMPUR", ampur);',
+'    $s("P17_TMP_AMPUR", "");',
+'}'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
@@ -19365,13 +19392,12 @@ wwv_flow_api.create_page_da_action(
 ,p_execute_on_page_init=>'N'
 ,p_action=>'NATIVE_JAVASCRIPT_CODE'
 ,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'let ampur = apex.item("P17_AMPUR").getValue();',
-'let tambon = apex.item("P17_TMP_TAMBON").getValue();',
+'let ampur = $v("P17_AMPUR");',
+'let tambon = $v("P17_TMP_TAMBON");',
 'if (!!ampur && !!tambon) {',
-'    apex.item("P17_TAMBON").setValue(tambon);',
-'    apex.item("P17_TMP_TAMBON").setValue("");',
-'}',
-''))
+'    $s("P17_TAMBON", tambon);',
+'    $s("P17_TMP_TAMBON", "");',
+'}'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
@@ -19667,6 +19693,9 @@ wwv_flow_api.create_page_da_action(
 '}'))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(54505049239889715)
 ,p_name=>'Initialize Keyboard Shortcuts'
@@ -19798,9 +19827,6 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_event_type=>'custom'
 ,p_bind_event_type_custom=>'findDocumentInformation'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(201150221094677906)
 ,p_event_id=>wwv_flow_api.id(54505476656889719)
@@ -20562,6 +20588,9 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(792671422373460137)
 ,p_event_id=>wwv_flow_api.id(119107269898171036)
@@ -20669,9 +20698,6 @@ wwv_flow_api.create_page_da_event(
 ,p_bind_delegate_to_selector=>'#CELL5WORKFLOW'
 ,p_bind_event_type=>'click'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(441446269997127536)
 ,p_event_id=>wwv_flow_api.id(441446184642127535)
@@ -21475,6 +21501,9 @@ wwv_flow_api.create_page_da_action(
 '}'))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(2811515798712452607)
 ,p_name=>'Get Overstay Information'
@@ -21571,9 +21600,6 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(2811517494654452624)
 ,p_event_id=>wwv_flow_api.id(2811515983791452609)
@@ -22340,6 +22366,9 @@ wwv_flow_api.create_page_da_action(
 '});'))
 ,p_stop_execution_on_error=>'Y'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(4696181340417264230)
 ,p_name=>'Check Warrant Service'
@@ -22399,6 +22428,7 @@ wwv_flow_api.create_page_da_action(
 'apex.event.trigger("#id-ir-warrant-report", "apexrefresh");',
 'openModal("dialogWarrantReport");',
 '$(''[aria-describedby="dialogWarrantReport"]'').css("width", "70%");'))
+,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_da_event(
  p_id=>wwv_flow_api.id(4696182558596264242)
@@ -22464,9 +22494,6 @@ wwv_flow_api.create_page_da_action(
 ,p_stop_execution_on_error=>'Y'
 ,p_wait_for_result=>'Y'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_da_action(
  p_id=>wwv_flow_api.id(4699024949934625917)
 ,p_event_id=>wwv_flow_api.id(4699024775831625915)
@@ -22507,6 +22534,168 @@ wwv_flow_api.create_page_da_action(
 ,p_affected_elements_type=>'REGION'
 ,p_affected_region_id=>wwv_flow_api.id(4699024561676625913)
 ,p_attribute_01=>'this.affectedElements.dialog(''close''); '
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4699028247648625950)
+,p_name=>'P17_SHOW_EVOA_SEARCH: Click'
+,p_event_sequence=>1700
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_api.id(4699028111368625949)
+,p_bind_type=>'bind'
+,p_bind_event_type=>'click'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4699901871819992501)
+,p_event_id=>wwv_flow_api.id(4699028247648625950)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'apex.server.process("CREATE_URL", ',
+'{',
+'    x02: 130',
+'    ,x04: ''EVOA''',
+'}, ',
+'{',
+'    success: function(pData) ',
+'    {',
+'        console.log(''EVOA: createUrl: '', pData.url);',
+'        let v_url = pData.url; ',
+'        //let v_url = pData.url.replace("modal:true", "modal:true,closeOnEscape:false");',
+'        //console.log(''EVOA: changed Url: '', v_url);',
+'        if (!!v_url) {',
+'            closeDialog("EVOA Search");',
+'            apex.navigation.redirect(v_url);',
+'        }',
+'    },',
+'    error: function()',
+'    {',
+'        apex.message.alert("Unexpected error !\nPlease refresh the page to try again or contact the administrator.");',
+'    }',
+'});',
+''))
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4699902154460992504)
+,p_name=>'P17_MVMNT_EVOA_PASSENGERS: Change'
+,p_event_sequence=>1710
+,p_triggering_element_type=>'ITEM'
+,p_triggering_element=>'P17_MVMNT_EVOA_PASSENGERS'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'change'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4699902287094992505)
+,p_event_id=>wwv_flow_api.id(4699902154460992504)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'let cnt = parseInt(this.triggeringElement.value) || 0;',
+'let btn = "P17_SHOW_EVOA_SEARCH";',
+'let cls = "button-data-available";',
+'',
+'$("#"+btn).removeClass(cls).addClass(cnt > 0 ? cls : "");',
+'addButtonBadge(btn, cnt > 0 ? cnt : "");'))
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_event(
+ p_id=>wwv_flow_api.id(4699902352837992506)
+,p_name=>'DA_CLOSE_EVOA_SEARCH'
+,p_event_sequence=>1720
+,p_triggering_element_type=>'JAVASCRIPT_EXPRESSION'
+,p_triggering_element=>'window'
+,p_triggering_condition_type=>'JAVASCRIPT_EXPRESSION'
+,p_triggering_expression=>'this.browserEvent != "load" && this.data.dialogPageId == "130"'
+,p_bind_type=>'bind'
+,p_bind_event_type=>'apexafterclosedialog'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4699902485803992507)
+,p_event_id=>wwv_flow_api.id(4699902352837992506)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'let isArrival = !parseInt($v("MOVEMENT_ENTRY_EXIT"));',
+'if (!isArrival) return false;',
+'',
+'$s("P17_PROVINCE", $v("P17_PROVINCE"));'))
+,p_stop_execution_on_error=>'Y'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4699902535293992508)
+,p_event_id=>wwv_flow_api.id(4699902352837992506)
+,p_event_result=>'TRUE'
+,p_action_sequence=>20
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_EXECUTE_PLSQL_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    l_count NUMBER := 0;',
+'    l_visa_num NUMBER;',
+'    l_visa_text VARCHAR2(5 CHAR);',
+'    l_manual_visano VARCHAR2(20 CHAR);',
+'    l_province VARCHAR2(32 CHAR);',
+'    l_district VARCHAR2(32 CHAR);',
+'    l_subdistrict VARCHAR2(32 CHAR);',
+'    l_address VARCHAR2(255 CHAR);',
+'BEGIN',
+'    SELECT ',
+'        MAX(passenger_count), MAX(voa_visa_text), MAX(voa_visa_num), MAX(manual_visano)',
+'        , MAX(province), MAX(district), MAX(subdistrict), MAX(address)',
+'    INTO ',
+'        l_count, l_visa_text, l_visa_num, l_manual_visano',
+'        , l_province, l_district, l_subdistrict, l_address',
+'    FROM',
+'    (',
+'        SELECT COUNT(1) OVER (PARTITION BY NULL) PASSENGER_COUNT, voa_visa_text, voa_visa_num, manual_visano',
+'        , province, district, subdistrict, address',
+'        FROM movements_evoa',
+'        WHERE mvmntid = :P17_MVMNTID',
+'        ORDER BY voa_visa_num DESC NULLS LAST, ins_at DESC',
+'    )',
+'    WHERE ROWNUM = 1;',
+'',
+'    :P17_MVMNT_EVOA_PASSENGERS := l_count;',
+'    IF l_count > 0 THEN',
+'        :P17_VISUM_1 := CASE WHEN l_visa_text IS NOT NULL AND l_visa_num IS NOT NULL THEN (l_visa_text || l_visa_num) ELSE l_manual_visano END;',
+'        :P17_VISUM := ''0077'';',
+'        :P17_MVMNT_EVOA_VISA_NUM := l_visa_num;',
+'        :P17_PROVINCE := l_province;',
+'        :P17_TMP_AMPUR := l_district;',
+'        :P17_TMP_TAMBON := l_subdistrict;',
+'        :P17_LC_ADDRESS := l_address;',
+'    ELSE',
+'        :P17_VISUM_1 := NULL;',
+'        :P17_VISUM := NULL;',
+'        :P17_MVMNT_EVOA_VISA_NUM := NULL;',
+'        :P17_PROVINCE := :AI_BORDERPOST_PROVINCE_ID;',
+'        :P17_TMP_AMPUR := NULL;',
+'        :P17_TMP_TAMBON := NULL;',
+'        :P17_LC_ADDRESS := NULL;',
+'    END IF;',
+'END;'))
+,p_attribute_03=>'P17_MVMNT_EVOA_PASSENGERS,P17_VISUM_1,P17_VISUM,P17_MVMNT_EVOA_VISA_NUM,P17_PROVINCE,P17_TMP_AMPUR,P17_TMP_TAMBON,P17_LC_ADDRESS'
+,p_attribute_04=>'Y'
+,p_stop_execution_on_error=>'Y'
+,p_wait_for_result=>'Y'
+);
+wwv_flow_api.create_page_da_action(
+ p_id=>wwv_flow_api.id(4699902633423992509)
+,p_event_id=>wwv_flow_api.id(4699902352837992506)
+,p_event_result=>'TRUE'
+,p_action_sequence=>30
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_JAVASCRIPT_CODE'
+,p_attribute_01=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'$("#P17_MVMNT_EVOA_PASSENGERS,#P17_VISUM_1,#P17_PROVINCE").trigger("change");',
+'$("#P17_VISUM").trigger("apexrefresh");'))
 ,p_stop_execution_on_error=>'Y'
 );
 wwv_flow_api.create_page_process(
@@ -22995,9 +23184,49 @@ wwv_flow_api.create_page_process(
 ,p_process_when=>'REQUEST_PROCESSBORDERDOCUMENT'
 ,p_process_when_type=>'REQUEST_EQUALS_CONDITION'
 );
+end;
+/
+begin
+wwv_flow_api.create_page_process(
+ p_id=>wwv_flow_api.id(4699902706458992510)
+,p_process_sequence=>41
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'ENQUEUE_EVOA'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'DECLARE',
+'    -- Logger',
+'    l_scope logger_logs.scope%TYPE := ''APEX BmBS (500) - Page '' || v(''APP_PAGE_ID'') || '' PageProcess: ENQUEUE_EVOA'';',
+'    l_params logger.tab_param;',
+'BEGIN',
+'',
+'    -- Logging',
+'    logger.log(''START'', l_scope, null, l_params);',
+'',
+'    IF TO_NUMBER(NVL(:P17_MVMNT_EVOA_VISA_NUM, 0)) > 0 THEN',
+'        servapp.pkg_evoa.update_visa_number (',
+'            p_ip_address => :AI_TERMINAL_IP',
+'            , p_visa_no  => TO_NUMBER(:P17_MVMNT_EVOA_VISA_NUM) + 1',
+'        );',
+'    END IF;',
+'',
+'    DL_BORDERCONTROL.PKG_EVOA_UTIL.enqueue_submit_evoa (',
+'        p_key_value => :P17_MVMNTID',
+'    );',
+'',
+'    -- Logging',
+'    logger.log(''END'', l_scope, null, l_params);',
+'',
+'END;'))
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>wwv_flow_string.join(wwv_flow_t_varchar2(
+':REQUEST = ''REQUEST_PROCESSBORDERDOCUMENT''',
+'AND NVL(:P17_MVMNT_EVOA_PASSENGERS, 0) > 0'))
+,p_process_when_type=>'SQL_EXPRESSION'
+);
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(570971457216568693)
-,p_process_sequence=>41
+,p_process_sequence=>51
 ,p_process_point=>'AFTER_SUBMIT'
 ,p_process_type=>'NATIVE_SESSION_STATE'
 ,p_process_name=>'Clear_Page_Items'
@@ -23007,7 +23236,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(570971910058589087)
-,p_process_sequence=>51
+,p_process_sequence=>61
 ,p_process_point=>'AFTER_SUBMIT'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'Clear_Session_Bag'
@@ -23106,7 +23335,7 @@ wwv_flow_api.create_page_process(
 );
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(792670746615460130)
-,p_process_sequence=>61
+,p_process_sequence=>71
 ,p_process_point=>'AFTER_SUBMIT'
 ,p_process_type=>'NATIVE_PLSQL'
 ,p_process_name=>'LogMeasurementPoint07b'
@@ -23266,9 +23495,6 @@ wwv_flow_api.create_page_process(
 'end;'))
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(185707899171174909)
 ,p_process_sequence=>10
@@ -23533,7 +23759,7 @@ wwv_flow_api.create_page_process(
 '',
 '    -- Currently supporting 2 values: ',
 '    -- ABIS (or NULL); ',
-'    -- ICPO;',
+'    -- EVOA;',
 '    l_url_name VARCHAR2(255); -- x04',
 '',
 '    l_params   VARCHAR2(500);',
@@ -23553,6 +23779,8 @@ wwv_flow_api.create_page_process(
 '',
 '    IF NVL(l_url_name, ''ABIS'') = ''ABIS'' THEN',
 '        l_params := '':P120_BL_INCIDENT_ID,P120_ICPO_INCIDENT_ID:&P17_BLACKLIST_INCIDENT_ID.,&P17_ICPO_INCIDENT_ID.'' ;',
+'    ELSIF l_url_name = ''EVOA'' THEN',
+'        l_params := '':P130_MVMNTID,P130_MVMNT_NATIONALITY,P130_MVMNT_DOCNO:&P17_MVMNTID.,&P17_NATIONALITY.,&P17_DISPLAY_DOCNUMBER.'' ;',
 '    END IF;',
 '',
 '    -- create URL',
@@ -23831,6 +24059,9 @@ wwv_flow_api.create_page_process(
 'END;'))
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
+end;
+/
+begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(2729913451716547132)
 ,p_process_sequence=>90
@@ -24150,9 +24381,6 @@ wwv_flow_api.create_page_process(
 ''))
 ,p_error_display_location=>'INLINE_IN_NOTIFICATION'
 );
-end;
-/
-begin
 wwv_flow_api.create_page_process(
  p_id=>wwv_flow_api.id(108034095441098013)
 ,p_process_sequence=>170
@@ -24643,7 +24871,7 @@ wwv_flow_api.create_page_process(
 '    l_search_enabled  NUMBER := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter(''WARRANT_ENABLED''), 0));',
 '    --',
 'BEGIN',
-'    IF l_search_enabled = 1 THEN',
+'    IF l_search_enabled = 1 AND NVL(l_id_no, ''~'') != ''0000000000000'' THEN',
 '        l_log_warrant_rec :=  ',
 '            dl_bordercontrol.pkg_warrant_util.search_warrant',
 '            (',
