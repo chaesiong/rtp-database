@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.MESSAGES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.MESSAGES$I18N (MESSAGE_KEY,LOCALE,MESSAGE_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('BMBS\17\DA_ChildrenAdded\Action_Seq10\1','th_TH','เพิ่มเด็ก - ทั้งหมด:',to_timestamp('23-NOV-18 10.14.35.204697000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
@@ -53,7 +52,3 @@ Insert into DL_COMMON.MESSAGES$I18N (MESSAGE_KEY,LOCALE,MESSAGE_VALUE,DML_AT,DML
 Insert into DL_COMMON.MESSAGES$I18N (MESSAGE_KEY,LOCALE,MESSAGE_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('BMBS\17\SAF\FingerprintManagement_JS\24','th_TH','ตรวจพบการสแกนนิ้วที่มีคุณภาพต่ำกว่าค่าที่กำหนด ต้องการสแกนนิ้วใหม่หรือไม่?',to_timestamp('24-JUN-19 01.29.09.453170000 AM','DD-MON-RR HH.MI.SSXFF AM'),'admin @SQL Developer - DESKTOP-CFDOCL0 (192.168.99.20)','I',null,to_timestamp('24-JUN-19','DD-MON-RR HH.MI.SSXFF AM'),'admin @SQL Developer - DESKTOP-CFDOCL0 (192.168.99.20)',0);
 Insert into DL_COMMON.MESSAGES$I18N (MESSAGE_KEY,LOCALE,MESSAGE_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('BMBS\17\SAF\FingerprintManagement_JS\25','th_TH','แจ้งเตือน##สแกนนิ้วใหม่อีกครั้ง##ยืนยันการบันทึก##cl-diag-big-font',to_timestamp('24-JUN-19 04.39.45.572294000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.19)','U',null,to_timestamp('24-JUN-19','DD-MON-RR HH.MI.SSXFF AM'),'admin @SQL Developer - DESKTOP-CFDOCL0 (192.168.99.20)',0);
 Insert into DL_COMMON.MESSAGES$I18N (MESSAGE_KEY,LOCALE,MESSAGE_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('BMBS\17\Workflow_js\27','th_TH','สแกนลายนิ้วมือ : ตรวจพบการสแกนนิ้วที่มีคุณภาพต่ำกว่าค่าที่กำหนด',to_timestamp('24-JUN-19 01.35.15.512305000 AM','DD-MON-RR HH.MI.SSXFF AM'),'admin @SQL Developer - DESKTOP-CFDOCL0 (192.168.99.20)','I',null,to_timestamp('24-JUN-19','DD-MON-RR HH.MI.SSXFF AM'),'admin @SQL Developer - DESKTOP-CFDOCL0 (192.168.99.20)',0);
-
-52 rows selected. 
-
-

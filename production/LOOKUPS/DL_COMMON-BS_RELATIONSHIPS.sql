@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.BS_RELATIONSHIPS
 SET DEFINE OFF;
 Insert into DL_COMMON.BS_RELATIONSHIPS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,OWNER) values ('1','en_US','(1)',1,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.830500000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1,null);
@@ -16,7 +15,3 @@ Insert into DL_COMMON.BS_RELATIONSHIPS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_O
 Insert into DL_COMMON.BS_RELATIONSHIPS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,OWNER) values ('7','en_US','(7)',7,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.831851000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1,null);
 Insert into DL_COMMON.BS_RELATIONSHIPS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,OWNER) values ('8','en_US','(8)',8,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.831880000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1,null);
 Insert into DL_COMMON.BS_RELATIONSHIPS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,OWNER) values ('9','en_US','(9)',9,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.831909000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1,null);
-
-15 rows selected. 
-
-

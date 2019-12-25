@@ -47,9 +47,9 @@ wwv_flow_api.create_flow(
 ,p_substitution_string_07=>'LDAP_DOMAIN'
 ,p_substitution_value_07=>'DHH-TESTING\'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20191212012057'
+,p_last_upd_yyyymmddhh24miss=>'20191223220510'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
-,p_files_version=>1909
+,p_files_version=>1911
 ,p_ui_type_name => null
 );
 end;

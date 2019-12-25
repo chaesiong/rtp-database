@@ -1,8 +1,5 @@
-
 REM INSERTING into DL_COMMON.TRANS_MODES
 SET DEFINE OFF;
 Insert into DL_COMMON.TRANS_MODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,BORDER_TYPE,INS_AT,INS_BY) values ('AIR','en_US','Air Traffic',null,'Y',to_timestamp('23-NOV-18 10.07.42.934196000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,0,1,'AIR_BORDER',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.TRANS_MODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,BORDER_TYPE,INS_AT,INS_BY) values ('LAND','en_US','Road Traffic',null,'Y',to_timestamp('23-NOV-18 10.07.42.937225000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,2,1,'LAND_BORDER',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.TRANS_MODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,BORDER_TYPE,INS_AT,INS_BY) values ('SEA','en_US','Sea Traffic',null,'Y',to_timestamp('23-NOV-18 10.07.42.937332000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,1,'SEA_BORDER',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
-
-

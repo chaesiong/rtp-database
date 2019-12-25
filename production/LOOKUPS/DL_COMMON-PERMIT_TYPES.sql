@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.PERMIT_TYPES
 SET DEFINE OFF;
 Insert into DL_COMMON.PERMIT_TYPES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('1','en_US','Extend Stay',1,'Y',to_timestamp('23-NOV-18 10.09.48.023346000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,1,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
@@ -6,5 +5,3 @@ Insert into DL_COMMON.PERMIT_TYPES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER
 Insert into DL_COMMON.PERMIT_TYPES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('3','en_US','Endorsement',3,'Y',to_timestamp('23-NOV-18 10.09.48.024058000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,3,1,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.PERMIT_TYPES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('4','en_US','Request Resident',4,'Y',to_timestamp('23-NOV-18 10.09.48.024093000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,4,1,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.PERMIT_TYPES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('5','en_US','Change Visa',5,'Y',to_timestamp('23-NOV-18 10.09.48.024125000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,5,1,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
-
-

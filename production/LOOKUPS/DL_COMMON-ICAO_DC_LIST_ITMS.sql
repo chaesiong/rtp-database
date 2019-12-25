@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.ICAO_DC_LIST_ITMS
 SET DEFINE OFF;
 Insert into DL_COMMON.ICAO_DC_LIST_ITMS (KEY_VALUE,ICAO_DOC_CODE,DML_AT,DML_BY,DML_TYPE,INS_AT,INS_BY,ROW_FLAG_MASK,IS_DEFAULT) values ('VACCINATION_CARD_REQUIRED','VEN',to_timestamp('23-NOV-18 10.07.41.311862000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,'N');
@@ -14,7 +13,3 @@ Insert into DL_COMMON.ICAO_DC_LIST_ITMS (KEY_VALUE,ICAO_DOC_CODE,DML_AT,DML_BY,D
 Insert into DL_COMMON.ICAO_DC_LIST_ITMS (KEY_VALUE,ICAO_DOC_CODE,DML_AT,DML_BY,DML_TYPE,INS_AT,INS_BY,ROW_FLAG_MASK,IS_DEFAULT) values ('VISA_ON_ARRIVAL','AND',to_timestamp('23-NOV-18 10.07.41.318398000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,'N');
 Insert into DL_COMMON.ICAO_DC_LIST_ITMS (KEY_VALUE,ICAO_DOC_CODE,DML_AT,DML_BY,DML_TYPE,INS_AT,INS_BY,ROW_FLAG_MASK,IS_DEFAULT) values ('VISA_FREE','AUS',to_timestamp('23-NOV-18 10.07.41.318472000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,'N');
 Insert into DL_COMMON.ICAO_DC_LIST_ITMS (KEY_VALUE,ICAO_DOC_CODE,DML_AT,DML_BY,DML_TYPE,INS_AT,INS_BY,ROW_FLAG_MASK,IS_DEFAULT) values ('VISA_ON_ARRIVAL','CHN',to_timestamp('23-NOV-18 10.07.41.318534000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,'N');
-
-13 rows selected. 
-
-

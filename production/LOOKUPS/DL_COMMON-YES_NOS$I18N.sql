@@ -1,9 +1,6 @@
-
 REM INSERTING into DL_COMMON.YES_NOS$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.YES_NOS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('N','de_DE','Nein',to_timestamp('23-NOV-18 10.07.39.342747000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.YES_NOS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('N','th_TH','ไม่',to_timestamp('23-NOV-18 10.07.39.343639000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.YES_NOS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('Y','de_DE','Ja',to_timestamp('23-NOV-18 10.07.39.343692000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.YES_NOS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('Y','th_TH','ใช่',to_timestamp('23-NOV-18 10.07.39.343733000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
-
-

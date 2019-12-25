@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.PERMIT_TYPES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.PERMIT_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('1','th_TH','ขออยู่ต่อ',to_timestamp('23-NOV-18 10.09.48.155714000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,0,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
@@ -6,5 +5,3 @@ Insert into DL_COMMON.PERMIT_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,D
 Insert into DL_COMMON.PERMIT_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('3','th_TH','สลักหลังแจ้งออก',to_timestamp('23-NOV-18 10.09.48.156613000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,0,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.PERMIT_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('4','th_TH','ขอมีถิ่นที่อยู่',to_timestamp('23-NOV-18 10.09.48.156651000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,0,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.PERMIT_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,TRANS_MODE,INS_AT,INS_BY) values ('5','th_TH','ขอเปลี่ยนประเภทตรวจลงตรา',to_timestamp('23-NOV-18 10.09.48.156696000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,0,null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
-
-

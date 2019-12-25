@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.OWNERS
 SET DEFINE OFF;
 Insert into DL_COMMON.OWNERS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK) values ('DL_BLACKLIST','en_US','Schema DL_BLACKLIST',null,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.36.287489000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1);
@@ -10,7 +9,3 @@ Insert into DL_COMMON.OWNERS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_AC
 Insert into DL_COMMON.OWNERS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK) values ('APEX_COMMON_DATA','en_US','Common / Master Data application',null,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.36.288443000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1);
 Insert into DL_COMMON.OWNERS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK) values ('DL_BORDERCONTROL','en_US','Schema DL_BORDERCONTROL',null,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.36.288477000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1);
 Insert into DL_COMMON.OWNERS (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK) values ('DL_DBA','en_US','Schema DL_DBA',null,'Y',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.36.288507000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,1);
-
-9 rows selected. 
-
-

@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.TRANS_VEHICLES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.TRANS_VEHICLES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('0003','th_TH','เรือ',to_timestamp('26-NOV-18 05.49.40.719147000 PM','DD-MON-RR HH.MI.SSXFF AM'),'ANUCHART @SQL Developer - DESKTOP-AD3KVV1 (192.168.99.29)','I',null,to_timestamp('26-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'ANUCHART @SQL Developer - DESKTOP-AD3KVV1 (192.168.99.29)',0);
@@ -15,7 +14,3 @@ Insert into DL_COMMON.TRANS_VEHICLES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT
 Insert into DL_COMMON.TRANS_VEHICLES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('OTHERS','th_TH','อื่นๆ',to_timestamp('23-NOV-18 10.09.45.924456000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.TRANS_VEHICLES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('SHIP','th_TH','เรือ',to_timestamp('23-NOV-18 10.09.45.924488000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.TRANS_VEHICLES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('TRAIN','th_TH','รถไฟ',to_timestamp('23-NOV-18 10.09.45.924521000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
-
-14 rows selected. 
-
-

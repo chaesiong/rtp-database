@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_BORDERCONTROL_DATAMART.EVENT_TYPES
 SET DEFINE OFF;
 Insert into DL_BORDERCONTROL_DATAMART.EVENT_TYPES (ID,DESCRIPTION) values ('START_UPDATE_DIMS','Start updating dimensions');
@@ -21,7 +20,3 @@ Insert into DL_BORDERCONTROL_DATAMART.EVENT_TYPES (ID,DESCRIPTION) values ('END_
 Insert into DL_BORDERCONTROL_DATAMART.EVENT_TYPES (ID,DESCRIPTION) values ('START_INIT_CALC_DIMS','Start initialize calculated dimensions');
 Insert into DL_BORDERCONTROL_DATAMART.EVENT_TYPES (ID,DESCRIPTION) values ('START_UPDATE_FACT_TABLE','Start update of fact table');
 Insert into DL_BORDERCONTROL_DATAMART.EVENT_TYPES (ID,DESCRIPTION) values ('START_INIT_DIM_EMPTY_VALUES','Start initialize empty values in dimensions');
-
-20 rows selected. 
-
-

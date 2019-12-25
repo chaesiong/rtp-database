@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.HUMAN_FINGERS$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.HUMAN_FINGERS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('LI','de_DE','Linker Zeigefinger',to_timestamp('23-NOV-18 10.07.39.898922000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
@@ -21,7 +20,3 @@ Insert into DL_COMMON.HUMAN_FINGERS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,
 Insert into DL_COMMON.HUMAN_FINGERS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('RR','th_TH','นิ้วนางขวา',to_timestamp('23-NOV-18 10.07.39.900523000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.HUMAN_FINGERS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('RT','de_DE','Rechter Daumen',to_timestamp('23-NOV-18 10.07.39.900561000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.HUMAN_FINGERS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('RT','th_TH','นิ้วโป้งขวา',to_timestamp('23-NOV-18 10.07.39.900595000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
-
-20 rows selected. 
-
-

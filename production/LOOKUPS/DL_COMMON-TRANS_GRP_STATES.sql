@@ -1,8 +1,5 @@
-
 REM INSERTING into DL_COMMON.TRANS_GRP_STATES
 SET DEFINE OFF;
 Insert into DL_COMMON.TRANS_GRP_STATES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,INS_AT,INS_BY) values ('CLOSED','en_US','Closed',null,'Y',to_timestamp('23-NOV-18 10.09.44.425939000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,2,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.TRANS_GRP_STATES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,INS_AT,INS_BY) values ('CREATED','en_US','Created',null,'Y',to_timestamp('23-NOV-18 10.09.44.426565000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,0,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.TRANS_GRP_STATES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,NUM_VALUE,ROW_FLAG_MASK,INS_AT,INS_BY) values ('OPEN','en_US','Open',null,'Y',to_timestamp('23-NOV-18 10.09.44.426614000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
-
-

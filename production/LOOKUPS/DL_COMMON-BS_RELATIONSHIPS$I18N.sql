@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.BS_RELATIONSHIPS$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.BS_RELATIONSHIPS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('6','th_TH','ผู้ติดตาม',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.975773000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,null);
@@ -16,7 +15,3 @@ Insert into DL_COMMON.BS_RELATIONSHIPS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_
 Insert into DL_COMMON.BS_RELATIONSHIPS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('1','th_TH','บิดา-มารดา',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.977225000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,null);
 Insert into DL_COMMON.BS_RELATIONSHIPS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('14','th_TH','หลานสาว',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.977254000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,null);
 Insert into DL_COMMON.BS_RELATIONSHIPS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('12','th_TH','ลูกสาว',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.50.977285000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,null);
-
-15 rows selected. 
-
-

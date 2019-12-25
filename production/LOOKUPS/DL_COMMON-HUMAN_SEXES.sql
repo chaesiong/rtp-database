@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.HUMAN_SEXES
 SET DEFINE OFF;
 Insert into DL_COMMON.HUMAN_SEXES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ISO5218,ICAO,NUM_VALUE,ROW_FLAG_MASK,INS_AT,INS_BY) values ('FEMALE','en_US','Female',2,'Y',to_timestamp('23-NOV-18 10.07.38.873991000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,2,'F',2,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
@@ -8,7 +7,3 @@ Insert into DL_COMMON.HUMAN_SEXES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,
 Insert into DL_COMMON.HUMAN_SEXES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ISO5218,ICAO,NUM_VALUE,ROW_FLAG_MASK,INS_AT,INS_BY) values ('OTHER','en_US','Other',null,'Y',to_timestamp('23-NOV-18 10.07.38.875120000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,null,null,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.HUMAN_SEXES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ISO5218,ICAO,NUM_VALUE,ROW_FLAG_MASK,INS_AT,INS_BY) values ('TRANSSEXUAL','en_US','Transsexual',null,'Y',to_timestamp('23-NOV-18 10.07.38.875157000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null,null,null,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.HUMAN_SEXES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ISO5218,ICAO,NUM_VALUE,ROW_FLAG_MASK,INS_AT,INS_BY) values ('UNKNOWN','en_US','Not Known',3,'Y',to_timestamp('23-NOV-18 10.07.38.875195000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,0,'X',0,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
-
-7 rows selected. 
-
-

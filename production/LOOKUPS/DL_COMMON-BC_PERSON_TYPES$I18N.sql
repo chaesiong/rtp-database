@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.BC_PERSON_TYPES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.BC_PERSON_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('CREW','de_DE','Crew',to_timestamp('23-NOV-18 10.09.45.118406000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
@@ -7,7 +6,3 @@ Insert into DL_COMMON.BC_PERSON_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_A
 Insert into DL_COMMON.BC_PERSON_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('PASSENGER','de_DE','Passagier',to_timestamp('23-NOV-18 10.09.45.119361000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.BC_PERSON_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('PASSENGER_ON_VEHICLE_BY_FERRY','de_DE','Passagier im Fahrzeug auf der Fähre',to_timestamp('23-NOV-18 10.09.45.119391000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.BC_PERSON_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('WALKER','de_DE','Fußgänger',to_timestamp('23-NOV-18 10.09.45.119425000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
-
-6 rows selected. 
-
-

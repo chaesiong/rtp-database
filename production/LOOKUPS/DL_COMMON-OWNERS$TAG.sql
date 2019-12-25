@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.OWNERS$TAG
 SET DEFINE OFF;
 Insert into DL_COMMON.OWNERS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('DL_COMMON','DL_COMMON','Tag 0','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.37.824196000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1);
@@ -13,7 +12,3 @@ Insert into DL_COMMON.OWNERS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_A
 Insert into DL_COMMON.OWNERS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('APEX_VOA','DL_BORDERCONTROL','Tag 10','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.37.826937000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1);
 Insert into DL_COMMON.OWNERS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('APEX_VOA','DL_COMMON','Tag 0','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.37.826998000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1);
 Insert into DL_COMMON.OWNERS$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('APEX_VOA','DL_COMMON','Tag 2','It is an example',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.07.37.827052000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1);
-
-12 rows selected. 
-
-

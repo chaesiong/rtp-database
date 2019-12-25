@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.BORDER_TYPES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.BORDER_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('AIR_BORDER','th_TH','ด่านอากาศ',to_timestamp('11-JUL-19 08.26.51.385167000 PM','DD-MON-RR HH.MI.SSXFF AM'),'UM_ADMIN @Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 - 192.168.99.25 (0:0:0:0:0:0:0:1)','I',null,to_timestamp('11-JUL-19','DD-MON-RR HH.MI.SSXFF AM'),'UM_ADMIN @Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 - 192.168.99.25 (0:0:0:0:0:0:0:1)',0);
@@ -7,7 +6,3 @@ Insert into DL_COMMON.BORDER_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,D
 Insert into DL_COMMON.BORDER_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('LAND_BORDER','de_DE','Land',to_timestamp('23-NOV-18 10.07.42.217855000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.BORDER_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('SEA_BORDER','de_DE','Hafen',to_timestamp('23-NOV-18 10.07.42.217992000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0);
 Insert into DL_COMMON.BORDER_TYPES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK) values ('SEA_BORDER','th_TH','ด่านน้ำ',to_timestamp('11-JUL-19 08.27.32.654942000 PM','DD-MON-RR HH.MI.SSXFF AM'),'UM_ADMIN @Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 - 192.168.99.25 (127.0.0.1)','I',null,to_timestamp('11-JUL-19','DD-MON-RR HH.MI.SSXFF AM'),'UM_ADMIN @Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36 - 192.168.99.25 (127.0.0.1)',0);
-
-6 rows selected. 
-
-

@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_USER_MANAGEMENT.GRANTS
 SET DEFINE OFF;
 Insert into DL_USER_MANAGEMENT.GRANTS (ID,NAME,DESCRIPTION,SORT_ORDER,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,TAG) values ('EDT','Edit','Edit',2,'en_US',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.12.20.348606000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',33,null);
@@ -24,7 +23,3 @@ Insert into DL_USER_MANAGEMENT.GRANTS (ID,NAME,DESCRIPTION,SORT_ORDER,LOCALE,INS
 Insert into DL_USER_MANAGEMENT.GRANTS (ID,NAME,DESCRIPTION,SORT_ORDER,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,TAG) values ('SWI','Save with Incident','Save with Incident',150,'en_US',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.14.36.337451000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0,null);
 Insert into DL_USER_MANAGEMENT.GRANTS (ID,NAME,DESCRIPTION,SORT_ORDER,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,TAG) values ('SWOI','Save without Incident','Save without Incident',160,'en_US',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.14.36.337620000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0,null);
 Insert into DL_USER_MANAGEMENT.GRANTS (ID,NAME,DESCRIPTION,SORT_ORDER,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,TAG) values ('TOOLS','Tools','Tools',90,'en_US',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.14.36.337790000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0,null);
-
-23 rows selected. 
-
-

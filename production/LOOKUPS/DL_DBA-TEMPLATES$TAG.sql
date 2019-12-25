@@ -1,5 +1,2 @@
-
 REM INSERTING into DL_DBA.TEMPLATES$TAG
 SET DEFINE OFF;
-no rows selected
-

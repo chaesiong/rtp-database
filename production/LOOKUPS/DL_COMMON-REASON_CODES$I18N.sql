@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.REASON_CODES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.REASON_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('37','th_TH','วิ่งราวทรัพย์',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('27-FEB-19 05.02.45.810422000 PM','DD-MON-RR HH.MI.SSXFF AM'),'Ken @SQL Developer - DESKTOP-HJ8HBAB (192.168.99.38)','U','0037',1,null);
@@ -105,7 +104,3 @@ Insert into DL_COMMON.REASON_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,I
 Insert into DL_COMMON.REASON_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('72','th_TH','แสดง มอก. โดยไม่ได้รับอนุญาต',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('27-FEB-19 05.02.45.854681000 PM','DD-MON-RR HH.MI.SSXFF AM'),'Ken @SQL Developer - DESKTOP-HJ8HBAB (192.168.99.38)','U','0072',1,null);
 Insert into DL_COMMON.REASON_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('67','th_TH','ประมาททำให้ผู้อื่นได้รับบาดเจ็บ',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('27-FEB-19 05.02.45.854782000 PM','DD-MON-RR HH.MI.SSXFF AM'),'Ken @SQL Developer - DESKTOP-HJ8HBAB (192.168.99.38)','U','0067',1,null);
 Insert into DL_COMMON.REASON_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('77','th_TH','ลักลอบค้ามนุษย์',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('27-FEB-19 05.02.45.854899000 PM','DD-MON-RR HH.MI.SSXFF AM'),'Ken @SQL Developer - DESKTOP-HJ8HBAB (192.168.99.38)','U','0077',1,null);
-
-104 rows selected. 
-
-

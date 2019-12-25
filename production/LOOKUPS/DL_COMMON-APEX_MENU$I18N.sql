@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.APEX_MENU$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.APEX_MENU$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values (7,'th_TH','ประวัติการเดินทาง',to_timestamp('20-AUG-19 02.50.24.504038000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)','I',null,to_timestamp('20-AUG-19','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)',1,'DL_BORDERCONTROL');
@@ -15,7 +14,3 @@ Insert into DL_COMMON.APEX_MENU$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_
 Insert into DL_COMMON.APEX_MENU$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values (54,'th_TH','ผู้ดูแลระบบ',to_timestamp('20-AUG-19 03.04.49.956088000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)','I',null,to_timestamp('20-AUG-19','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)',1,'DL_BORDERCONTROL');
 Insert into DL_COMMON.APEX_MENU$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values (24,'th_TH','พารามิเตอร์ระบบ',to_timestamp('20-AUG-19 03.04.49.965813000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)','I',null,to_timestamp('20-AUG-19','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)',1,'DL_BORDERCONTROL');
 Insert into DL_COMMON.APEX_MENU$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values (96,'th_TH','จำนวน License คงเหลือ',to_timestamp('20-AUG-19 03.05.50.259996000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)','I',null,to_timestamp('20-AUG-19','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.12)',1,'DL_BORDERCONTROL');
-
-14 rows selected. 
-
-

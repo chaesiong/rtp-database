@@ -1,5 +1,2 @@
-
 REM INSERTING into DL_COMMON.AIRPORTS$I18N
 SET DEFINE OFF;
-no rows selected
-

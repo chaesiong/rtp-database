@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.ACTION_CODES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.ACTION_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('5','th_TH','หยุด - ติดต่อเจ้าของเรื่อง',to_timestamp('10-JUN-19','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.18)',to_timestamp('10-JUN-19 09.20.53.784260000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.18)','I',null,1,null);
@@ -18,7 +17,3 @@ Insert into DL_COMMON.ACTION_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,I
 Insert into DL_COMMON.ACTION_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('3','th_TH','ไม่พึงปรารถนา',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('10-JUN-19 09.19.29.970080000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.18)','U',null,1,null);
 Insert into DL_COMMON.ACTION_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('4','th_TH','หยุดตรวจค้น',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('10-JUN-19 09.19.30.009823000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.18)','U',null,1,null);
 Insert into DL_COMMON.ACTION_CODES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('1','th_TH','ตรวจสอบ',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('10-JUN-19 09.19.29.719866000 AM','DD-MON-RR HH.MI.SSXFF AM'),'chunl @DBeaver 6.0.0 - Main - Ohm-Dell (192.168.99.18)','U',null,1,null);
-
-17 rows selected. 
-
-

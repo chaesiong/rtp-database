@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.STATUSES$TAG
 SET DEFINE OFF;
 Insert into DL_COMMON.STATUSES$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('CANCEL','APEX_FEE_AND_FINE','APEX_FEE_AND_FINE_STATUS_LOV',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.47.880127000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
@@ -16,7 +15,3 @@ Insert into DL_COMMON.STATUSES$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML
 Insert into DL_COMMON.STATUSES$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('DONT_PAY','APEX_VOA','VOA_PAYMENT_STATUS',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.47.881308000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
 Insert into DL_COMMON.STATUSES$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('NOT_YET_PAID','APEX_VOA','VOA_PAYMENT_STATUS',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.47.881333000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
 Insert into DL_COMMON.STATUSES$TAG (KEY_VALUE,OWNER,TAG,NOTICE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK) values ('NOT_APPROVED','APEX_REENTRY','REENTRY_TM8STATUS',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.47.881356000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',0);
-
-15 rows selected. 
-
-

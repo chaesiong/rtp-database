@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.MESSAGES
 SET DEFINE OFF;
 Insert into DL_COMMON.MESSAGES (MESSAGE_KEY,KEY_DELIMITER,LOCALE,MESSAGE_VALUE,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER,INS_AT,INS_BY) values ('FEENFINE\LOGIN\ModuleDescription','\','en_US','Biometric Border Control System Home','Y',to_timestamp('23-NOV-18 10.14.35.122388000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,'DL_BORDERCONTROL',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
@@ -106,7 +105,3 @@ Insert into DL_COMMON.MESSAGES (MESSAGE_KEY,KEY_DELIMITER,LOCALE,MESSAGE_VALUE,I
 Insert into DL_COMMON.MESSAGES (MESSAGE_KEY,KEY_DELIMITER,LOCALE,MESSAGE_VALUE,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER,INS_AT,INS_BY) values ('BMBS\LOGIN\ModuleDescription','\','en_US','ระบบงานสำหรับจัดเก็บและตรวจสอบข้อมูล Biometrics ของบุคคลเดินทางเข้า-ออกประเทศไทย','Y',to_timestamp('23-NOV-18 10.14.35.122178000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,'DL_BORDERCONTROL',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.MESSAGES (MESSAGE_KEY,KEY_DELIMITER,LOCALE,MESSAGE_VALUE,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER,INS_AT,INS_BY) values ('DASH\LOGIN\ModuleDescription','\','en_US','ระบบจัดเก็บข้อมูล Biometrics ของสำนักงานตรวจคนเข้าเมือง','Y',to_timestamp('23-NOV-18 10.14.35.122250000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,'DL_BORDERCONTROL',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
 Insert into DL_COMMON.MESSAGES (MESSAGE_KEY,KEY_DELIMITER,LOCALE,MESSAGE_VALUE,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER,INS_AT,INS_BY) values ('EXTSTAY\LOGIN\ModuleDescription','\','en_US','Biometric Border Control System Extend Stay','Y',to_timestamp('23-NOV-18 10.14.35.122318000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,'DL_BORDERCONTROL',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001');
-
-105 rows selected. 
-
-

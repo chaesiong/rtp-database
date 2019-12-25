@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.LANGUAGES$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.LANGUAGES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values ('tha','de_DE','Thailändisch',to_timestamp('23-NOV-18 10.07.37.973342000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,null);
@@ -6,5 +5,3 @@ Insert into DL_COMMON.LANGUAGES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_
 Insert into DL_COMMON.LANGUAGES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values ('deu','de_DE','Deutsch',to_timestamp('23-NOV-18 10.07.37.974136000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,null);
 Insert into DL_COMMON.LANGUAGES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values ('eng','de_DE','Englisch',to_timestamp('23-NOV-18 10.07.37.974309000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,null);
 Insert into DL_COMMON.LANGUAGES$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,DML_AT,DML_BY,DML_TYPE,NOTICE,INS_AT,INS_BY,ROW_FLAG_MASK,OWNER) values ('fra','de_DE','Französich',to_timestamp('23-NOV-18 10.07.37.974375000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',0,null);
-
-

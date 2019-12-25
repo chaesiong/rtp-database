@@ -134,7 +134,7 @@ select borderdocuments.brddocid
      , decode(borderdocuments.sex, 1, ''M'', 2, ''F'', ''U'') sex
      , countries$lc.iso3166_a3 nationality
      , borderdocuments.issuectry nationality_icao
-     , pkg_common.parse_date(borderdocuments.dob, 1, 0, 0, 1) birthdate
+     , case when dob_partial is null or borderdocuments.dob_partial.isnull() != 0 then null else borderdocuments.dob_partial.getformatdata(''YYYY-MM-DD'') end birthdate -- pkg_common.parse_date(borderdocuments.dob, 1, 0, 0, 1) birthdate
      , afisid abisid
      , movements.exitflg is_departure
      , movements.scanned_flight transport
@@ -206,7 +206,7 @@ select borderdocuments.brddocid
      , decode(borderdocuments.sex, 1, ''M'', 2, ''F'', ''U'') sex
      , countries$lc.iso3166_a3 nationality
      , borderdocuments.issuectry nationality_icao
-     , to_char(pkg_common.parse_date(borderdocuments.dob, 1, 0, 0, 1), ''YYYY-MM-DD'') || ''T00:00:00Z'' birthdate
+     , case when dob_partial is null or borderdocuments.dob_partial.isnull() != 0 then null else borderdocuments.dob_partial.getformatdata(''YYYY-MM-DD'') end birthdate -- to_char(pkg_common.parse_date(borderdocuments.dob, 1, 0, 0, 1), ''YYYY-MM-DD'') || ''T00:00:00Z'' birthdate
 --     , borderdocuments.dob birthdate
      , afisid abisid
      , movements.exitflg is_departure
@@ -396,17 +396,6 @@ end;');
       p_module_name        => 'TravelService',
       p_pattern            => 'identity/search',
       p_method             => 'POST',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
-      p_access_method      => 'OUT',
-      p_comments           => NULL);
-
-  ORDS.DEFINE_PARAMETER(
-      p_module_name        => 'TravelService',
-      p_pattern            => 'identity/search',
-      p_method             => 'POST',
       p_name               => 'items',
       p_bind_variable_name => 'result',
       p_source_type        => 'RESPONSE',
@@ -422,6 +411,17 @@ end;');
       p_bind_variable_name => 'msg',
       p_source_type        => 'RESPONSE',
       p_param_type         => 'STRING',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'TravelService',
+      p_pattern            => 'identity/search',
+      p_method             => 'POST',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
@@ -469,6 +469,7 @@ end;');
     l_age_from          number;
     l_age_until         number;
     l_abis_id           number;
+    l_limit_record      number;
     --
     l_response_message  varchar2(4000);
     l_cursor    sys_refcursor;
@@ -507,6 +508,11 @@ begin
         l_age_from          := apex_json.get_number(p_values => l_values, p_path => ''KIAgeFrom'');
         l_age_until         := apex_json.get_number(p_values => l_values, p_path => ''KIAgeTo'');
         l_abis_id           := apex_json.get_number(p_values => l_values, p_path => ''ABISid'');
+        l_limit_record      := apex_json.get_number(p_values => l_values, p_path => ''LimitRecord'');
+
+        if l_limit_record is null
+        then l_limit_record := 999999999999;
+        end if;
 
     -- Check all mandatory fields; if not filled exit with code 400 and msg
 --    if l_nationality    is null or
@@ -590,7 +596,9 @@ begin
                                           and (l_flight_no        is null or (movements.scanned_flight = l_flight_no))
                                           and (l_borderpost       is null or (borderposts.name  = l_borderpost))
                                         order by movements.date_of_entry desc
-                                        fetch first 1 rows only);
+                                        fetch first 1 rows only)
+            order by movements.movement_dt
+            fetch first l_limit_record rows only;
 
         -- exception handling; no data found and others
         exception
@@ -617,17 +625,6 @@ end;');
       p_module_name        => 'TravelService',
       p_pattern            => 'movementhistory/search',
       p_method             => 'POST',
-      p_name               => 'X-APEX-STATUS-CODE',
-      p_bind_variable_name => 'status',
-      p_source_type        => 'HEADER',
-      p_param_type         => 'INT',
-      p_access_method      => 'OUT',
-      p_comments           => NULL);
-
-  ORDS.DEFINE_PARAMETER(
-      p_module_name        => 'TravelService',
-      p_pattern            => 'movementhistory/search',
-      p_method             => 'POST',
       p_name               => 'items',
       p_bind_variable_name => 'result',
       p_source_type        => 'RESPONSE',
@@ -646,6 +643,17 @@ end;');
       p_access_method      => 'OUT',
       p_comments           => NULL);
 
+  ORDS.DEFINE_PARAMETER(
+      p_module_name        => 'TravelService',
+      p_pattern            => 'movementhistory/search',
+      p_method             => 'POST',
+      p_name               => 'X-APEX-STATUS-CODE',
+      p_bind_variable_name => 'status',
+      p_source_type        => 'HEADER',
+      p_param_type         => 'INT',
+      p_access_method      => 'OUT',
+      p_comments           => NULL);
+
 
 
 COMMIT;
@@ -655,4 +663,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.15
+Elapsed: 00:00:00.06

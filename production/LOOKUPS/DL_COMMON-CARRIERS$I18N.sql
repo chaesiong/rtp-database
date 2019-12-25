@@ -1,5 +1,2 @@
-
 REM INSERTING into DL_COMMON.CARRIERS$I18N
 SET DEFINE OFF;
-no rows selected
-

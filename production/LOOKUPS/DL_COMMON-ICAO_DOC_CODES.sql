@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.ICAO_DOC_CODES
 SET DEFINE OFF;
 Insert into DL_COMMON.ICAO_DOC_CODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,NOTICE,NUM_VALUE,OFFICIAL_LANGUAGE,ROW_FLAG_MASK,INS_AT,INS_BY,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE) values ('KHM','en_US','Cambodia',null,null,null,null,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','Y',to_timestamp('23-NOV-18 10.07.40.619711000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I');
@@ -288,7 +287,3 @@ Insert into DL_COMMON.ICAO_DOC_CODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORD
 Insert into DL_COMMON.ICAO_DOC_CODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,NOTICE,NUM_VALUE,OFFICIAL_LANGUAGE,ROW_FLAG_MASK,INS_AT,INS_BY,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE) values ('ZWE','en_US','Zimbabwe',null,null,null,null,1,to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','Y',to_timestamp('23-NOV-18 10.07.40.630676000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I');
 Insert into DL_COMMON.ICAO_DOC_CODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,NOTICE,NUM_VALUE,OFFICIAL_LANGUAGE,ROW_FLAG_MASK,INS_AT,INS_BY,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE) values ('RKS','en_US','Kosovo',null,null,null,null,1,to_timestamp('29-JAN-19','DD-MON-RR HH.MI.SSXFF AM'),'pkevin @SQL Developer - w-pkevin (192.168.99.18)','Y',to_timestamp('29-JAN-19 11.00.44.093769000 AM','DD-MON-RR HH.MI.SSXFF AM'),'pkevin @SQL Developer - w-pkevin (192.168.99.18)','I');
 Insert into DL_COMMON.ICAO_DOC_CODES (KEY_VALUE,LOCALE,DISPLAY_VALUE,DISPLAY_ORDER,NOTICE,NUM_VALUE,OFFICIAL_LANGUAGE,ROW_FLAG_MASK,INS_AT,INS_BY,IS_ACTIVE,DML_AT,DML_BY,DML_TYPE) values ('LIE','en_US','Liechtenstein',null,null,null,null,1,to_timestamp('27-JAN-19','DD-MON-RR HH.MI.SSXFF AM'),'pkevin @SQL Developer - w-pkevin (192.168.99.14)','Y',to_timestamp('27-JAN-19 11.03.32.871585000 PM','DD-MON-RR HH.MI.SSXFF AM'),'pkevin @SQL Developer - w-pkevin (192.168.99.14)','I');
-
-287 rows selected. 
-
-

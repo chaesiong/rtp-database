@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.ICAO_DOC_CODE$VISA_TYPE
 SET DEFINE OFF;
 Insert into DL_COMMON.ICAO_DOC_CODE$VISA_TYPE (ICAO_DOC_CODE,VISA_TYPE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,OWNER,IS_DEFAULT) values ('N02','0008',to_timestamp('04-JUL-19','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('04-JUL-19 12.51.53.312549000 AM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1,null,'Y');
@@ -280,7 +279,3 @@ Insert into DL_COMMON.ICAO_DOC_CODE$VISA_TYPE (ICAO_DOC_CODE,VISA_TYPE,INS_AT,IN
 Insert into DL_COMMON.ICAO_DOC_CODE$VISA_TYPE (ICAO_DOC_CODE,VISA_TYPE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,OWNER,IS_DEFAULT) values ('KEN','0008',to_timestamp('04-JUL-19','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('04-JUL-19 12.51.53.338592000 AM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1,null,'Y');
 Insert into DL_COMMON.ICAO_DOC_CODE$VISA_TYPE (ICAO_DOC_CODE,VISA_TYPE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,OWNER,IS_DEFAULT) values ('MLI','0008',to_timestamp('04-JUL-19','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('04-JUL-19 12.51.53.338683000 AM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1,null,'Y');
 Insert into DL_COMMON.ICAO_DOC_CODE$VISA_TYPE (ICAO_DOC_CODE,VISA_TYPE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,ROW_FLAG_MASK,OWNER,IS_DEFAULT) values ('NCL','0008',to_timestamp('04-JUL-19','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('04-JUL-19 12.51.53.338783000 AM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',1,null,'Y');
-
-279 rows selected. 
-
-

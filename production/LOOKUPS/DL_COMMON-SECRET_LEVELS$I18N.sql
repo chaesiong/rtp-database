@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_COMMON.SECRET_LEVELS$I18N
 SET DEFINE OFF;
 Insert into DL_COMMON.SECRET_LEVELS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('03','th_TH','ระดับ 3',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.48.839234000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,null);
@@ -6,5 +5,3 @@ Insert into DL_COMMON.SECRET_LEVELS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,
 Insert into DL_COMMON.SECRET_LEVELS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('04','th_TH','ระดับ 4',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.48.840548000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,null);
 Insert into DL_COMMON.SECRET_LEVELS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('02','th_TH','ระดับ 2',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.09.48.840585000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,1,null);
 Insert into DL_COMMON.SECRET_LEVELS$I18N (KEY_VALUE,LOCALE,DISPLAY_VALUE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,NOTICE,ROW_FLAG_MASK,OWNER) values ('00','th_TH','ระดับ 0',to_timestamp('10-DEC-18','DD-MON-RR HH.MI.SSXFF AM'),'pkevin @SQL Developer - w-pkevin (192.168.99.13)',to_timestamp('10-DEC-18 07.42.55.355551000 PM','DD-MON-RR HH.MI.SSXFF AM'),'pkevin @SQL Developer - w-pkevin (192.168.99.13)','I',null,1,null);
-
-

@@ -1,4 +1,3 @@
-
 REM INSERTING into DL_USER_MANAGEMENT.LOOKUPS$I18N
 SET DEFINE OFF;
 Insert into DL_USER_MANAGEMENT.LOOKUPS$I18N (KEY_CATEGORY,KEY_VALUE,DISPLAY_VALUE,NOTICE,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,DISPLAY_VALUE_SHORT,DISPLAY_VALUE_ALTERNATIVE) values ('user_source','2','UM',null,'de_DE',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.12.18.998245000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null);
@@ -13,7 +12,3 @@ Insert into DL_USER_MANAGEMENT.LOOKUPS$I18N (KEY_CATEGORY,KEY_VALUE,DISPLAY_VALU
 Insert into DL_USER_MANAGEMENT.LOOKUPS$I18N (KEY_CATEGORY,KEY_VALUE,DISPLAY_VALUE,NOTICE,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,DISPLAY_VALUE_SHORT,DISPLAY_VALUE_ALTERNATIVE) values ('user_operation','2','Abmelden',null,'de_DE',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.12.18.999246000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I',null,null);
 Insert into DL_USER_MANAGEMENT.LOOKUPS$I18N (KEY_CATEGORY,KEY_VALUE,DISPLAY_VALUE,NOTICE,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,DISPLAY_VALUE_SHORT,DISPLAY_VALUE_ALTERNATIVE) values ('user_state','0','Registriert',null,'de_DE',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.12.18.999274000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I','REG',null);
 Insert into DL_USER_MANAGEMENT.LOOKUPS$I18N (KEY_CATEGORY,KEY_VALUE,DISPLAY_VALUE,NOTICE,LOCALE,INS_AT,INS_BY,DML_AT,DML_BY,DML_TYPE,DISPLAY_VALUE_SHORT,DISPLAY_VALUE_ALTERNATIVE) values ('user_state','-1','Inaktiv',null,'de_DE',to_timestamp('23-NOV-18','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001',to_timestamp('23-NOV-18 10.12.18.999324000 PM','DD-MON-RR HH.MI.SSXFF AM'),'oracle @sqlplus@tibpbio-db001 (TNS V1-V3) - tibpbio-db001','I','ACT',null);
-
-12 rows selected. 
-
-
