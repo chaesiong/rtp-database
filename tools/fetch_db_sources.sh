@@ -683,8 +683,8 @@ function exportObjects {
     <!-- <property name="URL" value="jdbc:oracle:thin:@10.120.40.146:1521:afis"/>  -->
     <property name="URL" value="jdbc:oracle:thin:@$HOST_PORT_SERVICE" />
     <!-- You can choose a DBA user. For example: value="sys as sysdba" -->
-    <property name="user" value="system" />
-    <property name="password" value="$SYSTEMPASS" />
+    <property name="user" value="DL_MAINTENANCE" />
+    <property name="password" value="DL_MAINTENANCE" />
     <property name="connectionCachingEnabled" value="true" />
 </bean>
 <bean id="writer" class="com.googlecode.scheme2ddl.UserObjectWriter">
