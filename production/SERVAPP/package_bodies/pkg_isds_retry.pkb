@@ -64,6 +64,9 @@ LOOP
               v_sender_object_post := 'DeporteeToPibics';
               end if;
               
+                if p_sender ='VOA' then
+              v_sender_object_post := 'VoaToPibics';
+              end if;
               v_url2 := v_url||'/'||v_sender_object_post;
               
               if p_sender ='TM2' then

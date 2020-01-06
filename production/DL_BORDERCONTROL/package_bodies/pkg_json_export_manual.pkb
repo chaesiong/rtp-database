@@ -19,7 +19,7 @@ function get_movements_jira(p_id in varchar2) return clob
                     mv.oridest,
                     mv.ins_at,
                     --translate(mv.ins_by, chr(13), ''),
-                    'samrerng.b',
+                    'dumrongsak.m',
                     mv.dml_at,
                     translate(mv.dml_by, chr(13), ''),
                     mv.dml_type,

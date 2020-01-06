@@ -196,6 +196,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
     v_tfamilyname varchar2(500);
   v_tgivenname varchar2(500);
   v_tmiddlename varchar2(500);
+   v_ipclient varchar2(100);
   BEGIN
   v_success :='False';
 --//////////////////////////////////////Get Data//////////////////////////////////////////
@@ -204,8 +205,9 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
            ,nvl(b.TFIRSTNM,a.Tfirstnm) as firstnameth
 		   ,nvl(b.TFAMILYNM,a.Tfamilynm) as surnameth
 		   ,nvl(b.TMIDDLENM,a.Tmiddlenm) as middlenameth
+           ,IpClient
     into v_familyname,v_givenname,v_middlename,v_nationality,v_birthdate,v_gender,v_docnumber,v_visa_expire_date,v_passport_no,v_passport_expire_date,v_port
-        ,i_card_type,v_visatype_code,v_flight_no,v_tgivenname,v_tmiddlename,v_tfamilyname
+        ,i_card_type,v_visatype_code,v_flight_no,v_tgivenname,v_tmiddlename,v_tfamilyname,v_ipclient
     FROM json_table(p_request  FORMAT JSON, '$'
          COLUMNS (
 			SUser      VARCHAR2  	PATH '$.User',
@@ -230,7 +232,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
             Tfirstnm   	VARCHAR2  	PATH '$.RescertDto.Tfirstnm',
             Tmiddlenm   	VARCHAR2  	PATH '$.RescertDto.Tmiddlenm',
             Tfamilynm   	VARCHAR2  	PATH '$.RescertDto.Tfamilynm',
-             FlightNo   	VARCHAR2  	PATH '$.FlightNo'
+             FlightNo   	VARCHAR2  	PATH '$.FlightNo',
+             IpClient   	VARCHAR2  	PATH '$.ipClient'
         )) a
           left join PIBICSDM2.thaipassport b on a.Tdtno =b.PASSPORTNO;
 
@@ -241,8 +244,8 @@ v_passport_no := upper(v_passport_no);
 v_docnumber := upper(v_docnumber);
 if v_gender ='M' then i_sex :=1; end if;
 if v_gender ='F' then i_sex :=2; end if;
---///////////////////////////////////////Get Dept Keyvalue/////////////////////////////////////////////
-select b.KEY_VALUE
+--///////////////////////////////////////Get Boderpost Terminal/////////////////////////////////////////////
+/*select b.KEY_VALUE
 into v_dept_keyvalue
 from PIBICSDM2.DEPARTMENT a
 inner join DL_STAGING4PIBICS_INTF.trcd_borderpost b on a.dept_seqno =seqno
@@ -251,7 +254,19 @@ where a.DEPTCD = LPAD(v_port,5,'00');
 select max(id)
 into v_terminal
 from dl_bordercontrol.TERMINALS a
-where a.BORDER_POST =v_dept_keyvalue and a.active =1;
+where a.BORDER_POST =v_dept_keyvalue and a.active =1;*/
+BEGIN
+  SELECT ID AS TERMINAL, BORDER_POST
+  into v_terminal,v_dept_keyvalue
+   FROM dl_bordercontrol.TERMINALS
+   WHERE ACTIVE =1
+   AND IPADDRESS =  v_ipclient;
+EXCEPTION 
+when NO_DATA_FOUND  then 
+ raise_application_error(-20001,'BorderPosr or Terminal not found'); 
+WHEN OTHERS THEN 
+raise_application_error(-20001,SQLERRM); 
+end;
 --///////////////////////////////////////Get COUNTCD///////////////////////////////////////////////////
 SELECT COU.COUNTCD,COU.COUNT_SEQNO   ,COU.ABBCOUNT
 into v_countcd,i_count_seqno, v_nat
@@ -411,7 +426,7 @@ v_sql := v_sql ||' where a.DOCNO ='''||v_docnumber||''' ';
 /*if v_middlename is not null then
 v_sql := v_sql ||' and a.MIDDLENAME ='''||v_middlename||'''';
 end if;*/
-v_sql := v_sql ||' and a.NAT ='''||v_nat||''' ';
+v_sql := v_sql ||' and a.ISSUECTRY ='''||v_nat||''' ';
 --v_sql := v_sql ||' and a.CALC_DOB =to_date('''||v_birthdate||''',''yyyymmdd'') ';
 --v_sql := v_sql ||' and a.sex ='||i_sex||' ';
 v_sql := v_sql ||' and a.expirydate =to_date('''||v_passport_expire_date||''',''yyyymmdd'') ';
@@ -423,7 +438,7 @@ open c_cursor for v_sql;
  END LOOP; 
  close c_cursor;
 --///////////////////////////////////////Get Last Movement////////////////////////////////////////////////////////
-select case when b.exitflg = 0 then 'Y' else 'N' end as c_flag,
+/*select case when b.exitflg = 0 then 'Y' else 'N' end as c_flag,
       nvl(b.exitflg,1) as i_flag
 into v_foundImm,i_checklastmovement
 from dual a
@@ -436,6 +451,37 @@ from MOVEMENTS a
 where a.BRDDOCID =v_brddocid
 ) a 
 where a.rn =1) b on 1=1;
+*/
+
+-- Miti Edit 23 Dec 2019 17:00 
+v_foundImm := 'N';
+i_checklastmovement := 1;
+BEGIN
+  SELECT C_FLAG, nvl(exitflg,1) as I_FLAG
+into v_foundImm,i_checklastmovement
+FROM (
+       SELECT  DOCNO, EXITFLG, case when EXITFLG = 0 then 'Y' else 'N' end AS C_FLAG, DML_AT
+       , ROW_NUMBER() OVER (PARTITION BY 1 ORDER BY DML_AT DESC) AS RNO
+       FROM (
+             SELECT TDTNO AS DOCNO
+            , case when CARDTYPE = '1' then 0 else 1 end AS EXITFLG
+            , INOUTDTE AS DML_AT
+            , 'PIB' AS SYSNAME
+            FROM PIBICSDM2.TMINOUT 
+            WHERE TDTNO = v_docnumber
+            and nationcd =v_countcd
+            UNION
+            SELECT BRD.DOCNO , MOV.EXITFLG, MOV.DML_AT AS DML_AT
+            , 'BIO' AS SYSNAME
+            FROM DL_BORDERCONTROL.MOVEMENTS MOV
+            LEFT JOIN DL_BORDERCONTROL.BORDERDOCUMENTS BRD ON BRD.BRDDOCID = MOV.BRDDOCID
+            WHERE  BRD.BRDDOCID =v_brddocid
+           )  
+     ) TT WHERE RNO = 1;
+EXCEPTION WHEN OTHERS THEN 
+null;
+end;
+
 
 --///////////////////////////////////////////////////////////////////////////////////////////////////////////
 if v_foundbwl  <> 'Y' and v_found_overstay <> 'Y' and v_found_visa_run <> 'Y' and i_checklastmovement <>(i_card_type-1) and 1=2 then
@@ -1350,6 +1396,7 @@ l_values         APEX_JSON.T_VALUES;
     l_lngctx         INTEGER := 0;
     l_warning        INTEGER;
     v_dept_keyvalue varchar2(100);
+       v_ipclient varchar2(100);
   BEGIN
   l_source_blob :=p_request;
 
@@ -1396,9 +1443,22 @@ l_values         APEX_JSON.T_VALUES;
     l_photo_scan                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => 'photoScan'));
     l_photo_chip                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => 'photoChip'));
     l_photo_pass                              := dl_common.pkg_util.decode_base64(apex_json.get_clob(p_values => l_values, p_path => 'photoPass'));
-
+    v_ipclient                                := apex_json.get_varchar2(p_values => l_values, p_path => 'ipClient');
 --///////////////////////Get Border post///////////////////////////////////////////////////////////////////////
-begin
+BEGIN
+  SELECT ID AS TERMINAL, BORDER_POST
+  into l_borderdocument_rec.ins_terminal,l_borderdocument_rec.ins_borderpost
+   FROM dl_bordercontrol.TERMINALS
+   WHERE ACTIVE =1
+   AND IPADDRESS =  v_ipclient;
+EXCEPTION 
+when NO_DATA_FOUND  then 
+ raise_application_error(-20001,'BorderPosr or Terminal not found'); 
+WHEN OTHERS THEN 
+raise_application_error(-20001,SQLERRM); 
+end;
+
+/*begin
   select b.KEY_VALUE
 into l_borderdocument_rec.ins_borderpost
 from PIBICSDM2.DEPARTMENT a
@@ -1406,20 +1466,20 @@ inner join DL_STAGING4PIBICS_INTF.trcd_borderpost b on a.dept_seqno =seqno
 where a.DEPTCD = LPAD(l_borderdocument_rec.ins_borderpost,5,'00');
 EXCEPTION WHEN OTHERS THEN
 l_borderdocument_rec.ins_borderpost := null;
-end;
+end;*/
 
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 --///////////////////////Get Terminal///////////////////////////////////////////////////////////////////////
-begin
+/*begin
 select a.ID
 into l_borderdocument_rec.ins_terminal
 from dl_bordercontrol.terminals a
 where a.ipaddress = l_borderdocument_rec.ins_terminal and a.BORDER_POST =l_borderdocument_rec.ins_borderpost;
 EXCEPTION WHEN OTHERS THEN
 l_borderdocument_rec.ins_terminal := null;
-end;
+end;*/
 
 
 
@@ -1571,6 +1631,7 @@ RES clob;
    v_dept_keyvalue varchar2(100);
     l_count     PLS_INTEGER;
     v_blacklist_flag varchar2(20);
+      v_ipclient varchar2(100);
   BEGIN
    l_source_blob :=p_request;  
 DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
@@ -1623,7 +1684,7 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
     l_entry_forms_rec.subdistrict    := apex_json.get_varchar2(p_values => l_values, p_path => 'subdistrict');
     l_entry_forms_rec.address        := apex_json.get_varchar2(p_values => l_values, p_path => 'address');
     l_entry_forms_rec.note           := apex_json.get_varchar2(p_values => l_values, p_path => 'note');
-
+    v_ipclient                       := apex_json.get_varchar2(p_values => l_values, p_path => 'ipClient');
     if l_movement_rec.source_system is null 
     then
         l_movement_rec.source_system := 3;
@@ -1652,7 +1713,20 @@ DBMS_LOB.CREATETEMPORARY(l_source_clob, TRUE);
 
 
    --///////////////////////Get Border post///////////////////////////////////////////////////////////////////////
-begin
+BEGIN
+  SELECT ID AS TERMINAL, BORDER_POST
+ into l_movement_rec.ins_terminal,l_movement_rec.ins_borderpost
+   FROM dl_bordercontrol.TERMINALS
+   WHERE ACTIVE =1
+   AND IPADDRESS =  v_ipclient;
+EXCEPTION 
+when NO_DATA_FOUND  then 
+ raise_application_error(-20001,'BorderPosr or Terminal not found'); 
+WHEN OTHERS THEN 
+raise_application_error(-20001,SQLERRM); 
+end;
+
+/*begin
 select b.KEY_VALUE
 into l_movement_rec.ins_borderpost
 from PIBICSDM2.DEPARTMENT a
@@ -1660,17 +1734,17 @@ inner join DL_STAGING4PIBICS_INTF.trcd_borderpost b on a.dept_seqno =seqno
 where a.DEPTCD = LPAD(l_movement_rec.ins_borderpost,5,'00');
 EXCEPTION WHEN OTHERS THEN
 l_movement_rec.ins_borderpost := null;
-end;
+end;*/
 
 --///////////////////////Get Terminal///////////////////////////////////////////////////////////////////////
-begin
+/*begin
 select a.ID
 into l_movement_rec.ins_terminal
 from dl_bordercontrol.terminals a
 where a.ipaddress = l_movement_rec.ins_terminal;
 EXCEPTION WHEN OTHERS THEN
 l_movement_rec.ins_terminal := null;
-end;
+end;*/
 
 
 --/////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1957,6 +2031,9 @@ end;
 
 
      commit;
+
+     --Sync To Pibics
+     DL_INTERFACE.PKG_LISTENER.send_bordercontrol_movement(l_movement_rec.mvmntid, 'I');
       select JSON_OBJECT(
                    'response_status_code' VALUE l_status,
                    'response_status_message' VALUE l_response_message,
@@ -2036,6 +2113,7 @@ PROCEDURE SP_CALLSERVICESBYLIST (
   v_tgivenname varchar2(500);
   v_tmiddlename varchar2(500);
   v_foundImm  varchar2(20);
+    v_ipclient varchar2(100);
   BEGIN
   v_success :='False';
 --//////////////////////////////////////Get Data//////////////////////////////////////////
@@ -2044,8 +2122,10 @@ PROCEDURE SP_CALLSERVICESBYLIST (
            ,nvl(b.TFIRSTNM,a.Tfirstnm) as firstnameth
 		   ,nvl(b.TFAMILYNM,a.Tfamilynm) as surnameth
 		   ,nvl(b.TMIDDLENM,a.Tmiddlenm) as middlenameth
+           ,IpClient
     into v_familyname,v_givenname,v_middlename,v_nationality,v_birthdate,v_gender,v_docnumber,v_visa_expire_date,v_passport_no,v_passport_expire_date,v_port
         ,i_card_type,v_visatype_code,v_flight_no,v_citizenid,v_tm6no,v_tfamilyname,v_tgivenname,v_tmiddlename
+        ,v_ipclient
     FROM json_table(p_request  FORMAT JSON, '$'
          COLUMNS (
 			SUser      VARCHAR2  	PATH '$.User',
@@ -2072,7 +2152,8 @@ PROCEDURE SP_CALLSERVICESBYLIST (
             Tfamilynm   	VARCHAR2  	PATH '$.RescertDto.Tfamilynm',
              FlightNo   	VARCHAR2  	PATH '$.Convregno',
              Citizenid VARCHAR2  	PATH '$.Citizenid',
-             Tm6no  VARCHAR2  	PATH '$.Tm6No'
+             Tm6no  VARCHAR2  	PATH '$.Tm6No',
+            IpClient  VARCHAR2  	PATH '$.ipClient'
         )) a
          left join PIBICSDM2.thaipassport b on a.Tdtno =b.PASSPORTNO;
 
@@ -2083,8 +2164,21 @@ v_passport_no := upper(v_passport_no);
 v_docnumber := upper(v_docnumber);
 if v_gender ='M' then i_sex :=1; end if;
 if v_gender ='F' then i_sex :=2; end if;
---///////////////////////////////////////Get Dept Keyvalue/////////////////////////////////////////////
-select b.KEY_VALUE
+--///////////////////////////////////////Get Borderpost Terminal/////////////////////////////////////////////
+BEGIN
+  SELECT ID AS TERMINAL, BORDER_POST
+  into v_terminal,v_dept_keyvalue
+   FROM dl_bordercontrol.TERMINALS
+   WHERE ACTIVE =1
+   AND IPADDRESS =  v_ipclient;
+EXCEPTION 
+when NO_DATA_FOUND  then 
+ raise_application_error(-20001,'BorderPosr or Terminal not found'); 
+WHEN OTHERS THEN 
+raise_application_error(-20001,SQLERRM); 
+end;
+
+/*select b.KEY_VALUE
 into v_dept_keyvalue
 from PIBICSDM2.DEPARTMENT a
 inner join DL_STAGING4PIBICS_INTF.trcd_borderpost b on a.dept_seqno =seqno
@@ -2093,7 +2187,7 @@ where a.DEPTCD = LPAD(v_port,5,'00');
 select max(id)
 into v_terminal
 from dl_bordercontrol.TERMINALS a
-where a.BORDER_POST =v_dept_keyvalue and a.active =1;
+where a.BORDER_POST =v_dept_keyvalue and a.active =1;*/
 --///////////////////////////////////////Get COUNTCD///////////////////////////////////////////////////
 SELECT COU.COUNTCD,COU.COUNT_SEQNO  ,COU.ABBCOUNT
 into v_countcd,i_count_seqno,v_nat
@@ -2161,7 +2255,7 @@ v_sql := v_sql ||' where a.DOCNO ='''||v_docnumber||''' ';
 /*if v_middlename is not null then
 v_sql := v_sql ||' and a.MIDDLENAME ='''||v_middlename||'''';
 end if;*/
-v_sql := v_sql ||' and a.NAT ='''||v_nat||''' ';
+v_sql := v_sql ||' and a.ISSUECTRY ='''||v_nat||''' ';
 --v_sql := v_sql ||' and a.CALC_DOB =to_date('''||v_birthdate||''',''yyyymmdd'') ';
 --v_sql := v_sql ||' and a.sex ='||i_sex||' ';
 v_sql := v_sql ||' and a.expirydate =to_date('''||v_passport_expire_date||''',''yyyymmdd'') ';
@@ -2173,7 +2267,7 @@ open c_cursor for v_sql;
  END LOOP; 
  close c_cursor;
 --///////////////////////////////////////Get Last Movement////////////////////////////////////////////////////////
-select case when b.exitflg = 0 then 'Y' else 'N' end as c_flag
+/*select case when b.exitflg = 0 then 'Y' else 'N' end as c_flag
 into v_foundImm
 from dual a
 left join (
@@ -2185,6 +2279,36 @@ from MOVEMENTS a
 where a.BRDDOCID =v_brddocid
 ) a 
 where a.rn =1) b on 1=1;
+*/  
+
+-- Miti Edit 23 Dec 2019 17:00 
+v_foundImm := 'N';
+BEGIN
+  SELECT C_FLAG
+into v_foundImm
+FROM (
+       SELECT  DOCNO, EXITFLG, case when EXITFLG = 0 then 'Y' else 'N' end AS C_FLAG, DML_AT
+       , ROW_NUMBER() OVER (PARTITION BY 1 ORDER BY DML_AT DESC) AS RNO
+       FROM (
+             SELECT TDTNO AS DOCNO
+            , case when CARDTYPE = '1' then 0 else 1 end AS EXITFLG
+            , INOUTDTE AS DML_AT
+            , 'PIB' AS SYSNAME
+            FROM PIBICSDM2.TMINOUT 
+            WHERE TDTNO = v_docnumber
+            and nationcd =v_countcd
+            UNION
+            SELECT BRD.DOCNO , MOV.EXITFLG, MOV.DML_AT AS DML_AT
+            , 'BIO' AS SYSNAME
+            FROM DL_BORDERCONTROL.MOVEMENTS MOV
+            LEFT JOIN DL_BORDERCONTROL.BORDERDOCUMENTS BRD ON BRD.BRDDOCID = MOV.BRDDOCID
+            WHERE  BRD.BRDDOCID =v_brddocid
+           )  
+     ) TT WHERE RNO = 1;
+EXCEPTION WHEN OTHERS THEN 
+null;
+end;
+
  --//////////////////////////////////////////////////////////////////////////////////////////////////////
 if v_foundbwl  <> 'Y' and 1=2 then
 
@@ -2429,6 +2553,7 @@ into p_response
 from dual;
   END SP_CALLSERVICESBYLIST;
 END PKG_AUTO_CHANNEL;
+
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL" TO "BIOAPPREPORT";
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL" TO "BIOSUPPORT";

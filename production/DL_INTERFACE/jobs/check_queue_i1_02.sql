@@ -14,7 +14,6 @@ dbms_scheduler.set_attribute('"CHECK_QUEUE_I1_02"','instance_stickiness',FALSE);
 dbms_scheduler.set_attribute('"CHECK_QUEUE_I1_02"','restart_on_recovery',TRUE);
 dbms_scheduler.set_attribute('"CHECK_QUEUE_I1_02"','restart_on_failure',TRUE);
 dbms_scheduler.set_attribute('"CHECK_QUEUE_I1_02"','instance_id',1);
-dbms_scheduler.enable('"CHECK_QUEUE_I1_02"');
 COMMIT; 
 END; 
 /

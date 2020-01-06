@@ -9,8 +9,11 @@ IS
 BEGIN
    /*   Create date : 27-01-2018    */
    --No.23
-   v_dstart := TO_CHAR (TRUNC (SYSDATE) - 1, 'yyyymmdd');
-   v_dend := TO_CHAR (TRUNC (SYSDATE), 'yyyymmdd');
+   --v_dstart := TO_CHAR (TRUNC (SYSDATE) - 1, 'yyyymmdd');
+   --v_dend := TO_CHAR (TRUNC (SYSDATE) , 'yyyymmdd');
+   
+   v_dstart := TO_CHAR ( (SYSDATE - 3/24), 'yyyymmdd');
+   v_dend := TO_CHAR (TRUNC (SYSDATE) + 1, 'yyyymmdd');
 
    vstdate :=sysdate;
 
@@ -18,7 +21,7 @@ BEGIN
         USING (SELECT * 
                     FROM PIBICS.TM2@PIBICS_PROD
                     WHERE CREATE_DATE >= TO_DATE(v_dstart,'yyyymmdd') 
-                        AND CREATE_DATE <= TO_DATE(v_dend,'yyyymmdd')
+                        AND CREATE_DATE < TO_DATE(v_dend,'yyyymmdd')
                         AND UPDATE_DATE IS NULL) P
         ON (DM.TM2_SEQNO = P.TM2_SEQNO)
 
