@@ -1589,6 +1589,15 @@ begin
     dbms_output.put_line('@install-dbms_jobs.sql');
     dbms_output.put_line('@install-schedules.sql'); 
     
+    --refresh materialized_views
+    dbms_output.put_line('declare');
+    dbms_output.put_line('  l_number_of_failures BINARY_INTEGER;');
+    dbms_output.put_line('begin');
+    dbms_output.put_line('  DBMS_MVIEW.REFRESH_ALL_MVIEWS (l_number_of_failures, NULL, NULL, true, false, false);');
+    dbms_output.put_line('end;');
+    dbms_output.put_line('/');
+    
+    
     dbms_output.put_line('quit'); 
    
 end;
