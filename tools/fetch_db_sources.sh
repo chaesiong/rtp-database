@@ -153,6 +153,7 @@ PROFESSIONS
 PROFESSIONS$I18N
 REASON_CODES
 REASON_CODES$I18N
+RELATIONS
 SALUTATIONS
 SALUTATIONS$I18N
 SECRET_LEVELS
@@ -1324,7 +1325,6 @@ declare
                 '@./' || O.OWNER || '/' ||
                 coalesce(FO.FOLDER_NAME,'unknown') || '/' ||
                 lower(O.OBJECT_NAME) || '.' ||
-                -- ---replace(lower(O.OBJECT_NAME),'$','\\\$') || '.' ||
                 coalesce(FI.FILE_ENDING,'sql') ||
                 CASE WHEN GR.OWNER IS NOT NULL THEN chr(10) END ||
                 GR.STMT STMT
