@@ -273,7 +273,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_PIBICS_UNHOOK
         -- mrz start --
         -----------------------
         l_pibics_mrz_json := JSON();
-        l_pibics_mrz_json.put('docType'       , '1');
+        --l_pibics_mrz_json.put('docType'       , '1');
+        l_pibics_mrz_json.put('docType'       , NVL(l_borderdocument_rec.docclass,'1'));
         l_pibics_mrz_json.put('docNumber'     , l_borderdocument_rec.docno);
         l_pibics_mrz_json.put('docExpireDate' , TO_CHAR(l_borderdocument_rec.expirydate, c_pibics_date_format_unformat_short));
         --
@@ -459,7 +460,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_PIBICS_UNHOOK
             -- thaipassport start --
             -----------------------
             -- if resident info is not available
-            IF l_pibics_resident_info.count() = 0 THEN
+            IF l_pibics_resident_info.count() = 0 and l_borderdocument_rec.nat = 'THA' THEN
                 BEGIN
                     SELECT
                         'Y'

@@ -164,6 +164,44 @@ wwv_flow_api.create_flow_process(
 ,p_process_sql_clob=>'PKG_MESSAGES.Load_Messages_Workflow_JS;'
 );
 wwv_flow_api.create_flow_process(
+ p_id=>wwv_flow_api.id(40930619362612792625)
+,p_process_sequence=>-1000
+,p_process_point=>'BEFORE_HEADER'
+,p_process_type=>'NATIVE_PLSQL'
+,p_process_name=>'Use Custom Files'
+,p_process_sql_clob=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'declare',
+'    l_host varchar2(255 char);',
+'    l_custom_files_present number := 0;',
+'    l_forwards apex_application_global.vc_arr2;',
+'    x_forwarded_for varchar2(4000);',
+'begin',
+'    begin',
+'        x_forwarded_for := OWA_UTIL.GET_CGI_ENV(''x-forwarded-for'');',
+'    exception when others then',
+'        null;',
+'    end;',
+'',
+'    if length(trim(x_forwarded_for)) > 0 then',
+'        l_forwards := apex_util.string_to_table(x_forwarded_for, '','');',
+'        for i in 1..l_forwards.count loop',
+'            l_host := trim(l_forwards(i));',
+'            if length(l_host) > 0 then',
+'                select least(1, count(*))',
+'                  into l_custom_files_present',
+'                  from apex_application_static_files',
+'                 where file_name like l_host || ''/%'';',
+'                if l_custom_files_present > 0 then',
+'                    apex_application.g_flow_images := apex_application.g_flow_images || ''/'' || l_host || ''/'';',
+'                    exit;',
+'                end if;',
+'            end if;',
+'        end loop;',
+'    end if;',
+'end;',
+''))
+);
+wwv_flow_api.create_flow_process(
  p_id=>wwv_flow_api.id(235418459730694869)
 ,p_process_sequence=>1
 ,p_process_point=>'BEFORE_HEADER'

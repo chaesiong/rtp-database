@@ -2,6 +2,7 @@
 -- procedures --
 -- DL_BLACKLIST/procedures
 @DL_BLACKLIST/procedures/p_bk_keep_data_main.prc
+@DL_BLACKLIST/procedures/p_upd_isactive_m.prc
 @DL_BLACKLIST/procedures/searchjk.prc
 -- DL_BORDERCONTROL/procedures
 @DL_BORDERCONTROL/procedures/assert.prc
@@ -183,14 +184,17 @@
 @PIBICSDM2/procedures/p_blimpreason.prc
 @PIBICSDM2/procedures/p_chk_blacklist_20190505.prc
 @PIBICSDM2/procedures/p_chk_blacklist_20190621.prc
+@PIBICSDM2/procedures/p_chk_blacklist_2.prc
 @PIBICSDM2/procedures/p_chk_blacklist_bmsc.prc
 @PIBICSDM2/procedures/p_chk_blacklist.prc
 @PIBICSDM2/procedures/p_chk_blacklist_t20190621.prc
 @PIBICSDM2/procedures/p_chk_blacklist_t20190628.prc
+@PIBICSDM2/procedures/p_chk_blacklist_t20200117.prc
 @PIBICSDM2/procedures/p_chk_blacklist_test2.prc
 @PIBICSDM2/procedures/p_chk_blacklist_test3.prc
 @PIBICSDM2/procedures/p_chk_blacklist_test4.prc
 @PIBICSDM2/procedures/p_chk_blacklist_test.prc
+@PIBICSDM2/procedures/p_chk_blacklist_ttest.prc
 @PIBICSDM2/procedures/p_chng_changevisalist_m.prc
 @PIBICSDM2/procedures/p_chng_changevisalist.prc
 @PIBICSDM2/procedures/p_chng_changevisa_m.prc

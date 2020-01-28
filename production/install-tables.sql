@@ -148,8 +148,11 @@
 @DL_BORDERCONTROL/tables/license_monitoring.sql
 @DL_BORDERCONTROL/tables/log_autochannel_api.sql
 @DL_BORDERCONTROL/tables/log_evoa_api.sql
+@DL_BORDERCONTROL/tables/log_evoa_search_o.sql
 @DL_BORDERCONTROL/tables/log_evoa_search.sql
+@DL_BORDERCONTROL/tables/log_evoa_submit_o.sql
 @DL_BORDERCONTROL/tables/log_evoa_submit.sql
+@DL_BORDERCONTROL/tables/log_report.sql
 @DL_BORDERCONTROL/tables/log_warrant_search.sql
 @DL_BORDERCONTROL/tables/movement_attr.sql
 @DL_BORDERCONTROL/tables/movements_bk.sql
@@ -447,7 +450,10 @@
 @DL_DBA/tables/templates$tag$his.sql
 @DL_DBA/tables/templates$tag.sql
 -- DL_INTERFACE/tables
+@DL_INTERFACE/tables/log_blacklist_hits_hist.sql
+@DL_INTERFACE/tables/log_blacklist_hits_nl.sql
 @DL_INTERFACE/tables/log_blacklist_hits.sql
+@DL_INTERFACE/tables/log_sync_webservices_nl.sql
 @DL_INTERFACE/tables/log_sync_webservices.sql
 @DL_INTERFACE/tables/log_webapi.sql
 @DL_INTERFACE/tables/mapping_pk2.sql
@@ -1941,6 +1947,7 @@
 @PIBICSDM2/tables/watchlistdoc.sql
 @PIBICSDM2/tables/watchlistlog2.sql
 @PIBICSDM2/tables/watchlistlog_b1.sql
+@PIBICSDM2/tables/watchlistlogdel.sql
 @PIBICSDM2/tables/watchlistlog_hist.sql
 @PIBICSDM2/tables/watchlistlog_rb.sql
 @PIBICSDM2/tables/watchlistlog.sql
@@ -2073,6 +2080,7 @@
 @SERVAPP/tables/mscs_ext_committee.sql
 @SERVAPP/tables/mscs_ext_company.sql
 @SERVAPP/tables/mscs_ext_docno.sql
+@SERVAPP/tables/mscs_ext_ext_backup_docno.sql
 @SERVAPP/tables/mscs_ext_extensionlist.sql
 @SERVAPP/tables/mscs_ext_extension.sql
 @SERVAPP/tables/mscs_ext_extlist_backup_docno.sql
@@ -2111,6 +2119,7 @@
 @SERVAPP/tables/mscs_foundwatchlist.sql
 @SERVAPP/tables/mscs_fs_fees_2.sql
 @SERVAPP/tables/mscs_fs_fees_copy.sql
+@SERVAPP/tables/mscs_fs_feesdetail_log_o.sql
 @SERVAPP/tables/mscs_fs_feesdetail_log.sql
 @SERVAPP/tables/mscs_fs_feesdetail.sql
 @SERVAPP/tables/mscs_fs_fees_log.sql
@@ -2120,6 +2129,7 @@
 @SERVAPP/tables/mscs_fs_fines_log.sql
 @SERVAPP/tables/mscs_fs_finesrunning.sql
 @SERVAPP/tables/mscs_fs_fines.sql
+@SERVAPP/tables/mscs_fs_settingfeeslip_log_o.sql
 @SERVAPP/tables/mscs_fs_settingfeeslip_log.sql
 @SERVAPP/tables/mscs_fs_settingfeeslip.sql
 @SERVAPP/tables/mscs_fs_settingfineslip_log.sql
@@ -2132,9 +2142,11 @@
 @SERVAPP/tables/mscs_inscash.sql
 @SERVAPP/tables/mscs_insdept.sql
 @SERVAPP/tables/mscs_inspro.sql
-@SERVAPP/tables/mscs_log_sync_webservices_n.sql
+@SERVAPP/tables/mscs_log_sync_webservices_hist.sql
+@SERVAPP/tables/mscs_log_sync_webservices_o.sql
 @SERVAPP/tables/mscs_log_sync_webservices.sql
-@SERVAPP/tables/mscs_log_webservices_n.sql
+@SERVAPP/tables/mscs_log_webservices_hist.sql
+@SERVAPP/tables/mscs_log_webservices_o.sql
 @SERVAPP/tables/mscs_log_webservices.sql
 @SERVAPP/tables/mscs_mappingip_copy.sql
 @SERVAPP/tables/mscs_mappingip.sql

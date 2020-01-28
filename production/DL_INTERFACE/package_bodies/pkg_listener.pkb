@@ -96,6 +96,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_LISTENER" IS
     --
     l_log_rec             log_sync_webservices%ROWTYPE;
     l_json_object         CLOB;
+    -- records
+    l_movement_rec        DL_BORDERCONTROL.MOVEMENTS%ROWTYPE;
     --
     l_service_address     VARCHAR2(255 CHAR) := c_pibics_server_address;
     --
@@ -116,6 +118,17 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_LISTENER" IS
     l_log_rec.sender                  := l_sender;
     l_log_rec.sender_object           := l_sender_object;
     l_log_rec.sender_object_id        := l_sender_object_id;
+    
+    -----------------------------
+    -- movement record start --
+    -----------------------------
+    SELECT *
+    INTO l_movement_rec
+    FROM dl_bordercontrol.movements
+    WHERE mvmntid = p_mvmntid;
+    ---
+    
+    IF l_movement_rec.source_system <> '5' THEN
 
     -- get JSON Object and call service
     --l_json_object := dl_bordercontrol.pkg_json_export.get_movements(p_mvmntid);
@@ -146,6 +159,10 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_INTERFACE"."PKG_LISTENER" IS
     COMMIT;
 
     logger.log('CALL ACTIONS TO SEND BORDERCONTROL/MOVEMENT: done', l_scope, null, l_params);
+    
+     ELSE
+        logger.log_error('CALL ACTIONS TO SEND BORDERCONTROL/MOVEMENT: PRE-REGISTER NOT SEND TO PIBICS', l_scope, null, l_params);
+    END IF;
     
     ELSE
         send_del_bordercontrol_movement(p_mvmntid);

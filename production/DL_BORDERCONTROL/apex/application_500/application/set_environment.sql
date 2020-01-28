@@ -46,7 +46,7 @@ prompt APPLICATION 500 - BmBS - Biometric Bordercontrol System
 --   Shared Components:
 --     Logic:
 --       Items:                123
---       Processes:             14
+--       Processes:             15
 --       Computations:          38
 --       Web Services:          11
 --     Navigation:
@@ -72,7 +72,7 @@ prompt APPLICATION 500 - BmBS - Biometric Bordercontrol System
 --       Shortcuts:              2
 --       Plug-ins:               2
 --     Globalization:
---       Messages:              21
+--       Messages:              32
 --     Reports:
 --   Supporting Objects:  Included
 

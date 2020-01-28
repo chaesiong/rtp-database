@@ -30,8 +30,9 @@ wwv_flow_api.create_flow(
 ,p_vpd=>'dl_common.pkg_session.init_package();'
 ,p_rejoin_existing_sessions=>'N'
 ,p_csv_encoding=>'Y'
+,p_auto_time_zone=>'N'
 ,p_last_updated_by=>'ADMIN'
-,p_last_upd_yyyymmddhh24miss=>'20190912015225'
+,p_last_upd_yyyymmddhh24miss=>'20200123162017'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>27
 ,p_ui_type_name => null

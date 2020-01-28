@@ -4499,7 +4499,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BLACKLIST"."PKG_SEARCH" is
                 ,d.DOC_NUMBER                               -- TDT_DOC_NUMBER
                 ,d.ISSUING_COUNTRY                          -- TDT_ISSUING_COUNTRY
                 ,d.ISSUING_COUNTRY                          -- TDT_ISSUING_COUNTRY$DV
-                ,d.DATE_OF_EXPIRY                           -- TDT_DATE_OF_EXPIRY
+                ,d.DATE_OF_EXPIRY$VC --d.DATE_OF_EXPIRY     -- TDT_DATE_OF_EXPIRY
                 ,DL_COMMON.PKG_I18N.Get_Sess_Data_Locale()  -- LOCALE
                 ,rownum                                     -- ROW_NUM
                 ,count(*) over()                            -- ROW_CNT
@@ -4563,7 +4563,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BLACKLIST"."PKG_SEARCH" is
         --                        ,d.DOC_NUMBER
         --                        ,d.ISSUING_COUNTRY
         --                        ,d.ISSUING_COUNTRY
-        --                        ,d.DATE_OF_EXPIRY
+        --                        ,d.DATE_OF_EXPIRY$VC --d.DATE_OF_EXPIRY
         --                        ,DL_COMMON.PKG_I18N.Get_Sess_Data_Locale()
         --                        ,rownum
         --                        ,count(*) over()
@@ -4632,7 +4632,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BLACKLIST"."PKG_SEARCH" is
                                 ,d.DOC_NUMBER
                                 ,d.ISSUING_COUNTRY
                                 ,d.ISSUING_COUNTRY
-                                ,d.DATE_OF_EXPIRY
+                                ,d.DATE_OF_EXPIRY$VC --d.DATE_OF_EXPIRY
                                 ,DL_COMMON.PKG_I18N.Get_Sess_Data_Locale()
                                 ,rownum
                                 ,count(*) over()

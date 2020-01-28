@@ -197,6 +197,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
   v_tgivenname varchar2(500);
   v_tmiddlename varchar2(500);
    v_ipclient varchar2(100);
+   v_citizenid varchar2(100);
   BEGIN
   v_success :='False';
 --//////////////////////////////////////Get Data//////////////////////////////////////////
@@ -206,8 +207,10 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL"
 		   ,nvl(b.TFAMILYNM,a.Tfamilynm) as surnameth
 		   ,nvl(b.TMIDDLENM,a.Tmiddlenm) as middlenameth
            ,IpClient
+           ,b.citizenid as idcard
     into v_familyname,v_givenname,v_middlename,v_nationality,v_birthdate,v_gender,v_docnumber,v_visa_expire_date,v_passport_no,v_passport_expire_date,v_port
         ,i_card_type,v_visatype_code,v_flight_no,v_tgivenname,v_tmiddlename,v_tfamilyname,v_ipclient
+        ,v_citizenid
     FROM json_table(p_request  FORMAT JSON, '$'
          COLUMNS (
 			SUser      VARCHAR2  	PATH '$.User',
@@ -327,7 +330,7 @@ from (
         P_MOVEMENTID    => null,
         P_NATIONCD      => v_countcd,
         P_PASSNO        => v_docnumber,
-        P_IDCard        => null,
+        P_IDCard        => v_citizenid,
         P_BIRTHDTE      => to_char(to_date(v_birthdate,'yyyymmdd'),'dd/mm/yyyy'),
         P_SEX           => i_sex,
         P_EFIRSTNM      => v_givenname,
@@ -1517,7 +1520,7 @@ end;*/
         /*l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.get_document (p_docno      => l_borderdocument_rec.docno
                                                                                            ,p_issuectry  => l_borderdocument_rec.issuectry
                                                                                            ,p_expirydate => l_borderdocument_rec.expirydate);*/
-
+       l_borderdocument_rec.docclass    := '1';
        -- IF l_borderdocument_rec.brddocid IS NULL
        -- THEN
             l_borderdocument_rec.brddocid := dl_bordercontrol.pkg_borderdocuments.create_document(l_borderdocument_rec.docno
@@ -1772,13 +1775,22 @@ end;*/
 
         if l_movement_rec.visa_type is not null then
            i_count_visatype := 0;
-            select count(1)
-           into i_count_visatype
+
+             BEGIN
+               select case when t.KEY_VALUE ='0022' then  to_char((sysdate+60),'yyyy-mm-dd') else to_char((sysdate+PERMIT_DAYS),'yyyy-mm-dd') end
+               into v_EXPIRY_DATE_VISA
                    from DL_COMMON.VISA_TYPES t
                   where t.KEY_VALUE = l_movement_rec.visa_type
                     and t.IS_ACTIVE = 'Y';
+            EXCEPTION 
+            when NO_DATA_FOUND  then 
+             raise_application_error(-20001,'VisaType not found'); 
+            WHEN OTHERS THEN 
+            raise_application_error(-20001,SQLERRM); 
+            end;
 
-         if i_count_visatype >0 then
+         if v_EXPIRY_DATE_VISA is not null then
+
 
          insert into DL_BORDERCONTROL.VISAS i
           (VISA_TYPE
@@ -1798,7 +1810,7 @@ end;*/
           ,l_movement_rec.ins_terminal
           ,l_movement_rec.ins_borderpost
           ,v_visaNumber
-          ,to_date(v_ISSUING_DATE,'yyyy-mm-dd')
+          ,sysdate
           ,v_ISSUING_PLACE
           ,l_movement_rec.brddocid
           ,v_PERMIT_TYPE
@@ -1889,6 +1901,7 @@ end;*/
         end if;
 
         -- insert entry_form
+        l_entry_forms_rec.form_no :='TM66666';
         if l_entry_forms_rec.form_no is not null
         then
             insert into dl_bordercontrol.entry_forms (form_no
@@ -2207,7 +2220,7 @@ inner join DL_STAGING4PIBICS_INTF.trcd_visatype b on a.VISATYPE_SEQNO =seqno and
         P_MOVEMENTID    => null,
         P_NATIONCD      => v_countcd,
         P_PASSNO        => v_docnumber,
-        P_IDCard        => null,
+        P_IDCard        => v_citizenid,
         P_BIRTHDTE      => to_char(to_date(v_birthdate,'yyyymmdd'),'dd/mm/yyyy'),
         P_SEX           => i_sex,
         P_EFIRSTNM      => v_givenname,
@@ -2553,7 +2566,6 @@ into p_response
 from dual;
   END SP_CALLSERVICESBYLIST;
 END PKG_AUTO_CHANNEL;
-
 /
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL" TO "BIOAPPREPORT";
   GRANT EXECUTE ON "DL_BORDERCONTROL"."PKG_AUTO_CHANNEL" TO "BIOSUPPORT";

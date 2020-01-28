@@ -1041,7 +1041,37 @@ end if;
             ) tb_max_process 
             WHERE tb_max_process.RN_MAX_ISSUE_DT = 1
     ) b on 1=1;
-            
+    
+    if i_pibicspk is null then
+     begin
+       select b.FEESLIP_SEQNO
+    into i_pibicspk
+    from MSCS_EXT_EXTENSIONLIST a
+    inner join PIBICSDM2.EXT_EXTENSIONLIST b on a.PIBICSPK =b.EXTLIST_SEQNO
+    where a.FEESLIP_SEQNO =p_id and
+       a.PIBICSPK is not null;
+
+    EXCEPTION WHEN OTHERS THEN
+    null;
+    end;
+    end if;
+    
+    
+       if i_pibicspk is null then
+     begin
+      select b.FEES_SEQNO
+      into i_pibicspk
+        from mscs_reps_tm8 a
+        inner join PIBICSDM2.reps_tm8 b on a.PIBICSPK =b.TM8_SEQNO
+        where a.FEES_SEQNO =p_id and
+           a.PIBICSPK is not null;
+
+
+    EXCEPTION WHEN OTHERS THEN
+    null;
+    end;
+    end if;
+    
      l_temp_obj1 :=l_obj.get_object('recordInfo'); 
      l_temp_obj1.put('pibicsPk',i_pibicspk);
     

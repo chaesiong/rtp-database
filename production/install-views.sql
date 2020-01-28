@@ -327,6 +327,7 @@
 @PIBICSDM2/views/rpt_inout_daily.vw
 @PIBICSDM2/views/rpt_wl_daily.vw
 @PIBICSDM2/views/tm2vw.vw
+@PIBICSDM2/views/v_borderdocuments.vw
 @PIBICSDM2/views/v_country.vw
 @PIBICSDM2/views/v_foundwatchlist_prod.vw
 @PIBICSDM2/views/view_ampur90.vw

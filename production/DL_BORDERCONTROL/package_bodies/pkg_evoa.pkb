@@ -28,14 +28,14 @@ i_pibicsprdconn  int;
 	       ,a.firstname
 		   ,a.surname
 		   ,a.middlename
-           ,b.TFIRSTNM as firstnameth
-		   ,b.TFAMILYNM as surnameth
-		   ,b.TMIDDLENM as middlenameth
 		   ,a.nationality
 		   ,a.passportnumber
 		   ,a.sex
 		   ,a.idcard
 		   ,a.movementid
+            ,b.TFIRSTNM as firstnameth
+		   ,b.TFAMILYNM as surnameth
+		   ,b.TMIDDLENM as middlenameth
     into   v_birthdte
 	       ,v_efirstnm
 		   ,v_efamilynm
@@ -91,7 +91,7 @@ i_pibicsprdconn  int;
 
     pibicsdm2.p_chk_blacklist
     (
-        P_MOVEMENTID    => null,
+        P_MOVEMENTID    => 'M'||v_passno,
         P_NATIONCD      => v_nationcd,
         P_PASSNO        => v_passno,
         P_IDCard        => v_idcard,
@@ -106,8 +106,10 @@ i_pibicsprdconn  int;
         P_PIBICSPRDCONN => 1,
         P_WLCD          => v_wlcd
     );
-
+    
+   
   p_response := '[]';
+  
    if v_wlcd is not null then
    if v_wlcd.COUNT > 0 then
 select JSON_ARRAYAGG(JSON_OBJECT (
@@ -153,5 +155,4 @@ end if;
   raise_application_error(-20001,'An error was encountered - PKG_EVOA.SP_CHECK_BALCKLIST'||SQLCODE||'-ERROR-'||SQLERRM); 
   END SP_CHECK_BALCKLIST;
 END PKG_EVOA;
-
 /

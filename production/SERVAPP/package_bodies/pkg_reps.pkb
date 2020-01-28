@@ -1298,7 +1298,19 @@ COMMIT;
 	--) INTO RES FROM DUAL;
 	--htp.prn('{"recordInfo":'||RES||',"msgInfo":{"msg_code":"00","msg_desc":"success"}}'); 
 
-    RES :='[{"FEES_SEQNO":"","FEESLIPNO":"","TM8_SEQNO":'||TM8_SEQNO_VAL||',"FEESLIPBOOKNO":"","IS_MAIN":1}]';
+   -- RES :='[{"FEES_SEQNO":"","FEESLIPNO":"","TM8_SEQNO":'||TM8_SEQNO_VAL||',"FEESLIPBOOKNO":"","IS_MAIN":1}]';
+       select  JSON_ARRAYAGG(
+    JSON_OBJECT ( 'TM8_SEQNO' VALUE (case when d.tm8_seqno is not null then d.tm8_seqno end)
+        ,'TM8NO' VALUE d.TM8NO
+        ,'YEAR' VALUE d.YEAR
+        ,'prate' VALUE i_prate_seqno
+        ,'doctype' VALUE DOCTYPE_VAL
+        ,'IS_MAIN' VALUE (case when d.tm8_seqno is null then 0 else 1 end)
+        )
+   ) 
+ into RES
+   from   MSCS_REPS_TM8 d 
+   where d.tm8_seqno =TM8_SEQNO_VAL;
     select count(1) INTO i_count
     from  mscs_fs_fees a 
     where a.fees_seqno =FEES_SEQNO_VAL and rownum=1;

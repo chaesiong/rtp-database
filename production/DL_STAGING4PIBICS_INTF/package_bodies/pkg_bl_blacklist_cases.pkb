@@ -662,6 +662,7 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_STAGING4PIBICS_INTF"."PKG_BL_BLAC
                         ,lp.credte
                         ,lp.updusr
                         ,lp.upddte
+                        ,lp.birthdate as birthdte
                   FROM dl_staging4pibics.lostpassport lp
                   INNER JOIN sync_blacklist_cases s
                   ON s.wlcd = lp.lppcd
@@ -758,7 +759,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_STAGING4PIBICS_INTF"."PKG_BL_BLAC
                         ,ins_at
                         ,dml_by
                         ,dml_at
-                        ,dml_type)
+                        ,dml_type
+                        ,date_of_birth_partial)
                     VALUES
                         (r.birthdate
                         ,r.sex
@@ -773,7 +775,9 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_STAGING4PIBICS_INTF"."PKG_BL_BLAC
                         ,r.credte
                         ,r.updusr
                         ,r.upddte
-                        ,'L')
+                        ,'L'
+                        ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(r.birthdte)
+)
                     RETURNING key_value INTO l_identity_id;
                 EXCEPTION
                     WHEN dup_val_on_index THEN
@@ -820,7 +824,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_STAGING4PIBICS_INTF"."PKG_BL_BLAC
                         ,ins_by
                         ,dml_at
                         ,dml_by
-                        ,dml_type)
+                        ,dml_type
+                        ,date_of_birth_partial)
                     VALUES
                         (r.doc_type
                         ,r.issuing_country
@@ -838,7 +843,8 @@ CREATE OR REPLACE EDITIONABLE PACKAGE BODY "DL_STAGING4PIBICS_INTF"."PKG_BL_BLAC
                         ,r.creusr
                         ,r.upddte
                         ,r.updusr
-                        ,'I')
+                        ,'I'
+                        ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(r.birthdte))
                     RETURNING key_value INTO l_travel_docs_id;
                 EXCEPTION
                     WHEN dup_val_on_index THEN

@@ -130,5 +130,82 @@ wwv_flow_api.create_message(
 ,p_message_text=>'รูปภาพบุคคลเฝ้าดู/เฝ้าระวัง'
 ,p_is_js_message=>true
 );
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968721864990628151)
+,p_name=>'FACEITEM:FINGERDETAILS.COMPRESSIONALGORITHM'
+,p_message_language=>'th'
+,p_message_text=>'CompressionAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968721915642628151)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.DONE'
+,p_message_language=>'th'
+,p_message_text=>'Face successfully captured!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968722179037628157)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.DEVICETYPE'
+,p_message_language=>'th'
+,p_message_text=>'Device.DeviceType'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968722555446628179)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.NAME'
+,p_message_language=>'th'
+,p_message_text=>'Device.Name'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968751312083288641)
+,p_name=>'FACEITEM:FACEDETAILS.TITLE.PORTRAIT'
+,p_message_language=>'th'
+,p_message_text=>'Portrait'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968751607001288671)
+,p_name=>'FACEITEM:FACEDETAILS.BUTTON.CLOSE'
+,p_message_language=>'th'
+,p_message_text=>'Close'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968781385413326758)
+,p_name=>'FACEITEM:FACEDETAILS.MESSAGE.STATE.QUESTION'
+,p_message_language=>'th'
+,p_message_text=>'Please capture or select missing reason!'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968781614104326785)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VERSION'
+,p_message_language=>'th'
+,p_message_text=>'Device.Version'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968787428833184454)
+,p_name=>'FACEITEM:FINGERDETAILS.QUALITYALGORITHM'
+,p_message_language=>'th'
+,p_message_text=>'QualityAlgorithm'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968787778658184478)
+,p_name=>'FACEITEM:USEMOUSEWHEEL.TO.ZOOM'
+,p_message_language=>'th'
+,p_message_text=>'Use the mouse wheel to zoom in.'
+,p_is_js_message=>true
+);
+wwv_flow_api.create_message(
+ p_id=>wwv_flow_api.id(40968788058734184479)
+,p_name=>'FACEITEM:FINGERDETAILS.DEVICE.VENDOR'
+,p_message_language=>'th'
+,p_message_text=>'Device.Vendor'
+,p_is_js_message=>true
+);
 end;
 /
