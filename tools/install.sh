@@ -116,11 +116,13 @@ function dropUser {
     )
     readarray -t SCHEMAS <<<"$SCHEMAS"
     QUERY="select 'ALTER SYSTEM KILL SESSION '''||SID||','||SERIAL#||''' IMMEDIATE' STMT  from v\$session where schemaname in ("
+    LOCKS=()
     DROPS=()
     CNT=0
     OLDIFS=$IFS
     IFS=""
     for SCHEMA in ${SCHEMAS[*]}; do
+        LOCKS+="ALTER USER $SCHEMA ACCOUNT LOCK;"$'\n'
         QUERY+="'$SCHEMA'"
         DROPS+=( "DROP USER $SCHEMA CASCADE;" )
         ((CNT+=1))
@@ -130,6 +132,11 @@ function dropUser {
         fi
     done
     QUERY+=");"
+    echo "Locking user accounts..."
+    sqlplus -s / as sysdba << EOF
+        $LOCKS
+
+EOF
     echo "Marking user sessions for kill..."
     sqlplus -s / as sysdba << EOF
         declare
@@ -137,7 +144,6 @@ function dropUser {
                 $QUERY
         begin
             for l_rec in c_kill loop
-                dbms_output.put_line(l_rec.stmt);
                 execute immediate l_rec.stmt;
             end loop;
         end;
@@ -157,12 +163,18 @@ EOF
 function installDBObjects {
     echo "--------------------- INSTALL DATABASE OBJECTS ---------------------"
     cd "$SCRIPTPATH" || errorExit "Cannot cd into $SCRIPTPATH"
-    sqlplus / as sysdba "@$INSTALLFILE_DB"
+    sqlplus / as sysdba <<EOF
+        @$INSTALLFILE_DB
+        exit;
+EOF
 }
 function insertLookups {
     echo "--------------------- INSERT INITIAL DATA ---------------------"
     cd "$SCRIPTPATH" || errorExit "Cannot cd into $SCRIPTPATH"
-    sqlplus / as sysdba "@$INSTALLFILE_LOOKUPS"
+    sqlplus / as sysdba <<EOF
+        @$INSTALLFILE_LOOKUPS
+        exit;
+EOF
 }
 function installApex {
     echo "--------------------- INSTALL APEX OBJECTS ---------------------"
