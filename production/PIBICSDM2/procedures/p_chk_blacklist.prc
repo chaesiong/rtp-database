@@ -38,6 +38,10 @@ CREATE OR REPLACE EDITIONABLE PROCEDURE "PIBICSDM2"."P_CHK_BLACKLIST"
     l_bl_demo_search_type   NUMBER := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter('BL_DEMO_SEARCH_TYPE'), 0));
     l_search_type_operator  VARCHAR2(1) := '%';
     l_search_type_string    VARCHAR2(4) := 'LIKE';
+
+    l_bl_p_chk_blacklist_2   NUMBER := TO_NUMBER(NVL(dl_bordercontrol.pkg_common.Get_Parameter('BL_P_CHK_BLACKLIST_2'), 0));
+
+    P_WLCD2   DL_BLACKLIST.TT_VARCHAR2 := DL_BLACKLIST.TT_VARCHAR2();
     --
     -- internal procs
     procedure append_coll as
@@ -54,27 +58,28 @@ CREATE OR REPLACE EDITIONABLE PROCEDURE "PIBICSDM2"."P_CHK_BLACKLIST"
 BEGIN
 
     -- add condtions here to return if required params are null
-    
+
     -- init
+
     P_WLCD := DL_BLACKLIST.TT_VARCHAR2();
     l_bl_demo_search_source := l_bl_demo_search_source * CASE P_PIBICSPRDCONN WHEN 1 THEN 1 ELSE 0 END;
     --
     l_search_type_operator := CASE l_bl_demo_search_type WHEN 0 THEN '%' ELSE NULL END;
     l_search_type_string   := CASE l_bl_demo_search_type WHEN 0 THEN 'LIKE' ELSE '=' END;
     --
-    
+
     IF P_SEX IN ('1', 'M') THEN
         l_sex := 'M';
     ELSIF P_SEX IN ('2', 'F') THEN
         l_sex := 'F';
     END IF;
-    
+
     WLFULLNMTWO   := REPLACE(P_EFIRSTNM || P_EFAMILYNM, ' ', '') || l_search_type_operator;
     WLFULLNMTHREE := REPLACE(P_EFIRSTNM || P_EFAMILYNM || P_EMIDDLENMN, ' ', '') || l_search_type_operator;
-    
+
     WLFULLNMTWO_SP   := REPLACE(P_EFAMILYNM || P_EFIRSTNM, ' ', '') || l_search_type_operator;
     WLFULLNMTHREE_SP := REPLACE(P_EFAMILYNM || P_EFIRSTNM || P_EMIDDLENMN, ' ', '') || l_search_type_operator;
-   
+
     -- thai
     WLFULLNMTWO_T   := REPLACE(P_TFIRSTNM || P_TFAMILYNM, ' ', '') ;
     WLFULLNMTHREE_T := REPLACE(P_TFIRSTNM || P_TFAMILYNM || P_TMIDDLENMN, ' ', '') ;
@@ -149,26 +154,26 @@ BEGIN
             ]'
             || CASE WHEN l_sex IS NOT NULL THEN q'[ AND W.sex = ']' || l_sex || q'[' ]' END
             ;
-            
+
             IF TRIM(l_query) IS NOT NULL THEN
                 EXECUTE IMMEDIATE l_query INTO V_Results;
             END IF;
-            
+
             --dbms_output.put_line('Step1 query :' || l_query);
             --dbms_output.put_line('Step1 :' || V_Results.COUNT);
-        
+
         EXCEPTION
             WHEN OTHERS THEN
                 NULL;
         END;
         -- 1: _END
     END IF;
-    
+
     -- append and init
     IF V_Results.COUNT > 0 THEN
         append_coll;
     END IF;
-    
+
     IF 
         REPLACE(WLFULLNMTWO_SP, l_search_type_operator) IS NOT NULL 
         OR REPLACE(WLFULLNMTHREE_SP, l_search_type_operator) IS NOT NULL 
@@ -232,26 +237,26 @@ BEGIN
             ]'
             || CASE WHEN l_sex IS NOT NULL THEN q'[ AND W.sex = ']' || l_sex || q'[' ]' END
             ;
-            
+
             IF TRIM(l_query) IS NOT NULL THEN
                 EXECUTE IMMEDIATE l_query INTO V_Results;
             END IF;
-                
+
             --dbms_output.put_line('Step2 query :' || l_query);
             --dbms_output.put_line('Step2 :' || V_Results.COUNT);
-        
+
         EXCEPTION
             WHEN OTHERS THEN
                 NULL;
         END;
         -- 2: _END
     END IF;
-    
+
     -- append and init
     IF V_Results.COUNT > 0 THEN
         append_coll;
     END IF;
-    
+
     IF 
         TRIM(P_PASSNO) IS NOT NULL
         OR TRIM(P_IDCard) IS NOT NULL 
@@ -280,26 +285,26 @@ BEGIN
                 REPLACE(WC.DOCNO, '-', '') = REPLACE( ']' || P_IDCard || q'[' , '-', '')
             ) 
             ]';
-            
+
             IF TRIM(l_query) IS NOT NULL THEN
                 EXECUTE IMMEDIATE l_query INTO V_Results;
             END IF;
-            
+
             --dbms_output.put_line('Step3 query :' || l_query);
             --dbms_output.put_line('Step3 :' || V_Results.COUNT);
-        
+
         EXCEPTION
             WHEN NO_DATA_FOUND THEN
                 NULL;
         END;
         -- 3: _END
     END IF;
-    
+
     -- append and init
     IF V_Results.COUNT > 0 THEN
         append_coll;
     END IF;
-    
+
     IF 
         REPLACE(WLFULLNMTWO_T, l_search_type_operator) IS NOT NULL 
         OR REPLACE(WLFULLNMTHREE_T, l_search_type_operator) IS NOT NULL 
@@ -355,26 +360,26 @@ BEGIN
             ]'
             || CASE WHEN l_sex IS NOT NULL THEN q'[ AND W.sex = ']' || l_sex || q'[' ]' END
             ;
-            
+
             IF TRIM(l_query) IS NOT NULL THEN
                 EXECUTE IMMEDIATE l_query INTO V_Results;
             END IF;
-                
+
             --dbms_output.put_line('Step4 query :' || l_query);
             --dbms_output.put_line('Step4 :' || V_Results.COUNT);
-        
+
         EXCEPTION
             WHEN OTHERS THEN
                 NULL;
         END;
         -- 4: _END
     END IF;
-    
+
     -- append and init
     IF V_Results.COUNT > 0 THEN
         append_coll;
     END IF;
-    
+
     --dbms_output.put_line('Result V_Results:' || V_Results.COUNT);
     --dbms_output.put_line('Result P_WLCD:' || P_WLCD.COUNT);
 
@@ -386,17 +391,55 @@ BEGIN
                 , P_MOVEMENTID
                 , SYSDATE
             FROM TABLE(P_WLCD);
-            
+
             -- moved to the bottom
             --commit;
-            
+
         EXCEPTION
             WHEN OTHERS THEN
                 -- use logger here
                 NULL;
         END;
+       ELSE
+             BEGIN
+                    IF l_bl_p_chk_blacklist_2 =  1 THEN
+
+                        PIBICSDM2.P_CHK_BLACKLIST_2(
+                        P_MOVEMENTID => P_MOVEMENTID,
+                        P_NATIONCD => P_NATIONCD,
+                        P_PASSNO => P_PASSNO,
+                        P_IDCARD => P_IDCARD,
+                        P_BIRTHDTE => P_BIRTHDTE,
+                        P_SEX => P_SEX,
+                        P_EFIRSTNM => P_EFIRSTNM,
+                        P_EMIDDLENMN => P_EMIDDLENMN,
+                        P_EFAMILYNM => P_EFAMILYNM,
+                        P_TFIRSTNM => P_TFIRSTNM,
+                        P_TMIDDLENMN => P_TMIDDLENMN,
+                        P_TFAMILYNM => P_TFAMILYNM,
+                        P_PIBICSPRDCONN => P_PIBICSPRDCONN,
+                        P_WLCD => P_WLCD2
+                      );
+
+                    --dbms_output.put_line('Result P_WLCD2:' || P_WLCD2.COUNT);
+                   -- dbms_output.put_line('Result P_WLCD:' || P_WLCD.COUNT);
+                      IF P_WLCD2 IS NOT NULL AND P_WLCD2.COUNT > 0 THEN
+                    BEGIN
+                      P_WLCD := P_WLCD MULTISET UNION DISTINCT P_WLCD2;
+                       EXCEPTION
+                        WHEN OTHERS THEN
+                            -- use logger here
+                            NULL;
+                      END;
+            END IF;
+
+          END IF;
+
+
+
+        END;
     END IF;
-  
+
   -- close dblink transaction
   COMMIT;
 

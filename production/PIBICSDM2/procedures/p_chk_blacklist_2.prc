@@ -62,16 +62,12 @@ BEGIN
         SELECT key_value
             INTO L_NATIONCD
             FROM  DL_STAGING4PIBICS_INTF.trcd_country t
-            WHERE to_char(t.seqno) = P_NATIONCD;
+            WHERE t.code = P_NATIONCD;
         EXCEPTION
-            WHEN no_data_found THEN
-                BEGIN
-                    SELECT key_value
-                    INTO L_NATIONCD
-                    FROM DL_STAGING4PIBICS_INTF.trcd_country t
-                    WHERE t.code = P_NATIONCD;
-                END;
-        end;
+            WHEN no_data_found THEN 
+                        L_NATIONCD := '';
+         END;
+
 
     -- init
     P_WLCD := DL_BLACKLIST.TT_VARCHAR2();
@@ -111,73 +107,124 @@ BEGIN
         OR REPLACE(WLFULLNMTHREE, l_search_type_operator) IS NOT NULL 
     THEN
         -- 1: _START
-        BEGIN
-            l_query := 
-            q'[ 
-            SELECT 
-                CAST(COLLECT(DISTINCT W.case_number) AS DL_BLACKLIST.TT_VARCHAR2) 
-            ]'
-            || 
-                 q'[ FROM DL_BLACKLIST.blacklist_cases W 
-                    inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
-                    on W.ID = BCI.BLACKLIST_CASE
-                    INNER join  DL_BLACKLIST.identities WN
-                    on BCI.IDENTITY = WN.KEY_VALUE  ]'
-            || 
-            q'[ 
-            WHERE  WN.nationality = ']' || L_NATIONCD || q'[' 
-            AND 
-            ( 
-                   to_char(wn.date_of_birth,'DD/MM/YYYY') = ']' || P_BIRTHDTE || q'['  
-                OR 
-                TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year = SUBSTR(']' || P_BIRTHDTE || q'[' , -4, 4) 
-                OR 
-                LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).month, 2, '0')||'/'||
-					LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year, 4, '0') = SUBSTR(']' || P_BIRTHDTE || q'[' , -7, 7) 
-                OR 
-                '/'||LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).month, 2, '0')||'/'||
-				LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year, 4, '0')||'/' = SUBSTR(']' || P_BIRTHDTE || q'[' , -8, 8)
-            )
-            AND 
-            (
-                (
-                    REPLACE(']' || WLFULLNMTWO || q'[' , ']' || l_search_type_operator || q'[') IS NOT NULL
+        BEGIN  
+
+           -- 1.1 where name,lastname,middelname like
+           IF  l_search_type_string = 'LIKE' THEN
+
+                    SELECT 
+                        CAST(COLLECT(DISTINCT W.case_number) AS DL_BLACKLIST.TT_VARCHAR2)   INTO V_Results
+                     FROM DL_BLACKLIST.blacklist_cases W 
+                            inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
+                            on W.ID = BCI.BLACKLIST_CASE
+                            INNER join  DL_BLACKLIST.identities WN
+                            on BCI.IDENTITY = WN.KEY_VALUE   
+                    WHERE  WN.nationality = L_NATIONCD
+                    AND W.IS_ACTIVE = 'Y'
+                    AND 
+                    ( 
+                           to_char(wn.date_of_birth,'DD/MM/YYYY') = P_BIRTHDTE  
+                        OR 
+                        WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -4, 4) 
+                        OR 
+                         WN.date_of_birth_partial.getMonth()||'/'||
+                            WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -7, 7) 
+                        OR 
+                        '/'|| WN.date_of_birth_partial.getMonth()||'/'||
+                        WN.date_of_birth_partial.getYear()||'/' = SUBSTR(P_BIRTHDTE , -8, 8)
+                    )
                     AND 
                     (
-                        (REPLACE(surname || middle_name || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO || q'[' ) OR
-                        (REPLACE(surname || given_name || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO || q'[' ) OR
-                        (REPLACE(middle_name || surname || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO || q'[' ) OR
-                        (REPLACE(middle_name || given_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO || q'[' ) OR
-                        (REPLACE(given_name || surname || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO || q'[' ) OR
-                        (REPLACE(given_name || middle_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO || q'[' ) 
+                        (
+                            REPLACE(WLFULLNMTWO, '%') IS NOT NULL
+                            AND 
+                            (
+                                (REPLACE(surname || middle_name || given_name, ' ', '') LIKE WLFULLNMTWO ) OR
+                                (REPLACE(surname || given_name || middle_name, ' ', '') LIKE WLFULLNMTWO ) OR
+                                (REPLACE(middle_name || surname || given_name, ' ', '') LIKE WLFULLNMTWO ) OR
+                                (REPLACE(middle_name || given_name || surname, ' ', '') LIKE WLFULLNMTWO ) OR
+                                (REPLACE(given_name || surname || middle_name, ' ', '') LIKE WLFULLNMTWO ) OR
+                                (REPLACE(given_name || middle_name || surname, ' ', '') LIKE WLFULLNMTWO )  
+                            )
+                        )
+                        OR
+                        (
+                            REPLACE(WLFULLNMTHREE, '%') IS NOT NULL
+                            AND
+                            (
+                                (REPLACE(surname || middle_name || given_name, ' ', '') LIKE WLFULLNMTHREE ) OR
+                                (REPLACE(surname || given_name || middle_name, ' ', '') LIKE WLFULLNMTHREE ) OR
+                                (REPLACE(middle_name || surname || given_name, ' ', '') LIKE WLFULLNMTHREE ) OR
+                                (REPLACE(middle_name || given_name || surname, ' ', '') LIKE WLFULLNMTHREE ) OR
+                                (REPLACE(given_name || surname || middle_name, ' ', '') LIKE WLFULLNMTHREE ) OR
+                                (REPLACE(given_name || middle_name || surname, ' ', '') LIKE WLFULLNMTHREE )
+                            )
+                        )
                     )
-                )
-                OR
-                (
-                    REPLACE(']' || WLFULLNMTHREE || q'[' , ']' || l_search_type_operator || q'[') IS NOT NULL
-                    AND
-                    (
-                        (REPLACE(surname || middle_name || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE || q'[' ) OR
-                        (REPLACE(surname || given_name || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE || q'[' ) OR
-                        (REPLACE(middle_name || surname || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE || q'[' ) OR
-                        (REPLACE(middle_name || given_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE || q'[' ) OR
-                        (REPLACE(given_name || surname || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE || q'[' ) OR
-                        (REPLACE(given_name || middle_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE || q'[' )
-                    )
-                )
-            )
-            ]'
-            || CASE WHEN l_sex IS NOT NULL THEN q'[ AND ( WN.sex = ']' || l_sex || q'[' or  WN.sex = ']' || l_sex_Full ||  q'[' )  ]'  END 
-            ;
+                     AND ( WN.sex = l_sex or  WN.sex = l_sex_full ) ;
 
-            IF TRIM(l_query) IS NOT NULL THEN
-                EXECUTE IMMEDIATE l_query INTO V_Results;
-            END IF;
+                ELSE  
+                -- 1.2 where name,lastname,middelname =
+
+                                 SELECT 
+                                CAST(COLLECT(DISTINCT W.case_number) AS DL_BLACKLIST.TT_VARCHAR2)   INTO V_Results
+                             FROM DL_BLACKLIST.blacklist_cases W 
+                                    inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
+                                    on W.ID = BCI.BLACKLIST_CASE
+                                    INNER join  DL_BLACKLIST.identities WN
+                                    on BCI.IDENTITY = WN.KEY_VALUE   
+                            WHERE  WN.nationality = L_NATIONCD
+                            AND W.IS_ACTIVE = 'Y'
+                             AND 
+                                ( 
+                                       to_char(wn.date_of_birth,'DD/MM/YYYY') = P_BIRTHDTE  
+                                    OR 
+                                    WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -4, 4) 
+                                    OR 
+                                     WN.date_of_birth_partial.getMonth()||'/'||
+                                        WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -7, 7) 
+                                    OR 
+                                    '/'|| WN.date_of_birth_partial.getMonth()||'/'||
+                                    WN.date_of_birth_partial.getYear()||'/' = SUBSTR(P_BIRTHDTE , -8, 8)
+                                )
+                            AND 
+                            (
+                                (
+                                    REPLACE(WLFULLNMTWO, '') IS NOT NULL
+                                    AND 
+                                    (
+                                        (REPLACE(surname || middle_name || given_name, ' ', '') = WLFULLNMTWO ) OR
+                                        (REPLACE(surname || given_name || middle_name, ' ', '') = WLFULLNMTWO ) OR
+                                        (REPLACE(middle_name || surname || given_name, ' ', '') = WLFULLNMTWO ) OR
+                                        (REPLACE(middle_name || given_name || surname, ' ', '') = WLFULLNMTWO ) OR
+                                        (REPLACE(given_name || surname || middle_name, ' ', '') = WLFULLNMTWO ) OR
+                                        (REPLACE(given_name || middle_name || surname, ' ', '') = WLFULLNMTWO )  
+                                    )
+                                )
+                                OR
+                                (
+                                    REPLACE(WLFULLNMTHREE, '') IS NOT NULL
+                                    AND
+                                    (
+                                        (REPLACE(surname || middle_name || given_name, ' ', '') = WLFULLNMTHREE ) OR
+                                        (REPLACE(surname || given_name || middle_name, ' ', '') = WLFULLNMTHREE ) OR
+                                        (REPLACE(middle_name || surname || given_name, ' ', '') = WLFULLNMTHREE ) OR
+                                        (REPLACE(middle_name || given_name || surname, ' ', '') = WLFULLNMTHREE ) OR
+                                        (REPLACE(given_name || surname || middle_name, ' ', '') = WLFULLNMTHREE ) OR
+                                        (REPLACE(given_name || middle_name || surname, ' ', '') = WLFULLNMTHREE )
+                                    )
+                                )
+                            )
+                             AND ( WN.sex = l_sex OR  WN.sex = l_sex_full ) ;
+
+                    END IF;
 
             --dbms_output.put_line('Step1 query :' || l_query);
             --dbms_output.put_line('Step1 :' || V_Results.COUNT);
 
         EXCEPTION
+         WHEN NO_DATA_FOUND THEN
+                NULL;
             WHEN OTHERS THEN
                 NULL;
         END;
@@ -195,74 +242,123 @@ BEGIN
     THEN
         -- 2: _START
         BEGIN
-            l_query := 
-            q'[
-            SELECT 
-                CAST(COLLECT(DISTINCT w.case_number) AS DL_BLACKLIST.TT_VARCHAR2) 
-            ]'
-            || 
-            q'[ FROM DL_BLACKLIST.blacklist_cases W 
-                inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
-                on W.ID = BCI.BLACKLIST_CASE
-                INNER join  DL_BLACKLIST.identities WN
-                on BCI.IDENTITY = WN.KEY_VALUE  ]'
 
-            || 
-            q'[ 
-            WHERE WN.nationality = ']' || L_NATIONCD || q'[' 
-            AND 
-            ( 
-                to_char(wn.date_of_birth,'DD/MM/YYYY') = ']' || P_BIRTHDTE || q'['  
-                OR 
-                TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year = SUBSTR(']' || P_BIRTHDTE || q'[' , -4, 4) 
-                OR 
-                LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).month, 2, '0')||'/'||
-					LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year, 4, '0') = SUBSTR(']' || P_BIRTHDTE || q'[' , -7, 7) 
-                OR 
-                '/'||LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).month, 2, '0')||'/'||
-				LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year, 4, '0')||'/' = SUBSTR(']' || P_BIRTHDTE || q'[' , -8, 8)
+           -- 2.1 where name,lastname,middelname like
+           IF  l_search_type_string = 'LIKE' THEN
 
-            )
-            AND 
-            (
-                (
-                    REPLACE(']' || WLFULLNMTWO_SP || q'[' , ']' || l_search_type_operator || q'[') IS NOT NULL
-                    AND 
-                    (
-                        (REPLACE(surname || middle_name || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_SP || q'[' ) OR
-                        (REPLACE(surname || given_name || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_SP || q'[' ) OR
-                        (REPLACE(middle_name || surname || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_SP || q'[' ) OR
-                        (REPLACE(middle_name || given_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_SP || q'[' ) OR
-                        (REPLACE(given_name || surname || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_SP || q'[' ) OR
-                        (REPLACE(given_name || middle_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_SP || q'[' ) 
-                    )
-                )
-                OR
-                (
-                    REPLACE(']' || WLFULLNMTHREE_SP || q'[' , ']' || l_search_type_operator || q'[') IS NOT NULL
-                    AND
-                    (
-                        (REPLACE(surname || middle_name || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_SP || q'[' ) OR
-                        (REPLACE(surname || given_name || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_SP || q'[' ) OR
-                        (REPLACE(middle_name || surname || given_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_SP || q'[' ) OR
-                        (REPLACE(middle_name || given_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_SP || q'[' ) OR
-                        (REPLACE(given_name || surname || middle_name, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_SP || q'[' ) OR
-                        (REPLACE(given_name || middle_name || surname, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_SP || q'[' )
-                    )
-                )
-            )
-            ]'
-            || CASE WHEN l_sex IS NOT NULL THEN q'[ AND ( WN.sex = ']' || l_sex || q'[' or WN.sex = ']' || l_sex_Full ||  q'[' )  ]'  END 
-            ;
+                                 SELECT 
+                                        CAST(COLLECT(DISTINCT w.case_number) AS DL_BLACKLIST.TT_VARCHAR2)  INTO V_Results
+                                     FROM DL_BLACKLIST.blacklist_cases W 
+                                        inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
+                                        on W.ID = BCI.BLACKLIST_CASE
+                                        INNER join  DL_BLACKLIST.identities WN
+                                        on BCI.IDENTITY = WN.KEY_VALUE   
+                                    WHERE WN.nationality = L_NATIONCD
+                                    AND W.IS_ACTIVE = 'Y'
+                                    AND 
+                                                        ( 
+                                                               to_char(wn.date_of_birth,'DD/MM/YYYY') = P_BIRTHDTE  
+                                                            OR 
+                                                            WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -4, 4) 
+                                                            OR 
+                                                             WN.date_of_birth_partial.getMonth()||'/'||
+                                                                WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -7, 7) 
+                                                            OR 
+                                                            '/'|| WN.date_of_birth_partial.getMonth()||'/'||
+                                                            WN.date_of_birth_partial.getYear()||'/' = SUBSTR(P_BIRTHDTE , -8, 8)
+                                                        )
+                                    AND 
+                                    (
+                                        (
+                                            REPLACE(WLFULLNMTWO_SP, '%') IS NOT NULL
+                                            AND 
+                                            (
+                                                (REPLACE(surname || middle_name || given_name, ' ', '') LIKE WLFULLNMTWO_SP ) OR
+                                                (REPLACE(surname || given_name || middle_name, ' ', '') LIKE WLFULLNMTWO_SP ) OR
+                                                (REPLACE(middle_name || surname || given_name, ' ', '') LIKE WLFULLNMTWO_SP ) OR
+                                                (REPLACE(middle_name || given_name || surname, ' ', '') LIKE WLFULLNMTWO_SP ) OR
+                                                (REPLACE(given_name || surname || middle_name, ' ', '') LIKE WLFULLNMTWO_SP ) OR
+                                                (REPLACE(given_name || middle_name || surname, ' ', '') LIKE WLFULLNMTWO_SP ) 
+                                            )
+                                        )
+                                        OR
+                                        (
+                                            REPLACE(WLFULLNMTHREE_SP , '%') IS NOT NULL
+                                            AND
+                                            (
+                                                (REPLACE(surname || middle_name || given_name, ' ', '') LIKE WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(surname || given_name || middle_name, ' ', '') LIKE WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(middle_name || surname || given_name, ' ', '') LIKE WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(middle_name || given_name || surname, ' ', '') LIKE WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(given_name || surname || middle_name, ' ', '') LIKE WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(given_name || middle_name || surname, ' ', '') LIKE WLFULLNMTHREE_SP )
+                                            )
+                                        )
+                                    )
+                                       AND ( WN.sex = l_sex OR  WN.sex = l_sex_full ) ;
 
-            IF TRIM(l_query) IS NOT NULL THEN
-                EXECUTE IMMEDIATE l_query INTO V_Results;
-            END IF;
 
+           ELSE
+             -- 2.1 where name,lastname,middelname =
+             SELECT 
+                                        CAST(COLLECT(DISTINCT w.case_number) AS DL_BLACKLIST.TT_VARCHAR2)  INTO V_Results
+                                     FROM DL_BLACKLIST.blacklist_cases W 
+                                        inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
+                                        on W.ID = BCI.BLACKLIST_CASE
+                                        INNER join  DL_BLACKLIST.identities WN
+                                        on BCI.IDENTITY = WN.KEY_VALUE   
+                                    WHERE WN.nationality = L_NATIONCD
+                                    AND W.IS_ACTIVE = 'Y'
+                                    AND 
+                                                        ( 
+                                                               to_char(wn.date_of_birth,'DD/MM/YYYY') = P_BIRTHDTE  
+                                                            OR 
+                                                            WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -4, 4) 
+                                                            OR 
+                                                             WN.date_of_birth_partial.getMonth()||'/'||
+                                                                WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -7, 7) 
+                                                            OR 
+                                                            '/'|| WN.date_of_birth_partial.getMonth()||'/'||
+                                                            WN.date_of_birth_partial.getYear()||'/' = SUBSTR(P_BIRTHDTE , -8, 8)
+                                                        )
+                                    AND 
+                                    (
+                                        (
+                                            REPLACE(WLFULLNMTWO_SP, '') IS NOT NULL
+                                            AND 
+                                            (
+                                                (REPLACE(surname || middle_name || given_name, ' ', '') = WLFULLNMTWO_SP ) OR
+                                                (REPLACE(surname || given_name || middle_name, ' ', '') = WLFULLNMTWO_SP ) OR
+                                                (REPLACE(middle_name || surname || given_name, ' ', '') = WLFULLNMTWO_SP ) OR
+                                                (REPLACE(middle_name || given_name || surname, ' ', '') = WLFULLNMTWO_SP ) OR
+                                                (REPLACE(given_name || surname || middle_name, ' ', '') = WLFULLNMTWO_SP ) OR
+                                                (REPLACE(given_name || middle_name || surname, ' ', '') = WLFULLNMTWO_SP ) 
+                                            )
+                                        )
+                                        OR
+                                        (
+                                            REPLACE(WLFULLNMTHREE_SP , '') IS NOT NULL
+                                            AND
+                                            (
+                                                (REPLACE(surname || middle_name || given_name, ' ', '') = WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(surname || given_name || middle_name, ' ', '') = WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(middle_name || surname || given_name, ' ', '') = WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(middle_name || given_name || surname, ' ', '') = WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(given_name || surname || middle_name, ' ', '') = WLFULLNMTHREE_SP ) OR
+                                                (REPLACE(given_name || middle_name || surname, ' ', '') = WLFULLNMTHREE_SP )
+                                            )
+                                        )
+                                    )
+                                       AND ( WN.sex = l_sex OR  WN.sex = l_sex_full ) ;
+
+           END IF;
             --dbms_output.put_line('Step2 query :' || l_query);
             --dbms_output.put_line('Step2 :' || V_Results.COUNT);
 
+
         EXCEPTION
+         WHEN NO_DATA_FOUND THEN
+                NULL;
             WHEN OTHERS THEN
                 NULL;
         END;
@@ -280,34 +376,24 @@ BEGIN
     THEN
         -- 3: _START
         BEGIN
-            l_query := 
-            q'[
-            SELECT 
-                CAST(COLLECT(DISTINCT w.case_number) AS DL_BLACKLIST.TT_VARCHAR2) 
-            ]'
-            || 
-             q'[  FROM DL_BLACKLIST.blacklist_cases W 
+
+         SELECT 
+                CAST(COLLECT(DISTINCT w.case_number) AS DL_BLACKLIST.TT_VARCHAR2)    INTO V_Results
+              FROM DL_BLACKLIST.blacklist_cases W 
                     inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
                     on W.ID = BCI.BLACKLIST_CASE
                     INNER join  DL_BLACKLIST.identities WN
                     on BCI.IDENTITY = WN.KEY_VALUE
                     LEFT join  DL_BLACKLIST.travel_docs WC
-                     on  WN.key_value = WC.identity  ]'
-
-            || 
-            q'[ 
-            WHERE  WN.nationality = ']' || L_NATIONCD || q'[' 
+                     on  WN.key_value = WC.identity   
+            WHERE  WN.nationality = L_NATIONCD
+            AND W.IS_ACTIVE = 'Y'
             AND 
             (
-                REPLACE(WC.doc_number, '-', '') = REPLACE( ']' || P_PASSNO || q'[' , '-', '') 
+                REPLACE(WC.doc_number, '-', '') = REPLACE( P_PASSNO , '-', '') 
                 OR
-                REPLACE(WC.doc_number, '-', '') = REPLACE( ']' || P_IDCard || q'[' , '-', '')
-            ) 
-            ]';
-
-            IF TRIM(l_query) IS NOT NULL THEN
-                EXECUTE IMMEDIATE l_query INTO V_Results;
-            END IF;
+                REPLACE(WC.doc_number, '-', '') = REPLACE(P_IDCard , '-', '')
+            ) ; 
 
             --dbms_output.put_line('Step3 query :' || l_query);
             --dbms_output.put_line('Step3 :' || V_Results.COUNT);
@@ -330,65 +416,106 @@ BEGIN
     THEN
         -- 4: _START
         BEGIN
-            l_query := 
-            q'[
-            SELECT 
-                CAST(COLLECT(DISTINCT W.case_number) AS DL_BLACKLIST.TT_VARCHAR2) 
-            ]'
-            || 
-           q'[ FROM  DL_BLACKLIST.blacklist_cases W 
-            inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
-            on W.ID = BCI.BLACKLIST_CASE
-            INNER join  DL_BLACKLIST.identities WN
-            on BCI.IDENTITY = WN.KEY_VALUE  ]'
+           -- 4.1 where name,lastname,middelname like
+           IF  l_search_type_string = 'LIKE' THEN
 
-            || 
-            q'[ 
-            WHERE  WN.nationality = ']' || L_NATIONCD || q'[' 
-            AND 
-            ( 
-                to_char(wn.date_of_birth,'DD/MM/YYYY') = ']' || P_BIRTHDTE || q'['  
-                OR 
-                TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year = SUBSTR(']' || P_BIRTHDTE || q'[' , -4, 4) 
-                OR 
-                LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).month, 2, '0')||'/'||
-					LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year, 4, '0') = SUBSTR(']' || P_BIRTHDTE || q'[' , -7, 7) 
-                OR 
-                '/'||LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).month, 2, '0')||'/'||
-				LPAD(TREAT(wn.date_of_birth_partial AS DL_BLACKLIST.CT_PARTIAL_DATE).year, 4, '0')||'/' = SUBSTR(']' || P_BIRTHDTE || q'[' , -8, 8)
-            )
-            AND 
-            (
-                (
-                    REPLACE(']' || WLFULLNMTWO_T || q'[' , ']' || l_search_type_operator || q'[') IS NOT NULL
-                    AND 
-                    (
-                        (REPLACE(givenname_thai || middlename_thai || surname_thai, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_T || q'[' ) OR
-                        (REPLACE(givenname_thai || surname_thai || middlename_thai, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTWO_T || q'[' )
-                    )
-                )
-                OR
-                (
-                    REPLACE(']' || WLFULLNMTHREE_T || q'[' , ']' || l_search_type_operator || q'[') IS NOT NULL
-                    AND
-                    (
-                        (REPLACE(givenname_thai || middlename_thai || surname_thai, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_T || q'[' ) OR
-                        (REPLACE(givenname_thai || surname_thai || middlename_thai, ' ', '') ]' || l_search_type_string || q'[ ']' || WLFULLNMTHREE_T || q'[' )
-                    )
-                )
-            ) 
-            ]'
-           || CASE WHEN l_sex IS NOT NULL THEN q'[ AND ( WN.sex = ']' || l_sex || q'[' or WN.sex = ']' || l_sex_Full ||  q'['  )  ]'  END 
-            ;
+                                    SELECT 
+                                            CAST(COLLECT(DISTINCT W.case_number) AS DL_BLACKLIST.TT_VARCHAR2)    INTO V_Results
+                                         FROM  DL_BLACKLIST.blacklist_cases W 
+                                        inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
+                                        on W.ID = BCI.BLACKLIST_CASE
+                                        INNER join  DL_BLACKLIST.identities WN
+                                        on BCI.IDENTITY = WN.KEY_VALUE   
+                                        WHERE  WN.nationality = L_NATIONCD
+                                        AND W.IS_ACTIVE = 'Y'
+                                       AND 
+                                                        ( 
+                                                               to_char(wn.date_of_birth,'DD/MM/YYYY') = P_BIRTHDTE  
+                                                            OR 
+                                                            WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -4, 4) 
+                                                            OR 
+                                                             WN.date_of_birth_partial.getMonth()||'/'||
+                                                                WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -7, 7) 
+                                                            OR 
+                                                            '/'|| WN.date_of_birth_partial.getMonth()||'/'||
+                                                            WN.date_of_birth_partial.getYear()||'/' = SUBSTR(P_BIRTHDTE , -8, 8)
+                                                        )
+                                    AND 
+                                    (
+                                                    (
+                                                        REPLACE(WLFULLNMTWO_T , '%') IS NOT NULL
+                                                        AND 
+                                                        (
+                                                            (REPLACE(givenname_thai || middlename_thai || surname_thai, ' ', '') LIKE WLFULLNMTWO_T ) OR
+                                                            (REPLACE(givenname_thai || surname_thai || middlename_thai, ' ', '') LIKE WLFULLNMTWO_T )
+                                                        )
+                                                    )
+                                                    OR
+                                                    (
+                                                        REPLACE(WLFULLNMTHREE_T , '%') IS NOT NULL
+                                                        AND
+                                                        (
+                                                            (REPLACE(givenname_thai || middlename_thai || surname_thai, ' ', '') LIKE WLFULLNMTHREE_T ) OR
+                                                            (REPLACE(givenname_thai || surname_thai || middlename_thai, ' ', '') LIKE WLFULLNMTHREE_T )
+                                                        )
+                                                    )
+                                                ) 
 
-            IF TRIM(l_query) IS NOT NULL THEN
-                EXECUTE IMMEDIATE l_query INTO V_Results;
-            END IF;
+                                                AND ( WN.sex = l_sex OR  WN.sex = l_sex_full ) ;
+                    ELSE 
+                             SELECT 
+                                            CAST(COLLECT(DISTINCT W.case_number) AS DL_BLACKLIST.TT_VARCHAR2)    INTO V_Results
+                                         FROM  DL_BLACKLIST.blacklist_cases W 
+                                        inner join DL_BLACKLIST.BLACKLIST_CASE_IDENTITIES BCI 
+                                        on W.ID = BCI.BLACKLIST_CASE
+                                        INNER join  DL_BLACKLIST.identities WN
+                                        on BCI.IDENTITY = WN.KEY_VALUE   
+                                        WHERE  WN.nationality = L_NATIONCD
+                                        AND W.IS_ACTIVE = 'Y'
+                                       AND 
+                                                        ( 
+                                                               to_char(wn.date_of_birth,'DD/MM/YYYY') = P_BIRTHDTE  
+                                                            OR 
+                                                            WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -4, 4) 
+                                                            OR 
+                                                             WN.date_of_birth_partial.getMonth()||'/'||
+                                                                WN.date_of_birth_partial.getYear() = SUBSTR(P_BIRTHDTE , -7, 7) 
+                                                            OR 
+                                                            '/'|| WN.date_of_birth_partial.getMonth()||'/'||
+                                                            WN.date_of_birth_partial.getYear()||'/' = SUBSTR(P_BIRTHDTE , -8, 8)
+                                                        )
+                                    AND 
+                                    (
+                                                    (
+                                                        REPLACE(WLFULLNMTWO_T , '') IS NOT NULL
+                                                        AND 
+                                                        (
+                                                            (REPLACE(givenname_thai || middlename_thai || surname_thai, ' ', '')  =  WLFULLNMTWO_T ) OR
+                                                            (REPLACE(givenname_thai || surname_thai || middlename_thai, ' ', '')  =  WLFULLNMTWO_T )
+                                                        )
+                                                    )
+                                                    OR
+                                                    (
+                                                        REPLACE(WLFULLNMTHREE_T , '') IS NOT NULL
+                                                        AND
+                                                        (
+                                                            (REPLACE(givenname_thai || middlename_thai || surname_thai, ' ', '') =  WLFULLNMTHREE_T ) OR
+                                                            (REPLACE(givenname_thai || surname_thai || middlename_thai, ' ', '') =  WLFULLNMTHREE_T )
+                                                        )
+                                                    )
+                                                ) 
+
+                                                AND ( WN.sex = l_sex OR  WN.sex = l_sex_full ) ;
+
+
+                                END IF;
 
            --dbms_output.put_line('Step4 query :' || l_query);
             --dbms_output.put_line('Step4 :' || V_Results.COUNT);
 
         EXCEPTION
+         WHEN NO_DATA_FOUND THEN
+                NULL;
             WHEN OTHERS THEN
                 NULL;
         END;

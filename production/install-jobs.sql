@@ -47,6 +47,8 @@
 @DL_INTERFACE/jobs/check_queue_i3_08.sql
 @DL_INTERFACE/jobs/check_queue_i3_09.sql
 @DL_INTERFACE/jobs/check_queue_i3_10.sql
+@DL_INTERFACE/jobs/sj_move_log_bl_hits.sql
+@DL_INTERFACE/jobs/sj_move_log_sync_web.sql
 @DL_INTERFACE/jobs/sj_send_to_pibics_case_gender.sql
 @DL_INTERFACE/jobs/sj_sp_send_to_pibics_again.sql
 -- DL_MAINTENANCE/jobs

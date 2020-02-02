@@ -92,14 +92,14 @@ BEGIN
                 v_dstart2, v_dstart2, vstdate, veddate);
   COMMIT;
   
-  /*IF (settype2 = '' OR settype2 IS NULL) THEN settype2 := 'N';
+  IF (settype2 = '' OR settype2 IS NULL) THEN settype2 := 'N';
   END IF;
  
   UPDATE DL_BLACKLIST.BLACKLIST_CASES SET IS_ACTIVE = settype2 WHERE CASE_NUMBER IN (
     SELECT WLCD FROM PIBICSDM2.WATCHLISTLOG 
         WHERE TO_CHAR(LOGDTE,'dd/mm/yyyy') = v_dstart2 AND LOGFLAG = 'D'
   );
-  COMMIT;*/
+  COMMIT;
   
 END P_DELETE_WATCHLIST_M;
 /

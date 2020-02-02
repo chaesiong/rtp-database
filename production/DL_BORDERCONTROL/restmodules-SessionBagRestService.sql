@@ -790,4 +790,4 @@ END;
 
 /
 timing for: TIMER_REST_EXPORT
-Elapsed: 00:00:00.12
+Elapsed: 00:00:00.07

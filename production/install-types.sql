@@ -86,9 +86,14 @@
 @PIBICSDM2/types/9g=.tps
 @PIBICSDM2/types/file_list.tps
 @PIBICSDM2/types/guwyfekwjew=.tps
+@PIBICSDM2/types/jguwifekysog=.tps
+@PIBICSDM2/types/kw=.tps
 @PIBICSDM2/types/st00001o2klm4vn4dguwefeky
+@PIBICSDM2/types/st00001whyzu6qcrhguwefekwgrq=.tps
 @PIBICSDM2/types/st00002ki
+@PIBICSDM2/types/st00002whyxyniy
 @PIBICSDM2/types/st00003qgtpycsybvguwufekyh1q=.tps
+@PIBICSDM2/types/st00003whyx+pyronguwufekx
 @PIBICSDM2/types/st000046c0rjx8gf
 @PIBICSDM2/types/str_array.tps
 -- SYSTEM/types

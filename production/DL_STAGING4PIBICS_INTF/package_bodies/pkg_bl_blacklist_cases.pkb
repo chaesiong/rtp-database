@@ -990,6 +990,7 @@ BEGIN
                         ,UPPER(wl.DOCNO_WLIC) as DOCNO_WLIC
                         ,wl.ISUDTE_WLIC
                         ,wl.ISUPLACE_WLIC
+                        ,wl.birthdte AS birthdte_DDMMYYYY --add
                   FROM dl_staging4pibics.watchlist2 wl
                   INNER JOIN sync_blacklist_cases2 s
                   ON wl.wlcd = s.wlcd
@@ -1127,7 +1128,8 @@ BEGIN
                         ,r.credte
                         ,r.updusr
                         ,r.upddte
-                        ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(to_char(r.birthdte ,'DD/MM/YYYY')))
+                       -- ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(to_char(r.birthdte ,'DD/MM/YYYY')))                
+                        ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(r.birthdte_DDMMYYYY)) --add
                     RETURNING key_value INTO l_identity_id;
                 end;
                 else    
@@ -1166,7 +1168,8 @@ BEGIN
                             ,r.updusr
                             ,'I'
                             ,r.birthdte
-                            ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(to_char(r.birthdte,'DD/MM/YYYY'))
+                           -- ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(to_char(r.birthdte,'DD/MM/YYYY'))
+			                ,dl_blacklist.pkg_dl_utils.get_partial_from_varchar(r.birthdte_DDMMYYYY) --add
                             );
                             
                     end;
@@ -1176,7 +1179,8 @@ BEGIN
                             ,tvd.DATE_OF_ISSUE   = r.ISUDTE_WLIC
                             ,tvd.DML_TYPE        = 'U'
                             ,tvd.date_of_birth = r.birthdte
-                            ,tvd.date_of_birth_partial = dl_blacklist.pkg_dl_utils.get_partial_from_varchar(to_char(r.birthdte,'DD/MM/YYYY'))
+                           -- ,tvd.date_of_birth_partial = dl_blacklist.pkg_dl_utils.get_partial_from_varchar(to_char(r.birthdte,'DD/MM/YYYY'))
+                             ,tvd.date_of_birth_partial = dl_blacklist.pkg_dl_utils.get_partial_from_varchar(r.birthdte_DDMMYYYY)
                             where tvd.IDENTITY = l_identity_id;
                             
                     end if;

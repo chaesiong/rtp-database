@@ -452,6 +452,7 @@
 -- DL_INTERFACE/tables
 @DL_INTERFACE/tables/log_blacklist_hits_hist.sql
 @DL_INTERFACE/tables/log_blacklist_hits_nl.sql
+@DL_INTERFACE/tables/log_blacklist_hits_o.sql
 @DL_INTERFACE/tables/log_blacklist_hits.sql
 @DL_INTERFACE/tables/log_sync_webservices_nl.sql
 @DL_INTERFACE/tables/log_sync_webservices.sql
@@ -758,6 +759,7 @@
 @PIBICSDM2/tables/conveyance.sql
 @PIBICSDM2/tables/convfordept.sql
 @PIBICSDM2/tables/convtype.sql
+@PIBICSDM2/tables/corona_virus.sql
 @PIBICSDM2/tables/corrupted_rows.sql
 @PIBICSDM2/tables/corrupt_lobs1_2012.sql
 @PIBICSDM2/tables/corrupt_lobs1.sql
@@ -2170,6 +2172,8 @@
 @SERVAPP/tables/mscs_tm2.sql
 @SERVAPP/tables/mscs_tm5.sql
 @SERVAPP/tables/mscs_tminout.sql
+@SERVAPP/tables/mscs_user_sessions_bak.sql
+@SERVAPP/tables/mscs_user_sessions.sql
 @SERVAPP/tables/mscs_voa_checkpointlist.sql
 @SERVAPP/tables/mscs_voa_checkpoint.sql
 @SERVAPP/tables/mscs_voa_docs_log.sql

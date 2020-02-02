@@ -13,6 +13,8 @@
 -- DL_COMMON/procedures
 @DL_COMMON/procedures/inst_db_obj4logger.prc
 -- DL_INTERFACE/procedures
+@DL_INTERFACE/procedures/p_partition_log_bl_hits.prc
+@DL_INTERFACE/procedures/p_partition_log_sync_web.prc
 @DL_INTERFACE/procedures/sp_can_not_add_data_pibics_1.prc
 @DL_INTERFACE/procedures/sp_ready_add_data_to_pibics.prc
 @DL_INTERFACE/procedures/sp_ready_invalid_given_format.prc
