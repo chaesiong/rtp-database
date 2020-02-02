@@ -855,10 +855,6 @@ function exportRESTModules {
     sqlplus -S $CREDENTIALS <<EOF > /dev/null
 
     $(createProxyConnectDL_BORDERCONTROL)
-
-    set timing on
-    timing start TIMER_REST_EXPORT
-
     -- SQL*Plus environment settings
     -- they are crucial to retrieve a consistent export file
     set feedback off
@@ -888,8 +884,6 @@ function exportRESTModules {
     prompt /
 
     -- spool off
-
-    timing stop TIMER_REST_EXPORT
 EOF
 
     REST_MODULES="$EXPORTDIR/DL_BORDERCONTROL"
