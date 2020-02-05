@@ -162,6 +162,13 @@ EOF
 }
 function installDBObjects {
     echo "--------------------- INSTALL DATABASE OBJECTS ---------------------"
+    # DL_BPM is pupulated by the camunda framework, but at least the schema must be present
+    sqlplus / as sysdba <<EOF
+    CREATE USER DL_BPM IDENTIFIED BY DL_BPM DEFAULT TABLESPACE DATASTORE QUOTA UNLIMITED ON DATASTORE ACCOUNT UNLOCK;
+    GRANT CREATE SESSION TO  DL_BPM;
+    GRANT CREATE TABLE TO    DL_BPM;
+    GRANT ALTER ANY TABLE TO DL_BPM;
+EOF
     cd "$SCRIPTPATH" || errorExit "Cannot cd into $SCRIPTPATH"
     sqlplus / as sysdba <<EOF
         @$INSTALLFILE_DB
